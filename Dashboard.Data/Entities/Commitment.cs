@@ -14,9 +14,9 @@ namespace Dashboard.Data.Entities
         public int UserId { get; set; }
         [ForeignKey("UserId")]
         public User User { get; set; }
-        public int ActivityId { get; set; }
-        [ForeignKey("ActivityId")]
-        public Project Activity { get; set; }
+        public int ProjectId { get; set; }
+        [ForeignKey("ProjectId")]
+        public Project Project { get; set; }
 
     }
 }

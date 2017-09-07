@@ -12,6 +12,7 @@ using Dashboard.Data.EF.Repository;
 using Dashboard.Data.EF.IRepository;
 using Dashboard.Data.EF.Db;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Http;
 
 namespace Dashboard.API
 {
@@ -47,10 +48,61 @@ namespace Dashboard.API
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, 
+            IHostingEnvironment env, 
+            ILoggerFactory loggerFactory,
+            DashboardContext dashboardContext)
         {
             loggerFactory.AddConsole(_config.GetSection("Logging"));
             loggerFactory.AddDebug();
+
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                app.UseExceptionHandler(appBuilder =>
+                {
+                    appBuilder.Run(async context =>
+                    {
+                        // ensure generic 500 status code on fault.
+                        context.Response.StatusCode = 500;
+                        await context.Response.WriteAsync("An unexpected fault happened. Try again later.");
+                    });
+                });
+            }
+
+            app.UseStaticFiles();
+
+            AutoMapper.Mapper.Initialize(cfg =>
+            {
+                // Map from Image (entity) to Image, and back
+                //cfg.CreateMap<Image, Model.Image>().ReverseMap();
+
+                //// Map from ImageForCreation to Image
+                //// Ignore properties that shouldn't be mapped
+                //cfg.CreateMap<Model.ImageForCreation, Image>()
+                //    .ForMember(m => m.FileName, options => options.Ignore())
+                //    .ForMember(m => m.Id, options => options.Ignore())
+                //    .ForMember(m => m.OwnerId, options => options.Ignore());
+
+                //// Map from ImageForUpdate to Image
+                //// ignore properties that shouldn't be mapped
+                //cfg.CreateMap<Model.ImageForUpdate, Image>()
+                //    .ForMember(m => m.FileName, options => options.Ignore())
+                //    .ForMember(m => m.Id, options => options.Ignore())
+                //    .ForMember(m => m.OwnerId, options => options.Ignore());
+            });
+
+            AutoMapper.Mapper.AssertConfigurationIsValid();
+
+            // ensure DB migrations are applied
+
+            dashboardContext.Database.Migrate();
+
+            // seed the DB with data
+            dashboardContext.DashboardCtxSeedData();
 
             app.UseMvc();
         }

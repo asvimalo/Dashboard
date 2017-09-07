@@ -1,6 +1,5 @@
 ﻿using Dashboard.Data.Entities;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,8 +17,9 @@ namespace Dashboard.Data.EF.Db
             
         }
         public DbSet<User> Users { get; set; }
-        public DbSet<Project> Activities { get; set; }
+        public DbSet<Project> Projects { get; set; }
         public DbSet<Picture> Pictures { get; set; }
+        public DbSet<Commitment> Commitments { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
