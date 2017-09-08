@@ -47,7 +47,7 @@ namespace Dashboard.Data.EF.Repository
 
         }
 
-        public ICollection<T> GetAll()
+        public IEnumerable<T> GetAll()
         {
             return entities.ToList();
         }

@@ -10,7 +10,7 @@ namespace Dashboard.Data.EF.IRepository
         
         void Add(T entity);
         T Get(int id);
-        ICollection<T> GetAll();
+        IEnumerable<T> GetAll();
         void Delete(T entity);
         T Update(T entity);
         

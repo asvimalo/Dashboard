@@ -21,11 +21,11 @@ namespace Dashboard.Data.EF.Db
         public DbSet<Picture> Pictures { get; set; }
         public DbSet<Commitment> Commitments { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnConfiguring(optionsBuilder);
-
-                  
-         }
+            base.OnModelCreating(modelBuilder);
+            //new ProjectMap(modelBuilder.Entity<Project>());
+            //new UserMap(modelBuilder.Entity<User>());
+        }
     }
 }
