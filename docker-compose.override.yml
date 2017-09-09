@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  dashboard_v1.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "80"
+networks:
+  default:
+    external:
+      name: nat

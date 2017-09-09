@@ -7,30 +7,31 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Dashboard.Data.EF.Repository;
-using Dashboard.Data.EF.IRepository;
-using Dashboard.Data.EF.Db;
+using Dashboard.API.EF.IRepository;
+using Microsoft.AspNetCore.Identity;
+using Dashboard.Data.Entities;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore.Infrastructure;
+using Dashboard.API.EF.Repository;
 using Newtonsoft.Json.Serialization;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Dashboard.API.EF.Db;
+using System.IO;
 
 namespace Dashboard.API
 {
-
     public class Startup
     {
-        public IConfigurationRoot _config { get; }
+        public IConfigurationRoot _config { get; set; }
 
         public Startup(IHostingEnvironment env)
         {
+
             var builder = new ConfigurationBuilder()
-                .SetBasePath(env.ContentRootPath)
-                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)                                     
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
-
-
             _config = builder.Build();
         }
 
@@ -39,86 +40,62 @@ namespace Dashboard.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            
+            //services.AddSingleton(_config);
+            services.AddDbContext<DashboardContext>(option => {
+                option.UseSqlServer(_config["ConnectionStrings:DashboardContextConnection"]);
+            });
+            //services.AddTransient<DashboardContextSeedData>();
+            services.AddIdentity<User, IdentityRole>()
+                .AddEntityFrameworkStores<DashboardContext>()
+                .AddDefaultTokenProviders();
+
+
+
+
+            //services.AddEntityFrameworkSqlServer();
+            //    .AddDbContext<DashboardContext>();
             // Add framework services.
-            services.AddEntityFrameworkSqlServer()
-                .AddDbContext<DashboardContext>();
-
-            services.AddSingleton(_config);
-
-            services.AddDbContext<DashboardContext>(options => 
-                options.UseSqlServer(_config["ConnectionStrings:DashboardContextConnection"]));
-
+            //services.AddDbContext<DashboardContext>();
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-            services.AddTransient<DashboardContextSeedData>();
-
+            
             services.AddMvc()
                 .AddJsonOptions(config =>
                 {
                     config.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver(); // It was already camelcasing before this config
-                }); 
+                });
+            services.Configure<IdentityOptions>(options =>
+            {
+            });
+
+            services.AddLogging();
+           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, 
             IHostingEnvironment env, 
-            ILoggerFactory loggerFactory,
-            DashboardContextSeedData seeder)
+            ILoggerFactory loggerFactory)
         {
-
             loggerFactory.AddConsole(_config.GetSection("Logging"));
             loggerFactory.AddDebug();
 
-            if (env.IsDevelopment())
+            if (env.IsEnvironment("Development"))
             {
                 app.UseDeveloperExceptionPage();
+                loggerFactory.AddDebug(LogLevel.Information);
             }
             else
-            {
-                app.UseExceptionHandler(appBuilder =>
-                {
-                    appBuilder.Run(async context =>
-                    {
-                        // ensure generic 500 status code on fault.
-                        context.Response.StatusCode = 500;
-                        await context.Response.WriteAsync("An unexpected fault happened. Try again later.");
-                    });
-                });
-            }
+                loggerFactory.AddDebug(LogLevel.Error);
 
             app.UseStaticFiles();
 
-            //AutoMapper.Mapper.Initialize(cfg =>
-            //{
-                // Map from Image (entity) to Image, and back
-                //cfg.CreateMap<Image, Model.Image>().ReverseMap();
-
-                //// Map from ImageForCreation to Image
-                //// Ignore properties that shouldn't be mapped
-                //cfg.CreateMap<Model.ImageForCreation, Image>()
-                //    .ForMember(m => m.FileName, options => options.Ignore())
-                //    .ForMember(m => m.Id, options => options.Ignore())
-                //    .ForMember(m => m.OwnerId, options => options.Ignore());
-
-                //// Map from ImageForUpdate to Image
-                //// ignore properties that shouldn't be mapped
-                //cfg.CreateMap<Model.ImageForUpdate, Image>()
-                //    .ForMember(m => m.FileName, options => options.Ignore())
-                //    .ForMember(m => m.Id, options => options.Ignore())
-                //    .ForMember(m => m.OwnerId, options => options.Ignore());
-            //});
-
-            //AutoMapper.Mapper.AssertConfigurationIsValid();
-
-            // ensure DB migrations are applied
-
-            //dashboardContext.Database.Migrate();
-
-            // seed the DB with data
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Dashboard}/{action=Index}/{id?}");
+            });
             
-
-            app.UseMvc();
-            //seeder.DashboardCtxSeedData();
         }
     }
 }

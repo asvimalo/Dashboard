@@ -9,9 +9,8 @@ namespace Dashboard.Data.Entities
         
         public string Title { get; set; }
         public string FileName { get; set; }
-        public int UserId { get; set; }
-        [ForeignKey("UserId")]
-        public User User { get; set; }
+        public int? UserId { get; set; }
+        
         
     }
 }
