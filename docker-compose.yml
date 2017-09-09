@@ -1,8 +1,0 @@
-version: '3'
-
-services:
-  dashboard_v1.api:
-    image: dashboard_v1.api
-    build:
-      context: ./Dashboard_v1.API
-      dockerfile: Dockerfile
