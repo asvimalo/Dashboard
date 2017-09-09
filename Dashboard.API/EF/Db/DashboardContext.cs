@@ -23,12 +23,5 @@ namespace Dashboard.API.EF.Db
         public DbSet<Picture> Pictures { get; set; }
         public DbSet<Commitment> Commitments { get; set; }
 
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    base.OnConfiguring(optionsBuilder);
-
-        //    optionsBuilder.UseSqlServer(_config["ConnectionStrings:GecContextConnection"]);
-        //}
-
     }
 }

@@ -46,14 +46,10 @@ namespace Dashboard.API
 
 
                                 })
-                                .ConfigureLogging((ctx, logging) =>
-                                {
-
+                                .ConfigureLogging((ctx, logging) => {
                                     logging.AddConsole();
-
                                 })
                                 .UseIISIntegration()
-                                // No logging
                                 .UseStartup<Startup>()
                                 .UseSetting("DesignTime", "true")
                                 .UseDefaultServiceProvider((context, options) =>
