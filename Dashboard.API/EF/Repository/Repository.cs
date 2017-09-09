@@ -44,7 +44,7 @@ namespace Dashboard.API.EF.Repository
         public T Get(int id)
         {
 
-            return null;// entities.SingleOrDefault(t => t.Id == id);
+            return entities.SingleOrDefault(t => t.Id == id);
 
         }
 
