@@ -12,6 +12,6 @@ namespace Dashboard.Data.ViewModel
         public Picture Picture { get; set; }
         public string PersonNr { get; set; }
 
-        public ICollection<Project> Activities { get; set; }
+        public ICollection<Project> Commitments { get; set; }
     }
 }

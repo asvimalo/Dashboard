@@ -17,6 +17,9 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Dashboard.API.EF.Db;
 using System.IO;
+using AutoMapper;
+using Dashboard.Data.ViewModels;
+using Dashboard.Data.ViewModel;
 
 namespace Dashboard.API
 {
@@ -76,6 +79,14 @@ namespace Dashboard.API
             IHostingEnvironment env, 
             ILoggerFactory loggerFactory)
         {
+            Mapper.Initialize(config =>
+            {
+                config.CreateMap<CommitmentViewModel, Commitment>().ReverseMap();             
+                config.CreateMap<UserViewModel, User>().ReverseMap();           
+                config.CreateMap<ProjectViewModel, Project>().ReverseMap();
+               
+
+            });
             loggerFactory.AddConsole(_config.GetSection("Logging"));
             loggerFactory.AddDebug();
 

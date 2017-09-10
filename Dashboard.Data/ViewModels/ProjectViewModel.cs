@@ -5,14 +5,14 @@ using System.Text;
 
 namespace Dashboard.Data.ViewModel
 {
-    public class ActivityViewModel
+    public class ProjectViewModel
     {
-        public int ActivityId { get; set; }
+        public int ProjectId { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime StopDate { get; set; }
 
-        public ICollection<UserViewModel> users { get; set; }
+        public ICollection<UserViewModel> Commitments { get; set; }
     }
 }

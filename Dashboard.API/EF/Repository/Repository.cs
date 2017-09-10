@@ -41,16 +41,17 @@ namespace Dashboard.API.EF.Repository
             //_ctx.SaveChanges();
         }
 
-        public T Get(int id)
+        public async Task<T> Get(int id)
         {
 
-            return entities.SingleOrDefault(t => t.Id == id);
+            return await entities.SingleOrDefaultAsync(t => t.Id == id);
 
         }
 
-        public IEnumerable<T> GetAll()
+        public async Task<IEnumerable<T>> GetAll()
         {
-            return entities.ToList();
+            
+            return await entities.ToListAsync();
         }
 
         public T Update(T entity)
