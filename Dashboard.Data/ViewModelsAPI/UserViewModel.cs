@@ -1,7 +1,7 @@
 ﻿using Dashboard.Data.Entities;
 using System.Collections.Generic;
 
-namespace Dashboard.Data.ViewModel
+namespace Dashboard.Data.ViewModelsAPI
 {
     public class UserViewModel
     {
@@ -12,6 +12,6 @@ namespace Dashboard.Data.ViewModel
         public Picture Picture { get; set; }
         public string PersonNr { get; set; }
 
-        public ICollection<Project> Commitments { get; set; }
+        public ICollection<Commitment> Commitments { get; set; }
     }
 }

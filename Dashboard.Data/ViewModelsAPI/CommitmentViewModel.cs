@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Dashboard.Data.ViewModels
+namespace Dashboard.Data.ViewModelsAPI
 {
     public class CommitmentViewModel
     {

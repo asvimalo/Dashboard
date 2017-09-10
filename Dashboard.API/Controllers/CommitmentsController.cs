@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Dashboard.API.EF.IRepository;
 using Dashboard.Data.Entities;
-using Dashboard.Data.ViewModels;
+using Dashboard.Data.ViewModelsAPI;
 using AutoMapper;
 using Microsoft.Extensions.Logging;
 

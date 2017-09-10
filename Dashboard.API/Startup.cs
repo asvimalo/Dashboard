@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,8 +14,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Dashboard.API.EF.Db;
 using System.IO;
 using AutoMapper;
-using Dashboard.Data.ViewModels;
-using Dashboard.Data.ViewModel;
+using Dashboard.Data.ViewModelsAPI;
 
 namespace Dashboard.API
 {
@@ -79,14 +74,8 @@ namespace Dashboard.API
             IHostingEnvironment env, 
             ILoggerFactory loggerFactory)
         {
-            Mapper.Initialize(config =>
-            {
-                config.CreateMap<CommitmentViewModel, Commitment>().ReverseMap();             
-                config.CreateMap<UserViewModel, User>().ReverseMap();           
-                config.CreateMap<ProjectViewModel, Project>().ReverseMap();
-               
+            app.UseStaticFiles();
 
-            });
             loggerFactory.AddConsole(_config.GetSection("Logging"));
             loggerFactory.AddDebug();
 
@@ -98,7 +87,23 @@ namespace Dashboard.API
             else
                 loggerFactory.AddDebug(LogLevel.Error);
 
-            app.UseStaticFiles();
+            Mapper.Initialize(config =>
+            {
+                config.CreateMap<CommitmentViewModel, Commitment>().ReverseMap();             
+                config.CreateMap<UserViewModel, User>().ReverseMap();           
+                config.CreateMap<ProjectViewModel, Project>().ReverseMap();
+                config.CreateMap<PictureForCreation, Picture>()
+                    .ForMember(m => m.FileName, options => options.Ignore())
+                    .ForMember(m => m.Id, options => options.Ignore())
+                    .ForMember(m => m.UserId, options => options.Ignore());
+                config.CreateMap<PictureToUpdate, Picture>()
+                    .ForMember(m => m.FileName, options => options.Ignore())
+                    .ForMember(m => m.Id, options => options.Ignore())
+                    .ForMember(m => m.UserId, options => options.Ignore());
+
+
+            });
+            Mapper.AssertConfigurationIsValid();
 
             app.UseMvc(routes =>
             {

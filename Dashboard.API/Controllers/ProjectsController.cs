@@ -1,8 +1,7 @@
 ﻿using AutoMapper;
 using Dashboard.API.EF.IRepository;
 using Dashboard.Data.Entities;
-using Dashboard.Data.ViewModel;
-using Dashboard.Data.ViewModels;
+using Dashboard.Data.ViewModelsAPI;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;

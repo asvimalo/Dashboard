@@ -1,11 +1,13 @@
 ﻿using AutoMapper;
 using Dashboard.API.EF.IRepository;
 using Dashboard.Data.Entities;
-using Dashboard.Data.ViewModel;
+using Dashboard.Data.ViewModelsAPI;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -15,45 +17,56 @@ namespace Dashboard.API.Controllers
     [Route("api/dashboard/[controller]")]
     public class PicturesController : Controller
     {
-        public IRepository<Picture> _repo;
+        private IRepository<Picture> _repo;
         private ILogger<PicturesController> _logger;
+        private IHostingEnvironment _env;
 
         public PicturesController(IRepository<Picture> repo,
-            ILogger<PicturesController> logger)
+            ILogger<PicturesController> logger,IHostingEnvironment env)
         {
             _repo = repo;
             _logger = logger;
+            _env = env;
         }
         public IActionResult Index()
         {
             return View();
         }
-        // GET api/values
+        // GET api/dashboard/Pictures
         [HttpGet("")]
         public async Task<IActionResult> Get()
         {
             try
             {
+                // Get from repo
                 var result = await _repo.GetAll();
-
-                return Ok(Mapper.Map<IEnumerable<PictureViewModel>>(result));
+                // map to model view
+                var pictures = Mapper.Map<IEnumerable<PictureViewModel>>(result);
+                // return pictures
+                return Ok(pictures);
             }
             catch (Exception ex)
             {
-                // LOGGING TODO
+                // LOGGING 
                 _logger.LogError($"Exception thrown while getting Pictures: {ex}");
                 return BadRequest($"Error ocurred");
             }
         }
 
-        // GET api/values/5
-        [HttpGet("{id}")]
+        // GET api/dashboard/Pictures/5
+        [HttpGet("{id}", Name = "GetImage")]
         public async Task<IActionResult> Get(int id)
         {
             try
             {
+                // Get picture
                 var result = await _repo.Get(id);
-                return Ok(Mapper.Map<PictureViewModel>(result));
+                if (result == null)
+                {
+                    return NotFound();
+                }
+                var picture = Mapper.Map<PictureViewModel>(result);
+                return Ok(picture);
             }
             catch (Exception ex)
             {
@@ -64,29 +77,50 @@ namespace Dashboard.API.Controllers
 
         }
 
-        // POST api/values
+        // POST api/dashboard/Pictures
         [HttpPost("")]
-        public async Task<IActionResult> Post([FromBody]PictureViewModel picture)
+        public async Task<IActionResult> Post([FromBody]PictureForCreation pictureForCreation)
         {
             if (ModelState.IsValid)
             {
-                var newPicture = Mapper.Map<Picture>(picture);
+                // Automapper maps only the Title
+                var newPicture = Mapper.Map<Picture>(pictureForCreation);
+                // get this environment's web root path (the path
+                // from which static content, wwwroot)
+                var webRootPath = _env.WebRootPath;
+                // create file name
+                string fileName = newPicture.Title + ".jpg";
+
+                // the full file path
+                var filePath = Path.Combine($"{webRootPath}/Images/{fileName}");
+
+                // write bytes and auto-close stream
+                await System.IO.File.WriteAllBytesAsync(filePath, pictureForCreation.Bytes);
+
+                newPicture.FileName = fileName;
+
+                // add and save ...
                 _repo.Add(newPicture);
                 if (await _repo.SaveChangesAsync())
                 {
-                    return Created($"api/dashboard/projects/{picture.Title}", Mapper.Map<PictureViewModel>(newPicture));
+                    var pictureToReturn = Mapper.Map<PictureViewModel>(newPicture);
+                    return CreatedAtRoute("GetImage", new { id = pictureToReturn.PictureId}, pictureToReturn);
                 }
             }
             return BadRequest("Failed to save changes to the database");
         }
 
-        // PUT api/values/5
+        // PUT api/dashboard/Pictures/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody]PictureViewModel pictureVM)
+        public async Task<IActionResult> Put(int id, [FromBody]PictureToUpdate pictureVM)
         {
             if (ModelState.IsValid)
             {
                 var pictureFromRepo = await _repo.Get(id);
+                if (pictureFromRepo == null)
+                {
+                    return NotFound();
+                }
                 Mapper.Map(pictureVM, pictureFromRepo);
                 var pictureUpdated = _repo.Update(pictureFromRepo);
                 if (!await _repo.SaveChangesAsync())
@@ -100,11 +134,15 @@ namespace Dashboard.API.Controllers
 
         }
 
-        // DELETE api/values/5
+        // DELETE api/dashboard/Pictures/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
             var pictureToDel = await _repo.Get(id);
+            if (pictureToDel == null)
+            {
+                return NotFound();
+            }
             _repo.Delete(pictureToDel);
 
             if (await _repo.SaveChangesAsync())
