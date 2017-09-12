@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace Dashboard.API.Views.Dashboard
+namespace Dashboard.Data.Views.Dashboard
 {
     public class IndexModel : PageModel
     {

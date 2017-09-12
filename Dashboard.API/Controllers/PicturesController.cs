@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Dashboard.API.EF.IRepository;
+using Dashboard.Data.EF.IRepository;
 using Dashboard.Data.Entities;
 using Dashboard.Data.ViewModelsAPI;
 using Microsoft.AspNetCore.Hosting;
@@ -11,7 +11,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Dashboard.API.Controllers
+namespace Dashboard.Data.Controllers
 {
   
     [Route("api/dashboard/[controller]")]
@@ -104,7 +104,7 @@ namespace Dashboard.API.Controllers
                 if (await _repo.SaveChangesAsync())
                 {
                     var pictureToReturn = Mapper.Map<PictureViewModel>(newPicture);
-                    return CreatedAtRoute("GetImage", new { id = pictureToReturn.PictureId}, pictureToReturn);
+                    return CreatedAtRoute("GetImage", new { id = newPicture.PictureId}, pictureToReturn);
                 }
             }
             return BadRequest("Failed to save changes to the database");

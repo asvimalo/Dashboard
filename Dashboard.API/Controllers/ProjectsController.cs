@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Dashboard.API.EF.IRepository;
+using Dashboard.Data.EF.IRepository;
 using Dashboard.Data.Entities;
 using Dashboard.Data.ViewModelsAPI;
 using Microsoft.AspNetCore.Mvc;
@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Dashboard.API.Controllers
+namespace Dashboard.Data.Controllers
 {
 
     [Route("api/dashboard/[controller]")]
@@ -17,12 +17,15 @@ namespace Dashboard.API.Controllers
     {
         public IRepository<Project> _repo;
         private ILogger<ProjectsController> _logger;
+        private IMapper _mapper;
 
         public ProjectsController(IRepository<Project> repo, 
-            ILogger<ProjectsController> logger)
+            ILogger<ProjectsController> logger,
+            IMapper mapper)
         {
             _repo = repo;
             _logger = logger;
+            _mapper = mapper;
         }
         public IActionResult Index()
         {
@@ -36,7 +39,7 @@ namespace Dashboard.API.Controllers
             {
                 var result = await _repo.GetAll();
 
-                return Ok(Mapper.Map<IEnumerable<ProjectViewModel>>(result));
+                return Ok(_mapper.Map<IEnumerable<ProjectViewModel>>(result));
             }
             catch (Exception ex)
             {
@@ -53,7 +56,7 @@ namespace Dashboard.API.Controllers
             try
             {
                 var result = await _repo.Get(id);
-                return Ok(Mapper.Map<ProjectViewModel>(result));
+                return Ok(_mapper.Map<ProjectViewModel>(result));
             }
             catch (Exception ex)
             {
@@ -70,11 +73,11 @@ namespace Dashboard.API.Controllers
         {
             if (ModelState.IsValid)
             {
-                var newProject = Mapper.Map<Project>(project);
+                var newProject = _mapper.Map<Project>(project);
                 _repo.Add(newProject);
                 if (await _repo.SaveChangesAsync())
                 {
-                    return Created($"api/dashboard/projects/{project.Title}", Mapper.Map<ProjectViewModel>(newProject));
+                    return Created($"api/dashboard/projects/{project.Title}", _mapper.Map<ProjectViewModel>(newProject));
                 }
             }
             return BadRequest("Failed to save changes to the database");
@@ -87,14 +90,14 @@ namespace Dashboard.API.Controllers
             if (ModelState.IsValid)
             {
                 var projectFromRepo = await _repo.Get(id);
-                Mapper.Map(projectVM, projectFromRepo);
+                _mapper.Map(projectVM, projectFromRepo);
                 var projectUpdated = _repo.Update(projectFromRepo);
                 if (!await _repo.SaveChangesAsync())
                 {
                     _logger.LogError($"Thrown exception when updating");
                     BadRequest("Something when wrong while updating");
                 }
-                return Ok(Mapper.Map<ProjectViewModel>(projectUpdated));
+                return Ok(_mapper.Map<ProjectViewModel>(projectUpdated));
             }
             return BadRequest("Error occured");
 

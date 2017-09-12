@@ -1,10 +1,8 @@
 ﻿using Dashboard.Data.EF.Entities;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace Dashboard.API.EF.IRepository
+namespace Dashboard.Data.EF.IRepository
 {
     public interface IRepository<T> where T : BaseEntity
     {

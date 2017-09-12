@@ -8,10 +8,10 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
-using Dashboard.API.EF.Db;
+using Dashboard.Data.EF.Db;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Dashboard.API
+namespace Dashboard.Data
 {
     public class Program
     {
@@ -25,7 +25,7 @@ namespace Dashboard.API
                 try
                 {
                     var context = services.GetRequiredService<DashboardContext>();
-                    DashboardContextSeedData.SeedData(context);
+                    DashboardContextSeedData.SeedData(context).Wait();
                 }
                 catch (Exception ex)
                 {

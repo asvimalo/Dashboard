@@ -9,7 +9,7 @@ namespace Dashboard.Data.Entities
     {
         public UserMap(EntityTypeBuilder<User> entityBuilder)
         {
-            entityBuilder.HasKey(t => t.Id);
+            entityBuilder.HasKey(t => t.UserId);
             entityBuilder.Property(t => t.FirstName).IsRequired();
             entityBuilder.Property(t => t.LastName).IsRequired();
             entityBuilder.Property(t => t.PersonNr).IsRequired();

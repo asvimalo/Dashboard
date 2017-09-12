@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Dashboard.API.EF.IRepository;
+using Dashboard.Data.EF.IRepository;
 using Dashboard.Data.Entities;
 using Dashboard.Data.ViewModelsAPI;
 using AutoMapper;
 using Microsoft.Extensions.Logging;
 
-namespace Dashboard.API.Controllers
+namespace Dashboard.Data.Controllers
 {
 
     [Route("api/dashboard/[controller]")]
@@ -27,7 +27,7 @@ namespace Dashboard.API.Controllers
         {
             return View();
         }
-        // GET api/values
+        // GET api/dashboard/Commitments
         [HttpGet("")]
         public async Task<IActionResult> Get()
         {
@@ -45,7 +45,7 @@ namespace Dashboard.API.Controllers
             }
         }
 
-        // GET api/values/5
+        // GET api/dashboard/Commitments/5
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
@@ -63,7 +63,7 @@ namespace Dashboard.API.Controllers
 
         }
 
-        // POST api/values
+        // POST api/dashboard/Commitments
         [HttpPost("")]
         public async Task<IActionResult> Post([FromBody]CommitmentViewModel commitment)
         {
@@ -79,7 +79,7 @@ namespace Dashboard.API.Controllers
             return BadRequest("Failed to save changes to the database");
         }
 
-        // PUT api/values/5
+        // PUT api/dashboard/Commitments/5
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, [FromBody]CommitmentViewModel commitmentVM)
         {
@@ -87,6 +87,7 @@ namespace Dashboard.API.Controllers
             {
                 var commiFromRepo = await _repo.Get(id);
                 Mapper.Map(commitmentVM, commiFromRepo);
+
                 var commitUpdated =  _repo.Update(commiFromRepo);
                 if (!await _repo.SaveChangesAsync())
                 {
@@ -99,7 +100,7 @@ namespace Dashboard.API.Controllers
             
         }
 
-        // DELETE api/values/5
+        // DELETE api/dashboard/Commitments/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {

@@ -3,20 +3,20 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Dashboard.API.EF.IRepository;
+using Dashboard.Data.EF.IRepository;
 using Microsoft.AspNetCore.Identity;
 using Dashboard.Data.Entities;
 using Microsoft.EntityFrameworkCore;
-using Dashboard.API.EF.Repository;
+using Dashboard.Data.EF.Repository;
 using Newtonsoft.Json.Serialization;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Dashboard.API.EF.Db;
+using Dashboard.Data.EF.Db;
 using System.IO;
 using AutoMapper;
 using Dashboard.Data.ViewModelsAPI;
 
-namespace Dashboard.API
+namespace Dashboard.Data
 {
     public class Startup
     {
@@ -42,28 +42,29 @@ namespace Dashboard.API
             services.AddDbContext<DashboardContext>(option => {
                 option.UseSqlServer(_config["ConnectionStrings:DashboardContextConnection"]);
             });
-            //services.AddTransient<DashboardContextSeedData>();
-            services.AddIdentity<User, IdentityRole>()
-                .AddEntityFrameworkStores<DashboardContext>()
-                .AddDefaultTokenProviders();
+
+            //services.AddIdentity<User, IdentityRole>()
+            //    .AddEntityFrameworkStores<DashboardContext>()
+            //    .AddDefaultTokenProviders();
 
 
 
 
-            //services.AddEntityFrameworkSqlServer();
-            //    .AddDbContext<DashboardContext>();
+            services.AddEntityFrameworkSqlServer()
+                .AddDbContext<DashboardContext>();
             // Add framework services.
             //services.AddDbContext<DashboardContext>();
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-            
+            services.AddAutoMapper();
+            //services.AddTransient<DashboardContextSeedData>();
             services.AddMvc()
                 .AddJsonOptions(config =>
                 {
                     config.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver(); // It was already camelcasing before this config
                 });
-            services.Configure<IdentityOptions>(options =>
-            {
-            });
+            //services.Configure<IdentityOptions>(options =>
+            //{
+            //});
 
             services.AddLogging();
            
@@ -74,6 +75,7 @@ namespace Dashboard.API
             IHostingEnvironment env, 
             ILoggerFactory loggerFactory)
         {
+            
             app.UseStaticFiles();
 
             loggerFactory.AddConsole(_config.GetSection("Logging"));
@@ -89,22 +91,41 @@ namespace Dashboard.API
 
             Mapper.Initialize(config =>
             {
-                config.CreateMap<CommitmentViewModel, Commitment>().ReverseMap();             
-                config.CreateMap<UserViewModel, User>().ReverseMap();           
-                config.CreateMap<ProjectViewModel, Project>().ReverseMap();
+                config.CreateMap<CommitmentViewModel, Commitment>()
+                    .ForMember(m => m.CommitmentId, options => options.Ignore())
+                    .ForMember(m => m.ProjectId, options => options.Ignore())
+                    .ForMember(m => m.UserId, options => options.Ignore()).ReverseMap();
+
+                config.CreateMap<UserViewModel, User>().ReverseMap();     
+                
+                config.CreateMap<ProjectViewModel, Project>()
+                    .ForMember(m => m.ProjectId, options => options.Ignore()).ReverseMap();
+
+                config.CreateMap<PictureViewModel, Picture>()
+                    .ForMember(m => m.PictureId, options => options.Ignore())
+                    .ForMember(m => m.UserId, options => options.Ignore()).ReverseMap();
+
                 config.CreateMap<PictureForCreation, Picture>()
                     .ForMember(m => m.FileName, options => options.Ignore())
-                    .ForMember(m => m.Id, options => options.Ignore())
+                    .ForMember(m => m.PictureId, options => options.Ignore())
                     .ForMember(m => m.UserId, options => options.Ignore());
+
                 config.CreateMap<PictureToUpdate, Picture>()
                     .ForMember(m => m.FileName, options => options.Ignore())
-                    .ForMember(m => m.Id, options => options.Ignore())
+                    .ForMember(m => m.PictureId, options => options.Ignore())
                     .ForMember(m => m.UserId, options => options.Ignore());
 
 
             });
             Mapper.AssertConfigurationIsValid();
-
+            if (_config["DesignTime"] != "true")
+            {
+                using (var scope = app.ApplicationServices.CreateScope())
+                {
+                    //var initializer = scope.ServiceProvider.GetRequiredService<DashboardContextSeedData>();
+                    //initializer.SeedData().Wait();
+                }
+            }
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
