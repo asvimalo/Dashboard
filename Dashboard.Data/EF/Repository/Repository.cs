@@ -57,18 +57,19 @@ namespace Dashboard.Data.EF.Repository
 
         public async Task<IEnumerable<T>> GetAll()
         {
-            var type = entities.GetType().GetElementType() as T;
-            if (type is Project)
-                return await _ctx.Projects.Include(x =>x.Commitments).ToListAsync() as IEnumerable<T>;
-            else if (type is Commitment)
-                return await _ctx.Commitments.Include(x => x.User).Include(x => x.Project).ToListAsync() as IEnumerable<T>;
-            else if (type is User)
-                return await _ctx.Users.Include(x => x.Commitments).ToListAsync() as IEnumerable<T>;
-            else if (type is Picture)
-                return await _ctx.Pictures.ToListAsync() as IEnumerable<T>;
-            else
-                return null;
-            
+            //var type = entities.GetType() as DbSet<T>;
+
+            //if (type is Project)
+            //    return await _ctx.Projects.Include(x => x.Commitments).ToListAsync() as IEnumerable<T>;
+            //else if (type is Commitment)
+            //    return await _ctx.Commitments.Include(x => x.User).Include(x => x.Project).ToListAsync() as IEnumerable<T>;
+            //else if (type is User)
+            //    return await _ctx.Users.Include(x => x.Commitments).ToListAsync() as IEnumerable<T>;
+            //else if (type is Picture)
+            //    return await _ctx.Pictures.ToListAsync() as IEnumerable<T>;
+            //else
+            //    return null;
+            return await entities.ToListAsync();
         }
 
         public T Update(T entity)
@@ -86,8 +87,8 @@ namespace Dashboard.Data.EF.Repository
             return (await _ctx.SaveChangesAsync() > 0);
         }
 
-        
+
     }
-    
+
 }
 
