@@ -15,10 +15,10 @@ namespace Dashboard.Data.Controllers
     [Route("api/dashboard/[controller]")]
     public class CommitmentsController : Controller
     {
-        public IRepository<Commitment> _repo;
+        public IRepositoryDashboard _repo;
         private ILogger<CommitmentsController> _logger;
 
-        public CommitmentsController(IRepository<Commitment> repo, ILogger<CommitmentsController> logger)
+        public CommitmentsController(IRepositoryDashboard repo, ILogger<CommitmentsController> logger)
         {
             _repo = repo;
             _logger = logger;
@@ -33,9 +33,9 @@ namespace Dashboard.Data.Controllers
         {
             try
             {
-                var result = await _repo.GetAll();
-
-                return Ok(Mapper.Map<IEnumerable<CommitmentViewModel>>(result));
+                var result = await _repo.GetCommitments();
+                return Ok(result);
+                //return Ok(Mapper.Map<IEnumerable<CommitmentViewModel>>(result));
             }
             catch (Exception ex)
             {
@@ -51,8 +51,9 @@ namespace Dashboard.Data.Controllers
         {
             try
             {
-                var result = await _repo.Get(id);
-                return Ok(Mapper.Map<CommitmentViewModel>(result));
+                var result = await _repo.GetCommitment(id);
+                return Ok(result);
+                //return Ok(Mapper.Map<CommitmentViewModel>(result));
             }
             catch (Exception ex)
             {
@@ -85,7 +86,7 @@ namespace Dashboard.Data.Controllers
         {
             if (ModelState.IsValid)
             {
-                var commiFromRepo = await _repo.Get(id);
+                var commiFromRepo = await _repo.GetCommitment(id);
                 Mapper.Map(commitmentVM, commiFromRepo);
 
                 var commitUpdated =  _repo.Update(commiFromRepo);
@@ -104,7 +105,7 @@ namespace Dashboard.Data.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var commiToDel = await _repo.Get(id);
+            var commiToDel = await _repo.GetCommitment(id);
             _repo.Delete(commiToDel);
             if (await _repo.SaveChangesAsync())
                 return Ok($"Commitment deleted!");

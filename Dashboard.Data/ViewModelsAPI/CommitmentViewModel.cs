@@ -1,8 +1,5 @@
-﻿using Dashboard.Data.EF.Entities;
-using Dashboard.Data.Entities;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Dashboard.Data.Entities;
+
 
 namespace Dashboard.Data.ViewModelsAPI
 {

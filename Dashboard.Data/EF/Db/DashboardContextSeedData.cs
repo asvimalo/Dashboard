@@ -17,8 +17,8 @@ namespace Dashboard.Data.EF.Db
         {
            
             ctx.Database.EnsureCreated();
-            
-            
+
+
             if (ctx.Pictures.Any())
             {
                 return false;
@@ -35,11 +35,11 @@ namespace Dashboard.Data.EF.Db
                 ctx.Pictures.Add(picture);
             }
             await ctx.SaveChangesAsync();
-            // Look for any students.
+            
             if (ctx.Users.Any())
-            {
-                return false;   // DB has been seeded
-            }
+                {
+                    return false;   // DB has been seeded
+                }
 
             var users = new User[]
             {
@@ -47,10 +47,10 @@ namespace Dashboard.Data.EF.Db
             new User{FirstName="Katrina",LastName="Rosales",PictureId = ctx.Pictures.Single(x => x.Title == "katrina").PictureId},
             new User{FirstName="Kriszta",LastName="Barta",PictureId = ctx.Pictures.Single(x => x.Title == "kriszta").PictureId},
             new User{FirstName="Jeff",LastName="Barzdukas",PictureId = ctx.Pictures.Single(x => x.Title == "jeff").PictureId},
-            new User{FirstName="Ivan",LastName="Programet",PictureId = ctx.Pictures.Single(x => x.Title == "jeff").PictureId},
-            new User{FirstName="Peggy",LastName="Justice"},
-            new User{FirstName="Laura",LastName="Norman"},
-            new User{FirstName="Nino",LastName="Olivetto"}
+            //new User{FirstName="Ivan",LastName="Programet",PictureId = ctx.Pictures.Single(x => x.Title == "ivan").PictureId}
+            //new User{FirstName="Peggy",LastName="Justice", PictureId },
+            //new User{FirstName="Laura",LastName="Norman"},
+            //new User{FirstName="Nino",LastName="Olivetto"}
             };
             foreach (User user in users)
             {
@@ -89,15 +89,15 @@ namespace Dashboard.Data.EF.Db
             new Commitment{Name="Sigma It Consulting", UserId = users.Single(x => x.FirstName == "Andrés").UserId, ProjectId = projects.Single(x => x.Title == "Dashboard").ProjectId},
             new Commitment{Name="Sigma It Consulting", UserId = users.Single(x => x.FirstName == "Andrés").UserId, ProjectId = projects.Single(x => x.Title == "Dashboard").ProjectId},
             new Commitment{Name="Sigma It Consulting", UserId = users.Single(x => x.FirstName == "Andrés").UserId, ProjectId = projects.Single(x => x.Title == "Dashboard").ProjectId},
-            
+
             };
-            
+
             foreach (Commitment commitment in commitments)
             {
                 ctx.Commitments.Add(commitment);
             }
             await ctx.SaveChangesAsync();
             return true;
-        }
+         }
     }
 }

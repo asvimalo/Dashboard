@@ -1,10 +1,9 @@
-﻿using Dashboard.Data.EF.Entities;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Dashboard.Data.EF.IRepository
 {
-    public interface IRepository<T> where T : BaseEntity
+    public interface IRepository<T> where T : class
     {
         
         void Add(T entity);

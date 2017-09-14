@@ -1,10 +1,8 @@
 ﻿
 
-using Dashboard.Data.EF.Entities;
-
 namespace Dashboard.Data.ViewModelsAPI
 {
-    public class PictureViewModel : BaseEntity
+    public class PictureViewModel 
     {
         
         public string Title { get; set; }

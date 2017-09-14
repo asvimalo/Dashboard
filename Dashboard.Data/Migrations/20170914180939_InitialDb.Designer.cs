@@ -11,7 +11,7 @@ using System;
 namespace Dashboard.Data.Migrations
 {
     [DbContext(typeof(DashboardContext))]
-    [Migration("20170912113119_InitialDb")]
+    [Migration("20170914180939_InitialDb")]
     partial class InitialDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -26,7 +26,8 @@ namespace Dashboard.Data.Migrations
                     b.Property<int>("CommitmentId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .IsRequired();
 
                     b.Property<int>("ProjectId");
 
@@ -34,11 +35,9 @@ namespace Dashboard.Data.Migrations
 
                     b.HasKey("CommitmentId");
 
-                    b.HasIndex("ProjectId");
-
                     b.HasIndex("UserId");
 
-                    b.ToTable("Commitment");
+                    b.ToTable("Commitments");
                 });
 
             modelBuilder.Entity("Dashboard.Data.Entities.Picture", b =>
@@ -46,15 +45,19 @@ namespace Dashboard.Data.Migrations
                     b.Property<int>("PictureId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("FileName");
+                    b.Property<string>("FileName")
+                        .IsRequired();
 
-                    b.Property<string>("Title");
+                    b.Property<string>("Title")
+                        .IsRequired();
+
+                    b.Property<int>("User");
 
                     b.Property<int?>("UserId");
 
                     b.HasKey("PictureId");
 
-                    b.ToTable("Picture");
+                    b.ToTable("Pictures");
                 });
 
             modelBuilder.Entity("Dashboard.Data.Entities.Project", b =>
@@ -68,11 +71,12 @@ namespace Dashboard.Data.Migrations
 
                     b.Property<DateTime>("StopDate");
 
-                    b.Property<string>("Title");
+                    b.Property<string>("Title")
+                        .IsRequired();
 
                     b.HasKey("ProjectId");
 
-                    b.ToTable("Project");
+                    b.ToTable("Projects");
                 });
 
             modelBuilder.Entity("Dashboard.Data.Entities.User", b =>
@@ -80,28 +84,28 @@ namespace Dashboard.Data.Migrations
                     b.Property<int>("UserId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("FirstName");
+                    b.Property<string>("FirstName")
+                        .IsRequired();
 
-                    b.Property<string>("LastName");
+                    b.Property<string>("LastName")
+                        .IsRequired();
 
                     b.Property<string>("PersonNr");
 
                     b.Property<int?>("PictureId");
 
-                    b.Property<int?>("PictureId1");
-
                     b.HasKey("UserId");
 
-                    b.HasIndex("PictureId1");
+                    b.HasIndex("PictureId");
 
-                    b.ToTable("User");
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("Dashboard.Data.Entities.Commitment", b =>
                 {
                     b.HasOne("Dashboard.Data.Entities.Project", "Project")
                         .WithMany("Commitments")
-                        .HasForeignKey("ProjectId")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Dashboard.Data.Entities.User", "User")
@@ -114,7 +118,7 @@ namespace Dashboard.Data.Migrations
                 {
                     b.HasOne("Dashboard.Data.Entities.Picture", "Picture")
                         .WithMany()
-                        .HasForeignKey("PictureId1");
+                        .HasForeignKey("PictureId");
                 });
 #pragma warning restore 612, 618
         }

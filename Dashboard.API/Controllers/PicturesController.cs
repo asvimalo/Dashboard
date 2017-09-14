@@ -17,11 +17,11 @@ namespace Dashboard.Data.Controllers
     [Route("api/dashboard/[controller]")]
     public class PicturesController : Controller
     {
-        private IRepository<Picture> _repo;
+        private IRepositoryDashboard _repo;
         private ILogger<PicturesController> _logger;
         private IHostingEnvironment _env;
 
-        public PicturesController(IRepository<Picture> repo,
+        public PicturesController(IRepositoryDashboard repo,
             ILogger<PicturesController> logger,IHostingEnvironment env)
         {
             _repo = repo;
@@ -39,7 +39,7 @@ namespace Dashboard.Data.Controllers
             try
             {
                 // Get from repo
-                var result = await _repo.GetAll();
+                var result = await _repo.GetPictures();
                 // map to model view
                 var pictures = Mapper.Map<IEnumerable<PictureViewModel>>(result);
                 // return pictures
@@ -60,7 +60,7 @@ namespace Dashboard.Data.Controllers
             try
             {
                 // Get picture
-                var result = await _repo.Get(id);
+                var result = await _repo.GetPicture(id);
                 if (result == null)
                 {
                     return NotFound();
@@ -116,7 +116,7 @@ namespace Dashboard.Data.Controllers
         {
             if (ModelState.IsValid)
             {
-                var pictureFromRepo = await _repo.Get(id);
+                var pictureFromRepo = await _repo.GetPicture(id);
                 if (pictureFromRepo == null)
                 {
                     return NotFound();
@@ -138,7 +138,7 @@ namespace Dashboard.Data.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var pictureToDel = await _repo.Get(id);
+            var pictureToDel = await _repo.GetPicture(id);
             if (pictureToDel == null)
             {
                 return NotFound();

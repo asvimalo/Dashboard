@@ -13,7 +13,7 @@ namespace Dashboard.Data.EntitiesMap
             entityBuilder.HasKey(t => t.PictureId);
             entityBuilder.Property(t => t.Title).IsRequired();
             entityBuilder.Property(t => t.FileName).IsRequired();
-            entityBuilder.Property(t => t.UserId);
+            entityBuilder.Property(t => t.User);
             
 
         }

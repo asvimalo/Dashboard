@@ -1,5 +1,5 @@
-﻿using Dashboard.Data.EF.Entities;
-using System;
+﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
@@ -9,70 +9,39 @@ using Dashboard.Data.Entities;
 
 namespace Dashboard.Data.EF.Repository
 {
-    public class Repository<T> : IRepository<T> where T : BaseEntity
+    public class Repository : IRepositoryDashboard
     {
         private DashboardContext _ctx;
-        private DbSet<T> entities;
+        
 
         public Repository(DashboardContext ctx)
         {
             _ctx = ctx;
-            entities = _ctx.Set<T>();
+            
         }
-        public void Add(T entity)
+
+
+
+        #region CRUD without gets
+        public void Add<T>(T entity) where T : class
         {
             if (entity == null)
             {
                 throw new ArgumentNullException("entity");
             }
-            entities.Add(entity);
+            _ctx.Add(entity);
             //_ctx.SaveChanges();
         }
-
-        public void Delete(T entity)
+        public void Delete<T>(T entity) where T : class
         {
             if (entity == null)
             {
                 throw new ArgumentNullException("entity");
             }
-            entities.Remove(entity);
+            _ctx.Remove(entity);
             //_ctx.SaveChanges();
         }
-
-        public async Task<T> Get(int id)
-        {
-            var entity = entities.Find(id);
-            if (entity is Project)
-                return await _ctx.Projects.SingleOrDefaultAsync(t => t.ProjectId == id) as T;
-            else if (entity is Commitment)
-                return await _ctx.Commitments.SingleOrDefaultAsync(t => t.CommitmentId == id) as T;
-            else if (entity is User)
-                return await _ctx.Users.SingleOrDefaultAsync(t => t.UserId == id) as T;
-            else if (entity is Picture)
-                return await _ctx.Pictures.SingleOrDefaultAsync(t => t.PictureId == id) as T;
-            else
-                return null;
-
-        }
-
-        public async Task<IEnumerable<T>> GetAll()
-        {
-            //var type = entities.GetType() as DbSet<T>;
-
-            //if (type is Project)
-            //    return await _ctx.Projects.Include(x => x.Commitments).ToListAsync() as IEnumerable<T>;
-            //else if (type is Commitment)
-            //    return await _ctx.Commitments.Include(x => x.User).Include(x => x.Project).ToListAsync() as IEnumerable<T>;
-            //else if (type is User)
-            //    return await _ctx.Users.Include(x => x.Commitments).ToListAsync() as IEnumerable<T>;
-            //else if (type is Picture)
-            //    return await _ctx.Pictures.ToListAsync() as IEnumerable<T>;
-            //else
-            //    return null;
-            return await entities.ToListAsync();
-        }
-
-        public T Update(T entity)
+        public T Update<T>(T entity) where T : class
         {
             if (entity == null)
             {
@@ -85,9 +54,117 @@ namespace Dashboard.Data.EF.Repository
         public async Task<bool> SaveChangesAsync()
         {
             return (await _ctx.SaveChangesAsync() > 0);
+        } 
+        #endregion
+
+
+
+        #region GetById
+        public async Task<Project> GetProject(int id)
+        {
+            return await _ctx.Projects                                                       
+                            .Include(c => c.Commitments)
+                            .FirstOrDefaultAsync(t => t.ProjectId == id);
         }
+        public async Task<Commitment> GetCommitment(int id)
+        {
+            return await _ctx.Commitments
+                            .Include(x => x.Project)
+                            .Include(y => y.User)
+                            .Where(com => com.CommitmentId == id)
+                            .FirstOrDefaultAsync();
+        }
+        public async Task<User> GetUser(int id)
+        {
+            return await _ctx.Users
+                            .Include(c => c.Picture)
+                            .Where(t => t.UserId == id)
+                            .FirstOrDefaultAsync();
+        }
+        public async Task<Picture> GetPicture(int id)
+        {
+            return await _ctx.Pictures
+                            .Include(c => c.User)
+                            .Where(t => t.PictureId == id)
+                            .FirstOrDefaultAsync();
+        }
+        #endregion
 
+        #region GetAll
+        public async Task<ICollection<Project>> GetProjects()
+        {
 
+            return await _ctx.Projects
+                            .Include(c => c.Commitments)
+                                .ThenInclude((x => x.User))
+                                    .ThenInclude(p => p.Picture)
+                            .ToListAsync();
+        }
+        public async Task<ICollection<Commitment>> GetCommitments()
+        {
+            return await _ctx.Commitments
+                            .Include(x => x.Project)
+                            .Include(y => y.User)
+                                .ThenInclude(p => p.Picture)
+                            .ToListAsync();
+        }
+        public async Task<ICollection<User>> GetUsers()
+        {
+
+            return await _ctx.Users
+                            .Include(p => p.Picture)
+                            .Include(cc => cc.Commitments)
+                            .ToListAsync();
+        }
+        public async Task<ICollection<Picture>> GetPictures() => await _ctx.Pictures
+                            .Include(p => p.User)
+                            .ToListAsync();
+
+        #endregion
+
+        #region Commitments by project/User
+        public async Task<ICollection<Commitment>> GetCommitmentsByProjectId(int id) => await _ctx.Commitments
+                            .Include(x => x.Project)
+                            .Include(y => y.User)
+                                .ThenInclude(p => p.Picture)
+                            .Where(project => project.ProjectId == id)
+                            .ToListAsync();
+        public async Task<ICollection<Commitment>> GetCommitmentsByUserId(int id)
+        {
+            return await _ctx.Commitments
+                            .Include(x => x.Project)
+                            .Include(y => y.User)
+                                .ThenInclude(p => p.Picture)
+                            .Where(user => user.UserId == id)
+                            .ToListAsync();
+        }
+        #endregion
+
+        #region User projects
+        public async Task<ICollection<User>> GetUsersByProjectId(int id)
+        {
+
+            // TODO TEST
+            var users = await _ctx.Users
+                         .Include(pic => pic.Picture)
+                         .Include(com => com.Commitments)
+                            .ThenInclude(p => p.ProjectId == id)
+                         .ToListAsync(); 
+                         
+
+            return users;
+                            
+        }
+        // TODO TEST
+        public async Task<ICollection<Project>> GetProjectsByUserId(int id)
+        {
+            var projects = await _ctx.Projects
+                            .Include(x => x.Commitments)
+                                .ThenInclude(user => user.UserId == id)
+                            .ToListAsync();
+            return projects;
+        }
+        #endregion
     }
 
 }

@@ -15,6 +15,9 @@ using Dashboard.Data.EF.Db;
 using System.IO;
 using AutoMapper;
 using Dashboard.Data.ViewModelsAPI;
+using Microsoft.EntityFrameworkCore.Design;
+using static Dashboard.Data.EF.Db.TempCtxDashboard;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace Dashboard.Data
 {
@@ -41,6 +44,8 @@ namespace Dashboard.Data
             //services.AddSingleton(_config);
             services.AddDbContext<DashboardContext>(option => {
                 option.UseSqlServer(_config["ConnectionStrings:DashboardContextConnection"]);
+                option.ConfigureWarnings(warnings => warnings.Throw(CoreEventId.IncludeIgnoredWarning));
+
             });
 
             //services.AddIdentity<User, IdentityRole>()
@@ -54,13 +59,15 @@ namespace Dashboard.Data
                 .AddDbContext<DashboardContext>();
             // Add framework services.
             //services.AddDbContext<DashboardContext>();
-            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            services.AddScoped(typeof(IRepositoryDashboard), typeof(Repository));
+            services.AddScoped(typeof(IDesignTimeDbContextFactory<DashboardContext>),typeof(DashboardCtxFactory));
             services.AddAutoMapper();
-            //services.AddTransient<DashboardContextSeedData>();
+            
             services.AddMvc()
                 .AddJsonOptions(config =>
                 {
                     config.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver(); // It was already camelcasing before this config
+                    config.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
                 });
             //services.Configure<IdentityOptions>(options =>
             //{
@@ -89,34 +96,34 @@ namespace Dashboard.Data
             else
                 loggerFactory.AddDebug(LogLevel.Error);
 
-            Mapper.Initialize(config =>
-            {
-                config.CreateMap<CommitmentViewModel, Commitment>()
-                    .ForMember(m => m.CommitmentId, options => options.Ignore())
-                    .ForMember(m => m.ProjectId, options => options.Ignore())
-                    .ForMember(m => m.UserId, options => options.Ignore()).ReverseMap();
+            //Mapper.Initialize(config =>
+            //{
+            //    config.CreateMap<CommitmentViewModel, Commitment>()
+            //        .ForMember(m => m.CommitmentId, options => options.Ignore())
+            //        .ForMember(m => m.ProjectId, options => options.Ignore())
+            //        .ForMember(m => m.UserId, options => options.Ignore()).ReverseMap();
 
-                config.CreateMap<UserViewModel, User>().ReverseMap();     
+            //    config.CreateMap<UserViewModel, User>().ReverseMap();     
                 
-                config.CreateMap<ProjectViewModel, Project>()
-                    .ForMember(m => m.ProjectId, options => options.Ignore()).ReverseMap();
+            //    config.CreateMap<ProjectViewModel, Project>()
+            //        .ForMember(m => m.ProjectId, options => options.Ignore()).ReverseMap();
 
-                config.CreateMap<PictureViewModel, Picture>()
-                    .ForMember(m => m.PictureId, options => options.Ignore())
-                    .ForMember(m => m.UserId, options => options.Ignore()).ReverseMap();
+            //    config.CreateMap<PictureViewModel, Picture>()
+            //        .ForMember(m => m.PictureId, options => options.Ignore())
+            //        .ForMember(m => m.UserId, options => options.Ignore()).ReverseMap();
 
-                config.CreateMap<PictureForCreation, Picture>()
-                    .ForMember(m => m.FileName, options => options.Ignore())
-                    .ForMember(m => m.PictureId, options => options.Ignore())
-                    .ForMember(m => m.UserId, options => options.Ignore());
+            //    config.CreateMap<PictureForCreation, Picture>()
+            //        .ForMember(m => m.FileName, options => options.Ignore())
+            //        .ForMember(m => m.PictureId, options => options.Ignore())
+            //        .ForMember(m => m.UserId, options => options.Ignore());
 
-                config.CreateMap<PictureToUpdate, Picture>()
-                    .ForMember(m => m.FileName, options => options.Ignore())
-                    .ForMember(m => m.PictureId, options => options.Ignore())
-                    .ForMember(m => m.UserId, options => options.Ignore());
+            //    config.CreateMap<PictureToUpdate, Picture>()
+            //        .ForMember(m => m.FileName, options => options.Ignore())
+            //        .ForMember(m => m.PictureId, options => options.Ignore())
+            //        .ForMember(m => m.UserId, options => options.Ignore());
 
 
-            });
+            //});
             Mapper.AssertConfigurationIsValid();
             if (_config["DesignTime"] != "true")
             {

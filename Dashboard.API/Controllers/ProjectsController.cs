@@ -15,11 +15,11 @@ namespace Dashboard.Data.Controllers
     [Route("api/dashboard/[controller]")]
     public class ProjectsController : Controller
     {
-        public IRepository<Project> _repo;
+        public IRepositoryDashboard _repo;
         private ILogger<ProjectsController> _logger;
         private IMapper _mapper;
 
-        public ProjectsController(IRepository<Project> repo, 
+        public ProjectsController(IRepositoryDashboard repo, 
             ILogger<ProjectsController> logger,
             IMapper mapper)
         {
@@ -37,9 +37,9 @@ namespace Dashboard.Data.Controllers
         {
             try
             {
-                var result = await _repo.GetAll();
-
-                return Ok(_mapper.Map<IEnumerable<ProjectViewModel>>(result));
+                var result = await _repo.GetProjects();
+                return Ok(result);
+                //return Ok(_mapper.Map<IEnumerable<ProjectViewModel>>(result));
             }
             catch (Exception ex)
             {
@@ -55,8 +55,9 @@ namespace Dashboard.Data.Controllers
         {
             try
             {
-                var result = await _repo.Get(id);
-                return Ok(_mapper.Map<ProjectViewModel>(result));
+                var result = await _repo.GetProject(id);
+                return Ok(result);
+                //return Ok(_mapper.Map<ProjectViewModel>(result));
             }
             catch (Exception ex)
             {
@@ -89,7 +90,7 @@ namespace Dashboard.Data.Controllers
         {
             if (ModelState.IsValid)
             {
-                var projectFromRepo = await _repo.Get(id);
+                var projectFromRepo = await _repo.GetProject(id);
                 _mapper.Map(projectVM, projectFromRepo);
                 var projectUpdated = _repo.Update(projectFromRepo);
                 if (!await _repo.SaveChangesAsync())
@@ -107,7 +108,7 @@ namespace Dashboard.Data.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var projectToDel = await _repo.Get(id);
+            var projectToDel = await _repo.GetProject(id);
             _repo.Delete(projectToDel);
             if (await _repo.SaveChangesAsync())
                 return Ok($"Project deleted!");
