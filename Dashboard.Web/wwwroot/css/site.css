@@ -35,3 +35,29 @@ textarea {
         display: none;
     }
 }
+
+/*a:active {
+    font-weight: bold;
+    border-bottom: 1px solid #808080;
+    margin-bottom: 20px;
+}*/
+
+/*.nav.navbar-nav a:focus {
+    font-weight: bold;
+    border-bottom: 1px solid #808080;
+    margin-bottom: 20px;
+}*/
+
+.navbar-default .navbar-nav > li > a:focus {
+    color: #333;
+    border-bottom: 1px solid #808080;
+    padding: 0;
+    margin: 14px;
+}
+
+/*.navbar-default .navbar-nav > li > a {
+    color: #333;
+    border-bottom: 1px solid transparent;
+    padding: 0;
+    margin: 14px;
+}*/
