@@ -82,12 +82,20 @@ namespace Dashboard.Data.Controllers
 
         // PUT api/dashboard/Commitments/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody]CommitmentViewModel commitmentVM)
+        public async Task<IActionResult> Put(int id, [FromBody]Commitment commitment)
         {
             if (ModelState.IsValid)
             {
+                var projectId = 0;
+                var userId = 0;
                 var commiFromRepo = await _repo.GetCommitment(id);
-                Mapper.Map(commitmentVM, commiFromRepo);
+                //Mapper.Map(commitmentVM, commiFromRepo);
+
+                commiFromRepo.Name = commitment.Name ?? commiFromRepo.Name;
+                commiFromRepo.ProjectId = projectId;
+                Int32.TryParse((commitment.ProjectId.ToString() ?? commiFromRepo.ProjectId.ToString()),out projectId);
+                commiFromRepo.UserId = userId;
+                Int32.TryParse((commitment.UserId.ToString() ?? commiFromRepo.UserId.ToString()),out userId);
 
                 var commitUpdated =  _repo.Update(commiFromRepo);
                 if (!await _repo.SaveChangesAsync())
@@ -95,7 +103,7 @@ namespace Dashboard.Data.Controllers
                     _logger.LogError($"Thrown exception when updating");
                     BadRequest("Something when wrong while updating");
                 }
-                return Ok(Mapper.Map<CommitmentViewModel>(commitUpdated)); 
+                return Ok(/*Mapper.Map<CommitmentViewModel>(*/commitUpdated/*)*/); 
             }
             return BadRequest("Error occured");
             
