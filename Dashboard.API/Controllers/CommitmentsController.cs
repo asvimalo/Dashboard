@@ -46,7 +46,7 @@ namespace Dashboard.Data.Controllers
         }
 
         // GET api/dashboard/Commitments/5
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = "GetCommitment")]
         public async Task<IActionResult> Get(int id)
         {
             try
@@ -66,15 +66,15 @@ namespace Dashboard.Data.Controllers
 
         // POST api/dashboard/Commitments
         [HttpPost("")]
-        public async Task<IActionResult> Post([FromBody]CommitmentViewModel commitment)
+        public async Task<IActionResult> Post([FromBody]Commitment commitment)
         {
             if (ModelState.IsValid)
             {
-                var newCommitment = Mapper.Map<Commitment>(commitment);
-                _repo.Add(newCommitment);
+                //var newCommitment = Mapper.Map<Commitment>(commitment);
+                var addedCommitment =  await _repo.AddAsync(commitment);
                 if (await _repo.SaveChangesAsync())
                 {
-                    return Created($"api/dashboard/commitments/{commitment.Name}", Mapper.Map<CommitmentViewModel>(newCommitment));
+                    return Created($"api/dashboard/commitments/{addedCommitment.CommitmentId}", addedCommitment);
                 }
             }
             return BadRequest("Failed to save changes to the database");

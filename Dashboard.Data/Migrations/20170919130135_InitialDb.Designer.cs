@@ -11,7 +11,7 @@ using System;
 namespace Dashboard.Data.Migrations
 {
     [DbContext(typeof(DashboardContext))]
-    [Migration("20170914180939_InitialDb")]
+    [Migration("20170919130135_InitialDb")]
     partial class InitialDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -51,11 +51,11 @@ namespace Dashboard.Data.Migrations
                     b.Property<string>("Title")
                         .IsRequired();
 
-                    b.Property<int>("User");
-
                     b.Property<int?>("UserId");
 
                     b.HasKey("PictureId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Pictures");
                 });
@@ -112,6 +112,13 @@ namespace Dashboard.Data.Migrations
                         .WithMany("Commitments")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Dashboard.Data.Entities.Picture", b =>
+                {
+                    b.HasOne("Dashboard.Data.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("Dashboard.Data.Entities.User", b =>

@@ -23,13 +23,14 @@ namespace Dashboard.Data.EF.Repository
 
 
         #region CRUD without gets
-        public void Add<T>(T entity) where T : class
+        public async Task<T> AddAsync<T>(T entity) where T : class
         {
             if (entity == null)
             {
                 throw new ArgumentNullException("entity");
             }
-            _ctx.Add(entity);
+            var addedEntity = await _ctx.AddAsync(entity);
+            return addedEntity.Entity;
             //_ctx.SaveChanges();
         }
         public void Delete<T>(T entity) where T : class
