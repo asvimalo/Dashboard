@@ -50,11 +50,11 @@ namespace Dashboard.Data.Migrations
                     b.Property<string>("Title")
                         .IsRequired();
 
-                    b.Property<int>("User");
-
                     b.Property<int?>("UserId");
 
                     b.HasKey("PictureId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Pictures");
                 });
@@ -111,6 +111,13 @@ namespace Dashboard.Data.Migrations
                         .WithMany("Commitments")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Dashboard.Data.Entities.Picture", b =>
+                {
+                    b.HasOne("Dashboard.Data.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("Dashboard.Data.Entities.User", b =>

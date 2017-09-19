@@ -50,7 +50,7 @@ namespace Dashboard.Data.Controllers
         }
 
         // GET api/values/5
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = "GetProject")]
         public async Task<IActionResult> Get(int id)
         {
             try
@@ -70,15 +70,15 @@ namespace Dashboard.Data.Controllers
 
         // POST api/values
         [HttpPost("")]
-        public async Task<IActionResult> Post([FromBody]ProjectViewModel project)
+        public async Task<IActionResult> Post([FromBody]Project project)
         {
             if (ModelState.IsValid)
             {
-                var newProject = _mapper.Map<Project>(project);
-                _repo.Add(newProject);
+                //var newProject = _mapper.Map<Project>(project);
+                var addedProject = await _repo.AddAsync(project);
                 if (await _repo.SaveChangesAsync())
                 {
-                    return Created($"api/dashboard/projects/{project.Title}", _mapper.Map<ProjectViewModel>(newProject));
+                    return Created($"api/dashboard/projects/{addedProject.Title}", /*_mapper.Map<ProjectViewModel>(newProject)*/ addedProject);
                 }
             }
             return BadRequest("Failed to save changes to the database");
@@ -86,19 +86,19 @@ namespace Dashboard.Data.Controllers
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody]ProjectViewModel projectVM)
+        public async Task<IActionResult> Put(int id, [FromBody]Project project)
         {
             if (ModelState.IsValid)
             {
                 var projectFromRepo = await _repo.GetProject(id);
-                _mapper.Map(projectVM, projectFromRepo);
+                //_mapper.Map(projectVM, projectFromRepo);
                 var projectUpdated = _repo.Update(projectFromRepo);
                 if (!await _repo.SaveChangesAsync())
                 {
                     _logger.LogError($"Thrown exception when updating");
                     BadRequest("Something when wrong while updating");
                 }
-                return Ok(_mapper.Map<ProjectViewModel>(projectUpdated));
+                return Ok(/*_mapper.Map<ProjectViewModel>(projectUpdated)*/projectUpdated);
             }
             return BadRequest("Error occured");
 

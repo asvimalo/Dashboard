@@ -41,9 +41,9 @@ namespace Dashboard.Data.Controllers
                 // Get from repo
                 var result = await _repo.GetPictures();
                 // map to model view
-                var pictures = Mapper.Map<IEnumerable<PictureViewModel>>(result);
+                //var pictures = Mapper.Map<IEnumerable<PictureViewModel>>(result);
                 // return pictures
-                return Ok(pictures);
+                return Ok(result);
             }
             catch (Exception ex)
             {
@@ -65,8 +65,8 @@ namespace Dashboard.Data.Controllers
                 {
                     return NotFound();
                 }
-                var picture = Mapper.Map<PictureViewModel>(result);
-                return Ok(picture);
+                //var picture = Mapper.Map<PictureViewModel>(result);
+                return Ok(result);
             }
             catch (Exception ex)
             {
@@ -84,7 +84,9 @@ namespace Dashboard.Data.Controllers
             if (ModelState.IsValid)
             {
                 // Automapper maps only the Title
-                var newPicture = Mapper.Map<Picture>(pictureForCreation);
+                //var newPicture = Mapper.Map<Picture>(pictureForCreation);
+                var newPicture = new Picture();
+                newPicture.Title = pictureForCreation.Title;
                 // get this environment's web root path (the path
                 // from which static content, wwwroot)
                 var webRootPath = _env.WebRootPath;
@@ -100,11 +102,11 @@ namespace Dashboard.Data.Controllers
                 newPicture.FileName = fileName;
 
                 // add and save ...
-                _repo.Add(newPicture);
+                var pictureFromRDb = await _repo.AddAsync(newPicture);
                 if (await _repo.SaveChangesAsync())
                 {
-                    var pictureToReturn = Mapper.Map<PictureViewModel>(newPicture);
-                    return CreatedAtRoute("GetImage", new { id = newPicture.PictureId}, pictureToReturn);
+                    //var pictureToReturn = Mapper.Map<PictureViewModel>(newPicture);
+                    return CreatedAtRoute("GetImage", new { id = pictureFromRDb.PictureId}, pictureFromRDb);
                 }
             }
             return BadRequest("Failed to save changes to the database");
@@ -121,14 +123,15 @@ namespace Dashboard.Data.Controllers
                 {
                     return NotFound();
                 }
-                Mapper.Map(pictureVM, pictureFromRepo);
+                pictureFromRepo.Title = pictureVM.Title;
+                //Mapper.Map(pictureVM, pictureFromRepo);
                 var pictureUpdated = _repo.Update(pictureFromRepo);
                 if (!await _repo.SaveChangesAsync())
                 {
                     _logger.LogError($"Thrown exception when updating");
                     BadRequest("Something when wrong while updating");
                 }
-                return Ok(Mapper.Map<PictureViewModel>(pictureUpdated));
+                return Ok(/*Mapper.Map<PictureViewModel>(*/pictureUpdated/*)*/);
             }
             return BadRequest("Error occured");
 

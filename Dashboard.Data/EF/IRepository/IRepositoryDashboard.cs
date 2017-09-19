@@ -6,7 +6,7 @@ namespace Dashboard.Data.EF.IRepository
 {
     public interface IRepositoryDashboard
     {
-        void Add<T>(T entity) where T : class;
+        Task<T> AddAsync<T>(T entity) where T : class;
         T Update<T>(T entity) where T : class;
         void Delete<T>(T entity) where T : class;
         Task<Commitment> GetCommitment(int id);
