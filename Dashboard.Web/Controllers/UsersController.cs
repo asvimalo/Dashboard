@@ -53,7 +53,7 @@ namespace Dashboard.Web.Controllers
                     var serializedUser = JsonConvert.SerializeObject(user);
 
                     var response = await httpClient.PostAsync(
-                            $"api/dashboard/commitments",
+                            $"api/dashboard/users",
                             new StringContent(serializedUser, 
                                 System.Text.Encoding.Unicode, 
                                 "application/json")).ConfigureAwait(false);
