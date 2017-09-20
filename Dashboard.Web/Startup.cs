@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Dashboard.Web.Services;
+using Dashboard.Web.Services.Contracts;
+using Microsoft.AspNetCore.Http;
 
 namespace Dashboard.Web
 {
@@ -19,6 +22,7 @@ namespace Dashboard.Web
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
+            
             Configuration = builder.Build();
         }
 
@@ -27,8 +31,15 @@ namespace Dashboard.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddApplicationInsightsTelemetry(Configuration);
             // Add framework services.
             services.AddMvc();
+
+            // HttpContext injected through services
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+            // register  IHttpClientDashboard
+            services.AddScoped<IHttpClientDashboard, HttpClientDashboard>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -44,9 +55,9 @@ namespace Dashboard.Web
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/Shared/Error");
             }
-
+            
             app.UseStaticFiles();
 
             app.UseMvc(routes =>
