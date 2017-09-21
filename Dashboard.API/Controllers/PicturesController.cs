@@ -85,8 +85,10 @@ namespace Dashboard.Data.Controllers
             {
                 // Automapper maps only the Title
                 //var newPicture = Mapper.Map<Picture>(pictureForCreation);
-                var newPicture = new Picture();
-                newPicture.Title = pictureForCreation.Title;
+                var newPicture = new Picture
+                {
+                    Title = pictureForCreation.Title
+                };
                 // get this environment's web root path (the path
                 // from which static content, wwwroot)
                 var webRootPath = _env.WebRootPath;

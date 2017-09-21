@@ -7,6 +7,7 @@ using Dashboard.Web.Services.Contracts;
 using Dashboard.Web.ViewModels;
 using Newtonsoft.Json;
 using System.Net.Http;
+using Dashboard.Data.Entities;
 
 namespace Dashboard.Web.Controllers
 {
@@ -27,7 +28,7 @@ namespace Dashboard.Web.Controllers
                 if (responseProj.IsSuccessStatusCode)
                 {
                     var projectsAsString = await responseProj.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    List<ProjectModel> projects = JsonConvert.DeserializeObject<IList<ProjectModel>>(projectsAsString).ToList();
+                    List<Project> projects = JsonConvert.DeserializeObject<IList<Project>>(projectsAsString).ToList();
                     return View(projects);
                 }
                 else
@@ -61,7 +62,7 @@ namespace Dashboard.Web.Controllers
                     if (response.IsSuccessStatusCode)
                     {
                         var projectAsString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        var desproject = JsonConvert.DeserializeObject<ProjectModel>(projectAsString);
+                        var desproject = JsonConvert.DeserializeObject<Project>(projectAsString);
                         return View(desproject);
                     }
                     else
@@ -79,7 +80,7 @@ namespace Dashboard.Web.Controllers
         }
         [HttpPut]
         [ValidateAntiForgeryToken] //TO-DO
-        public async Task<IActionResult> EditProject([FromBody] ProjectModel project)
+        public async Task<IActionResult> EditProject([FromBody] Project project)
         {
             // TODO
             if (ModelState.IsValid)
@@ -99,7 +100,7 @@ namespace Dashboard.Web.Controllers
                     if (response.IsSuccessStatusCode)
                     {
                         var projectAsString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        var desProject = JsonConvert.DeserializeObject<CommitmentModel>(projectAsString);
+                        var desProject = JsonConvert.DeserializeObject<Project>(projectAsString);
                         return View(desProject);
                     }
                     else

@@ -1,15 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.15
+VisualStudioVersion = 15.0.26730.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dashboard.Data", "Dashboard.Data\Dashboard.Data.csproj", "{E069BF73-FB4B-4969-9C7D-5620D59C2B5D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dashboard.Web", "Dashboard.Web\Dashboard.Web.csproj", "{715C395E-43D5-4D7E-97D2-5D147AA31CB8}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dashboard.API", "Dashboard.API\Dashboard.API.csproj", "{E5E744E1-5B61-4863-A051-F0BC419A7478}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dasboard.Client", "Dasboard.Client\Dasboard.Client.csproj", "{F9070A16-486A-4EE3-BCB6-B8204EDC29BB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +27,6 @@ Global
 		{E5E744E1-5B61-4863-A051-F0BC419A7478}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E5E744E1-5B61-4863-A051-F0BC419A7478}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E5E744E1-5B61-4863-A051-F0BC419A7478}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F9070A16-486A-4EE3-BCB6-B8204EDC29BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F9070A16-486A-4EE3-BCB6-B8204EDC29BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F9070A16-486A-4EE3-BCB6-B8204EDC29BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F9070A16-486A-4EE3-BCB6-B8204EDC29BB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

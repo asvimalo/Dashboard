@@ -7,6 +7,7 @@ using Dashboard.Web.Services.Contracts;
 using Newtonsoft.Json;
 using System.Net.Http;
 using Dashboard.Web.ViewModels;
+using Dashboard.Data.Entities;
 
 namespace Dashboard.Web.Controllers
 {
@@ -27,7 +28,7 @@ namespace Dashboard.Web.Controllers
                 if (responseCom.IsSuccessStatusCode)
                 {
                     var commitmmentsAsString = await responseCom.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    List<CommitmentModel> commitments = JsonConvert.DeserializeObject<IList<CommitmentModel>>(commitmmentsAsString).ToList();
+                    List<Commitment> commitments = JsonConvert.DeserializeObject<IList<Commitment>>(commitmmentsAsString).ToList();
                     return View(commitments);
                 }
                 else
@@ -40,9 +41,16 @@ namespace Dashboard.Web.Controllers
             }
 
         }
+
+        [HttpGet]
+        public IActionResult AddCommitment()
+        {
+            return View();
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddCommitment([FromBody] CommitmentModel commitment)
+        public async Task<IActionResult> AddCommitment([FromBody] Commitment commitment)
         {
 
             if (ModelState.IsValid)
@@ -57,7 +65,7 @@ namespace Dashboard.Web.Controllers
                     if (response.IsSuccessStatusCode)
                     {
                         var commitmmentAsString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        var desCommitment = JsonConvert.DeserializeObject<CommitmentModel>(commitmmentAsString);
+                        var desCommitment = JsonConvert.DeserializeObject<Commitment>(commitmmentAsString);
                         return View(desCommitment);
                     }
                     else
@@ -75,7 +83,7 @@ namespace Dashboard.Web.Controllers
         }
         [HttpPut]
         [ValidateAntiForgeryToken] //TO-DO
-        public async Task<IActionResult> EditCommitment([FromBody] CommitmentModel commitment)
+        public async Task<IActionResult> EditCommitment([FromBody] Commitment commitment)
         {
             // TODO
             if (ModelState.IsValid)
@@ -95,7 +103,7 @@ namespace Dashboard.Web.Controllers
                     if (response.IsSuccessStatusCode)
                     {
                         var commitmmentAsString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        var desCommitment = JsonConvert.DeserializeObject<CommitmentModel>(commitmmentAsString);
+                        var desCommitment = JsonConvert.DeserializeObject<Commitment>(commitmmentAsString);
                         return View(desCommitment);
                     }
                     else

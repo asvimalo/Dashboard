@@ -7,6 +7,6 @@ namespace Dashboard.Web.ViewModels
 {
     public class UserModel
     {
-
+            
     }
 }

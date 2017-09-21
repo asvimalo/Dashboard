@@ -7,6 +7,7 @@ using Dashboard.Web.Services.Contracts;
 using Dashboard.Web.ViewModels;
 using Newtonsoft.Json;
 using System.Net.Http;
+using Dashboard.Data.Entities;
 
 namespace Dashboard.Web.Controllers
 {
@@ -23,12 +24,12 @@ namespace Dashboard.Web.Controllers
             var httpClient = await _httpClientDashboard.GetClient();
             try
             {
-                var responseCom = await httpClient.GetAsync("api/dashboard/commitments").ConfigureAwait(false);
+                var responseCom = await httpClient.GetAsync("api/dashboard/users").ConfigureAwait(false);
                 if (responseCom.IsSuccessStatusCode)
                 {
-                    var projectsAsString = await responseCom.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    List<UserModel> projects = JsonConvert.DeserializeObject<IList<UserModel>>(projectsAsString).ToList();
-                    return View(projects);
+                    var usersAsString = await responseCom.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    List<User> users = JsonConvert.DeserializeObject<IList<User>>(usersAsString).ToList();
+                    return View(users);
                 }
                 else
                     throw new Exception($"A problem happened while calling the API: {responseCom.ReasonPhrase}");
