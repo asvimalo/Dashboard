@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Dashboard.IDP.Configuration;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Dashboard.IDP
 {
@@ -16,7 +17,7 @@ namespace Dashboard.IDP
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddIdentityServer()
-                .AddDeveloperSigningCredential()
+                .AddSigningCredential(new X509Certificate2(@"D:\GitHub\GitRepo\Sigma\Dashboard\dashboard.pfx","password"))
                 .AddTestUsers(InMemoryConfiguration.Users().ToList())
                 .AddInMemoryClients(InMemoryConfiguration.Clients())
                 .AddInMemoryApiResources(InMemoryConfiguration.ApiResources());
