@@ -15,7 +15,8 @@ namespace Dashboard.IDP
     {       
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddIdentityServer()               
+            services.AddIdentityServer()
+                .AddDeveloperSigningCredential()
                 .AddTestUsers(InMemoryConfiguration.Users().ToList())
                 .AddInMemoryClients(InMemoryConfiguration.Clients())
                 .AddInMemoryApiResources(InMemoryConfiguration.ApiResources());
