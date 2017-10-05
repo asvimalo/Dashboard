@@ -11,6 +11,8 @@ using Dashboard.Data.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.Authentication;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
+using System.Diagnostics;
+using Microsoft.AspNetCore.Authentication;
 
 namespace Dashboard.Web.Controllers
 {
@@ -133,6 +135,22 @@ namespace Dashboard.Web.Controllers
             }
             throw new Exception($"A problem happened while calling the API: {response.ReasonPhrase}");
         }
-        
+        public async Task WriteOutIdentityInformation()
+        {
+            // get the saved identity token
+            var identityToken = await HttpContext.GetTokenAsync("id_token");
+            var accessToken = await HttpContext.GetTokenAsync("access_token");
+            //.GetTokenAsync(OpenIdConnectParameterNames.IdToken);
+
+            // write it out
+            Debug.WriteLine($"Identity token: {identityToken}");
+
+            // write out the user claims
+            foreach (var claim in User.Claims)
+            {
+                Debug.WriteLine($"Claim type: {claim.Type} - Claim value: {claim.Value}");
+            }
+        }
+
     }
 }
