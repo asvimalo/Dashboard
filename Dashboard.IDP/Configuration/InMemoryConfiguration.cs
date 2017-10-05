@@ -1,4 +1,5 @@
-﻿using IdentityServer4.Models;
+﻿using IdentityServer4;
+using IdentityServer4.Models;
 using IdentityServer4.Test;
 using System;
 using System.Collections.Generic;
@@ -30,10 +31,18 @@ namespace Dashboard.IDP.Configuration
                 new Client
                 {
                     ClientId = "dashboard",
+                    ClientName = "Sigma Dashboard",
                     ClientSecrets = new [] { new Secret("secret".Sha256())},
-                    AllowedGrantTypes = GrantTypes.ResourceOwnerPasswordAndClientCredentials,
-                    AllowedScopes = new [] { "dashboard" }
-
+                    AllowedGrantTypes = GrantTypes.Hybrid,
+                    RedirectUris = new List<string>()
+                    {
+                        "https://localhost:44395/signin-oidc"
+                    },
+                    AllowedScopes =
+                    {
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile
+                    }
                 }
             };
         }

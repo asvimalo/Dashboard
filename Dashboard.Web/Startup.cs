@@ -10,6 +10,9 @@ using Microsoft.Extensions.Logging;
 using Dashboard.Web.Services;
 using Dashboard.Web.Services.Contracts;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace Dashboard.Web
 {
@@ -34,7 +37,31 @@ namespace Dashboard.Web
             services.AddApplicationInsightsTelemetry(Configuration);
             // Add framework services.
             services.AddMvc();
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
+            services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = "Cookies";
+                options.DefaultChallengeScheme = "oidc";
+            })
+                .AddCookie("Cookies")
+                .AddOpenIdConnect("oidc", options =>
+                {
+                    options.SignInScheme = "Cookies";
+                    
+                    options.Authority = "https://localhost:44394/";
+                    options.RequireHttpsMetadata = true;
+
+                    options.ClientId = "dashboard";
+                    options.ClientSecret = "secret";
+                    options.ResponseType = "code id_token";
+                   
+                    options.SaveTokens = true;
+                    //options.GetClaimsFromUserInfoEndpoint = true;
+
+                    //options.Scope.Add("openId");
+                    //options.Scope.Add("profile");
+                });
             // HttpContext injected through services
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
@@ -57,7 +84,11 @@ namespace Dashboard.Web
             {
                 app.UseExceptionHandler("/Shared/Error");
             }
-            
+
+
+
+            app.UseAuthentication();
+
             app.UseStaticFiles();
 
             app.UseMvc(routes =>

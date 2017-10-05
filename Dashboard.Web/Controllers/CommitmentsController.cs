@@ -8,9 +8,13 @@ using Newtonsoft.Json;
 using System.Net.Http;
 using Dashboard.Web.ViewModels;
 using Dashboard.Data.Entities;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.Authentication;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 
 namespace Dashboard.Web.Controllers
 {
+    [Authorize]
     public class CommitmentsController : Controller
     {
         private IHttpClientDashboard _httpClientDashboard;
@@ -129,5 +133,6 @@ namespace Dashboard.Web.Controllers
             }
             throw new Exception($"A problem happened while calling the API: {response.ReasonPhrase}");
         }
+        
     }
 }

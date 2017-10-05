@@ -8,10 +8,12 @@ using Dashboard.Data.Entities;
 using Dashboard.Data.ViewModelsAPI;
 using AutoMapper;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 
 namespace Dashboard.Data.Controllers
 {
-
+    
     [Route("api/dashboard/[controller]")]
     public class CommitmentsController : Controller
     {
@@ -120,5 +122,7 @@ namespace Dashboard.Data.Controllers
             else
                 return BadRequest($"Commitment {commiToDel.Name} wasn't deleted!");
         }
+
+        
     }
 }
