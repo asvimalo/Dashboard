@@ -3,6 +3,7 @@ using IdentityServer4.Test;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Dashboard.IDP.Configuration
@@ -13,6 +14,13 @@ namespace Dashboard.IDP.Configuration
         {
             return new[] {
                 new ApiResource("dashboard", "Sigma Dashboard")
+            };
+        }
+        public static IEnumerable<IdentityResource> IdentityResources()
+        {
+            return new List<IdentityResource> {
+                new IdentityResources.OpenId(),
+                new IdentityResources.Profile()
             };
         }
         public static IEnumerable<Client> Clients()
@@ -36,7 +44,12 @@ namespace Dashboard.IDP.Configuration
                 {
                     SubjectId = "1",
                     Username = "mail@mtzlosa.es",
-                    Password = "password"
+                    Password = "password",
+                    Claims = new List<Claim>
+                    {
+                        new Claim("given_name","Andy"),
+                        new Claim("family_name","Kat"),
+                    }
                 }
             };
         }

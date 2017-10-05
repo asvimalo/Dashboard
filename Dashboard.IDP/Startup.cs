@@ -16,12 +16,17 @@ namespace Dashboard.IDP
     {       
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMvc();
+
             services.AddIdentityServer()
-                .AddSigningCredential(new X509Certificate2(@"D:\GitHub\GitRepo\Sigma\Dashboard\dashboard.pfx", "password"))
+                .AddDeveloperSigningCredential()
+                //.AddSigningCredential(new X509Certificate2(@"D:\GitHub\GitRepo\Sigma\Dashboard\dashboard.pfx", "password"))
                 .AddTestUsers(InMemoryConfiguration.Users().ToList())
                 .AddInMemoryClients(InMemoryConfiguration.Clients())
-                .AddInMemoryApiResources(InMemoryConfiguration.ApiResources());
-            services.AddMvc();
+                .AddInMemoryApiResources(InMemoryConfiguration.ApiResources())
+                .AddInMemoryIdentityResources(InMemoryConfiguration.IdentityResources());
+            
+           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -30,7 +35,8 @@ namespace Dashboard.IDP
             ILoggerFactory loggerFactory)
         {
             loggerFactory.AddConsole();
-           
+            loggerFactory.AddDebug();
+
             app.UseDeveloperExceptionPage();
 
             app.UseIdentityServer();

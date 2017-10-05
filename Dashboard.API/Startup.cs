@@ -18,6 +18,11 @@ using Dashboard.Data.ViewModelsAPI;
 using Microsoft.EntityFrameworkCore.Design;
 using static Dashboard.Data.EF.Db.TempCtxDashboard;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using IdentityServer4.AccessTokenValidation;
+using Microsoft.AspNetCore.Authentication;
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+
 
 namespace Dashboard.Data
 {
@@ -72,7 +77,7 @@ namespace Dashboard.Data
             //services.Configure<IdentityOptions>(options =>
             //{
             //});
-
+            
             services.AddLogging();
            
         }
@@ -87,6 +92,12 @@ namespace Dashboard.Data
 
             loggerFactory.AddConsole(_config.GetSection("Logging"));
             loggerFactory.AddDebug();
+
+            //app.UseId(new IdentityServerAuthenticationOptions {
+            //    RequireHttpsMetadata = false,
+            //    Authority = "http://localhost:50092",
+            //    ApiName = "dashboard"
+            //});
 
             if (env.IsEnvironment("Development"))
             {

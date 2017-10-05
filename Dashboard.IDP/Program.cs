@@ -19,7 +19,7 @@ namespace Dashboard.IDP
 
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseUrls("http://localhost:50093/")
+                //.UseUrls("https://localhost:44394/")
                 .UseStartup<Startup>()
                 .Build();
     }
