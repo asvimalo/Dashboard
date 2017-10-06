@@ -47,6 +47,7 @@ namespace Dashboard.IDP.Configuration
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile
                     },
+                    // AlwaysIncludeUserClaimsInIdToken = true,
                     AllowOfflineAccess = true
                 }
             };
