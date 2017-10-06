@@ -25,9 +25,19 @@
                 <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand pull-left text-uppercase">Sigma</a>
                 <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand pull-left text-capitalize"> |  Search...</a>
             </div>
-            <div navbar-left>
-                <a asp-area="" class="navbar-brand pull-right">Welcome Kalle Anka | Log out</a>
-            </div>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <div navbar-left>
+                    <a asp-area="" asp-controller="Home" asp-action="Logout" class="navbar-brand pull-right">Welcome @User.Identity.Name | Log out</a>
+                </div>
+            }
+            else
+            {
+                <div navbar-left>
+                    <a asp-area="" asp-controller="Home" asp-action="Login" class="navbar-brand pull-right">Login</a>
+                </div>
+
+            }
         </div>
         <div class="container">
             <div class="navbar-collapse collapse">
@@ -35,7 +45,7 @@
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">Timeline</a></li>
                     <li><a asp-area="" asp-controller="Commitments" asp-action="Index">Commitments</a></li>
                     <li><a asp-area="" asp-controller="Projects" asp-action="Index">Project</a></li>
-                    <li><a asp-area="" asp-controller="Users" asp-action="Index">Team</a></li>
+                    <li><a asp-area="" asp-controller="Users" asp-action="Index">Team</a></li>        
                 </ul>
             </div>
         </div>

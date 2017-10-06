@@ -75,12 +75,9 @@ namespace Dashboard.Web
                     // That’s what the SaveTokens setting does.
                     options.SaveTokens = true;
 
-                    options.GetClaimsFromUserInfoEndpoint = true;
-
-                    //options.GetClaimsFromUserInfoEndpoint = true;
+                    options.GetClaimsFromUserInfoEndpoint = true;                   
                     options.Scope.Add("offline_access");
-                    //options.Scope.Add("openId");
-                    //options.Scope.Add("profile");
+                
                 });
             // HttpContext injected through services
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
