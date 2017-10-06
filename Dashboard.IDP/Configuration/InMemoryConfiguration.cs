@@ -38,11 +38,16 @@ namespace Dashboard.IDP.Configuration
                     {
                         "https://localhost:44395/signin-oidc"
                     },
+                    PostLogoutRedirectUris = new List<string>()
+                    {
+                        "https://localhost:44395/signout-callback-oidc"
+                    },
                     AllowedScopes =
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile
-                    }
+                    },
+                    AllowOfflineAccess = true
                 }
             };
         }
