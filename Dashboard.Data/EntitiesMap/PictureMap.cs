@@ -10,10 +10,10 @@ namespace Dashboard.Data.EntitiesMap
     {
         public PictureMap(EntityTypeBuilder<Picture> entityBuilder)
         {
-            entityBuilder.HasKey(t => t.PictureId);
-            entityBuilder.Property(t => t.Title).IsRequired();
-            entityBuilder.Property(t => t.FileName).IsRequired();
-            entityBuilder.Property(t => t.User);
+            //entityBuilder.HasKey(t => t.PictureId);
+            //entityBuilder.Property(t => t.Title).IsRequired();
+            //entityBuilder.Property(t => t.FileName).IsRequired();
+            //entityBuilder.Property(t => t.User);
             
 
         }

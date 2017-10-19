@@ -11,9 +11,9 @@ namespace Dashboard.Data.Entities
         public string Title { get; set; }
         [Required]
         public string FileName { get; set; }
-        public int? UserId { get; set; }
-        [ForeignKey("UserId")]
-        public User User { get; set; }
+        public int? EmployeeId { get; set; }
+        [ForeignKey("EmployeeId")]
+        public Employee Employee { get; set; }
 
 
     }

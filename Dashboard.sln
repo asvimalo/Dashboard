@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dashboard.Web", "Dashboard.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dashboard.API", "Dashboard.API\Dashboard.API.csproj", "{E5E744E1-5B61-4863-A051-F0BC419A7478}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dashboard.IDP", "Dashboard.IDP\Dashboard.IDP.csproj", "{080B1A79-1FBA-480E-99AF-8447DF372681}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dashboard.IDP", "Dashboard.IDP\Dashboard.IDP.csproj", "{080B1A79-1FBA-480E-99AF-8447DF372681}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -23,10 +23,9 @@ namespace Dashboard.IDP
                 //.AddSigningCredential(new X509Certificate2(@"D:\GitHub\GitRepo\Sigma\Dashboard\dashboard.pfx", "password"))
                 .AddTestUsers(InMemoryConfiguration.Users().ToList())
                 .AddInMemoryClients(InMemoryConfiguration.Clients())
-                .AddInMemoryApiResources(InMemoryConfiguration.ApiResources())
-                .AddInMemoryIdentityResources(InMemoryConfiguration.IdentityResources());
-            
-           
+                .AddInMemoryIdentityResources(InMemoryConfiguration.IdentityResources())
+                .AddInMemoryApiResources(InMemoryConfiguration.ApiResources());
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

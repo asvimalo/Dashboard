@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Dashboard.Data.EF.Contracts;
 using Dashboard.Data.EF.IRepository;
 using Dashboard.Data.Entities;
 using Dashboard.Data.ViewModelsAPI;
@@ -17,12 +18,13 @@ namespace Dashboard.Data.Controllers
     [Route("api/dashboard/[controller]")]
     public class PicturesController : Controller
     {
-        private IRepositoryDashboard _repo;
+        private IRepoPicture _repo;
         private ILogger<PicturesController> _logger;
         private IHostingEnvironment _env;
 
-        public PicturesController(IRepositoryDashboard repo,
-            ILogger<PicturesController> logger,IHostingEnvironment env)
+        public PicturesController(IRepoPicture repo,
+            ILogger<PicturesController> logger,
+            IHostingEnvironment env)
         {
             _repo = repo;
             _logger = logger;
@@ -39,7 +41,7 @@ namespace Dashboard.Data.Controllers
             try
             {
                 // Get from repo
-                var result = await _repo.GetPictures();
+                var result = await _repo.GetAll<Picture>();
                 // map to model view
                 //var pictures = Mapper.Map<IEnumerable<PictureViewModel>>(result);
                 // return pictures
@@ -60,7 +62,7 @@ namespace Dashboard.Data.Controllers
             try
             {
                 // Get picture
-                var result = await _repo.GetPicture(id);
+                var result = _repo.Get<Picture>(id);
                 if (result == null)
                 {
                     return NotFound();
@@ -120,7 +122,7 @@ namespace Dashboard.Data.Controllers
         {
             if (ModelState.IsValid)
             {
-                var pictureFromRepo = await _repo.GetPicture(id);
+                var pictureFromRepo = _repo.Get<Picture>(id);
                 if (pictureFromRepo == null)
                 {
                     return NotFound();
@@ -143,7 +145,7 @@ namespace Dashboard.Data.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var pictureToDel = await _repo.GetPicture(id);
+            var pictureToDel = _repo.Get<Picture>(id);
             if (pictureToDel == null)
             {
                 return NotFound();

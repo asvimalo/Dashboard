@@ -10,17 +10,19 @@ using AutoMapper;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
+using Dashboard.Data.EF.Contracts;
 
 namespace Dashboard.Data.Controllers
 {
     
     [Route("api/dashboard/[controller]")]
-    public class CommitmentsController : Controller
+    public class AssignmentsController : Controller
     {
-        public IRepositoryDashboard _repo;
-        private ILogger<CommitmentsController> _logger;
+        public IRepoAssignment _repo;
+        private ILogger<AssignmentsController> _logger;
 
-        public CommitmentsController(IRepositoryDashboard repo, ILogger<CommitmentsController> logger)
+        public AssignmentsController(IRepoAssignment repo, 
+            ILogger<AssignmentsController> logger)
         {
             _repo = repo;
             _logger = logger;
@@ -35,7 +37,7 @@ namespace Dashboard.Data.Controllers
         {
             try
             {
-                var result = await _repo.GetCommitments();
+                var result = _repo.GetAll<Assignment>();
                 return Ok(result);
                 //return Ok(Mapper.Map<IEnumerable<CommitmentViewModel>>(result));
             }
@@ -48,12 +50,12 @@ namespace Dashboard.Data.Controllers
         }
 
         // GET api/dashboard/Commitments/5
-        [HttpGet("{id}", Name = "GetCommitment")]
+        [HttpGet("{id}", Name = "GetAssigment")]
         public async Task<IActionResult> Get(int id)
         {
             try
             {
-                var result = await _repo.GetCommitment(id);
+                var result =  _repo.Get<Assignment>(id);
                 return Ok(result);
                 //return Ok(Mapper.Map<CommitmentViewModel>(result));
             }
@@ -68,15 +70,15 @@ namespace Dashboard.Data.Controllers
 
         // POST api/dashboard/Commitments
         [HttpPost("")]
-        public async Task<IActionResult> Post([FromBody]Commitment commitment)
+        public async Task<IActionResult> Post([FromBody]Assignment assignment)
         {
             if (ModelState.IsValid)
             {
                 //var newCommitment = Mapper.Map<Commitment>(commitment);
-                var addedCommitment =  await _repo.AddAsync(commitment);
+                var addedAssignment =  await _repo.AddAsync(assignment);
                 if (await _repo.SaveChangesAsync())
                 {
-                    return Created($"api/dashboard/commitments/{addedCommitment.CommitmentId}", addedCommitment);
+                    return Created($"api/dashboard/assignments/{addedAssignment.AssignmentId}", addedAssignment);
                 }
             }
             return BadRequest("Failed to save changes to the database");
@@ -84,22 +86,22 @@ namespace Dashboard.Data.Controllers
 
         // PUT api/dashboard/Commitments/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody]Commitment commitment)
+        public async Task<IActionResult> Put(int id, [FromBody]Assignment assignment)
         {
             if (ModelState.IsValid)
             {
                 var projectId = 0;
                 var userId = 0;
-                var commiFromRepo = await _repo.GetCommitment(id);
+                var assignFromRepo =  _repo.Get<Assignment>(id);
                 //Mapper.Map(commitmentVM, commiFromRepo);
 
-                commiFromRepo.Name = commitment.Name ?? commiFromRepo.Name;
-                commiFromRepo.ProjectId = projectId;
-                Int32.TryParse((commitment.ProjectId.ToString() ?? commiFromRepo.ProjectId.ToString()),out projectId);
-                commiFromRepo.UserId = userId;
-                Int32.TryParse((commitment.UserId.ToString() ?? commiFromRepo.UserId.ToString()),out userId);
+                assignFromRepo.JobTitle = assignment.JobTitle ?? assignFromRepo.JobTitle;
+                assignFromRepo.ProjectId = projectId;
+                Int32.TryParse((assignment.ProjectId.ToString() ?? assignFromRepo.ProjectId.ToString()),out projectId);
+                assignFromRepo.EmployeeId = userId;
+                Int32.TryParse((assignment.EmployeeId.ToString() ?? assignFromRepo.EmployeeId.ToString()),out userId);
 
-                var commitUpdated =  _repo.Update(commiFromRepo);
+                var commitUpdated =  _repo.Update(assignFromRepo);
                 if (!await _repo.SaveChangesAsync())
                 {
                     _logger.LogError($"Thrown exception when updating");
@@ -115,12 +117,12 @@ namespace Dashboard.Data.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var commiToDel = await _repo.GetCommitment(id);
-            _repo.Delete(commiToDel);
+            var assignmentToDel = _repo.Get<Assignment>(id);
+            _repo.Delete(assignmentToDel);
             if (await _repo.SaveChangesAsync())
-                return Ok($"Commitment deleted!");
+                return Ok($"Assignment deleted!");
             else
-                return BadRequest($"Commitment {commiToDel.Name} wasn't deleted!");
+                return BadRequest($"Assignment {assignmentToDel.AssignmentId} wasn't deleted!");
         }
 
         

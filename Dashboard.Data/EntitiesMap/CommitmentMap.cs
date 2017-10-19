@@ -11,10 +11,10 @@ namespace Dashboard.Data.EntitiesMap
         public CommitmentMap(EntityTypeBuilder<Commitment> entityBuilder)
         {
 
-            entityBuilder.HasKey(c => c.CommitmentId);
-            entityBuilder.Property(t => t.Name).IsRequired();
-            entityBuilder.Property(t => t.ProjectId).IsRequired();
-            entityBuilder.Property(t => t.UserId).IsRequired();
+            //entityBuilder.HasKey(c => c.CommitmentId);
+            //entityBuilder.Property(t => t.Name).IsRequired();
+            //entityBuilder.Property(t => t.ProjectId).IsRequired();
+            //entityBuilder.Property(t => t.UserId).IsRequired();
             //entityBuilder.Property(t => t.Project).IsRequired();
             //entityBuilder.Property(t => t.Project).IsRequired();
 

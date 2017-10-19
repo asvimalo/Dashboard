@@ -4,7 +4,7 @@ using Dashboard.Data.Entities;
 
 namespace Dashboard.Data.EF.IRepository
 {
-    public interface IRepositoryDashboard
+    public interface _IRepositoryDashboard
     {
         Task<T> AddAsync<T>(T entity) where T : class;
         T Update<T>(T entity) where T : class;
@@ -18,9 +18,9 @@ namespace Dashboard.Data.EF.IRepository
         Task<Project> GetProject(int id);
         Task<ICollection<Project>> GetProjects();
         Task<ICollection<Project>> GetProjectsByUserId(int id);
-        Task<User> GetUser(int id);
-        Task<ICollection<User>> GetUsers();
-        Task<ICollection<User>> GetUsersByProjectId(int id);
+        Task<Employee> GetUser(int id);
+        Task<ICollection<Employee>> GetUsers();
+        Task<ICollection<Employee>> GetUsersByProjectId(int id);
         Task<bool> SaveChangesAsync();
         
     }

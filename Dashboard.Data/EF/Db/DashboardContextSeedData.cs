@@ -36,25 +36,25 @@ namespace Dashboard.Data.EF.Db
             }
             await ctx.SaveChangesAsync();
             
-            if (ctx.Users.Any())
+            if (ctx.Employees.Any())
                 {
                     return false;   // DB has been seeded
                 }
 
-            var users = new User[]
+            var employees = new Employee[]
             {
-            new User{FirstName="Andrés",LastName="Alexander",PictureId = ctx.Pictures.Single(x => x.Title == "andres").PictureId},
-            new User{FirstName="Katrina",LastName="Rosales",PictureId = ctx.Pictures.Single(x => x.Title == "katrina").PictureId},
-            new User{FirstName="Kriszta",LastName="Barta",PictureId = ctx.Pictures.Single(x => x.Title == "kriszta").PictureId},
-            new User{FirstName="Jeff",LastName="Barzdukas",PictureId = ctx.Pictures.Single(x => x.Title == "jeff").PictureId},
+            new Employee{FirstName="Andrés",LastName="Alexander",PictureId = ctx.Pictures.Single(x => x.Title == "andres").PictureId},
+            new Employee{FirstName="Katrina",LastName="Rosales",PictureId = ctx.Pictures.Single(x => x.Title == "katrina").PictureId},
+            new Employee{FirstName="Kriszta",LastName="Barta",PictureId = ctx.Pictures.Single(x => x.Title == "kriszta").PictureId},
+            new Employee{FirstName="Jeff",LastName="Barzdukas",PictureId = ctx.Pictures.Single(x => x.Title == "jeff").PictureId},
             //new User{FirstName="Ivan",LastName="Programet",PictureId = ctx.Pictures.Single(x => x.Title == "ivan").PictureId}
             //new User{FirstName="Peggy",LastName="Justice", PictureId },
             //new User{FirstName="Laura",LastName="Norman"},
             //new User{FirstName="Nino",LastName="Olivetto"}
             };
-            foreach (User user in users)
+            foreach (Employee employee in employees)
             {
-                ctx.Users.Add(user);
+                ctx.Employees.Add(employee);
             }
             await ctx.SaveChangesAsync();
             if (ctx.Projects.Any())
@@ -63,38 +63,35 @@ namespace Dashboard.Data.EF.Db
             }
             var projects = new Project[]
             {
-            new Project{Title="Dashboard",  StartDate = new DateTime(2017, 09, 06, 10, 00, 00), StopDate = new DateTime(2017, 09, 06, 10, 00, 00), Description = "Dashboard API/Web app to keep track of our consults"},
-            new Project{Title="Microeconomics",StartDate = new DateTime(2017, 09, 06, 10, 00, 00), StopDate = new DateTime(2017, 09, 06, 10, 00, 00), Description = "Dashboard API/Web app to keep track of our consults"},
-            new Project{Title="Macroeconomics",StartDate = new DateTime(2017, 09, 06, 10, 00, 00), StopDate = new DateTime(2017, 09, 06, 10, 00, 00), Description = "Dashboard API/Web app to keep track of our consults"},
-            new Project{Title="Calculus",StartDate = new DateTime(2017, 09, 06, 10, 00, 00), StopDate = new DateTime(2017, 09, 06, 10, 00, 00), Description = "Dashboard API/Web app to keep track of our consults"},
-            new Project{Title="Trigonometry",StartDate = new DateTime(2017, 09, 06, 10, 00, 00), StopDate = new DateTime(2017, 09, 06, 10, 00, 00), Description = "Dashboard API/Web app to keep track of our consults"},
-            new Project{Title="Composition",StartDate = new DateTime(2017, 09, 06, 10, 00, 00), StopDate = new DateTime(2017, 09, 06, 10, 00, 00), Description = "Dashboard API/Web app to keep track of our consults"},
-            new Project{Title="Literature",StartDate = new DateTime(2017, 09, 06, 10, 00, 00), StopDate = new DateTime(2017, 09, 06, 10, 00, 00), Description = "Dashboard API/Web app to keep track of our consults"}
+            new Project{ProjectName="Dashboard",  StartDate = new DateTime(2017, 09, 06, 10, 00, 00), StopDate = new DateTime(2017, 09, 06, 10, 00, 00), Notes = "Dashboard API/Web app to keep track of our consults"},
+            new Project{ProjectName="Microeconomics",StartDate = new DateTime(2017, 09, 06, 10, 00, 00), StopDate = new DateTime(2017, 09, 06, 10, 00, 00), Notes = "Dashboard API/Web app to keep track of our consults"},
+            new Project{ProjectName="Macroeconomics",StartDate = new DateTime(2017, 09, 06, 10, 00, 00), StopDate = new DateTime(2017, 09, 06, 10, 00, 00), Notes = "Dashboard API/Web app to keep track of our consults"},
+            new Project{ProjectName="Calculus",StartDate = new DateTime(2017, 09, 06, 10, 00, 00), StopDate = new DateTime(2017, 09, 06, 10, 00, 00), Notes = "Dashboard API/Web app to keep track of our consults"},
+            new Project{ProjectName="Trigonometry",StartDate = new DateTime(2017, 09, 06, 10, 00, 00), StopDate = new DateTime(2017, 09, 06, 10, 00, 00), Notes = "Dashboard API/Web app to keep track of our consults"},
+            new Project{ProjectName="Composition",StartDate = new DateTime(2017, 09, 06, 10, 00, 00), StopDate = new DateTime(2017, 09, 06, 10, 00, 00), Notes = "Dashboard API/Web app to keep track of our consults"},
+            new Project{ProjectName="Literature",StartDate = new DateTime(2017, 09, 06, 10, 00, 00), StopDate = new DateTime(2017, 09, 06, 10, 00, 00), Notes = "Dashboard API/Web app to keep track of our consults"}
             };
             foreach (Project project in projects)
             {
                 ctx.Projects.Add(project);
             }
             await ctx.SaveChangesAsync();
-            if (ctx.Commitments.Any())
+            if (ctx.Assignments.Any())
             {
                 return false;   // DB has been seeded
             }
-            var commitments = new Commitment[]
+            var assignments = new Assignment[]
             {
-            new Commitment{Name="Sigma It Consulting", UserId = users.Single(x => x.FirstName == "Andrés").UserId, ProjectId = projects.Single(x => x.Title == "Dashboard").ProjectId},
-            new Commitment{Name="Sigma It Consulting", UserId = users.Single(x => x.FirstName == "Andrés").UserId, ProjectId = projects.Single(x => x.Title == "Dashboard").ProjectId},
-            new Commitment{Name="Sigma It Consulting", UserId = users.Single(x => x.FirstName == "Andrés").UserId, ProjectId = projects.Single(x => x.Title == "Dashboard").ProjectId},
-            new Commitment{Name="Sigma It Consulting", UserId = users.Single(x => x.FirstName == "Andrés").UserId, ProjectId = projects.Single(x => x.Title == "Dashboard").ProjectId},
-            new Commitment{Name="Sigma It Consulting", UserId = users.Single(x => x.FirstName == "Andrés").UserId, ProjectId = projects.Single(x => x.Title == "Dashboard").ProjectId},
-            new Commitment{Name="Sigma It Consulting", UserId = users.Single(x => x.FirstName == "Andrés").UserId, ProjectId = projects.Single(x => x.Title == "Dashboard").ProjectId},
-            new Commitment{Name="Sigma It Consulting", UserId = users.Single(x => x.FirstName == "Andrés").UserId, ProjectId = projects.Single(x => x.Title == "Dashboard").ProjectId},
+            new Assignment{EmployeeId = employees.Single(x => x.FirstName == "Andrés").EmployeeId, ProjectId = projects.Single(x => x.ProjectName == "Dashboard").ProjectId},
+            new Assignment{EmployeeId = employees.Single(x => x.FirstName == "Kat").EmployeeId, ProjectId = projects.Single(x => x.ProjectName == "Dashboard").ProjectId},
+            new Assignment{EmployeeId = employees.Single(x => x.FirstName == "Kriszt").EmployeeId, ProjectId = projects.Single(x => x.ProjectName == "Dashboard").ProjectId},
+            new Assignment{EmployeeId = employees.Single(x => x.FirstName == "Jeff").EmployeeId, ProjectId = projects.Single(x => x.ProjectName == "Dashboard").ProjectId},
 
             };
 
-            foreach (Commitment commitment in commitments)
+            foreach (var assignment in assignments)
             {
-                ctx.Commitments.Add(commitment);
+                ctx.Assignments.Add(assignment);
             }
             await ctx.SaveChangesAsync();
             return true;

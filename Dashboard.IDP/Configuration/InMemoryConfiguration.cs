@@ -1,4 +1,5 @@
-﻿using IdentityServer4;
+﻿using IdentityModel;
+using IdentityServer4;
 using IdentityServer4.Models;
 using IdentityServer4.Test;
 using System;
@@ -14,14 +15,21 @@ namespace Dashboard.IDP.Configuration
         public static IEnumerable<ApiResource> ApiResources()
         {
             return new[] {
-                new ApiResource("dashboard", "Sigma Dashboard")
-            };
+                    new ApiResource("roles"){
+                        Name = "dashboard",
+                        DisplayName = "Sigma Dashboard",
+                        UserClaims  = { "role", "admin" }
+                        //ApiSecrets = new List<Secret> {new Secret("secret".Sha256()) }
+                    }
+                };
         }
         public static IEnumerable<IdentityResource> IdentityResources()
         {
             return new List<IdentityResource> {
                 new IdentityResources.OpenId(),
-                new IdentityResources.Profile()
+                new IdentityResources.Profile(),
+                new IdentityResources.Address(),
+                new IdentityResource("roles", "My Roles", new [] {"role","admin"})
             };
         }
         public static IEnumerable<Client> Clients()
@@ -45,7 +53,11 @@ namespace Dashboard.IDP.Configuration
                     AllowedScopes =
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
-                        IdentityServerConstants.StandardScopes.Profile
+                        IdentityServerConstants.StandardScopes.Profile,
+                        IdentityServerConstants.StandardScopes.Address,
+                        IdentityServerConstants.StandardScopes.OfflineAccess,
+                        "roles",
+                        "role"
                     },
                     // AlwaysIncludeUserClaimsInIdToken = true,
                     AllowOfflineAccess = true
@@ -54,7 +66,7 @@ namespace Dashboard.IDP.Configuration
         }
         public static IEnumerable<TestUser> Users()
         {
-            return new[] {
+            return new List<TestUser> {
                 new TestUser
                 {
                     SubjectId = "1",
@@ -64,8 +76,25 @@ namespace Dashboard.IDP.Configuration
                     {
                         new Claim("given_name","Andy"),
                         new Claim("family_name","Kat"),
+                        new Claim("address","1, LaCroix"),
+                        new Claim(JwtClaimTypes.Role, "admin")
                     }
+                },
+                new TestUser
+                {
+                    SubjectId = "2",
+                    Username = "mail@kat.se",
+                    Password = "password",
+                    Claims = new List<Claim>
+                    {
+                        new Claim("given_name","Kat"),
+                        new Claim("family_name","Woman"),
+                        new Claim("address","2, Franc"),
+                        new Claim(JwtClaimTypes.Role,"Consult")
+                    }
+
                 }
+
             };
         }
     }

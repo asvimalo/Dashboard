@@ -11,12 +11,16 @@ namespace Dashboard.Data.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ProjectId { get; set; }
         [Required]
-        public string Title { get; set; }
-        public string Description { get; set; }
+        public string ProjectName { get; set; }
+        public string Notes { get; set; }
         [Required]
         public DateTime StartDate { get; set; }
         public DateTime StopDate { get; set; }
-
-        public ICollection<Commitment> Commitments { get; set; }
+        public int Budget { get; set; }
+        public int ClientId { get; set; }
+        [ForeignKey("ClientId")]
+        public Client Client { get; set; }
+        public ICollection<Assignment> Assignments { get; set; }
+        public ICollection<Phase> Phases { get; set; }
     }
 }

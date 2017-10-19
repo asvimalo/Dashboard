@@ -5,10 +5,10 @@ using System;
 
 namespace Dashboard.Data.Entities
 {
-    public class User 
+    public class Employee 
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int UserId { get; set; }
+        public int EmployeeId { get; set; }
         [Required]
         public string FirstName { get; set; }
         [Required]
@@ -19,6 +19,6 @@ namespace Dashboard.Data.Entities
         [ForeignKey("PictureId")]
         public  Picture Picture { get; set; }
       
-        public ICollection <Commitment> Commitments { get; set; }
+        public ICollection <Assignment> Assignments { get; set; }
     }
 }

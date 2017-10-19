@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Dashboard.Data.EF.Contracts;
 using Dashboard.Data.EF.IRepository;
 using Dashboard.Data.Entities;
 using Dashboard.Data.ViewModelsAPI;
@@ -15,17 +16,17 @@ namespace Dashboard.Data.Controllers
     [Route("api/dashboard/[controller]")]
     public class ProjectsController : Controller
     {
-        public IRepositoryDashboard _repo;
+        public IRepoProject _repo;
         private ILogger<ProjectsController> _logger;
-        private IMapper _mapper;
+        //private IMapper _mapper;
 
-        public ProjectsController(IRepositoryDashboard repo, 
-            ILogger<ProjectsController> logger,
-            IMapper mapper)
+        public ProjectsController(IRepoProject repo, 
+            ILogger<ProjectsController> logger/*,
+            IMapper mapper*/)
         {
             _repo = repo;
             _logger = logger;
-            _mapper = mapper;
+            //_mapper = mapper;
         }
         public IActionResult Index()
         {
@@ -37,14 +38,14 @@ namespace Dashboard.Data.Controllers
         {
             try
             {
-                var result = await _repo.GetProjects();
+                var result = await _repo.GetAll<Assignment>();
                 return Ok(result);
                 //return Ok(_mapper.Map<IEnumerable<ProjectViewModel>>(result));
             }
             catch (Exception ex)
             {
                 // LOGGING TODO
-                _logger.LogError($"Exception thrown white getting commitments: {ex}");
+                _logger.LogError($"Exception thrown white getting projects: {ex}");
                 return BadRequest($"Error ocurred");
             }
         }
@@ -55,14 +56,14 @@ namespace Dashboard.Data.Controllers
         {
             try
             {
-                var result = await _repo.GetProject(id);
+                var result = _repo.Get<Assignment>(id);
                 return Ok(result);
                 //return Ok(_mapper.Map<ProjectViewModel>(result));
             }
             catch (Exception ex)
             {
 
-                _logger.LogError($"Exception thrown while getting commitment: {ex}");
+                _logger.LogError($"Exception thrown while getting project: {ex}");
                 return BadRequest($"Error ocurred");
             }
 
@@ -78,7 +79,7 @@ namespace Dashboard.Data.Controllers
                 var addedProject = await _repo.AddAsync(project);
                 if (await _repo.SaveChangesAsync())
                 {
-                    return Created($"api/dashboard/projects/{addedProject.Title}", /*_mapper.Map<ProjectViewModel>(newProject)*/ addedProject);
+                    return Created($"api/dashboard/projects/{addedProject.ProjectName}", /*_mapper.Map<ProjectViewModel>(newProject)*/ addedProject);
                 }
             }
             return BadRequest("Failed to save changes to the database");
@@ -90,7 +91,7 @@ namespace Dashboard.Data.Controllers
         {
             if (ModelState.IsValid)
             {
-                var projectFromRepo = await _repo.GetProject(id);
+                var projectFromRepo = _repo.Get<Project>(id);
                 //_mapper.Map(projectVM, projectFromRepo);
                 var projectUpdated = _repo.Update(projectFromRepo);
                 if (!await _repo.SaveChangesAsync())
@@ -108,12 +109,12 @@ namespace Dashboard.Data.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var projectToDel = await _repo.GetProject(id);
+            var projectToDel = _repo.Get<Project>(id);
             _repo.Delete(projectToDel);
             if (await _repo.SaveChangesAsync())
                 return Ok($"Project deleted!");
             else
-                return BadRequest($"Project {projectToDel.Title} wasn't deleted!");
+                return BadRequest($"Project {projectToDel.ProjectName} wasn't deleted!");
         }
     }
 

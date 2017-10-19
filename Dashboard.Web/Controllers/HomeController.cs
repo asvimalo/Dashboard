@@ -4,14 +4,26 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
+using Dashboard.Data.EF.Contracts;
 
 namespace Dashboard.Web.Controllers
 {
     public class HomeController : Controller
     {
-        public async Task<IActionResult> Index()
+        
+
+        
+        public IActionResult Index()
         {
+
             return View();
+        }
+        [Authorize]
+        public void Login()
+        {
+
+           
         }
         public async Task Logout()
         {
@@ -19,7 +31,7 @@ namespace Dashboard.Web.Controllers
             await HttpContext.SignOutAsync("Cookies");
             await HttpContext.SignOutAsync("oidc");
         }
-
+        
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";

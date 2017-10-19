@@ -14,24 +14,25 @@ using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using System.Diagnostics;
 using Microsoft.AspNetCore.Authentication;
 
+
 namespace Dashboard.Web.Controllers
 {
     [Authorize]
-    public class CommitmentsController : Controller
+    public class AssignmentsController : Controller
     {
         private IHttpClientDashboard _httpClientDashboard;
 
-        public CommitmentsController(IHttpClientDashboard httpClientDashboard)
+        public AssignmentsController(IHttpClientDashboard httpClientDashboard)
         {
             _httpClientDashboard = httpClientDashboard;
         }
         public async Task<IActionResult> Index()
         {
-            await WriteOutIdentityInformation();
+            
             var httpClient = await _httpClientDashboard.GetClient();
             try
             {
-                var responseCom = await httpClient.GetAsync("api/dashboard/commitments").ConfigureAwait(false);
+                var responseCom = await httpClient.GetAsync("api/dashboard/assignments").ConfigureAwait(false);
                 if (responseCom.IsSuccessStatusCode)
                 {
                     var commitmmentsAsString = await responseCom.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -50,14 +51,14 @@ namespace Dashboard.Web.Controllers
         }
 
         [HttpGet]
-        public IActionResult AddCommitment()
+        public IActionResult AddAssignment()
         {
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddCommitment([FromBody] Commitment commitment)
+        public async Task<IActionResult> AddAssignment([FromBody] Assignment assignment)
         {
 
             if (ModelState.IsValid)
@@ -65,14 +66,14 @@ namespace Dashboard.Web.Controllers
                 try
                 {
                     var httpClient = await _httpClientDashboard.GetClient();
-                    var serializedCommitment = JsonConvert.SerializeObject(commitment);
+                    var serializedAssignment = JsonConvert.SerializeObject(assignment);
                     var response = await httpClient.PostAsync(
-                            $"api/dashboard/commitments",
-                            new StringContent(serializedCommitment, System.Text.Encoding.Unicode, "application/json")).ConfigureAwait(false);
+                            $"api/dashboard/assignments",
+                            new StringContent(serializedAssignment, System.Text.Encoding.Unicode, "application/json")).ConfigureAwait(false);
                     if (response.IsSuccessStatusCode)
                     {
-                        var commitmmentAsString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        var desCommitment = JsonConvert.DeserializeObject<Commitment>(commitmmentAsString);
+                        var AssignmentAsString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        var desCommitment = JsonConvert.DeserializeObject<Commitment>(AssignmentAsString);
                         return View(desCommitment);
                     }
                     else
@@ -90,7 +91,7 @@ namespace Dashboard.Web.Controllers
         }
         [HttpPut]
         [ValidateAntiForgeryToken] //TO-DO
-        public async Task<IActionResult> EditCommitment([FromBody] Commitment commitment)
+        public async Task<IActionResult> EditAssigment([FromBody] Assignment assignment)
         {
             // TODO
             if (ModelState.IsValid)
@@ -98,20 +99,20 @@ namespace Dashboard.Web.Controllers
                 try
                 {
                     var httpClient = await _httpClientDashboard.GetClient();
-                    var serializedCommitment = JsonConvert.SerializeObject(commitment);
+                    var serializedAssignment = JsonConvert.SerializeObject(assignment);
 
                     var response = await httpClient.PostAsync(
-                            $"api/dashboard/commitments",
-                            new StringContent(serializedCommitment, 
+                            $"api/dashboard/assignments",
+                            new StringContent(serializedAssignment, 
                                 System.Text.Encoding.Unicode, 
                                 "application/json"))
                                 .ConfigureAwait(false);
 
                     if (response.IsSuccessStatusCode)
                     {
-                        var commitmmentAsString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        var desCommitment = JsonConvert.DeserializeObject<Commitment>(commitmmentAsString);
-                        return View(desCommitment);
+                        var assignmentAsString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        var desAssignment = JsonConvert.DeserializeObject<Commitment>(assignmentAsString);
+                        return View(desAssignment);
                     }
                     else
                         throw new Exception($"A problem happened while calling the API: {response.ReasonPhrase}");
@@ -126,32 +127,18 @@ namespace Dashboard.Web.Controllers
                 return View();
 
         }
-        public async Task<IActionResult> DeleteCommitment(int id)
+        public async Task<IActionResult> DeleteAssignment(int id)
         {
             var httpClient = await _httpClientDashboard.GetClient();
-            var response = await httpClient.DeleteAsync($"api/commitments/{id}").ConfigureAwait(false);
+            var response = await httpClient.DeleteAsync($"api/dashboard/assignment/{id}").ConfigureAwait(false);
             if (response.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index");
             }
             throw new Exception($"A problem happened while calling the API: {response.ReasonPhrase}");
         }
-        public async Task WriteOutIdentityInformation()
-        {
-            // get the saved identity token
-            var identityToken = await HttpContext.GetTokenAsync("id_token");
-            var accessToken = await HttpContext.GetTokenAsync("access_token");
-            //.GetTokenAsync(OpenIdConnectParameterNames.IdToken);
-
-            // write it out
-            Debug.WriteLine($"Identity token: {identityToken}");
-
-            // write out the user claims
-            foreach (var claim in User.Claims)
-            {
-                Debug.WriteLine($"Claim type: {claim.Type} - Claim value: {claim.Value}");
-            }
-        }
+        
+        
 
     }
 }

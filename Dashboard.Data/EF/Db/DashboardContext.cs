@@ -19,9 +19,16 @@ namespace Dashboard.Data.EF.Db
         }
         public DbSet<Picture> Pictures { get; set; }
         public DbSet<Project> Projects { get; set; }
-        public DbSet<User> Users { get; set; }
+        public DbSet<Employee> Employees { get; set; }
         public DbSet<Commitment> Commitments { get; set; }
-        
+        public DbSet<Assignment> Assignments { get; set; }
+        public DbSet<Client> Clients { get; set; }
+        public DbSet<Knowledge> Knowledges { get; set; }
+        public DbSet<AcquiredKnowledge> AcquiredKnowledges { get; set; }
+        public DbSet<Phase> Phases { get; set; }
+        public DbSet<Dashboard.Data.Entities.Task> Tasks { get; set; }
+        public DbSet<Location> Location { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //modelBuilder.Entity<Picture>()
