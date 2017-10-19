@@ -9,8 +9,7 @@ namespace Dashboard.Data.Entities
     public class AcquiredKnowledge
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int AcquiredId { get; set; }
-        [ForeignKey("KnowledgeId")]
+        public int AcquiredKnowledgeId { get; set; }     
         public int KnowledgeId { get; set; }
         [ForeignKey("KnowledgeId")]
         public Knowledge Knowledge { get; set; }
