@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Dashboard.Data.EF.Contracts
 {
-    public interface IRepoClient
+    public interface IRepoClient : IRepo
     {
 
     }
