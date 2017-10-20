@@ -36,8 +36,8 @@ namespace Dashboard.Web.Controllers
                 if (responseCom.IsSuccessStatusCode)
                 {
                     var commitmmentsAsString = await responseCom.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    List<Commitment> commitments = JsonConvert.DeserializeObject<IList<Commitment>>(commitmmentsAsString).ToList();
-                    return View(commitments);
+                    List<Assignment> assignments = JsonConvert.DeserializeObject<IList<Assignment>>(commitmmentsAsString).ToList();
+                    return View(assignments);
                 }
                 else
                     throw new Exception($"A problem happened while calling the API: {responseCom.ReasonPhrase}");
@@ -73,8 +73,8 @@ namespace Dashboard.Web.Controllers
                     if (response.IsSuccessStatusCode)
                     {
                         var AssignmentAsString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        var desCommitment = JsonConvert.DeserializeObject<Commitment>(AssignmentAsString);
-                        return View(desCommitment);
+                        var desAssignment = JsonConvert.DeserializeObject<Assignment>(AssignmentAsString);
+                        return View(desAssignment);
                     }
                     else
                         throw new Exception($"A problem happened while calling the API: {response.ReasonPhrase}");
@@ -111,7 +111,7 @@ namespace Dashboard.Web.Controllers
                     if (response.IsSuccessStatusCode)
                     {
                         var assignmentAsString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        var desAssignment = JsonConvert.DeserializeObject<Commitment>(assignmentAsString);
+                        var desAssignment = JsonConvert.DeserializeObject<Assignment>(assignmentAsString);
                         return View(desAssignment);
                     }
                     else

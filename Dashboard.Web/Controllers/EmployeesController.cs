@@ -18,30 +18,29 @@ using System.Diagnostics;
 namespace Dashboard.Web.Controllers
 {
     
-    public class EmployeeController : Controller
+    public class EmployeesController : Controller
     {
         private IHttpClientDashboard _httpClientDashboard;
 
-        public EmployeeController(IHttpClientDashboard httpClientDashboard)
+        public EmployeesController(IHttpClientDashboard httpClientDashboard)
         {
             _httpClientDashboard = httpClientDashboard;
         }
-        [Authorize]
         public async Task<IActionResult> Index()
         {
             await WriteOutIdentityInformation();
             var httpClient = await _httpClientDashboard.GetClient();
             try
             {
-                var responseCom = await httpClient.GetAsync("api/dashboard/employees").ConfigureAwait(false);
-                if (responseCom.IsSuccessStatusCode)
+                var responseEmployee = await httpClient.GetAsync("api/dashboard/employees").ConfigureAwait(false);
+                if (responseEmployee.IsSuccessStatusCode)
                 {
-                    var usersAsString = await responseCom.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    List<Employee> users = JsonConvert.DeserializeObject<IList<Employee>>(usersAsString).ToList();
-                    return View(users);
+                    var employeesAsString = await responseEmployee.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    List<Employee> employees = JsonConvert.DeserializeObject<IList<Employee>>(employeesAsString).ToList();
+                    return View(employees);
                 }
                 else
-                    throw new Exception($"A problem happened while calling the API: {responseCom.ReasonPhrase}");
+                    throw new Exception($"A problem happened while calling the API: {responseEmployee.ReasonPhrase}");
             }
             catch (Exception ex)
             {
@@ -102,7 +101,7 @@ namespace Dashboard.Web.Controllers
                     var serializedUser = JsonConvert.SerializeObject(user);
 
                     var response = await httpClient.PostAsync(
-                            $"api/dashboard/users",
+                            $"api/dashboard/employees",
                             new StringContent(serializedUser,
                                 System.Text.Encoding.Unicode,
                                 "application/json"))
@@ -131,7 +130,7 @@ namespace Dashboard.Web.Controllers
         public async Task<IActionResult> DeleteUser(int id)
         {
             var httpClient = await _httpClientDashboard.GetClient();
-            var response = await httpClient.DeleteAsync($"api/dashboard/users/{id}").ConfigureAwait(false);
+            var response = await httpClient.DeleteAsync($"api/dashboard/employees/{id}").ConfigureAwait(false);
             if (response.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index");

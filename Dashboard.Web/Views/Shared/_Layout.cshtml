@@ -35,7 +35,7 @@
             else
             {
                 <div navbar-left>
-                    <a  class="navbar-brand pull-right">Login</a>
+                    <a  class="navbar-brand pull-right" asp-controller="Home" asp-action="Login"><span class="btn btn-default">Login</span></a>
                 </div>
 
             }
@@ -44,9 +44,9 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">Timeline</a></li>
-                    <li><a asp-area="" asp-controller="Commitments" asp-action="Index">Commitments</a></li>
+                    <li><a asp-area="" asp-controller="Assignments" asp-action="Index">Assignments</a></li>
                     <li><a asp-area="" asp-controller="Projects" asp-action="Index">Projects</a></li>
-                    <li><a asp-area="" asp-controller="Users" asp-action="Index">Consults</a></li>  
+                    <li><a asp-area="" asp-controller="Employees" asp-action="Index">Employees</a></li>  
                     @if (User.Identity.IsAuthenticated)
                     {
                         <li><a asp-area="" asp-controller="Users" asp-action="GetUserInfo">User Info</a></li>
