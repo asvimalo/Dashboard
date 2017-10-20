@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Dashboard.Data.EF.Contracts
 {
-    public interface IRepoAssignment : IRepo 
+    public interface IRepoAssignment : IRepo
     {
         Task<ICollection<Assignment>> GetProjectsByEmployeeId(int id);
     }

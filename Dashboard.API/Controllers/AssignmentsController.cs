@@ -37,7 +37,7 @@ namespace Dashboard.Data.Controllers
         {
             try
             {
-                var result = _repo.GetAll<Assignment>();
+                var result = await _repo.GetAll<Assignment>();
                 return Ok(result);
                 //return Ok(Mapper.Map<IEnumerable<CommitmentViewModel>>(result));
             }

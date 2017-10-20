@@ -64,7 +64,7 @@ namespace Dashboard.Data
                 .AddDbContext<DashboardContext>();
             // Add framework services.
             //services.AddDbContext<DashboardContext>();
-            services.AddScoped(typeof(IRepo), typeof(Repository));
+            //services.AddScoped(typeof(IRepo), typeof(IRepoAssignment));
             //services.AddScoped(typeof(IRepo), typeof(IRepoAssignment));
             //services.AddScoped(typeof(IRepo), typeof(IRepoProject));
             //services.AddScoped(typeof(IRepo), typeof(IRepoPicture));
