@@ -1,108 +1,140 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Dashboard";
 }
 
-<div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="6000">
-    <ol class="carousel-indicators">
-        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-        <li data-target="#myCarousel" data-slide-to="1"></li>
-        <li data-target="#myCarousel" data-slide-to="2"></li>
-        <li data-target="#myCarousel" data-slide-to="3"></li>
-    </ol>
-    <div class="carousel-inner" role="listbox">
-        <div class="item active">
-            <img src="~/images/banner1.svg" alt="ASP.NET" class="img-responsive" />
-            <div class="carousel-caption" role="option">
-                <p>
-                    Learn how to build ASP.NET apps that can run anywhere.
-                    <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkID=525028&clcid=0x409">
-                        Learn More
-                    </a>
-                </p>
-            </div>
-        </div>
-        <div class="item">
-            <img src="~/images/banner2.svg" alt="Visual Studio" class="img-responsive" />
-            <div class="carousel-caption" role="option">
-                <p>
-                    There are powerful new features in Visual Studio for building modern web apps.
-                    <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkID=525030&clcid=0x409">
-                        Learn More
-                    </a>
-                </p>
-            </div>
-        </div>
-        <div class="item">
-            <img src="~/images/banner3.svg" alt="Package Management" class="img-responsive" />
-            <div class="carousel-caption" role="option">
-                <p>
-                    Bring in libraries from NuGet, Bower, and npm, and automate tasks using Grunt or Gulp.
-                    <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkID=525029&clcid=0x409">
-                        Learn More
-                    </a>
-                </p>
-            </div>
-        </div>
-        <div class="item">
-            <img src="~/images/banner4.svg" alt="Microsoft Azure" class="img-responsive" />
-            <div class="carousel-caption" role="option">
-                <p>
-                    Learn how Microsoft's Azure cloud platform allows you to build, deploy, and scale web apps.
-                    <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkID=525027&clcid=0x409">
-                        Learn More
-                    </a>
-                </p>
-            </div>
-        </div>
-    </div>
-    <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
-        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
-    </a>
-    <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
-        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
-    </a>
-</div>
+<div id="gantt_here" style="width: 100%; height: 250px;"></div>
 
-<div class="row">
-    <div class="col-md-3">
-        <h2>Application uses</h2>
-        <ul>
-            <li>Sample pages using ASP.NET Core MVC</li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=518004">Bower</a> for managing client-side libraries</li>
-            <li>Theming using <a href="https://go.microsoft.com/fwlink/?LinkID=398939">Bootstrap</a></li>
-        </ul>
-    </div>
-    <div class="col-md-3">
-        <h2>How to</h2>
-        <ul>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=398600">Add a Controller and View</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=699315">Manage User Secrets using Secret Manager.</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=699316">Use logging to log a message.</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=699317">Add packages using NuGet.</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=699318">Add client packages using Bower.</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=699319">Target development, staging or production environment.</a></li>
-        </ul>
-    </div>
-    <div class="col-md-3">
-        <h2>Overview</h2>
-        <ul>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=518008">Conceptual overview of what is ASP.NET Core</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=699320">Fundamentals of ASP.NET Core such as Startup and middleware.</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=398602">Working with Data</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=398603">Security</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=699321">Client side development</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=699322">Develop on different platforms</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=699323">Read more on the documentation site</a></li>
-        </ul>
-    </div>
-    <div class="col-md-3">
-        <h2>Run & Deploy</h2>
-        <ul>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=517851">Run your app</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=517853">Run tools such as EF migrations and more</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=398609">Publish to Microsoft Azure Web Apps</a></li>
-        </ul>
-    </div>
-</div>
+
+@section Scripts 
+{
+
+<script>
+
+    gantt.init("gantt_here");
+    gantt.config.columns = [
+        { name: "text", label: "Task name", tree: true, width: "*" },
+        { name: "start_date", label: "Start time", align: "center" },
+        {
+            name: "priority", label: "Priority", align: "center", template: function (obj) {
+                if (obj.priority == 1) { return "High" }
+                if (obj.priority == 2) { return "Medium" }
+                return "Low"
+            }
+        }
+    ];
+    gantt.templates.task_class = function (start, end, task) {
+        switch (task.priority) {
+            case "1":
+                return "high";
+                break;
+            case "2":
+                return "medium";
+                break;
+            case "3":
+                return "low";
+                break;
+        }
+    };
+
+    gantt.parse({
+        "data": [
+            { "id": 1, "text": "Project #1", "start_date": "01-04-2013", "duration": "11", "progress": 0.6, "open": true, "users": ["John", "Mike", "Anna"], "priority": "2" },
+            { "id": 2, "text": "Task #1", "start_date": "03-04-2013", "duration": "5", "parent": "1", "progress": 1, "open": true, "users": ["John", "Mike"], "priority": "1" },
+            { "id": 3, "text": "Task #2", "start_date": "02-04-2013", "duration": "7", "parent": "1", "progress": 0.5, "open": true, "users": ["Anna"], "priority": "1" },
+            { "id": 4, "text": "Task #3", "start_date": "02-04-2013", "duration": "6", "parent": "1", "progress": 0.8, "open": true, "users": ["Mike", "Anna"], "priority": "2" },
+            { "id": 5, "text": "Task #4", "start_date": "02-04-2013", "duration": "5", "parent": "1", "progress": 0.2, "open": true, "users": ["John"], "priority": "3" },
+            { "id": 6, "text": "Task #5", "start_date": "02-04-2013", "duration": "7", "parent": "1", "progress": 0, "open": true, "users": ["John"], "priority": "2" },
+            { "id": 7, "text": "Task #2.1", "start_date": "03-04-2013", "duration": "2", "parent": "3", "progress": 1, "open": true, "users": ["Mike", "Anna"], "priority": "2" },
+            { "id": 8, "text": "Task #2.2", "start_date": "06-04-2013", "duration": "3", "parent": "3", "progress": 0.8, "open": true, "users": ["Anna"], "priority": "3" },
+            { "id": 9, "text": "Task #2.3", "start_date": "10-04-2013", "duration": "4", "parent": "3", "progress": 0.2, "open": true, "users": ["Mike", "Anna"], "priority": "1" },
+            { "id": 10, "text": "Task #2.4", "start_date": "10-04-2013", "duration": "4", "parent": "3", "progress": 0, "open": true, "users": ["John", "Mike"], "priority": "1" },
+            { "id": 11, "text": "Task #4.1", "start_date": "03-04-2013", "duration": "4", "parent": "5", "progress": 0.5, "open": true, "users": ["John", "Anna"], "priority": "3" },
+            { "id": 12, "text": "Task #4.2", "start_date": "03-04-2013", "duration": "4", "parent": "5", "progress": 0.1, "open": true, "users": ["John"], "priority": "3" },
+            { "id": 13, "text": "Task #4.3", "start_date": "03-04-2013", "duration": "5", "parent": "5", "progress": 0, "open": true, "users": ["Anna"], "priority": "3" }
+        ],
+        "links": [
+            { "id": "10", "source": "11", "target": "12", "type": "1" },
+            { "id": "11", "source": "11", "target": "13", "type": "1" },
+            { "id": "12", "source": "11", "target": "14", "type": "1" },
+            { "id": "13", "source": "11", "target": "15", "type": "1" },
+            { "id": "14", "source": "11", "target": "16", "type": "1" },
+
+            { "id": "15", "source": "13", "target": "17", "type": "1" },
+            { "id": "16", "source": "17", "target": "18", "type": "0" },
+            { "id": "17", "source": "18", "target": "19", "type": "0" },
+            { "id": "18", "source": "19", "target": "20", "type": "0" },
+            { "id": "19", "source": "15", "target": "21", "type": "2" },
+            { "id": "20", "source": "15", "target": "22", "type": "2" },
+            { "id": "21", "source": "15", "target": "23", "type": "2" }
+        ]
+    });
+
+    //function exportGantt(mode) {
+    //    if (mode == "png")
+    //        gantt.exportToPNG({
+    //            header: '<link rel="stylesheet" href="//dhtmlx.com/docs/products/dhtmlxGantt/common/customstyles.css" type="text/css">'
+    //        });
+    //    else if (mode == "pdf")
+    //        gantt.exportToPDF({
+    //            header: '<link rel="stylesheet" href="//dhtmlx.com/docs/products/dhtmlxGantt/common/customstyles.css" type="text/css">'
+    //        });
+    //}
+
+
+    //var tasks = {
+    //    data: [
+    //        {
+    //            id: 1, text: "Project #1", start_date: "01-04-2013", duration: 11,
+    //            progress: 0.6, open: true
+    //        },
+    //        {
+    //            id: 2, text: "Task #1", start_date: "03-04-2013", duration: 5,
+    //            progress: 1, open: true, parent: 1
+    //        },
+    //        {
+    //            id: 3, text: "Task #2", start_date: "02-04-2013", duration: 7,
+    //            progress: 0.5, open: true, parent: 1
+    //        },
+    //        {
+    //            id: 4, text: "Task #2.1", start_date: "03-04-2013", duration: 2,
+    //            progress: 1, open: true, parent: 3
+    //        },
+    //        {
+    //            id: 5, text: "Task #2.2", start_date: "04-04-2013", duration: 3,
+    //            progress: 0.8, open: true, parent: 3
+    //        },
+    //        {
+    //            id: 6, text: "Task #2.3", start_date: "05-04-2013", duration: 4,
+    //            progress: 0.2, open: true, parent: 3
+    //        }
+    //    ],
+    //    links: [
+    //        { id: 1, source: 1, target: 2, type: "1" },
+    //        { id: 2, source: 1, target: 3, type: "1" },
+    //        { id: 3, source: 3, target: 4, type: "1" },
+    //        { id: 4, source: 4, target: 5, type: "0" },
+    //        { id: 5, source: 5, target: 6, type: "0" }
+    //    ]
+    //};
+
+
+    //(function () {
+    //        /*chart configuration:*/
+    //        // specifying the date format
+    //        gantt.config.xml_date = "%Y-%m-%d %H:%i%s";
+    //        // initializing gantt
+    //        gantt.init("gantt_here");
+    //        gantt.parse(tasks);
+    //        //// enabling data loading
+    //        //gantt.load("/api/data");
+    //        //// initializing dataProcessor
+    //        //var dp = new gantt.dataProcessor("/api/data/");
+    //        //// and attaching it to gantt
+    //        //dp.init(gantt);
+    //        //// setting the REST mode for dataProcessor
+    //        //dp.setTransactionMode("REST");
+    //    })();
+</script>
+
+}
+
