@@ -8,9 +8,7 @@ namespace Dashboard.Data.Entities
     public class Employee 
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        //[Key]
         public int EmployeeId { get; set; }
-
         [Required]
         public string FirstName { get; set; }
         [Required]
@@ -19,11 +17,7 @@ namespace Dashboard.Data.Entities
         public string ImageName { get; set; }
         public string ImagePath { get; set; }
 
-        public int? PictureId { get; set; } //Delete
-        [ForeignKey("PictureId")] //Delete
-        public  Picture Picture { get; set; } //Delete
-      
-        //public ICollection <KnowledgeEmployee> KnowledgeEmployees { get; set; } ??AquiredKnowledge
+        public ICollection <AcquiredKnowledge> AcquiredKnowledge { get; set; } 
         public ICollection <Assignment> Assignments { get; set; }
     }
 }

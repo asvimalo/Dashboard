@@ -81,29 +81,29 @@ namespace Dashboard.API.Controllers
 
         // PUT api/dashboard/Commitments/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody]Employee user)
+        public async Task<IActionResult> Put(int id, [FromBody]Employee employee)
         {
             if (ModelState.IsValid)
             {
                 //var projectId = 0;
                 //var userId = 0;
-                var employeeFromRepo = _repo.Get<Employee>(id);
+                //var employeeFromRepo = _repo.Get<Employee>(id);
                 //Mapper.Map(commitmentVM, commiFromRepo);
 
-                employeeFromRepo.FirstName = user.FirstName ?? employeeFromRepo.FirstName;
-                employeeFromRepo.LastName = user.LastName ?? employeeFromRepo.LastName;
-                employeeFromRepo.PersonNr = user.PersonNr ?? employeeFromRepo.PersonNr;
-                employeeFromRepo.PictureId = user.PictureId ?? employeeFromRepo.PictureId;
-                employeeFromRepo.Picture = user.Picture ?? employeeFromRepo.Picture;
+                //employeeFromRepo.FirstName = user.FirstName ?? employeeFromRepo.FirstName;
+                //employeeFromRepo.LastName = user.LastName ?? employeeFromRepo.LastName;
+                //employeeFromRepo.PersonNr = user.PersonNr ?? employeeFromRepo.PersonNr;
+                //employeeFromRepo.PictureId = user.PictureId ?? employeeFromRepo.PictureId;
+                //employeeFromRepo.Picture = user.Picture ?? employeeFromRepo.Picture;
 
-                var userUpdated = _repo.Update(employeeFromRepo);
+                var employeeUpdated = _repo.Update(employee);
 
                 if (!await _repo.SaveChangesAsync())
                 {
                     _logger.LogError($"Thrown exception when updating");
                     BadRequest("Something when wrong while updating");
                 }
-                return Ok(/*Mapper.Map<CommitmentViewModel>(*/userUpdated/*)*/);
+                return Ok(/*Mapper.Map<CommitmentViewModel>(*/employeeUpdated/*)*/);
             }
             return BadRequest("Error occured");
 

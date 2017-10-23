@@ -9,15 +9,13 @@ namespace Dashboard.Data.Entities
     public class AcquiredKnowledge
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        //[Key] using missing
-        public int AcquiredKnowledgeId { get; set; }     
+        public int AcquiredKnowledgeId { get; set; }    
         
-        [ForeignKey("KnowledgeId")]
         public int KnowledgeId { get; set; }
-        [ForeignKey("EmployeeId")]
-        public int EmployeeId { get; set; }
-
+        [ForeignKey("KnowledgeId")]
         public Knowledge Knowledge { get; set; }
+        public int EmployeeId { get; set; }
+        [ForeignKey("EmployeeId")]
         public Employee Employee { get; set; }
     }
 }

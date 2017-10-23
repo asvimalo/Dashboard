@@ -91,15 +91,16 @@ namespace Dashboard.Data.Controllers
             if (ModelState.IsValid)
             {
                 var projectId = 0;
-                var userId = 0;
+                var employeeId = 0;
                 var assignFromRepo =  _repo.Get<Assignment>(id);
                 //Mapper.Map(commitmentVM, commiFromRepo);
-
-                assignFromRepo.JobTitle = assignment.JobTitle ?? assignFromRepo.JobTitle;
+                //assignFromRepo.Location = assignment.Location ?? assignFromRepo.Location;
+                //assignFromRepo.JobTitle = assignment.JobTitle ?? assignFromRepo.JobTitle;
                 assignFromRepo.ProjectId = projectId;
-                Int32.TryParse((assignment.ProjectId.ToString() ?? assignFromRepo.ProjectId.ToString()),out projectId);
-                assignFromRepo.EmployeeId = userId;
-                Int32.TryParse((assignment.EmployeeId.ToString() ?? assignFromRepo.EmployeeId.ToString()),out userId);
+                Int32.TryParse((assignment.ProjectId.ToString() ?? assignFromRepo.ProjectId.ToString()), out projectId);
+                assignFromRepo.EmployeeId = employeeId;
+                Int32.TryParse((assignment.EmployeeId.ToString() ?? assignFromRepo.EmployeeId.ToString()), out employeeId);             
+                
 
                 var commitUpdated =  _repo.Update(assignFromRepo);
                 if (!await _repo.SaveChangesAsync())

@@ -68,7 +68,8 @@ namespace Dashboard.Data.EF.Repository
         {
             var assigments = await _ctx.Assignments
                             .Include(e => e.Project)
-                            .Include(c => c.Commitment)
+                            .Include(c => c.Commitments)
+                            .Include(x => x.Employee)
                             .Where(p => p.EmployeeId == id)
                             .ToListAsync();
             return assigments;

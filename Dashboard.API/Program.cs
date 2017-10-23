@@ -25,7 +25,7 @@ namespace Dashboard.Data
                 try
                 {
                     var context = services.GetRequiredService<DashboardContext>();
-                    DashboardContextSeedData.SeedData(context).Wait();
+                    //DashboardContextSeedData.SeedData(context).Wait();
                 }
                 catch (Exception ex)
                 {
