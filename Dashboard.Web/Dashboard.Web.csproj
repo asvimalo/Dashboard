@@ -25,6 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Dhtmlx\" />
     <Folder Include="Views\Pictures\" />
   </ItemGroup>
 
