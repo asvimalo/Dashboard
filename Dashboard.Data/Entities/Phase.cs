@@ -6,13 +6,16 @@ namespace Dashboard.Data.Entities
     public class Phase
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        //[Key]
         public int PhaseId { get; set; }
-        public string PhaseName { get; set; }
-
-        public int ProjectId { get; set; }
         [ForeignKey("ProjectId")]
-        public Project Project { get; set; }
+        public int ProjectId { get; set; }
 
+        public string PhaseName { get; set; }
+        public string Comments { get; set; }
+        
+        
+        public Project Project { get; set; }
         public ICollection<Task> Tasks { get; set; }
     }
 }
