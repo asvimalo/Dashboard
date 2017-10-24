@@ -15,8 +15,5 @@ namespace Dashboard.Data.Entities
         public DateTime StartDate { get; set; }
         public DateTime StopDate { get; set; }
         public int Hours { get; set; }
-
-        
-
     }
 }
