@@ -11,9 +11,10 @@ using System;
 namespace Dashboard.Data.Migrations
 {
     [DbContext(typeof(DashboardContext))]
-    partial class DashboardContextModelSnapshot : ModelSnapshot
+    [Migration("20171024001045_NewRevDb")]
+    partial class NewRevDb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -16,7 +16,7 @@ namespace Dashboard.Data.Entities
         public DateTime StopDate { get; set; }
         public int Hours { get; set; }
 
-        public ICollection<Assignment> Assignments { get; set; }
+        
 
     }
 }
