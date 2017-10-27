@@ -65,11 +65,11 @@ namespace Dashboard.Data.EF.Db
             var locations = new Location[]
             {
                 new Location{ Address = "Storgatan 1", City ="Malmö"},
-                new Location {  Address = "Storgatan 1", City = "Helsingborg"},
-                new Location {  Address = "Storgatan 1", City = "Lund"},
+                new Location {  Address = "Storgatan 10", City = "Helsingborg"},
+                new Location {  Address = "Storgatan 100", City = "Lund"},
                 new Location{ Address = "Storgatan 2", City ="Malmö"},
-                new Location {  Address = "Storgatan 2", City = "Helsingborg"},
-                new Location {  Address = "Storgatan 2", City = "Lund"},
+                new Location {  Address = "Storgatan 20", City = "Helsingborg"},
+                new Location {  Address = "Storgatan 200", City = "Lund"},
                 new Location {  Address = "Storgatan 3", City = "Lund"}
 
             };
@@ -85,9 +85,9 @@ namespace Dashboard.Data.EF.Db
             }
             var clients = new Client[]
             {
-                new Client{ ClientName = "Sigma",Description ="It Consulting", Location = ctx.Location.FirstOrDefault(x => x.City == "Malmö")},
-                new Client{ ClientName = "Combitech",Description ="It Consulting", Location = ctx.Location.FirstOrDefault(x => x.City == "Malmö") },
-                new Client { ClientName = "ÅF",Description ="It Consulting", Location = ctx.Location.FirstOrDefault(x => x.City == "Malmö")}
+                new Client{ ClientName = "Sigma",Description ="It Consulting", LocationId = ctx.Location.FirstOrDefault(x => x.Address == "Storgatan 1").LocationId},
+                new Client{ ClientName = "Combitech",Description ="It Consulting", LocationId = ctx.Location.FirstOrDefault(x => x.Address == "Storgatan 2").LocationId },
+                new Client { ClientName = "ÅF",Description ="It Consulting", LocationId = ctx.Location.FirstOrDefault(x => x.Address == "Storgatan 200").LocationId}
             };
             foreach (Client client in clients)
             {
@@ -113,14 +113,14 @@ namespace Dashboard.Data.EF.Db
             }
             var tasks = new Entities.Task[]
             {
-                new Entities.Task { TaskName = "Customer Requirements", Phase = ctx.Phases.FirstOrDefault(x => x.PhaseName == "Analisys")},
-                new Entities.Task { TaskName = "User Requirements",  Phase = ctx.Phases.FirstOrDefault(x => x.PhaseName == "Analisys")},
-                new Entities.Task { TaskName = "Customer Requirements", Phase = ctx.Phases.FirstOrDefault(x => x.PhaseName == "Analisys")},
-                new Entities.Task { TaskName = "Entities Design",  Phase = ctx.Phases.FirstOrDefault(x => x.PhaseName == "Analisys")},
-                new Entities.Task { TaskName = "Db Design", Phase = ctx.Phases.FirstOrDefault(x => x.PhaseName == "Design")},
-                new Entities.Task { TaskName = "Entities Design",  Phase = ctx.Phases.FirstOrDefault(x => x.PhaseName == "Design")},
-                new Entities.Task { TaskName = "UI Design", Phase = ctx.Phases.FirstOrDefault(x => x.PhaseName == "Design")},
-                new Entities.Task { TaskName = "Mockups",  Phase = ctx.Phases.FirstOrDefault(x => x.PhaseName == "Design")}
+                new Entities.Task { TaskName = "Customer Requirements", PhaseId = ctx.Phases.FirstOrDefault(x => x.PhaseName == "Analisys").PhaseId},
+                new Entities.Task { TaskName = "User Requirements",  PhaseId = ctx.Phases.FirstOrDefault(x => x.PhaseName == "Analisys").PhaseId},
+                new Entities.Task { TaskName = "Customer Requirements", PhaseId = ctx.Phases.FirstOrDefault(x => x.PhaseName == "Analisys").PhaseId},
+                new Entities.Task { TaskName = "Entities Design",  PhaseId = ctx.Phases.FirstOrDefault(x => x.PhaseName == "Analisys").PhaseId},
+                new Entities.Task { TaskName = "Db Design", PhaseId = ctx.Phases.FirstOrDefault(x => x.PhaseName == "Design").PhaseId},
+                new Entities.Task { TaskName = "Entities Design",  PhaseId = ctx.Phases.FirstOrDefault(x => x.PhaseName == "Design").PhaseId},
+                new Entities.Task { TaskName = "UI Design", PhaseId = ctx.Phases.FirstOrDefault(x => x.PhaseName == "Design").PhaseId},
+                new Entities.Task { TaskName = "Mockups",  PhaseId = ctx.Phases.FirstOrDefault(x => x.PhaseName == "Design").PhaseId}
             };
             if (ctx.Projects.Any())
             {

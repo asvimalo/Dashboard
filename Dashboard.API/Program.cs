@@ -25,7 +25,7 @@ namespace Dashboard.Data
                 try
                 {
                     var context = services.GetRequiredService<DashboardContext>();
-                    //DashboardContextSeedData.SeedData(context).Wait();
+                    DashboardContextSeedData.SeedData(context);
                 }
                 catch (Exception ex)
                 {
@@ -43,7 +43,7 @@ namespace Dashboard.Data
                                 .UseKestrel()
                                 .ConfigureAppConfiguration((ctx, cfg) =>
                                 {
-
+                                    
 
                                 })
                                 .ConfigureLogging((ctx, logging) => {

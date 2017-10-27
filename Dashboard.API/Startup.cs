@@ -150,6 +150,7 @@ namespace Dashboard.Data
             {
                 using (var scope = app.ApplicationServices.CreateScope())
                 {
+                    //DashboardContextSeedData.SeedData();
                     //var initializer = scope.ServiceProvider.GetRequiredService<DashboardContextSeedData>();
                     //initializer.SeedData().Wait();
                 }
