@@ -8,6 +8,7 @@
   <ItemGroup>
     <Folder Include="Services\" />
     <Folder Include="Views\Dashboard\" />
+    <Folder Include="wwwroot\Images\" />
   </ItemGroup>
   
   <ItemGroup>
@@ -21,10 +22,6 @@
 
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.0" />   
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="wwwroot\Images\dashboard.jpg" />
   </ItemGroup>
 
   <ItemGroup>

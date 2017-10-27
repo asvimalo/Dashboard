@@ -10,7 +10,7 @@ using Dashboard.Data.EF.Contracts;
 
 namespace Dashboard.Data.EF.Repository
 {
-    public abstract class Repository : IRepo
+    public class Repository : IRepo
     {
         private DashboardContext _ctx;
 

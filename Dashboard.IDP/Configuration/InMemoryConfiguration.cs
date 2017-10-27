@@ -15,7 +15,7 @@ namespace Dashboard.IDP.Configuration
         public static IEnumerable<ApiResource> ApiResources()
         {
             return new[] {
-                    new ApiResource("roles"){
+                    new ApiResource(){
                         Name = "dashboard",
                         DisplayName = "Sigma Dashboard",
                         UserClaims  = { "role", "admin" }
@@ -57,7 +57,7 @@ namespace Dashboard.IDP.Configuration
                         IdentityServerConstants.StandardScopes.Address,
                         IdentityServerConstants.StandardScopes.OfflineAccess,
                         "roles",
-                        "role"
+                        //"role"
                     },
                     // AlwaysIncludeUserClaimsInIdToken = true,
                     AllowOfflineAccess = true

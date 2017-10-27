@@ -11,12 +11,12 @@ namespace Dashboard.Data.EF.Db
 {
     public static class DashboardContextSeedData
     {
-        
 
-        //public static async Task<bool> SeedData(DashboardContext ctx)
-        //{
-           
-        //    ctx.Database.EnsureCreated();
+
+        public static async Task<bool> SeedData(DashboardContext ctx)
+        {
+
+            ctx.Database.EnsureCreated();
 
 
             //if (ctx.Pictures.Any())
@@ -35,66 +35,131 @@ namespace Dashboard.Data.EF.Db
             //    ctx.Pictures.Add(picture);
             //}
             //await ctx.SaveChangesAsync();
-            
+
             //if (ctx.Employees.Any())
             //    {
             //        return false;   // DB has been seeded
             //    }
 
-            //var employees = new Employee[]
-            //{
-            //new Employee{FirstName="Andrés",LastName="Alexander",PictureId = ctx.Pictures.Single(x => x.Title == "andres").PictureId},
-            //new Employee{FirstName="Katrina",LastName="Rosales",PictureId = ctx.Pictures.Single(x => x.Title == "katrina").PictureId},
-            //new Employee{FirstName="Kriszta",LastName="Barta",PictureId = ctx.Pictures.Single(x => x.Title == "kriszta").PictureId},
-            //new Employee{FirstName="Jeff",LastName="Barzdukas",PictureId = ctx.Pictures.Single(x => x.Title == "jeff").PictureId},
-            ////new User{FirstName="Ivan",LastName="Programet",PictureId = ctx.Pictures.Single(x => x.Title == "ivan").PictureId}
-            ////new User{FirstName="Peggy",LastName="Justice", PictureId },
-            ////new User{FirstName="Laura",LastName="Norman"},
-            ////new User{FirstName="Nino",LastName="Olivetto"}
-            //};
-            //foreach (Employee employee in employees)
-            //{
-            //    ctx.Employees.Add(employee);
-            //}
-            //await ctx.SaveChangesAsync();
-            //if (ctx.Projects.Any())
-            //{
-            //    return false;   // DB has been seeded
-            //}
-            //var projects = new Project[]
-            //{
-            //new Project{ProjectName="Dashboard",  StartDate = new DateTime(2017, 09, 06, 10, 00, 00), StopDate = new DateTime(2017, 09, 06, 10, 00, 00), Notes = "Dashboard API/Web app to keep track of our consults"},
-            //new Project{ProjectName="Microeconomics",StartDate = new DateTime(2017, 09, 06, 10, 00, 00), StopDate = new DateTime(2017, 09, 06, 10, 00, 00), Notes = "Dashboard API/Web app to keep track of our consults"},
-            //new Project{ProjectName="Macroeconomics",StartDate = new DateTime(2017, 09, 06, 10, 00, 00), StopDate = new DateTime(2017, 09, 06, 10, 00, 00), Notes = "Dashboard API/Web app to keep track of our consults"},
-            //new Project{ProjectName="Calculus",StartDate = new DateTime(2017, 09, 06, 10, 00, 00), StopDate = new DateTime(2017, 09, 06, 10, 00, 00), Notes = "Dashboard API/Web app to keep track of our consults"},
-            //new Project{ProjectName="Trigonometry",StartDate = new DateTime(2017, 09, 06, 10, 00, 00), StopDate = new DateTime(2017, 09, 06, 10, 00, 00), Notes = "Dashboard API/Web app to keep track of our consults"},
-            //new Project{ProjectName="Composition",StartDate = new DateTime(2017, 09, 06, 10, 00, 00), StopDate = new DateTime(2017, 09, 06, 10, 00, 00), Notes = "Dashboard API/Web app to keep track of our consults"},
-            //new Project{ProjectName="Literature",StartDate = new DateTime(2017, 09, 06, 10, 00, 00), StopDate = new DateTime(2017, 09, 06, 10, 00, 00), Notes = "Dashboard API/Web app to keep track of our consults"}
-            //};
-            //foreach (Project project in projects)
-            //{
-            //    ctx.Projects.Add(project);
-            //}
-            //await ctx.SaveChangesAsync();
-            //if (ctx.Assignments.Any())
-            //{
-            //    return false;   // DB has been seeded
-            //}
-            //var assignments = new Assignment[]
-            //{
-            //new Assignment{EmployeeId = employees.Single(x => x.FirstName == "Andrés").EmployeeId, ProjectId = projects.Single(x => x.ProjectName == "Dashboard").ProjectId},
-            //new Assignment{EmployeeId = employees.Single(x => x.FirstName == "Kat").EmployeeId, ProjectId = projects.Single(x => x.ProjectName == "Dashboard").ProjectId},
-            //new Assignment{EmployeeId = employees.Single(x => x.FirstName == "Kriszt").EmployeeId, ProjectId = projects.Single(x => x.ProjectName == "Dashboard").ProjectId},
-            //new Assignment{EmployeeId = employees.Single(x => x.FirstName == "Jeff").EmployeeId, ProjectId = projects.Single(x => x.ProjectName == "Dashboard").ProjectId},
+            var employees = new Employee[]
+            {
+            new Employee{FirstName="Andrés",LastName="Alexander"},
+            new Employee{FirstName="Katrina",LastName="Rosales"},
+            new Employee{FirstName="Kriszta",LastName="Barta"},
+            new Employee{FirstName="Jeff",LastName="Efe"},
+            new Employee{FirstName="Ivan",LastName="Programet"},
+            new Employee{FirstName="Per",LastName="Justice"},
+            new Employee{FirstName="Laura",LastName="Norman"},
+            new Employee{FirstName="Nino",LastName="Olivetto"}
+            };
+            foreach (Employee employee in employees)
+            {
+                ctx.Employees.Add(employee);
+            }
+            await ctx.SaveChangesAsync();
 
-            //};
+            if (ctx.Location.Any())
+            {
+                return false;   // DB has been seeded
+            }
+            var locations = new Location[]
+            {
+                new Location{ Address = "Storgatan 1", City ="Malmö"},
+                new Location {  Address = "Storgatan 1", City = "Helsingborg"},
+                new Location {  Address = "Storgatan 1", City = "Lund"},
+                new Location{ Address = "Storgatan 2", City ="Malmö"},
+                new Location {  Address = "Storgatan 2", City = "Helsingborg"},
+                new Location {  Address = "Storgatan 2", City = "Lund"},
+                new Location {  Address = "Storgatan 3", City = "Lund"}
 
-            //foreach (var assignment in assignments)
-            //{
-            //    ctx.Assignments.Add(assignment);
-            //}
-            //await ctx.SaveChangesAsync();
-            //return true;
-         //}
+            };
+            foreach (Location location in locations)
+            {
+                ctx.Location.Add(location);
+            }
+            await ctx.SaveChangesAsync();
+
+            if (ctx.Clients.Any())
+            {
+                return false;   // DB has been seeded
+            }
+            var clients = new Client[]
+            {
+                new Client{ ClientName = "Sigma",Description ="It Consulting", Location = ctx.Location.FirstOrDefault(x => x.City == "Malmö")},
+                new Client{ ClientName = "Combitech",Description ="It Consulting", Location = ctx.Location.FirstOrDefault(x => x.City == "Malmö") },
+                new Client { ClientName = "ÅF",Description ="It Consulting", Location = ctx.Location.FirstOrDefault(x => x.City == "Malmö")}
+            };
+            foreach (Client client in clients)
+            {
+                ctx.Clients.Add(client);
+            }
+            await ctx.SaveChangesAsync();
+
+            if (ctx.Phases.Any())
+            {
+                return false;   // DB has been seeded
+            }
+            var phases = new Phase[]
+            {
+                new Phase { PhaseName = "Analisys", },
+                new Phase { PhaseName = "Design", },
+                new Phase { PhaseName = "Implementation", },
+                new Phase { PhaseName = "Testing", },
+                new Phase { PhaseName = "Deployment", }
+            };
+            if (ctx.Tasks.Any())
+            {
+                return false;   // DB has been seeded
+            }
+            var tasks = new Entities.Task[]
+            {
+                new Entities.Task { TaskName = "Customer Requirements", Phase = ctx.Phases.FirstOrDefault(x => x.PhaseName == "Analisys")},
+                new Entities.Task { TaskName = "User Requirements",  Phase = ctx.Phases.FirstOrDefault(x => x.PhaseName == "Analisys")},
+                new Entities.Task { TaskName = "Customer Requirements", Phase = ctx.Phases.FirstOrDefault(x => x.PhaseName == "Analisys")},
+                new Entities.Task { TaskName = "Entities Design",  Phase = ctx.Phases.FirstOrDefault(x => x.PhaseName == "Analisys")},
+                new Entities.Task { TaskName = "Db Design", Phase = ctx.Phases.FirstOrDefault(x => x.PhaseName == "Design")},
+                new Entities.Task { TaskName = "Entities Design",  Phase = ctx.Phases.FirstOrDefault(x => x.PhaseName == "Design")},
+                new Entities.Task { TaskName = "UI Design", Phase = ctx.Phases.FirstOrDefault(x => x.PhaseName == "Design")},
+                new Entities.Task { TaskName = "Mockups",  Phase = ctx.Phases.FirstOrDefault(x => x.PhaseName == "Design")}
+            };
+            if (ctx.Projects.Any())
+            {
+                return false;   // DB has been seeded
+            }
+            var projects = new Project[]
+            {
+            new Project{ProjectName="Dashboard",  StartDate = new DateTime(2017, 09, 06, 10, 00, 00), StopDate = new DateTime(2017, 09, 06, 10, 00, 00), Phases = phases, Notes = "Dashboard API/Web app to keep track of our consults", Client = ctx.Clients.FirstOrDefault(x => x.ClientName == "Sigma")},
+            new Project{ProjectName="Booking System", StartDate = new DateTime(2017, 09, 06, 10, 00, 00), StopDate = new DateTime(2017, 09, 06, 10, 00, 00), Phases = phases, Notes = "Dashboard API/Web app to keep track of our consults", Client = ctx.Clients.FirstOrDefault(x => x.ClientName == "Sigma")},
+            new Project{ProjectName="Macroeconomics Count System", StartDate = new DateTime(2017, 09, 06, 10, 00, 00), StopDate = new DateTime(2017, 09, 06, 10, 00, 00), Phases = phases, Notes = "Dashboard API/Web app to keep track of our consults", Client = ctx.Clients.FirstOrDefault(x => x.ClientName == "Sigma")},
+            new Project{ProjectName="Calculus System", StartDate = new DateTime(2017, 09, 06, 10, 00, 00), StopDate = new DateTime(2017, 09, 06, 10, 00, 00), Phases = phases, Notes = "Dashboard API/Web app to keep track of our consults", Client = ctx.Clients.FirstOrDefault(x => x.ClientName == "Combitech")},
+            new Project{ProjectName="Particle Entanglement Props Count", StartDate = new DateTime(2017, 09, 06, 10, 00, 00), StopDate = new DateTime(2017, 09, 06, 10, 00, 00), Phases = phases, Notes = "Dashboard API/Web app to keep track of our consults", Client = ctx.Clients.FirstOrDefault(x => x.ClientName == "ÅF")},
+            new Project{ProjectName="Composition Light Photons", StartDate = new DateTime(2017, 09, 06, 10, 00, 00), StopDate = new DateTime(2017, 09, 06, 10, 00, 00), Phases = phases, Notes = "Dashboard API/Web app to keep track of our consults", Client = ctx.Clients.FirstOrDefault(x => x.ClientName == "Combitech")},
+            new Project{ProjectName="Literature Search Motor", StartDate = new DateTime(2017, 09, 06, 10, 00, 00), StopDate = new DateTime(2017, 09, 06, 10, 00, 00), Phases = phases, Notes = "Dashboard API/Web app to keep track of our consults", Client = ctx.Clients.FirstOrDefault(x => x.ClientName == "ÅF")}
+            };
+            foreach (Project project in projects)
+            {
+                ctx.Projects.Add(project);
+            }
+            await ctx.SaveChangesAsync();
+            if (ctx.Assignments.Any())
+            {
+                return false;   // DB has been seeded
+            }
+            var assignments = new Assignment[]
+            {
+            new Assignment{EmployeeId = employees.Single(x => x.FirstName == "Andrés").EmployeeId, ProjectId = projects.Single(x => x.ProjectName == "Dashboard").ProjectId},
+            new Assignment{EmployeeId = employees.Single(x => x.FirstName == "Kat").EmployeeId, ProjectId = projects.Single(x => x.ProjectName == "Dashboard").ProjectId},
+            new Assignment{EmployeeId = employees.Single(x => x.FirstName == "Kriszt").EmployeeId, ProjectId = projects.Single(x => x.ProjectName == "Dashboard").ProjectId},
+            new Assignment{EmployeeId = employees.Single(x => x.FirstName == "Jeff").EmployeeId, ProjectId = projects.Single(x => x.ProjectName == "Dashboard").ProjectId},
+
+            };
+
+            foreach (var assignment in assignments)
+            {
+                ctx.Assignments.Add(assignment);
+            }
+            await ctx.SaveChangesAsync();
+            return true;
+        }
     }
 }

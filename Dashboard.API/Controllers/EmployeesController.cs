@@ -12,14 +12,14 @@ using Dashboard.Data.EF.Contracts;
 
 namespace Dashboard.API.Controllers
 {
-    [Produces("application/json")]
+    //[Produces("application/json")]
     [Route("api/dashboard/[controller]")]
     public class EmployeesController : Controller
     {
-        public IRepoEmployee _repo;
+        public IRepo _repo;
         private ILogger<EmployeesController> _logger;
 
-        public EmployeesController(IRepoEmployee repo, 
+        public EmployeesController(IRepo repo, 
             ILogger<EmployeesController> logger)
         {
             _repo = repo;

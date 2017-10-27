@@ -16,11 +16,11 @@ namespace Dashboard.Data.Controllers
     [Route("api/dashboard/[controller]")]
     public class ProjectsController : Controller
     {
-        public IRepoProject _repo;
+        public IRepo _repo;
         private ILogger<ProjectsController> _logger;
         //private IMapper _mapper;
 
-        public ProjectsController(IRepoProject repo, 
+        public ProjectsController(IRepo repo, 
             ILogger<ProjectsController> logger/*,
             IMapper mapper*/)
         {
@@ -38,7 +38,7 @@ namespace Dashboard.Data.Controllers
         {
             try
             {
-                var result = await _repo.GetAll<Assignment>();
+                var result = await _repo.GetAll<Project>();
                 return Ok(result);
                 //return Ok(_mapper.Map<IEnumerable<ProjectViewModel>>(result));
             }
@@ -56,7 +56,7 @@ namespace Dashboard.Data.Controllers
         {
             try
             {
-                var result = _repo.Get<Assignment>(id);
+                var result = _repo.Get<Project>(id);
                 return Ok(result);
                 //return Ok(_mapper.Map<ProjectViewModel>(result));
             }

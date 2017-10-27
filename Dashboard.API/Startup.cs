@@ -62,6 +62,7 @@ namespace Dashboard.Data
 
             services.AddEntityFrameworkSqlServer()
                 .AddDbContext<DashboardContext>();
+
             // Add framework services.
             //services.AddDbContext<DashboardContext>();
             //services.AddScoped(typeof(IRepo), typeof(IRepoAssignment));
@@ -69,10 +70,10 @@ namespace Dashboard.Data
             //services.AddScoped(typeof(IRepo), typeof(IRepoProject));
             //services.AddScoped(typeof(IRepo), typeof(IRepoPicture));
             //services.AddScoped(typeof(IRepo), typeof(IRepoEmployee));
-            services.AddScoped(typeof(IRepoAssignment), typeof(RepoAssignment));
-            services.AddScoped(typeof(IRepoEmployee), typeof(RepoEmployee));
-            services.AddScoped(typeof(IRepoProject), typeof(RepoProject));
-            services.AddScoped(typeof(IRepoPicture), typeof(RepoPicture));
+            services.AddScoped(typeof(IRepo), typeof(Repository));
+            //services.AddScoped(typeof(IRepoEmployee), typeof(RepoEmployee));
+            //services.AddScoped(typeof(IRepoProject), typeof(RepoProject));
+            //services.AddScoped(typeof(IRepoPicture), typeof(RepoPicture));
 
             services.AddScoped(typeof(IDesignTimeDbContextFactory<DashboardContext>),typeof(DashboardCtxFactory));
             services.AddAutoMapper();

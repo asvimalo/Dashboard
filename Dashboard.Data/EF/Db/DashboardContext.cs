@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
+
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -17,7 +18,7 @@ namespace Dashboard.Data.EF.Db
             {
             
         }
-        //public DbSet<Picture> Pictures { get; set; }
+        public DbSet<Picture> Pictures { get; set; }
         public DbSet<Project> Projects { get; set; }
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Commitment> Commitments { get; set; }
@@ -28,6 +29,8 @@ namespace Dashboard.Data.EF.Db
         public DbSet<Phase> Phases { get; set; }
         public DbSet<Dashboard.Data.Entities.Task> Tasks { get; set; }
         public DbSet<Location> Location { get; set; }
+
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

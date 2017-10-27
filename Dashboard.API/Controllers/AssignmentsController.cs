@@ -18,10 +18,10 @@ namespace Dashboard.Data.Controllers
     [Route("api/dashboard/[controller]")]
     public class AssignmentsController : Controller
     {
-        public IRepoAssignment _repo;
+        public IRepo _repo;
         private ILogger<AssignmentsController> _logger;
 
-        public AssignmentsController(IRepoAssignment repo, 
+        public AssignmentsController(IRepo repo, 
             ILogger<AssignmentsController> logger)
         {
             _repo = repo;
@@ -31,7 +31,7 @@ namespace Dashboard.Data.Controllers
         {
             return View();
         }
-        // GET api/dashboard/Commitments
+        // GET api/dashboard/Assignments
         [HttpGet("")]
         public async Task<IActionResult> Get()
         {
@@ -114,7 +114,7 @@ namespace Dashboard.Data.Controllers
             
         }
 
-        // DELETE api/dashboard/Commitments/5
+        // DELETE api/dashboard/Assignments/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
