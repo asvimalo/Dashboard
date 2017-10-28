@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Dashboard.Data.Entities
+namespace Dashboard.Entities
 {
     [Table("Employee_Project")]
     public class Assignment

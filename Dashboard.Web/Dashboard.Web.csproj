@@ -28,7 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Dashboard.Data\Dashboard.Data.csproj" />
+    <ProjectReference Include="..\Dashboard.Entities\Dashboard.Entities.csproj" />
   </ItemGroup>
 
 </Project>

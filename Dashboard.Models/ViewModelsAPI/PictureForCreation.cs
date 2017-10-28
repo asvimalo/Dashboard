@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
 
-namespace Dashboard.Data.ViewModelsAPI
+namespace Dashboard.Models
 {
     public class PictureForCreation
     {

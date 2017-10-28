@@ -1,7 +1,7 @@
-﻿using Dashboard.Data.Entities;
+﻿using Dashboard.Entities;
 
 
-namespace Dashboard.Data.ViewModelsAPI
+namespace Dashboard.Models
 {
     public class CommitmentViewModel 
     {

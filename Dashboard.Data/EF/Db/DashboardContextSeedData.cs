@@ -1,4 +1,4 @@
-﻿using Dashboard.Data.Entities;
+﻿using Dashboard.Entities;
 using Microsoft.AspNetCore.Hosting;
 using System;
 using System.Collections.Generic;
@@ -36,10 +36,10 @@ namespace Dashboard.Data.EF.Db
             //}
             //await ctx.SaveChangesAsync();
 
-            //if (ctx.Employees.Any())
-            //    {
-            //        return false;   // DB has been seeded
-            //    }
+            if (ctx.Employees.Any())
+            {
+                return false;   // DB has been seeded
+            }
 
             var employees = new Employee[]
             {

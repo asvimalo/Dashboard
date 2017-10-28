@@ -7,7 +7,7 @@ using Dashboard.Web.Services.Contracts;
 using Newtonsoft.Json;
 using System.Net.Http;
 using Dashboard.Web.ViewModels;
-using Dashboard.Data.Entities;
+using Dashboard.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.Authentication;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;

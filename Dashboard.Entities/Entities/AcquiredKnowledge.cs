@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace Dashboard.Data.Entities
+namespace Dashboard.Entities
 {
     [Table("Knowledge_Employee")]
     public class AcquiredKnowledge

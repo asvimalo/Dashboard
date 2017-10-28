@@ -1,6 +1,6 @@
 ﻿
 
-namespace Dashboard.Data.ViewModelsAPI
+namespace Dashboard.Models
 {
     public class PictureViewModel 
     {

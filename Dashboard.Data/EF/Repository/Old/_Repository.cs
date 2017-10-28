@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 using Dashboard.Data.EF.IRepository;
 using Dashboard.Data.EF.Db;
-using Dashboard.Data.Entities;
+using Dashboard.Entities;
 
 namespace Dashboard.Data.EF.Repository
 {

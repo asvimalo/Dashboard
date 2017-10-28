@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace Dashboard.Data.ViewModelsAPI
+namespace Dashboard.Models
 {
     public class PictureToUpdate
     {

@@ -1,10 +1,10 @@
-﻿using Dashboard.Data.Entities;
+﻿using Dashboard.Entities;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Dashboard.Data.EntitiesMap
+namespace Dashboard.EntitiesMap
 {
     public class CommitmentMap
     {

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Dashboard.Data.Entities
+namespace Dashboard.Entities
 {
     public class Task
     {

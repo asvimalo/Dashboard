@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 
-namespace Dashboard.Data.ViewModelsAPI
+namespace Dashboard.Models
 {
     public class ProjectViewModel 
     {

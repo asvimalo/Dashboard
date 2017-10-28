@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
-using Dashboard.Data.EF.Contracts;
+
 
 namespace Dashboard.Web.Controllers
 {

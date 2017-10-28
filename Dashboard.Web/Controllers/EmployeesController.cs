@@ -7,7 +7,7 @@ using Dashboard.Web.Services.Contracts;
 using Dashboard.Web.ViewModels;
 using Newtonsoft.Json;
 using System.Net.Http;
-using Dashboard.Data.Entities;
+using Dashboard.Entities;
 using Microsoft.AspNetCore.Authorization;
 using IdentityModel.Client;
 using Microsoft.AspNetCore.Authentication;
@@ -36,7 +36,7 @@ namespace Dashboard.Web.Controllers
                 if (responseEmployee.IsSuccessStatusCode)
                 {
                     var employeesAsString = await responseEmployee.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    List<Employee> employees = JsonConvert.DeserializeObject<IList<Employee>>(employeesAsString).ToList();
+                    List<Employee> employees =  JsonConvert.DeserializeObject<IList<Employee>>(employeesAsString).ToList();
                     return View(employees);
                 }
                 else
@@ -49,10 +49,14 @@ namespace Dashboard.Web.Controllers
             }
 
         }
-        
+        [HttpGet]
+        public IActionResult Add()
+        {
+            return View();
+        }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddUser([FromBody] UserModel user)
+        public async Task<IActionResult> Add([FromBody] Employee employee)
         {
 
             if (ModelState.IsValid)
@@ -60,19 +64,19 @@ namespace Dashboard.Web.Controllers
                 try
                 {
                     var httpClient = await _httpClientDashboard.GetClient();
-                    var serializedUser = JsonConvert.SerializeObject(user);
+                    var serializedEmployee = JsonConvert.SerializeObject(employee);
 
                     var response = await httpClient.PostAsync(
                             $"api/dashboard/employees",
-                            new StringContent(serializedUser, 
+                            new StringContent(serializedEmployee, 
                                 System.Text.Encoding.Unicode, 
                                 "application/json")).ConfigureAwait(false);
 
                     if (response.IsSuccessStatusCode)
                     {
-                        var userAsString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        var desUser = JsonConvert.DeserializeObject<UserModel>(userAsString);
-                        return View(desUser);
+                        var employeeAsString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        var desEmployee = JsonConvert.DeserializeObject<Employee>(employeeAsString);
+                        return View(desEmployee);
                     }
                     else
                         throw new Exception($"A problem happened while calling the API: {response.ReasonPhrase}");
@@ -84,34 +88,39 @@ namespace Dashboard.Web.Controllers
                 }
             }
             else
-                return View();
+                return View("Index");
 
         }
-        [Authorize]
-        [HttpPut]
-        [ValidateAntiForgeryToken] //TO-DO
-        public async Task<IActionResult> EditUser([FromBody] UserModel user)
+        [HttpGet]
+        public IActionResult Edit()
         {
-            // TODO
+            return View();
+        }
+       
+        [HttpPut]
+        [ValidateAntiForgeryToken] 
+        public async Task<IActionResult> Edit([FromBody] Employee employee)
+        {
+            
             if (ModelState.IsValid)
             {
                 try
                 {
                     var httpClient = await _httpClientDashboard.GetClient();
-                    var serializedUser = JsonConvert.SerializeObject(user);
+                    var serializedEmployee = JsonConvert.SerializeObject(employee);
 
-                    var response = await httpClient.PostAsync(
+                    var response = await httpClient.PutAsync(
                             $"api/dashboard/employees",
-                            new StringContent(serializedUser,
+                            new StringContent(serializedEmployee,
                                 System.Text.Encoding.Unicode,
                                 "application/json"))
                                 .ConfigureAwait(false);
 
                     if (response.IsSuccessStatusCode)
                     {
-                        var userAsString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        var desUser = JsonConvert.DeserializeObject<UserModel>(userAsString);
-                        return View(desUser);
+                        var employeeAsString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        var desEmployee = JsonConvert.DeserializeObject<Employee>(employeeAsString);
+                        return View(desEmployee);
                     }
                     else
                         throw new Exception($"A problem happened while calling the API: {response.ReasonPhrase}");
@@ -126,8 +135,8 @@ namespace Dashboard.Web.Controllers
                 return View();
 
         }
-        [Authorize]
-        public async Task<IActionResult> DeleteUser(int id)
+       
+        public async Task<IActionResult> Delete(int id)
         {
             var httpClient = await _httpClientDashboard.GetClient();
             var response = await httpClient.DeleteAsync($"api/dashboard/employees/{id}").ConfigureAwait(false);
@@ -137,6 +146,7 @@ namespace Dashboard.Web.Controllers
             }
             throw new Exception($"A problem happened while calling the API: {response.ReasonPhrase}");
         }
+        //OPENID CONNECT
         public async Task<IActionResult> GetUserInfo()
         {
             var discoveryClient = new DiscoveryClient("https://localhost:44394");
@@ -162,6 +172,7 @@ namespace Dashboard.Web.Controllers
             //userInfo.claims = claims;
             return View(userInfo);
         }
+        //WRITE INFO
         public async System.Threading.Tasks.Task WriteOutIdentityInformation()
         {
             // get the saved identity token

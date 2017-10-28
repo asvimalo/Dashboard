@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using Dashboard.Data.EF.Contracts;
 using Dashboard.Data.EF.IRepository;
-using Dashboard.Data.Entities;
-using Dashboard.Data.ViewModelsAPI;
+using Dashboard.Entities;
+using Dashboard.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;

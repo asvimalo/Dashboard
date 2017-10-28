@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System;
 
-namespace Dashboard.Data.Entities
+namespace Dashboard.Entities
 {
     public class Employee 
     {

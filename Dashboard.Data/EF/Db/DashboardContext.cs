@@ -1,4 +1,4 @@
-﻿using Dashboard.Data.Entities;
+﻿using Dashboard.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -27,7 +27,7 @@ namespace Dashboard.Data.EF.Db
         public DbSet<Knowledge> Knowledges { get; set; }
         public DbSet<AcquiredKnowledge> AcquiredKnowledges { get; set; }
         public DbSet<Phase> Phases { get; set; }
-        public DbSet<Dashboard.Data.Entities.Task> Tasks { get; set; }
+        public DbSet<Dashboard.Entities.Task> Tasks { get; set; }
         public DbSet<Location> Location { get; set; }
 
 

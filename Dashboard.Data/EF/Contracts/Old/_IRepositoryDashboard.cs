@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Dashboard.Data.Entities;
+using Dashboard.Entities;
 
 namespace Dashboard.Data.EF.IRepository
 {

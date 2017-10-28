@@ -7,7 +7,7 @@ using Dashboard.Web.Services.Contracts;
 using Dashboard.Web.ViewModels;
 using Newtonsoft.Json;
 using System.Net.Http;
-using Dashboard.Data.Entities;
+using Dashboard.Entities;
 
 namespace Dashboard.Web.Controllers
 {

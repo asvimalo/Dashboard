@@ -1,4 +1,4 @@
-﻿using Dashboard.Data.Entities;
+﻿using Dashboard.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;

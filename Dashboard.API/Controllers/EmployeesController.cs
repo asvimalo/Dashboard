@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Dashboard.Data.EF.IRepository;
 using Dashboard.Data.Controllers;
 using Microsoft.Extensions.Logging;
-using Dashboard.Data.Entities;
+using Dashboard.Entities;
 using Dashboard.Data.EF.Contracts;
 
 namespace Dashboard.API.Controllers
@@ -87,16 +87,18 @@ namespace Dashboard.API.Controllers
             {
                 //var projectId = 0;
                 //var userId = 0;
-                //var employeeFromRepo = _repo.Get<Employee>(id);
+                var employeeFromRepo = _repo.Get<Employee>(id);
                 //Mapper.Map(commitmentVM, commiFromRepo);
 
-                //employeeFromRepo.FirstName = user.FirstName ?? employeeFromRepo.FirstName;
-                //employeeFromRepo.LastName = user.LastName ?? employeeFromRepo.LastName;
-                //employeeFromRepo.PersonNr = user.PersonNr ?? employeeFromRepo.PersonNr;
-                //employeeFromRepo.PictureId = user.PictureId ?? employeeFromRepo.PictureId;
-                //employeeFromRepo.Picture = user.Picture ?? employeeFromRepo.Picture;
+                employeeFromRepo.FirstName = employee.FirstName ?? employeeFromRepo.FirstName;
+                employeeFromRepo.LastName = employee.LastName ?? employeeFromRepo.LastName;
+                employeeFromRepo.PersonNr = employee.PersonNr ?? employeeFromRepo.PersonNr;
+                employeeFromRepo.ImageName = employee.ImageName ?? employeeFromRepo.ImageName;
+                employeeFromRepo.ImagePath = employee.ImagePath ?? employeeFromRepo.ImagePath;
+                employeeFromRepo.Assignments = employee.Assignments ?? employeeFromRepo.Assignments;
+                employeeFromRepo.AcquiredKnowledge = employee.AcquiredKnowledge ?? employeeFromRepo.AcquiredKnowledge;
 
-                var employeeUpdated = _repo.Update(employee);
+                var employeeUpdated = _repo.Update(employeeFromRepo);
 
                 if (!await _repo.SaveChangesAsync())
                 {

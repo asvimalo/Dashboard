@@ -1,7 +1,7 @@
-﻿using Dashboard.Data.Entities;
+﻿using Dashboard.Entities;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Dashboard.Data.EntitiesMap
+namespace Dashboard.EntitiesMap
 {
     public class ProjectMap
     {

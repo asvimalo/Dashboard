@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Dashboard.Data.Entities
+namespace Dashboard.Entities
 {
     public class Picture 
     {

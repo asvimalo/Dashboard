@@ -1,7 +1,7 @@
-﻿using Dashboard.Data.Entities;
+﻿using Dashboard.Entities;
 using System.Collections.Generic;
 
-namespace Dashboard.Data.ViewModelsAPI
+namespace Dashboard.Models
 {
     public class UserViewModel
     {

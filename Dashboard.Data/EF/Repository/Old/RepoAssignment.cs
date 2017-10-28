@@ -1,5 +1,5 @@
 ﻿using Dashboard.Data.EF.Db;
-using Dashboard.Data.Entities;
+using Dashboard.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

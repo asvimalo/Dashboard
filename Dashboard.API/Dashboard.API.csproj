@@ -26,6 +26,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Dashboard.Data\Dashboard.Data.csproj" />
+    <ProjectReference Include="..\Dashboard.Entities\Dashboard.Entities.csproj" />
+    <ProjectReference Include="..\Dashboard.Models\Dashboard.Models.csproj" />
   </ItemGroup>
 
 </Project>
