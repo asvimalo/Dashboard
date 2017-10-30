@@ -6,6 +6,12 @@
     "jquery": "2.2.0",
     "jquery-validation": "1.14.0",
     "jquery-validation-unobtrusive": "3.2.6",
-    "gantt": "v4.0.0"
+    "gantt": "v4.0.0",
+    "angular": "v1.6.7-build.5490+sha.c15c8a1",
+    "font-awesome": "Font-Awesome#v4.7.0",
+    "angular-route": "v1.6.7-build.5489+sha.9871ada"
+  },
+  "resolutions": {
+    "angular": "v1.6.7-build.5490+sha.c15c8a1"
   }
 }

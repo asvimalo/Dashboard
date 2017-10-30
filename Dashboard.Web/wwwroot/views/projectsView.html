@@ -1,0 +1,25 @@
+﻿<div class="row">
+    <div class="col-md-6 col-md-offset-3">
+        <div class="text-danger" ng-show="holder.errorMessage">{{ holder.errorMessage }}</div>
+        <!--<div ng-show="vm.isBusy" class="text-center"><i class="fa fa-spinner fa-spin"></i> Loading...</div>-->
+        <loader-cursor display-when="vm.isBusy"></loader-cursor>
+    </div>
+
+    <div class="col-md-12">
+        <table class="table table-responsive table-striped">
+            <tr ng-repeat="project in holder.projects">
+                <td>{{ project.projectName }}</td>
+                <td>{{ project.clientId  }}</td>
+                <td>{{ project.client  }}</td>
+                <td>{{ project.startDate | date: 'dd-MM-yyyy' }}</td>
+                <td>{{ project.stopDate  | date: 'dd-MM-yyyy' }}</td>
+                <td>{{ project.timeBudget  }}</td>
+                <td>{{ project.notes  }}</td>
+                <td>{{ project.assignments  }}</td>
+                <td>{{ project.phases  }}</td>
+                <td><a ng-href="#/projects/{{ project.projectId }}" class="btn btn-sm btn-primary">Manage</a></td>
+
+            </tr>
+        </table>
+    </div>
+</div>

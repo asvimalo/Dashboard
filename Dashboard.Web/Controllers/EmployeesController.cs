@@ -28,7 +28,7 @@ namespace Dashboard.Web.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            await WriteOutIdentityInformation();
+            //await WriteOutIdentityInformation();
             var httpClient = await _httpClientDashboard.GetClient();
             try
             {

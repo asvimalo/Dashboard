@@ -23,7 +23,7 @@ namespace Dashboard.Web.Controllers
         public void Login()
         {
 
-           
+            RedirectToAction("Index");
         }
         public async Task Logout()
         {
@@ -42,6 +42,11 @@ namespace Dashboard.Web.Controllers
         public IActionResult Contact()
         {
             ViewData["Message"] = "Your contact page.";
+
+            return View();
+        }
+        public IActionResult Angular()
+        {
 
             return View();
         }
