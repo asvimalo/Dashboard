@@ -10,6 +10,7 @@
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link href="~/lib/font-awesome/css/font-awesome.css" rel="stylesheet" />
         <link rel="stylesheet" href="~/css/site.css" />
+        <link rel="stylesheet" href="~/css/projectBase.css" />
         <link rel="stylesheet" href="~/lib/gantt/codebase/skins/dhtmlxgantt_broadway.css" />
 
     </environment>
@@ -26,23 +27,24 @@
         <div class="container">
             <div class="navbar-header">
                 <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand pull-left text-uppercase">Sigma</a>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand pull-left text-capitalize"> |  Search...</a>
             </div>
             @if (User.Identity.IsAuthenticated)
             {
                 <div navbar-left>
-                    
-                    <a  class="navbar-brand pull-right" asp-controller="Home" asp-action="Logout">Welcome @User.Claims.FirstOrDefault(x => x.Type == "given_name")?.Value  | <span class="btn btn-default">Logout</span></a> 
+
+                    <a class="navbar-brand pull-right" asp-controller="Home" asp-action="Logout">Welcome @User.Claims.FirstOrDefault(x => x.Type == "given_name")?.Value  | <span class="btn btn-default">Logout</span></a>
                 </div>
             }
             else
             {
                 <div navbar-left>
-                    <a  class="navbar-brand pull-right" asp-controller="Home" asp-action="Login"><span class="btn btn-default">Login</span></a>
+                    <a class="navbar-brand pull-right" asp-controller="Home" asp-action="Login"><span class="btn btn-default">Login</span></a>
                 </div>
 
             }
         </div>
+    </nav>
+    <nav class="navbar navbar-default navbar-static-top navbar2">
         <div class="container">
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -55,18 +57,21 @@
                     {
                         <li><a asp-area="" asp-controller="Employees" asp-action="GetUserInfo">User Info</a></li>
                     }
-                    
+
                 </ul>
             </div>
         </div>
     </nav>
     <div class="container body-content">
-        @RenderBody()
-        <hr />
-        @*<footer>
-            <p>&copy; 2017 - Dashboard.Web</p>
-        </footer>*@
-    </div>
+        <div class="container">
+            @RenderBody()
+        </div>
+
+            <hr />
+            @*<footer>
+                <p>&copy; 2017 - Dashboard.Web</p>
+            </footer>*@
+        </div>
 
     <environment names="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
