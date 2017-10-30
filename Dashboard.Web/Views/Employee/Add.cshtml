@@ -4,13 +4,8 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="EditEmployee">
+        <form asp-action="AddEmployee">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="EmployeeId" class="control-label"></label>
-                <input asp-for="EmployeeId" class="form-control" />
-                <span asp-validation-for="EmployeeId" class="text-danger"></span>
-            </div>
             <div class="form-group">
                 <label asp-for="FirstName" class="control-label"></label>
                 <input asp-for="FirstName" class="form-control" />
@@ -37,7 +32,7 @@
                 <span asp-validation-for="ImagePath" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="EditEmployee" class="btn btn-default" />
+                <input type="submit" value="AddEmployee()" class="btn btn-default" />
             </div>
         </form>
     </div>
