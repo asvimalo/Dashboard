@@ -12,7 +12,7 @@ using Dashboard.Data.EF.Contracts;
 
 namespace Dashboard.API.Controllers
 {
-    //[Produces("application/json")]
+    [Produces("application/json")]
     [Route("api/dashboard/[controller]")]
     public class EmployeesController : Controller
     {
@@ -26,7 +26,7 @@ namespace Dashboard.API.Controllers
             _logger = logger;
         }
         
-        // GET api/dashboard/Commitments
+        // GET api/dashboard/employees
         [HttpGet("")]
         public async Task<IActionResult> Get()
         {

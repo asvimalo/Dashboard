@@ -158,6 +158,7 @@ namespace Dashboard.Data
                     //initializer.SeedData().Wait();
                 }
             }
+            
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

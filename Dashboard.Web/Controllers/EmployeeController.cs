@@ -14,15 +14,13 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using System.Diagnostics;
 
-
 namespace Dashboard.Web.Controllers
 {
-    
-    public class EmployeesController : Controller
+    public class EmployeeController : Controller
     {
         private IHttpClientDashboard _httpClientDashboard;
 
-        public EmployeesController(IHttpClientDashboard httpClientDashboard)
+        public EmployeeController(IHttpClientDashboard httpClientDashboard)
         {
             _httpClientDashboard = httpClientDashboard;
         }
@@ -36,7 +34,7 @@ namespace Dashboard.Web.Controllers
                 if (responseEmployee.IsSuccessStatusCode)
                 {
                     var employeesAsString = await responseEmployee.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    List<Employee> employees =  JsonConvert.DeserializeObject<IList<Employee>>(employeesAsString).ToList();
+                    List<Employee> employees = JsonConvert.DeserializeObject<IList<Employee>>(employeesAsString).ToList();
                     return View(employees);
                 }
                 else
@@ -68,8 +66,8 @@ namespace Dashboard.Web.Controllers
 
                     var response = await httpClient.PostAsync(
                             $"api/dashboard/employees",
-                            new StringContent(serializedEmployee, 
-                                System.Text.Encoding.Unicode, 
+                            new StringContent(serializedEmployee,
+                                System.Text.Encoding.Unicode,
                                 "application/json")).ConfigureAwait(false);
 
                     if (response.IsSuccessStatusCode)
@@ -96,12 +94,12 @@ namespace Dashboard.Web.Controllers
         {
             return View();
         }
-       
+
         [HttpPut]
-        [ValidateAntiForgeryToken] 
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit([FromBody] Employee employee)
         {
-            
+
             if (ModelState.IsValid)
             {
                 try
@@ -135,7 +133,7 @@ namespace Dashboard.Web.Controllers
                 return View();
 
         }
-       
+
         public async Task<IActionResult> Delete(int id)
         {
             var httpClient = await _httpClientDashboard.GetClient();
