@@ -8,7 +8,7 @@
     </div>
 
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-2">
             <ul class="nav navbar-nav">
                 <li><a href="#/">Dashboard</a></li>
                 <li><a href="#/employees">Employees</a></li>
@@ -17,8 +17,8 @@
             </ul>
            
         </div>
-        <div class="col-md-4">
-            <h2>Employees</h2>
+        <div class="col-md-5">
+            
             <table class="table table-responsive table-striped">
                
                 <tr ng-repeat="project in holder.projects">
@@ -36,7 +36,7 @@
                 </tr>
             </table>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-5">
             <table class="table table-responsive table-striped">
                 <tr ng-repeat="employee in holder.employees">
                     <td>{{ employee.firstName }}</td>
