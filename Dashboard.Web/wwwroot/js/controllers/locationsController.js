@@ -3,26 +3,26 @@
     "use strict";
 
     angular.module("app-dashboard")
-        .controller("assignmentsController", projectsController);
+        .controller("locationsController", locationsController);
 
-    function projectsController($http) {
+    function locationsController($http) {
 
         var holder = this;
 
-        holder.assignments = [];
+        holder.locations = [];
 
 
-        holder.newAssignment = {};
+        holder.newLocation = {};
 
-        console.log("inside assignment controller");
+        console.log("inside location controller");
         holder.errorMessage = "";
         holder.isBusy = true;
 
         ///////////////////////Assignments/////////////////////////////////
-        $http.get("http://localhost:8899/api/dashboard/assignments")
+        $http.get("http://localhost:8899/api/dashboard/locations")
             .then(function (response) {
                 //success
-                angular.copy(response.data, holder.assignments);
+                angular.copy(response.data, holder.locations);
             }, function (error) {
                 //failure
                 holder.errorMessage = "Failed to load data: " + error;
@@ -36,10 +36,10 @@
             holder.isBusy = true;
             holder.errorMessage = "";
 
-            $http.post("http://localhost:8899/api/dashboard/assignments", holder.newAssignment)
+            $http.post("http://localhost:8899/api/dashboard/locations", holder.newLocation)
                 .then(function (response) {
                     //success
-                    holder.assignments.push(response.data);
+                    holder.locations.push(response.data);
                     holder.newProject = {};
 
                 }, function () {
@@ -51,11 +51,11 @@
                 });
 
         };
-        holder.updateProject = function () {//TODO IMPORTANT
+        holder.updateLocation = function () {//TODO IMPORTANT
             holder.isBusy = true;
             holder.errorMessage = "";
 
-            $http.put("http://localhost:8899/api/dashboard/assignments", //TODO object to Update)
+            $http.put("http://localhost:8899/api/dashboard/locations", //TODO object to Update)
                 .then(function (response) {
                     //success
 
@@ -63,18 +63,18 @@
 
                 }, function () {
                     //failure
-                    holder.errorMessage = "Failure to update assignment";
+                    holder.errorMessage = "Failure to update location";
                 })
                     .finally(function () {
                         holder.isBusy = false;
                     });
 
         };
-        holder.deleteProject = function () {//TODO IMPORTANT
+        holder.deleteLocation = function () {//TODO IMPORTANT
             holder.isBusy = true;
             holder.errorMessage = "";
 
-            $http.delete("http://localhost:8899/api/dashboard/assignments/", //TODO => ID)
+            $http.delete("http://localhost:8899/api/dashboard/locations/", //TODO => ID)
                 .then(function (response) {
                     //success
 
@@ -82,7 +82,7 @@
 
                 }, function () {
                     //failure
-                    holder.errorMessage = "Failure to delete assignment";
+                    holder.errorMessage = "Failure to delete location";
                 })
                     .finally(function () {
                         holder.isBusy = false;

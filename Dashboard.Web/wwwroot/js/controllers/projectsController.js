@@ -44,11 +44,49 @@
 
                 }, function () {
                     //failure
-                    holder.errorMessage = "Failure to save new trip";
+                    holder.errorMessage = "Failure to save new project";
                 })
                 .finally(function () {
                     holder.isBusy = false;
                 });
+
+        };
+        holder.UpdateProject = function () {//TODO IMPORTANT
+            holder.isBusy = true;
+            holder.errorMessage = "";
+
+            $http.put("http://localhost:8899/api/dashboard/projects", //TODO object to Update)
+                .then(function (response) {
+                    //success
+
+                    //// TODO ///////////////
+
+                }, function () {
+                    //failure
+                    holder.errorMessage = "Failure to update project";
+                })
+                    .finally(function () {
+                        holder.isBusy = false;
+                    });
+
+        };
+        holder.DeleteProject = function () {//TODO IMPORTANT
+            holder.isBusy = true;
+            holder.errorMessage = "";
+
+            $http.delete("http://localhost:8899/api/dashboard/projects/", //TODO => ID)
+                .then(function (response) {
+                    //success
+
+                    ////// TODO    //////////////
+
+                }, function () {
+                    //failure
+                    holder.errorMessage = "Failure to delete project";
+                })
+                    .finally(function () {
+                        holder.isBusy = false;
+                    });
 
         };
 

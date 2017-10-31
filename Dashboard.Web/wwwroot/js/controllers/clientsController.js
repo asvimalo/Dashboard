@@ -1,28 +1,28 @@
-﻿//assignmentsController.js
+﻿//clientsController.js
 (function () {
     "use strict";
 
     angular.module("app-dashboard")
-        .controller("assignmentsController", projectsController);
+        .controller("clientsController", clientsController);
 
-    function projectsController($http) {
+    function clientsController($http) {
 
         var holder = this;
 
-        holder.assignments = [];
+        holder.clients = [];
 
 
-        holder.newAssignment = {};
+        holder.newClient = {};
 
-        console.log("inside assignment controller");
+        console.log("inside clients controller");
         holder.errorMessage = "";
         holder.isBusy = true;
 
-        ///////////////////////Assignments/////////////////////////////////
-        $http.get("http://localhost:8899/api/dashboard/assignments")
+        ///////////////////////Clients/////////////////////////////////
+        $http.get("http://localhost:8899/api/dashboard/clients")
             .then(function (response) {
                 //success
-                angular.copy(response.data, holder.assignments);
+                angular.copy(response.data, holder.clients);
             }, function (error) {
                 //failure
                 holder.errorMessage = "Failed to load data: " + error;
@@ -32,30 +32,30 @@
             });
 
 
-        holder.addProject = function () {
+        holder.addClient = function () {
             holder.isBusy = true;
             holder.errorMessage = "";
 
-            $http.post("http://localhost:8899/api/dashboard/assignments", holder.newAssignment)
+            $http.post("http://localhost:8899/api/dashboard/clients", holder.newClient)
                 .then(function (response) {
                     //success
-                    holder.assignments.push(response.data);
-                    holder.newProject = {};
+                    holder.clients.push(response.data);
+                    holder.newClient = {};
 
                 }, function () {
                     //failure
-                    holder.errorMessage = "Failure to save assignment";
+                    holder.errorMessage = "Failure to save new client";
                 })
                 .finally(function () {
                     holder.isBusy = false;
                 });
 
         };
-        holder.updateProject = function () {//TODO IMPORTANT
+        holder.updateClient = function () {//TODO IMPORTANT
             holder.isBusy = true;
             holder.errorMessage = "";
 
-            $http.put("http://localhost:8899/api/dashboard/assignments", //TODO object to Update)
+            $http.put("http://localhost:8899/api/dashboard/clients", //TODO object to Update)
                 .then(function (response) {
                     //success
 
@@ -63,18 +63,18 @@
 
                 }, function () {
                     //failure
-                    holder.errorMessage = "Failure to update assignment";
+                    holder.errorMessage = "Failure to update client";
                 })
                     .finally(function () {
                         holder.isBusy = false;
                     });
 
         };
-        holder.deleteProject = function () {//TODO IMPORTANT
+        holder.deleteClient = function () {//TODO IMPORTANT
             holder.isBusy = true;
             holder.errorMessage = "";
 
-            $http.delete("http://localhost:8899/api/dashboard/assignments/", //TODO => ID)
+            $http.delete("http://localhost:8899/api/dashboard/clients/", //TODO => ID)
                 .then(function (response) {
                     //success
 
@@ -82,7 +82,7 @@
 
                 }, function () {
                     //failure
-                    holder.errorMessage = "Failure to delete assignment";
+                    holder.errorMessage = "Failure to delete client";
                 })
                     .finally(function () {
                         holder.isBusy = false;

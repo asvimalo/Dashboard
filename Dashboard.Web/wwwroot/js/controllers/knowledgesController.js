@@ -1,28 +1,28 @@
-﻿//assignmentsController.js
+﻿//knowledgesController.js
 (function () {
     "use strict";
 
     angular.module("app-dashboard")
-        .controller("assignmentsController", projectsController);
+        .controller("knowledgesController", knowledgesController);
 
-    function projectsController($http) {
+    function knowledgesController($http) {
 
         var holder = this;
 
-        holder.assignments = [];
+        holder.knowledges = [];
 
 
-        holder.newAssignment = {};
+        holder.newKnowledge = {};
 
-        console.log("inside assignment controller");
+        console.log("inside knowledge controller");
         holder.errorMessage = "";
         holder.isBusy = true;
 
-        ///////////////////////Assignments/////////////////////////////////
-        $http.get("http://localhost:8899/api/dashboard/assignments")
+        ///////////////////////Knowledge/////////////////////////////////
+        $http.get("http://localhost:8899/api/dashboard/knowledges")
             .then(function (response) {
                 //success
-                angular.copy(response.data, holder.assignments);
+                angular.copy(response.data, holder.knowledges);
             }, function (error) {
                 //failure
                 holder.errorMessage = "Failed to load data: " + error;
@@ -32,30 +32,30 @@
             });
 
 
-        holder.addProject = function () {
+        holder.addKnowledge = function () {
             holder.isBusy = true;
             holder.errorMessage = "";
 
-            $http.post("http://localhost:8899/api/dashboard/assignments", holder.newAssignment)
+            $http.post("http://localhost:8899/api/dashboard/knowledges", holder.newKnowledge)
                 .then(function (response) {
                     //success
-                    holder.assignments.push(response.data);
-                    holder.newProject = {};
+                    holder.knowledges.push(response.data);
+                    holder.newPhase = {};
 
                 }, function () {
                     //failure
-                    holder.errorMessage = "Failure to save assignment";
+                    holder.errorMessage = "Failure to save new knowledge";
                 })
                 .finally(function () {
                     holder.isBusy = false;
                 });
 
         };
-        holder.updateProject = function () {//TODO IMPORTANT
+        holder.updateKnowledge = function () {//TODO IMPORTANT
             holder.isBusy = true;
             holder.errorMessage = "";
 
-            $http.put("http://localhost:8899/api/dashboard/assignments", //TODO object to Update)
+            $http.put("http://localhost:8899/api/dashboard/knowledges", //TODO object to Update)
                 .then(function (response) {
                     //success
 
@@ -63,18 +63,18 @@
 
                 }, function () {
                     //failure
-                    holder.errorMessage = "Failure to update assignment";
+                    holder.errorMessage = "Failure to update knowledge";
                 })
                     .finally(function () {
                         holder.isBusy = false;
                     });
 
         };
-        holder.deleteProject = function () {//TODO IMPORTANT
+        holder.deleteKnowledge = function () {//TODO IMPORTANT
             holder.isBusy = true;
             holder.errorMessage = "";
 
-            $http.delete("http://localhost:8899/api/dashboard/assignments/", //TODO => ID)
+            $http.delete("http://localhost:8899/api/dashboard/knowledges/", //TODO => ID)
                 .then(function (response) {
                     //success
 
@@ -82,7 +82,7 @@
 
                 }, function () {
                     //failure
-                    holder.errorMessage = "Failure to delete assignment";
+                    holder.errorMessage = "Failure to delete knowledge";
                 })
                     .finally(function () {
                         holder.isBusy = false;

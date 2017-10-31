@@ -2,8 +2,10 @@
 (function () {
     "use strict";
     console.log("inside func dashboard controller");
+
     angular.module("app-dashboard")
         .controller("employeesController", employeesController);
+
     console.log("outside employeesController ");
 
     function employeesController($http) {
@@ -15,10 +17,10 @@
 
         
         holder.newEmployee = {};
-        console.log("inside employeesController ");
+        console.log("inside employees Controller ");
         holder.errorMessage = "";
         holder.isBusy = true;
-        /////////////////////Employees//////////////////////////////////////
+        ///////////////////////Employees//////////////////////////////////////
         $http.get("http://localhost:8899/api/dashboard/employees")
             .then(function (response) {
                 console.log("got employees");
@@ -46,7 +48,45 @@
 
                 }, function () {
                     //failure
-                    holder.errorMessage = "Failure to save new trip";
+                    holder.errorMessage = "Failure to save new employee";
+                })
+                .finally(function () {
+                    holder.isBusy = false;
+                });
+
+        };
+        holder.updateEmployee = function () {//TODO IMPORTANT
+            holder.isBusy = true;
+            holder.errorMessage = "";
+
+            $http.put("http://localhost:8899/api/dashboard/employees", //TODO object to Update)
+                .then(function (response) {
+                    //success
+                  
+                    //// TODO ///////////////
+
+                }, function () {
+                    //failure
+                    holder.errorMessage = "Failure to update employee";
+                })
+                .finally(function () {
+                    holder.isBusy = false;
+                });
+
+        };
+        holder.deleteEmployee = function () {//TODO IMPORTANT
+            holder.isBusy = true;
+            holder.errorMessage = "";
+
+            $http.delete("http://localhost:8899/api/dashboard/employees/", //TODO => ID)
+                .then(function (response) {
+                    //success
+
+                    ////// TODO    //////////////
+
+                }, function () {
+                    //failure
+                    holder.errorMessage = "Failure to delete new employee";
                 })
                 .finally(function () {
                     holder.isBusy = false;

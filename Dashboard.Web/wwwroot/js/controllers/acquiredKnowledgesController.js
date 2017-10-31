@@ -1,28 +1,28 @@
-﻿//assignmentsController.js
+﻿//acquiredKnowledgesController.js
 (function () {
     "use strict";
 
     angular.module("app-dashboard")
-        .controller("assignmentsController", projectsController);
+        .controller("acquiredKnowledgesController", acquiredKnowledgesController);
 
-    function projectsController($http) {
+    function acquiredKnowledgesController($http) {
 
         var holder = this;
 
-        holder.assignments = [];
+        holder.acquiredKnowledges = [];
 
 
-        holder.newAssignment = {};
+        holder.newAcquiredKnowledge = {};
 
         console.log("inside assignment controller");
         holder.errorMessage = "";
         holder.isBusy = true;
 
         ///////////////////////Assignments/////////////////////////////////
-        $http.get("http://localhost:8899/api/dashboard/assignments")
+        $http.get("http://localhost:8899/api/dashboard/acquiredKnowledges")
             .then(function (response) {
                 //success
-                angular.copy(response.data, holder.assignments);
+                angular.copy(response.data, holder.acquiredKnowledges);
             }, function (error) {
                 //failure
                 holder.errorMessage = "Failed to load data: " + error;
@@ -32,14 +32,14 @@
             });
 
 
-        holder.addProject = function () {
+        holder.addAcKnowledge = function () {
             holder.isBusy = true;
             holder.errorMessage = "";
 
-            $http.post("http://localhost:8899/api/dashboard/assignments", holder.newAssignment)
+            $http.post("http://localhost:8899/api/dashboard/acquiredKnowledges", holder.newAcquiredKnowledge)
                 .then(function (response) {
                     //success
-                    holder.assignments.push(response.data);
+                    holder.acquiredKnowledges.push(response.data);
                     holder.newProject = {};
 
                 }, function () {
@@ -51,11 +51,11 @@
                 });
 
         };
-        holder.updateProject = function () {//TODO IMPORTANT
+        holder.updateAcKnowledge = function () {//TODO IMPORTANT
             holder.isBusy = true;
             holder.errorMessage = "";
 
-            $http.put("http://localhost:8899/api/dashboard/assignments", //TODO object to Update)
+            $http.put("http://localhost:8899/api/dashboard/acquiredKnowledges", //TODO object to Update)
                 .then(function (response) {
                     //success
 
@@ -70,11 +70,11 @@
                     });
 
         };
-        holder.deleteProject = function () {//TODO IMPORTANT
+        holder.deleteAcKnowledge = function () {//TODO IMPORTANT
             holder.isBusy = true;
             holder.errorMessage = "";
 
-            $http.delete("http://localhost:8899/api/dashboard/assignments/", //TODO => ID)
+            $http.delete("http://localhost:8899/api/dashboard/acquiredKnowledges/", //TODO => ID)
                 .then(function (response) {
                     //success
 
