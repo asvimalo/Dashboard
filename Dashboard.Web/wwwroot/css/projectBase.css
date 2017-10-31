@@ -14,11 +14,12 @@
     font-family: Arial;
 }
 
-.panels {
-    box-shadow: 0px 3px 3px #d4d4d4;
-    padding: 2%;
+/* Here start the panelsModals */
+
+.panelsModals {
+    margin-top: 3%;
 }
 
-.modalpoop {
-    background: #ffd800;
-}
+
+/* Here Ends the panelsModals */
+
