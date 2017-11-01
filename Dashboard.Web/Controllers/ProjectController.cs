@@ -22,11 +22,8 @@ namespace Dashboard.Web.Controllers
             return View();
         }
 
-        public IActionResult Angular()
-        {
-            return View();
-        }
-        public IActionResult PhonecatApp()
+        
+        public IActionResult AngApp()
         {
             return View();
         }

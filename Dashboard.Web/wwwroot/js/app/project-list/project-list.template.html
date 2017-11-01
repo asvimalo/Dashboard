@@ -1,6 +1,20 @@
 ﻿
             <h2 class="text-center">Projects</h2>
             <table class="table table-responsive table-striped">
+                <thead>
+                    <tr>
+                        <td>projectName</td>
+                        <td>clientId</td>
+                        <td>client</td>
+                        <td>startDate</td>
+                        <td>stopDate</td>
+                        <td>timeBudget</td>
+                        <td>notes</td>
+                        <td>stopDate</td>
+                        <td>assignments</td>
+                        <td>phases</td>
+                    </tr>
+                </thead>
                 <tr ng-repeat="project in $ctrl.projects">
                     <td>{{ project.projectName }}</td>
                     <td>{{ project.clientId  }}</td>
