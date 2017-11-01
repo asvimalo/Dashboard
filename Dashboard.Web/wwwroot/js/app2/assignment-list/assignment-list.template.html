@@ -1,0 +1,17 @@
+﻿<h2 class="text-center">Assignments</h2>
+<table class="table table-responsive table-striped">
+    <tr ng-repeat="assignment in $ctrl.assignments">
+        <td>{{ assignment.assignmentId }}</td>
+        <td>{{ assignment.employeeId  }}</td>
+        <td>{{ assignment.employee  }}</td>
+        <td>{{ assignment.projectId  }}</td>
+        <td>{{ assignment.project  }}</td>
+        <td>{{ assignment.jobTitle  }}</td>
+        <td>{{ assignment.startDate  }}</td>
+        <td>{{ assignment.stopDate  }}</td>
+        <td>{{ assignment.location  }}</td>
+        <td>{{ assignment.commitments  }}</td>
+        <td><a ng-href="#/employees/{{ assignment.assignmentId }}" class="btn btn-sm btn-primary">Manage</a></td>
+
+    </tr>
+</table>

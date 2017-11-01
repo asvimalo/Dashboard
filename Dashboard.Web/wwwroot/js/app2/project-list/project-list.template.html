@@ -1,0 +1,18 @@
+﻿
+            <h2 class="text-center">Projects</h2>
+            <table class="table table-responsive table-striped">
+                <tr ng-repeat="project in $ctrl.projects">
+                    <td>{{ project.projectName }}</td>
+                    <td>{{ project.clientId  }}</td>
+                    <td>{{ project.client  }}</td>
+                    <td>{{ project.startDate | date: 'dd-MM-yyyy' }}</td>
+                    <td>{{ project.stopDate  | date: 'dd-MM-yyyy' }}</td>
+                    <td>{{ project.timeBudget  }}</td>
+                    <td>{{ project.notes  }}</td>
+                    <td>{{ project.assignments  }}</td>
+                    <td>{{ project.phases  }}</td>
+                    <td><a href="#/projects/{{project.id}}">{{project.projectName}}</a></td>
+
+                </tr>
+            </table>
+        

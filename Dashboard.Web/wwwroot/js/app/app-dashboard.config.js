@@ -5,24 +5,24 @@
     angular.module("app-dashboard")
         .config(function ($locationProvider,  $routeProvider) {
             $locationProvider.hashPrefix('!')
-
+            debugger;
             $routeProvider.when("/", {               
-                templateUrl: "dashboard/dashboard.template.html"
+                templateUrl: "js/dashboard/dashboard.template.html"
             });
             $routeProvider.when("/employees", {
                 
-                templateUrl: "employeeList/employee-list.template.html"
+                templateUrl: "<employee-list></employee-list>"
             });
             $routeProvider.when("/assignments", {
                 
-                templateUrl: "assignmentList/assignment-list.template.html"
+                templateUrl: "<assignment-list></assignment-list>"
             });
             $routeProvider.when("/projects", {
                 
-                templateUrl: "projectList/project-list.template.html"
+                templateUrl: "<project-list></project-list>"
             });
             $routeProvider.otherwise({redirect: "/"})
         })
 
 
-})();
+}());

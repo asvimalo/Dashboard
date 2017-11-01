@@ -3,10 +3,11 @@
 
     angular.module("app-dashboard",
         ["loaderControl",
-            "ngRoute",
-            "employeeList",
+            //"employeeList",
             "projectList",
-            "assignmentList"
+            //"assignmentList",
+            "ngRoute"
+            
             ])
 
-})();
+}());

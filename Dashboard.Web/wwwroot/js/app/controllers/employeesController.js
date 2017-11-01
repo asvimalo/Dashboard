@@ -3,7 +3,7 @@
     "use strict";
     console.log("inside func dashboard controller");
 
-    angular.module("app-dashboard")
+    angular.module("employeeList")
         .controller("employeesController", employeesController);
 
     console.log("outside employeesController ");

@@ -1,0 +1,14 @@
+﻿<h2 class="text-center">Employees</h2>
+<table class="table table-responsive table-striped">
+    <tr ng-repeat="employee in $ctrl.employees">
+        <td>{{ employee.firstName }}</td>
+        <td>{{ employee.lastName  }}</td>
+        <td>{{ employee.personNr  }}</td>
+        <td>{{ employee.imageName  }}</td>
+        <td>{{ employee.imagePath  }}</td>
+        <td>{{ employee.acquiredKnowledge  }}</td>
+        <td>{{ employee.assignments  }}</td>
+        <td><a ng-href="#/employees/{{ employee.employeeId }}" class="btn btn-sm btn-primary">Manage</a></td>
+
+    </tr>
+</table>

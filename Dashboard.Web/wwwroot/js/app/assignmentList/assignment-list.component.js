@@ -4,7 +4,7 @@
     angular.
         module('assignmentList').
         component('assignmentList', {
-            templateUrl: 'assignment-list.template.html',
+            templateUrl: '../assigmentList/assignment-list.template.html',
             controller: "assignmentsController"
         });
 
