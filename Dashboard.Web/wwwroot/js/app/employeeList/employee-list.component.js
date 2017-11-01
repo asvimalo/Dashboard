@@ -4,8 +4,8 @@
     angular.
         module('employeeList').
         component('employeeList', {
-            templateUrl: 'employee-list.template.html',
+            templateUrl: '../employeeList/employee-list.template.html',
             controller: "employeesController"
         });
 
-})();
+}());

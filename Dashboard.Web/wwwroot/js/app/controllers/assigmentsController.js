@@ -2,7 +2,7 @@
 (function () {
     "use strict";
 
-    angular.module("app-dashboard")
+    angular.module("assignmentList")
         .controller("assignmentsController", assignmentsController);
 
     function assignmentsController($http) {

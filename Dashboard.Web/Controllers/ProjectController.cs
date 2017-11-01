@@ -26,5 +26,9 @@ namespace Dashboard.Web.Controllers
         {
             return View();
         }
+        public IActionResult PhonecatApp()
+        {
+            return View();
+        }
     }
 }

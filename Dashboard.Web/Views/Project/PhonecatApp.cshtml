@@ -1,0 +1,30 @@
+﻿@section Scripts {
+    <script src="~/lib/angular/angular.min.js"></script>
+    <script src="~/lib/angular-route/angular-route.min.js"></script>
+
+    <script src="~/js/app2/app-dashboard.js"></script>
+
+    <script src="~/js/app2/project-list/project-list.module.js"></script>
+    <script src="~/js/app2/project-list/project-list.component.js"></script>
+
+    <script src="~/js/app2/employee-list/employee-list.module.js"></script>
+    <script src="~/js/app2/employee-list/employee-list.component.js"></script>
+
+    <script src="~/js/app2/assignment-list/asssignment-list.module.js"></script>
+    <script src="~/js/app2/assignment-list/assignment-list.component.js"></script>
+}
+<div ng-app="app-dashboard">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4">
+                <project-list></project-list>
+            </div>
+            <div class="col-md-4">
+                <employee-list></employee-list>
+            </div>
+            <div class="col-md-4">
+                <assignment-list></assignment-list>
+            </div>
+        </div>
+    </div>
+</div>
