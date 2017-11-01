@@ -1,8 +1,9 @@
 ﻿(function () {
     "use strict";
     angular.module("app-dashboard",
-        ["projectList",
+        ["ngRoute","projectList",
             "employeeList",
-            "assignmentList"]);
+            "assignmentList",
+            "dashboardView"]);
 
 })();
