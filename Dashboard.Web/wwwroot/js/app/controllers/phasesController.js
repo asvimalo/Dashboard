@@ -51,44 +51,44 @@
                 });
 
         };
-        holder.updatePhase = function () {//TODO IMPORTANT
-            holder.isBusy = true;
-            holder.errorMessage = "";
+        //holder.updatePhase = function () {//TODO IMPORTANT
+        //    holder.isBusy = true;
+        //    holder.errorMessage = "";
 
-            $http.put("http://localhost:8899/api/dashboard/phases", //TODO object to Update)
-                .then(function (response) {
-                    //success
+        //    $http.put("http://localhost:8899/api/dashboard/phases", //TODO object to Update)
+        //        .then(function (response) {
+        //            //success
 
-                    //// TODO ///////////////
+        //            //// TODO ///////////////
 
-                }, function () {
-                    //failure
-                    holder.errorMessage = "Failure to update phase";
-                })
-                    .finally(function () {
-                        holder.isBusy = false;
-                    });
+        //        }, function () {
+        //            //failure
+        //            holder.errorMessage = "Failure to update phase";
+        //        })
+        //            .finally(function () {
+        //                holder.isBusy = false;
+        //            });
 
-        };
-        holder.deletePhase = function () {//TODO IMPORTANT
-            holder.isBusy = true;
-            holder.errorMessage = "";
+        //};
+        //holder.deletePhase = function () {//TODO IMPORTANT
+        //    holder.isBusy = true;
+        //    holder.errorMessage = "";
 
-            $http.delete("http://localhost:8899/api/dashboard/phases/", //TODO => ID)
-                .then(function (response) {
-                    //success
+        //    $http.delete("http://localhost:8899/api/dashboard/phases/", //TODO => ID)
+        //        .then(function (response) {
+        //            //success
 
-                    ////// TODO    //////////////
+        //            ////// TODO    //////////////
 
-                }, function () {
-                    //failure
-                    holder.errorMessage = "Failure to delete phase";
-                })
-                    .finally(function () {
-                        holder.isBusy = false;
-                    });
+        //        }, function () {
+        //            //failure
+        //            holder.errorMessage = "Failure to delete phase";
+        //        })
+        //            .finally(function () {
+        //                holder.isBusy = false;
+        //            });
 
-        };
+        //};
 
 
     }

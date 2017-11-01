@@ -10,14 +10,14 @@
         var holder = this;
 
         holder.projects = [];
-        
+
 
         holder.newProject = {};
-        
+
         console.log("inside projects controller");
         holder.errorMessage = "";
         holder.isBusy = true;
-        
+
         ///////////////////////Projects/////////////////////////////////
         $http.get("http://localhost:8899/api/dashboard/projects")
             .then(function (response) {
@@ -51,44 +51,44 @@
                 });
 
         };
-        holder.UpdateProject = function () {//TODO IMPORTANT
-            holder.isBusy = true;
-            holder.errorMessage = "";
+        //holder.UpdateProject = function () {//TODO IMPORTANT
+        //    holder.isBusy = true;
+        //    holder.errorMessage = "";
 
-            $http.put("http://localhost:8899/api/dashboard/projects", //TODO object to Update)
-                .then(function (response) {
-                    //success
+        //    $http.put("http://localhost:8899/api/dashboard/projects", //TODO object to Update)
+        //        .then(function (response) {
+        //            //success
 
-                    //// TODO ///////////////
+        //            //// TODO ///////////////
 
-                }, function () {
-                    //failure
-                    holder.errorMessage = "Failure to update project";
-                })
-                    .finally(function () {
-                        holder.isBusy = false;
-                    });
+        //        }, function () {
+        //            //failure
+        //            holder.errorMessage = "Failure to update project";
+        //        })
+        //            .finally(function () {
+        //                holder.isBusy = false;
+        //            });
 
-        };
-        holder.DeleteProject = function () {//TODO IMPORTANT
-            holder.isBusy = true;
-            holder.errorMessage = "";
+        //};
+        //holder.DeleteProject = function () {//TODO IMPORTANT
+        //    holder.isBusy = true;
+        //    holder.errorMessage = "";
 
-            $http.delete("http://localhost:8899/api/dashboard/projects/", //TODO => ID)
-                .then(function (response) {
-                    //success
+        //    $http.delete("http://localhost:8899/api/dashboard/projects/", //TODO => ID)
+        //        .then(function (response) {
+        //            //success
 
-                    ////// TODO    //////////////
+        //            ////// TODO    //////////////
 
-                }, function () {
-                    //failure
-                    holder.errorMessage = "Failure to delete project";
-                })
-                    .finally(function () {
-                        holder.isBusy = false;
-                    });
+        //        }, function () {
+        //            //failure
+        //            holder.errorMessage = "Failure to delete project";
+        //        })
+        //            .finally(function () {
+        //                holder.isBusy = false;
+        //            });
 
-        };
+        //};
 
 
     }

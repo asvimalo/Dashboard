@@ -34,4 +34,8 @@
     <ProjectReference Include="..\Dashboard.Entities\Dashboard.Entities.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\views\" />
+  </ItemGroup>
+
 </Project>

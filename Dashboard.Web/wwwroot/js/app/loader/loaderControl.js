@@ -12,7 +12,7 @@
                 show: "=displayWhen"
             },
             restrict: "E",
-            templateUrl: "/views/loaderCursor.html"
+            templateUrl: "loaderCursor.html"
         };
     };
 })()

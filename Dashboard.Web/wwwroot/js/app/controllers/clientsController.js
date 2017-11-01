@@ -51,44 +51,44 @@
                 });
 
         };
-        holder.updateClient = function () {//TODO IMPORTANT
-            holder.isBusy = true;
-            holder.errorMessage = "";
+        //holder.updateClient = function () {//TODO IMPORTANT
+        //    holder.isBusy = true;
+        //    holder.errorMessage = "";
 
-            $http.put("http://localhost:8899/api/dashboard/clients", //TODO object to Update)
-                .then(function (response) {
-                    //success
+        //    $http.put("http://localhost:8899/api/dashboard/clients", //TODO object to Update)
+        //        .then(function (response) {
+        //            //success
 
-                    //// TODO ///////////////
+        //            //// TODO ///////////////
 
-                }, function () {
-                    //failure
-                    holder.errorMessage = "Failure to update client";
-                })
-                    .finally(function () {
-                        holder.isBusy = false;
-                    });
+        //        }, function () {
+        //            //failure
+        //            holder.errorMessage = "Failure to update client";
+        //        })
+        //            .finally(function () {
+        //                holder.isBusy = false;
+        //            });
 
-        };
-        holder.deleteClient = function () {//TODO IMPORTANT
-            holder.isBusy = true;
-            holder.errorMessage = "";
+        //};
+        //holder.deleteClient = function () {//TODO IMPORTANT
+        //    holder.isBusy = true;
+        //    holder.errorMessage = "";
 
-            $http.delete("http://localhost:8899/api/dashboard/clients/", //TODO => ID)
-                .then(function (response) {
-                    //success
+        //    $http.delete("http://localhost:8899/api/dashboard/clients/", //TODO => ID)
+        //        .then(function (response) {
+        //            //success
 
-                    ////// TODO    //////////////
+        //            ////// TODO    //////////////
 
-                }, function () {
-                    //failure
-                    holder.errorMessage = "Failure to delete client";
-                })
-                    .finally(function () {
-                        holder.isBusy = false;
-                    });
+        //        }, function () {
+        //            //failure
+        //            holder.errorMessage = "Failure to delete client";
+        //        })
+        //            .finally(function () {
+        //                holder.isBusy = false;
+        //            });
 
-        };
+        //};
 
 
     }

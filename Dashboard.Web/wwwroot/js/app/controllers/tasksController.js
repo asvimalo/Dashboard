@@ -51,44 +51,44 @@
                 });
 
         };
-        holder.updateTask = function () {//TODO IMPORTANT
-            holder.isBusy = true;
-            holder.errorMessage = "";
+        //holder.updateTask = function () {//TODO IMPORTANT
+        //    holder.isBusy = true;
+        //    holder.errorMessage = "";
 
-            $http.put("http://localhost:8899/api/dashboard/tasks", //TODO object to Update)
-                .then(function (response) {
-                    //success
+        //    $http.put("http://localhost:8899/api/dashboard/tasks", //TODO object to Update)
+        //        .then(function (response) {
+        //            //success
 
-                    //// TODO ///////////////
+        //            //// TODO ///////////////
 
-                }, function () {
-                    //failure
-                    holder.errorMessage = "Failure to update task";
-                })
-                    .finally(function () {
-                        holder.isBusy = false;
-                    });
+        //        }, function () {
+        //            //failure
+        //            holder.errorMessage = "Failure to update task";
+        //        })
+        //            .finally(function () {
+        //                holder.isBusy = false;
+        //            });
 
-        };
-        holder.deleteTask = function () {//TODO IMPORTANT
-            holder.isBusy = true;
-            holder.errorMessage = "";
+        //};
+        //holder.deleteTask = function () {//TODO IMPORTANT
+        //    holder.isBusy = true;
+        //    holder.errorMessage = "";
 
-            $http.delete("http://localhost:8899/api/dashboard/tasks/", //TODO => ID)
-                .then(function (response) {
-                    //success
+        //    $http.delete("http://localhost:8899/api/dashboard/tasks/", //TODO => ID)
+        //        .then(function (response) {
+        //            //success
 
-                    ////// TODO    //////////////
+        //            ////// TODO    //////////////
 
-                }, function () {
-                    //failure
-                    holder.errorMessage = "Failure to delete task";
-                })
-                    .finally(function () {
-                        holder.isBusy = false;
-                    });
+        //        }, function () {
+        //            //failure
+        //            holder.errorMessage = "Failure to delete task";
+        //        })
+        //            .finally(function () {
+        //                holder.isBusy = false;
+        //            });
 
-        };
+        //};
 
 
     }

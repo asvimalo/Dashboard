@@ -55,44 +55,44 @@
                 });
 
         };
-        holder.updateEmployee = function () {//TODO IMPORTANT
-            holder.isBusy = true;
-            holder.errorMessage = "";
+        //holder.updateEmployee = function () {//TODO IMPORTANT
+        //    holder.isBusy = true;
+        //    holder.errorMessage = "";
 
-            $http.put("http://localhost:8899/api/dashboard/employees", //TODO object to Update)
-                .then(function (response) {
-                    //success
+        //    $http.put("http://localhost:8899/api/dashboard/employees", //TODO object to Update)
+        //        .then(function (response) {
+        //            //success
                   
-                    //// TODO ///////////////
+        //            //// TODO ///////////////
 
-                }, function () {
-                    //failure
-                    holder.errorMessage = "Failure to update employee";
-                })
-                .finally(function () {
-                    holder.isBusy = false;
-                });
+        //        }, function () {
+        //            //failure
+        //            holder.errorMessage = "Failure to update employee";
+        //        })
+        //        .finally(function () {
+        //            holder.isBusy = false;
+        //        });
 
-        };
-        holder.deleteEmployee = function () {//TODO IMPORTANT
-            holder.isBusy = true;
-            holder.errorMessage = "";
+        //};
+        //holder.deleteEmployee = function () {//TODO IMPORTANT
+        //    holder.isBusy = true;
+        //    holder.errorMessage = "";
 
-            $http.delete("http://localhost:8899/api/dashboard/employees/", //TODO => ID)
-                .then(function (response) {
-                    //success
+        //    $http.delete("http://localhost:8899/api/dashboard/employees/", //TODO => ID)
+        //        .then(function (response) {
+        //            //success
 
-                    ////// TODO    //////////////
+        //            ////// TODO    //////////////
 
-                }, function () {
-                    //failure
-                    holder.errorMessage = "Failure to delete new employee";
-                })
-                .finally(function () {
-                    holder.isBusy = false;
-                });
+        //        }, function () {
+        //            //failure
+        //            holder.errorMessage = "Failure to delete new employee";
+        //        })
+        //        .finally(function () {
+        //            holder.isBusy = false;
+        //        });
 
-        };
+        //};
 
         
     }
