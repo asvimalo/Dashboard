@@ -1,0 +1,30 @@
+﻿<!--<script src="../js/controllers/assigmentsController.js"></script>-->
+
+<div class="row" ng-controller="assigmentsController">
+    <div class="col-md-6 col-md-offset-3">
+        <!--<div class="text-danger" ng-show="ass.errorMessage">{{ holder.errorMessage }}</div>-->
+        <!--<div ng-show="vm.isBusy" class="text-center"><i class="fa fa-spinner fa-spin"></i> Loading...</div>-->
+        <loader-cursor display-when="holder.isBusy"></loader-cursor>
+    </div>
+
+    <div class="col-md-6 col-md-offset-3">
+        <h2 class="text-center">{{ holder.text }}</h2>
+        <table class="table table-responsive table-striped">
+            <tr ng-repeat="assignment in holder.assignments">
+                <td>{{ assignment.assignmentId }}</td>
+                <td>{{ assignment.employeeId  }}</td>
+                <td>{{ assignment.employee  }}</td>
+                <td>{{ assignment.projectId  }}</td>
+                <td>{{ assignment.project  }}</td>
+                <td>{{ assignment.jobTitle  }}</td>
+                <td>{{ assignment.startDate  }}</td>
+                <td>{{ assignment.stopDate  }}</td>
+                <td>{{ assignment.location  }}</td>
+                <td>{{ assignment.commitments  }}</td>
+                <!--<td><a ng-href="#/employees/{{ assignment.assignmentId }}" class="btn btn-sm btn-primary">Manage</a></td>-->
+
+            </tr>
+        </table>
+    </div>
+
+</div>

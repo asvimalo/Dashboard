@@ -3,15 +3,15 @@
     "use strict";
 
     angular.module("app-dashboard")
-        .controller("assignmentsController", projectsController);
+        .controller("assignmentsController", assignmentsController);
 
-    function projectsController($http) {
+    function assignmentsController($http) {
 
         var holder = this;
 
         holder.assignments = [];
 
-
+        holder.title = "Assignments";
         holder.newAssignment = {};
 
         console.log("inside assignment controller");
@@ -51,44 +51,44 @@
                 });
 
         };
-        holder.updateProject = function () {//TODO IMPORTANT
-            holder.isBusy = true;
-            holder.errorMessage = "";
+        //holder.updateProject = function () {//TODO IMPORTANT
+        //    holder.isBusy = true;
+        //    holder.errorMessage = "";
 
-            $http.put("http://localhost:8899/api/dashboard/assignments", //TODO object to Update)
-                .then(function (response) {
-                    //success
+        //    $http.put("http://localhost:8899/api/dashboard/assignments", //TODO object to Update)
+        //        .then(function (response) {
+        //            //success
 
-                    //// TODO ///////////////
+        //            //// TODO ///////////////
 
-                }, function () {
-                    //failure
-                    holder.errorMessage = "Failure to update assignment";
-                })
-                    .finally(function () {
-                        holder.isBusy = false;
-                    });
+        //        }, function () {
+        //            //failure
+        //            holder.errorMessage = "Failure to update assignment";
+        //        })
+        //            .finally(function () {
+        //                holder.isBusy = false;
+        //            });
 
-        };
-        holder.deleteProject = function () {//TODO IMPORTANT
-            holder.isBusy = true;
-            holder.errorMessage = "";
+        //};
+        //holder.deleteProject = function () {//TODO IMPORTANT
+        //    holder.isBusy = true;
+        //    holder.errorMessage = "";
 
-            $http.delete("http://localhost:8899/api/dashboard/assignments/", //TODO => ID)
-                .then(function (response) {
-                    //success
+        //    $http.delete("http://localhost:8899/api/dashboard/assignments/", //TODO => ID)
+        //        .then(function (response) {
+        //            //success
 
-                    ////// TODO    //////////////
+        //            ////// TODO    //////////////
 
-                }, function () {
-                    //failure
-                    holder.errorMessage = "Failure to delete assignment";
-                })
-                    .finally(function () {
-                        holder.isBusy = false;
-                    });
+        //        }, function () {
+        //            //failure
+        //            holder.errorMessage = "Failure to delete assignment";
+        //        })
+        //            .finally(function () {
+        //                holder.isBusy = false;
+        //            });
 
-        };
+        //};
 
 
     }

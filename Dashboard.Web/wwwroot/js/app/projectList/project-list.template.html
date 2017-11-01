@@ -1,11 +1,13 @@
-﻿<div class="row">
+﻿<!--<script src="../js/controllers/projectsController.js"></script>-->
+<div class="row" ng-controller="projectsController">
     <div class="col-md-6 col-md-offset-3">
-        <div class="text-danger" ng-show="holder.errorMessage">{{ holder.errorMessage }}</div>
+        <!--<div class="text-danger" ng-show="pr.errorMessage">{{ holder.errorMessage }}</div>-->
         <!--<div ng-show="vm.isBusy" class="text-center"><i class="fa fa-spinner fa-spin"></i> Loading...</div>-->
-        <loader-cursor display-when="vm.isBusy"></loader-cursor>
+        <loader-cursor display-when="holder.isBusy"></loader-cursor>
     </div>
 
     <div class="col-md-12">
+        <h2 class="text-center">Projects</h2>
         <table class="table table-responsive table-striped">
             <tr ng-repeat="project in holder.projects">
                 <td>{{ project.projectName }}</td>
