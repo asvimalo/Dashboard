@@ -28,7 +28,7 @@
                     //    template: '<assignment-detail></assignment-detail>'
                     //}).
                     when('/acquiredKnowledges', {
-                        template: '<acquiredKnowledge-list></acquiredKnowledge-list>'
+                        template: '<acquired-knowledge-list></acquired-knowledge-list>'
                     }).
                     //when('/acquiredKnowledge/:acquiredKnowledge', {
                     //    template: '<acquiredKnowledge-detail></acquiredKnowledge-detail>'
