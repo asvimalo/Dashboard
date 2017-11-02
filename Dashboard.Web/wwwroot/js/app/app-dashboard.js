@@ -11,8 +11,8 @@
             "knowledgeList",
             "phaseList",
             "taskList",
-            "locationList"
-            //"assignProjectToEmployee"
+            "locationList",
+            "assignProjectToEmployee"
             ]);
 })();
 
