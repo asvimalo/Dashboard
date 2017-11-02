@@ -3,7 +3,7 @@
     <script src="~/lib/angular-route/angular-route.min.js"></script>
 
     <script src="~/js/app/app-dashboard.js"></script>
-   
+    @*<script src="~/js/app2/app-dashboard.config.js"></script>*@
 
     <script src="~/js/app/dashboard-view/dashboard-view.module.js"></script>
     <script src="~/js/app/dashboard-view/dashboard-view.component.js"></script>
@@ -32,12 +32,11 @@
     <script src="~/js/app/phase/phase-list/phase-list.module.js"></script>
     <script src="~/js/app/phase/phase-list/phase-list.component.js"></script>
 
+    @*<script src="~/js/app/assign-project-to-employee/assign-project-to-employee.module.js"></script>
+    <script src="~/js/app/assign-project-to-employee/assign-project-to-employee.component.js"></script>*@
+
     <script src="~/js/app/task/task-list/task-list.module.js"></script>
     <script src="~/js/app/task/task-list/task-list.component.js"></script>
-
-    <script src="~/js/app/location/location-list/location-list.module.js"></script>
-    <script src="~/js/app/location/location-list/location-list.component.js"></script>
-
     <script src="~/js/app/app-dashboard.config.js"></script>
 
 }
@@ -58,8 +57,8 @@
                     <li><a ng-href="#!/phases">Phases</a></li>
                     <li><a ng-href="#!/tasks">Tasks</a></li>     
                     <li><a ng-href="#!/commitments">Commitments</a></li>
-                    
-                                                  
+                    @*<li><a ng-href="#!/assignProjectToEmployee">AssignProjectToEmployee</a></li>*@
+                                                       
                 </ul>
             </div>
             <div class="col-lg-10" ng-view>

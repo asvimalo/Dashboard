@@ -6,13 +6,15 @@
             "assignmentList",
             "dashboardView",
             "clientList",
-            "phaseList",
-            "knowledgeList",
-            "taskList",
             "commitmentList",
-            "locationList",
-            "acquiredKnowledgeList"           
-                      
-           ]);
-
+            "acquiredKnowledgeList",
+            "knowledgeList",
+            "phaseList",
+            "taskList",
+            "assignProjectToEmployee"
+            ]);
 })();
+
+//"locationList",
+//    "projectAdd",
+//    "assignProjectToEmployee"
