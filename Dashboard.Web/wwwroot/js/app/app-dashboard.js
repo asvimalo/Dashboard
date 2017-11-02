@@ -10,6 +10,8 @@
             "acquiredKnowledgeList",
             "knowledgeList",
             "phaseList",
-            "taskList"]);
+            "taskList",
+            "locationList",
+            "projectAdd"]);
 
 })();

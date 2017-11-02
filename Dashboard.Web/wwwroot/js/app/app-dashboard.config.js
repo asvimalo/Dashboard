@@ -63,6 +63,15 @@
                     //when('/tasks/:taskId', {
                     //    template: '<task-detail></task-detail>'
                     //}).
+                    when('/locations', {
+                        template: '<location-list></location-list>'
+                    }).
+                    //when('/locations/:locationId', {
+                    //    template: '<location-detail></location-detail>'
+                    //}).
+                    when('/projectAdd', {
+                        template: '<project-add></project-add>'
+                    }).
                     otherwise('/dashboard');
             }
         ]);
