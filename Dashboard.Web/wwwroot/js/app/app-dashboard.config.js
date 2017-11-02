@@ -27,6 +27,18 @@
                     //when('/assignments/:employeeId', {
                     //    template: '<assignment-detail></assignment-detail>'
                     //}).
+                    when('/acquiredKnowledge', {
+                        template: '<acquiredKnowledge-list></acquiredKnowledge-list>'
+                    }).
+                    //when('/acquiredKnowledge/:acquiredKnowledge', {
+                    //    template: '<acquiredKnowledge-detail></acquiredKnowledge-detail>'
+                    //}).
+                    when('/client', {
+                        template: '<client-list></client-list>'
+                    }).
+                    //when('/acquiredKnowledge/:acquiredKnowledge', {
+                    //    template: '<acquiredKnowledge-detail></acquiredKnowledge-detail>'
+                    //}).
                     otherwise('/dashboard');
             }
         ]);

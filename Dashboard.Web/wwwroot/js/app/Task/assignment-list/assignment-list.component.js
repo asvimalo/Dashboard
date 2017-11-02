@@ -2,7 +2,7 @@
     "use strict";
     angular.module("assignmentList")
         .component("assignmentList", {
-            templateUrl: "/js/app/assignment-list/assignment-list.template.html",
+            templateUrl: "/js/app/assignment/assignment-list/assignment-list.template.html",
             controller: function AssignmentListController($http) {
                 var self = this;
                 //self.orderProp = 'projectName';

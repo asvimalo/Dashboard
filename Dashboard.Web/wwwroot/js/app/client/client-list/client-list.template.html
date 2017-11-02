@@ -1,0 +1,25 @@
+﻿<h2 class="text-center">Clients</h2>
+<table class="table table-responsive table-striped">
+    <thead>
+        <tr>
+            <td>ClientId</td>
+            <td>LocationId</td>
+            <td>ClientName</td>
+            <td>Description</td>
+            <td>Location</td>
+            <td>jobTitle</td>
+            <td>Projects</td>
+            
+        </tr>
+    </thead>
+    <tr ng-repeat="client in $ctrl.clients">
+        <td>{{ client.clientId }}</td>
+        <td>{{ client.LocationId  }}</td>
+        <td>{{ client.clientName  }}</td>
+        <td>{{ client.description  }}</td>
+        <td>{{ client.projects  }}</td>
+        
+        <td><a ng-href="#/employees/{{ assignment.assignmentId }}" class="btn btn-sm btn-primary">Manage</a></td>
+
+    </tr>
+</table>

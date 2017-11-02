@@ -1,0 +1,23 @@
+﻿<h2 class="text-center">Acquired Knowledge</h2>
+<table class="table table-responsive table-striped">
+    <thead>
+        <tr>
+            <td>Acquired Knowledge Id</td>
+            <td>KnowledgeId</td>
+            <td>Knowledge</td>
+            <td>projectId</td>
+            <td>EmployeeId</td>
+            <td>Employee</td>
+           
+        </tr>
+    </thead>
+    <tr ng-repeat="acquiredKnowledge in $ctrl.acquiredKnowledges">
+        <td>{{ acquiredKnowledge.AcquiredKnowledgeId }}</td>
+        <td>{{ acquiredKnowledge.KnowledgeId  }}</td>
+        <td>{{ acquiredKnowledge.Knowledge  }}</td>
+        <td>{{ acquiredKnowledge.EmployeeId  }}</td>
+        <td>{{ acquiredKnowledge.Employee  }}</td>       
+        <td><a ng-href="#/acquiredKnowledges/{{ acquiredKnowledge.assignmentId }}" class="btn btn-sm btn-primary">Manage</a></td>
+
+    </tr>
+</table>

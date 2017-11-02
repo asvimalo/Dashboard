@@ -4,6 +4,8 @@
         ["ngRoute","projectList",
             "employeeList",
             "assignmentList",
-            "dashboardView"]);
+            "dashboardView",
+            "clientList",
+            "acquiredKnowledgeList"]);
 
 })();
