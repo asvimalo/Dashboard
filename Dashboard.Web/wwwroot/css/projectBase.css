@@ -23,3 +23,12 @@
 
 /* Here Ends the panelsModals */
 
+/* For Angular Views */
+.modal {
+    display: block;
+}
+
+a {
+    cursor: pointer;
+}
+/* Here ENDS For Angular Views */
