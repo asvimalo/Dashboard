@@ -11,7 +11,6 @@
             "knowledgeList",
             "phaseList",
             "taskList",
-            "locationList",
-            "projectAdd"]);
+            "locationList"]);
 
 })();

@@ -1,6 +1,6 @@
 ﻿(function () {
     "use strict";
-    angular.module("employeeList", []);
+    angular.module("locationList", []);
         
 
 })();
