@@ -27,17 +27,41 @@
                     //when('/assignments/:employeeId', {
                     //    template: '<assignment-detail></assignment-detail>'
                     //}).
-                    when('/acquiredKnowledge', {
+                    when('/acquiredKnowledges', {
                         template: '<acquiredKnowledge-list></acquiredKnowledge-list>'
                     }).
                     //when('/acquiredKnowledge/:acquiredKnowledge', {
                     //    template: '<acquiredKnowledge-detail></acquiredKnowledge-detail>'
                     //}).
-                    when('/client', {
+                    when('/clients', {
                         template: '<client-list></client-list>'
                     }).
-                    //when('/acquiredKnowledge/:acquiredKnowledge', {
+                    //when('/client/:client', {
                     //    template: '<acquiredKnowledge-detail></acquiredKnowledge-detail>'
+                    //}).
+                    when('/commitments', {
+                        template: '<commitment-list></commitment-list>'
+                    }).
+                    //when('/commitment/:commitmentId', {
+                    //    template: '<commitment-detail></commitment-detail>'
+                    //}).
+                    when('/knowledges', {
+                        template: '<knowledge-list></knowledge-list>'
+                    }).
+                    //when('/knowledge/:knowledgeId', {
+                    //    template: '<knowledge-detail></knowledge-detail>'
+                    //}).
+                    when('/phases', {
+                        template: '<phase-list></phase-list>'
+                    }).
+                    //when('/phases/:phaseId', {
+                    //    template: '<phase-detail></phase-detail>'
+                    //}).
+                    when('/tasks', {
+                        template: '<task-list></task-list>'
+                    }).
+                    //when('/tasks/:taskId', {
+                    //    template: '<task-detail></task-detail>'
                     //}).
                     otherwise('/dashboard');
             }

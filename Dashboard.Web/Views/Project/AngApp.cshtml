@@ -16,19 +16,45 @@
 
     <script src="~/js/app/assignment/assignment-list/assignment-list.module.js"></script>
     <script src="~/js/app/assignment/assignment-list/assignment-list.component.js"></script>
+
+    <script src="~/js/app/acquiredKnowledge/acquiredKnowledge-list/acquiredKnowledge-list.module.js"></script>
+    <script src="~/js/app/acquiredKnowledge/acquiredKnowledge-list/acquiredKnowledge-list.component.js"></script>
+
+    <script src="~/js/app/client/client-list/client-list.module.js"></script>
+    <script src="~/js/app/client/client-list/client-list.component.js"></script>
+
+    <script src="~/js/app/commitment/commitment-list/commitment-list.module.js"></script>
+    <script src="~/js/app/commitment/commitment-list/commitment-list.component.js"></script>
+
+    <script src="~/js/app/knowledge/knowledge-list/knowledge-list.module.js"></script>
+    <script src="~/js/app/knowledge/knowledge-list/knowledge-list.component.js"></script>
+
+    <script src="~/js/app/phase/phase-list/phase-list.module.js"></script>
+    <script src="~/js/app/phase/phase-list/phase-list.component.js"></script>
+
+    <script src="~/js/app/task/task-list/task-list.module.js"></script>
+    <script src="~/js/app/task/task-list/task-list.component.js"></script>
     <script src="~/js/app/app-dashboard.config.js"></script>
 
 }
 <div ng-app="app-dashboard">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-2">
+            <div class="col-md-2 col-lg-2">
                 <ul class="nav navbar-nav">
                     
                     <li><a ng-href="#!/dashboard">Dashboard</a></li>
                     <li><a ng-href="#!/employees">Employees</a></li>
+                    <li><a ng-href="#!/knowledges">Knowledges</a></li>
+                    <li><a ng-href="#!/acquiredKnowledges">Acquired Knowledges</a></li>
+                    <li><a ng-href="#!/clients">Clients</a></li>   
+                    <li><a ng-href="#!/locations">Locations</a></li>   
                     <li><a ng-href="#!/projects">Projects</a></li>
                     <li><a ng-href="#!/assignments">Assignments</a></li>
+                    <li><a ng-href="#!/phases">Phases</a></li>
+                    <li><a ng-href="#!/tasks">Tasks</a></li>     
+                    <li><a ng-href="#!/commitments">Commitments</a></li>
+                                                       
                 </ul>
             </div>
             <div class="col-lg-10" ng-view>

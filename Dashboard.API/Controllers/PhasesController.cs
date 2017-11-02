@@ -11,7 +11,7 @@ using Dashboard.Entities;
 namespace Dashboard.API.Controllers
 {
     [Produces("application/json")]
-    [Route("api/dashbard/phases")]
+    [Route("api/dashboard/phases")]
     public class PhasesController : Controller
     {
         public IRepo _repo;
@@ -118,7 +118,7 @@ namespace Dashboard.API.Controllers
             if (await _repo.SaveChangesAsync())
                 return Ok($"Commitment deleted!");
             else
-                return BadRequest($"Commitment {phaseToDel.FirstName } wasn't deleted!");
+                return BadRequest($"Commitment {phaseToDel.PhaseName } wasn't deleted!");
         }
 
     }

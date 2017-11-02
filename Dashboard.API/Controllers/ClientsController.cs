@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 
 namespace Dashboard.API.Controllers
 {
+    [Produces("application/json")]
+    [Route("api/dashboard/clients")]
     public class ClientsController : Controller
     {
         public IRepo _repo;

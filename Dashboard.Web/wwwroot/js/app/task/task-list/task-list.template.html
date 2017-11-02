@@ -1,0 +1,19 @@
+﻿<h3 class="text-center">tasks</h3>
+<table class="table table-responsive table-striped">
+    <thead>
+        <tr>
+            <td>TaskName</td>
+            <td>PhaseId</td>
+            <td>Phase</td>
+            
+        </tr>
+    </thead>
+    <tr ng-repeat="task in $ctrl.tasks">
+        <td>{{ task.taskName }}</td>
+        <td>{{ task.phaseId  }}</td>
+        <td>{{ task.phase  }}</td>
+        
+        <td><a ng-href="#/tasks/{{ task.taskId }}" class="btn btn-sm btn-primary">Manage</a></td>
+
+    </tr>
+</table>
