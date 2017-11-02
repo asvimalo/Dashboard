@@ -69,12 +69,12 @@
                     //when('/locations/:locationId', {
                     //    template: '<location-detail></location-detail>'
                     //}).
-                    when('/projectAdd', {
-                        template: '<project-add></project-add>'
-                    }).
-                    when('/assignProjectToEmployee', {
-                        template: '<assign-project-to-employee></assign-project-to-employee>'
-                    }).
+                    //when('/projectAdd', {
+                    //    template: '<project-add></project-add>'
+                    //}).
+                    //when('/assignProjectToEmployee', {
+                    //    template: '<assign-project-to-employee></assign-project-to-employee>'
+                    //}).
                     otherwise('/dashboard');
             }
         ]);
