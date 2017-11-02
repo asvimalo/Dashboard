@@ -6,20 +6,23 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label>Employee</label>
-                    <table class="table table-responsive table-striped">
-                        <tr ng-repeat="e in $ctrl.employees">
-                            <td>{{ e.firstName }}</td>
-                        </tr>
-                    </table>
-                    <select class="form-control" id="singleSelect" ng-model="$ctrl.employees">
-                        <option ng-repeat="o in employees.options" value="{{o.id}}">{{o.firstName}}</option>
+                    <label>Employee:</label>
+                    <select class="form-control" id="singleSelect" ng-options="item.firstName for item in $ctrl.employees" ng-model="data.singleSelect">
+                        <option value="" disabled selected></option>
                     </select>
                 </div>
-                <!--<div class="form-group">
-                    <label>Project</label>
-                    <select class="form-control" ng-model="$ctrl.project.projectName" ng-options="o.projectName for o in project.options"></select>
-                </div>-->
+                <div class="form-group">
+                    <label>Project:</label>
+                    <table class="table table-responsive table-striped">
+                        <tr ng-repeat="e in $ctrl.projects">
+                            <td>{{ e.projectName }}</td>
+                        </tr>
+                    </table>
+                    <select class="form-control" id="singleSelect" ng-options="item.projectName for item in $ctrl.projects" ng-model="data.singleSelect">
+                        <option value="" disabled selected></option>
+                    </select>
+                    <!--<select class="form-control" ng-model="$ctrl.project.projectName" ng-options="o.projectName for o in project.options"></select>-->
+                </div>
                 <div class="form-group">
                     <label>Job title:</label>
                     <input type="text" ng-model="$ctrl.assigment.jobTitle" class="form-control">

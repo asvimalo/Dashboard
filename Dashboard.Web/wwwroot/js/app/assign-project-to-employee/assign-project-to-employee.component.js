@@ -19,17 +19,17 @@
                         holder.isBusy = false;
                     });
 
-                //$http.get("http://localhost:8899/api/dashboard/projects")
-                //    .then(function (response) {
-                //        //success
-                //        angular.copy(response.data, holder.projects);
-                //    }, function (error) {
-                //        //failure
-                //        holder.errorMessage = "Failed to load data: " + error;
-                //    })
-                //    .finally(function () {
-                //        holder.isBusy = false;
-                //    });
+                $http.get("http://localhost:8899/api/dashboard/projects")
+                    .then(function (response) {
+                        //success
+                        angular.copy(response.data, holder.projects);
+                    }, function (error) {
+                        //failure
+                        holder.errorMessage = "Failed to load data: " + error;
+                    })
+                    .finally(function () {
+                        holder.isBusy = false;
+                    });
 
                 holder.addCommitment = function () {
                 //    holder.isBusy = true;
