@@ -35,6 +35,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="wwwroot\js\app\all-projects\" />
+    <Folder Include="wwwroot\js\app\one-project-details\" />
     <Folder Include="wwwroot\views\" />
   </ItemGroup>
 
