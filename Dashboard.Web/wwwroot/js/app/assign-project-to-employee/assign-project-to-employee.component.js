@@ -19,6 +19,7 @@
                         holder.isBusy = false;
                     });
 
+                holder.projects = [];
                 $http.get("http://localhost:8899/api/dashboard/projects")
                     .then(function (response) {
                         //success
@@ -50,21 +51,21 @@
                 };
 
                 holder.assignProjectToEmployee = function () {
-                //    holder.isBusy = true;
-                //    holder.errorMessage = "";
+                    holder.isBusy = true;
+                    holder.errorMessage = "";
 
-                //    $http.post("http://localhost:8899/api/dashboard/assignments", $routeProvider.project)
-                //        .then(function (response) {
-                //            //success
-                //            holder.assignments.push(response.data);
-                //            holder.assignments = {}; //??
-                //        }, function () {
-                //            //failure
-                //            holder.errorMessage = "Failure to save new project";
-                //        })
-                //        .finally(function () {
-                //            holder.isBusy = false;
-                //        });
+                    $http.post("http://localhost:8899/api/dashboard/assignments", { header: { "Content-Type": "application/json" } } ) //$routeProvider.project
+                        .then(function (response) {
+                            //success
+                            holder.assignments.push(response.data);
+                            holder.assignments = {}; //??
+                        }, function () {
+                            //failure
+                            holder.errorMessage = "Failure to save new project";
+                        })
+                        .finally(function () {
+                            holder.isBusy = false;
+                        });
                 };
             }
         });
