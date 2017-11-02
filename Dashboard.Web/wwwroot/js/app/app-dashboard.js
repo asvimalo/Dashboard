@@ -6,11 +6,13 @@
             "assignmentList",
             "dashboardView",
             "clientList",
-            "commitmentList",
-            "acquiredKnowledgeList",
-            "knowledgeList",
             "phaseList",
+            "knowledgeList",
             "taskList",
-            "locationList"]);
+            "commitmentList",
+            "locationList",
+            "acquiredKnowledgeList"           
+                      
+           ]);
 
 })();

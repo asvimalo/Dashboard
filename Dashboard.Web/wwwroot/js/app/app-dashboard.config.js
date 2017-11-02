@@ -28,7 +28,7 @@
                     //    template: '<assignment-detail></assignment-detail>'
                     //}).
                     when('/acquiredKnowledges', {
-                        template: '<acquiredKnowledge-list></acquiredKnowledge-list>'
+                        template: '<acquired-knowledge-list></acquired-knowledge-list>'
                     }).
                     //when('/acquiredKnowledge/:acquiredKnowledge', {
                     //    template: '<acquiredKnowledge-detail></acquiredKnowledge-detail>'
@@ -69,9 +69,9 @@
                     //when('/locations/:locationId', {
                     //    template: '<location-detail></location-detail>'
                     //}).
-                    when('/projectAdd', {
-                        template: '<project-add></project-add>'
-                    }).
+                    //when('/projectAdd', {
+                    //    template: '<project-add></project-add>'
+                    //}).
                     otherwise('/dashboard');
             }
         ]);
