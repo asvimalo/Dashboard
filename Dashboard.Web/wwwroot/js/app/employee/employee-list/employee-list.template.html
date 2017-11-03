@@ -1,4 +1,5 @@
 ﻿<h2 class="text-center">Employees</h2>
+<div><a ng-href="#!/employees/employee-add" class="btn btn-sm btn-primary">Add New Employee</a></div>
 <table class="table table-responsive table-striped">
     <thead>
         <tr>
@@ -19,7 +20,9 @@
         <td>{{ employee.imagePath  }}</td>
         <td>{{ employee.acquiredKnowledge  }}</td>
         <td>{{ employee.assignments  }}</td>
-        <td><a ng-href="#/employees/{{ employee.employeeId }}" class="btn btn-sm btn-primary">Edit</a></td>
+
+        <td><a ng-href="#!/employees/{{ employee.employeeId }}" class="btn btn-sm btn-primary">Edit</a></td>
+  
 
     </tr>
 </table>

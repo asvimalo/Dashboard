@@ -10,7 +10,7 @@ using Dashboard.Entities;
 
 namespace Dashboard.API.Controllers
 {
-    [Produces("application/json")]
+    
     [Route("api/dashboard/acquiredKnowledges")]
     public class AcquiredKnowledgesController : Controller
     {

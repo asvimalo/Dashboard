@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Dashboard.API.Controllers
 {
-    [Produces("application/json")]
+    
     [Route("api/dashboard/tasks")]
     public class TasksController : Controller
     {

@@ -77,7 +77,16 @@ namespace Dashboard.Data
 
             services.AddScoped(typeof(IDesignTimeDbContextFactory<DashboardContext>),typeof(DashboardCtxFactory));
             services.AddAutoMapper();
-            services.AddCors();
+            services.AddCors(  options =>
+            {
+                options.AddPolicy("access", builder =>
+                {
+                    builder.AllowAnyHeader();
+                    builder.AllowAnyMethod();
+                    builder.AllowAnyOrigin();
+                });
+            });
+                
             services.AddMvc()
                 .AddJsonOptions(config =>
                 {
@@ -145,8 +154,7 @@ namespace Dashboard.Data
 
 
             //});
-            app.UseCors(builder =>
-                builder.WithOrigins("http://localhost:8898"));
+            app.UseCors("access");
 
             Mapper.AssertConfigurationIsValid();
             if (_config["DesignTime"] != "true")

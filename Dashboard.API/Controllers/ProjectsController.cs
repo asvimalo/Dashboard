@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Dashboard.Data.Controllers
 {
-    [Produces("application/json")]
+    
     [Route("api/dashboard/[controller]")]
     public class ProjectsController : Controller
     {

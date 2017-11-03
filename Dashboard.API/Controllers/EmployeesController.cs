@@ -9,21 +9,27 @@ using Dashboard.Data.Controllers;
 using Microsoft.Extensions.Logging;
 using Dashboard.Entities;
 using Dashboard.Data.EF.Contracts;
+using Dashboard.Entities.Entities;
+using Microsoft.AspNetCore.Hosting;
+using System.IO;
 
 namespace Dashboard.API.Controllers
 {
-    [Produces("application/json")]
+    
     [Route("api/dashboard/[controller]")]
     public class EmployeesController : Controller
     {
         public IRepo _repo;
         private ILogger<EmployeesController> _logger;
+        private IHostingEnvironment _env;
 
         public EmployeesController(IRepo repo, 
-            ILogger<EmployeesController> logger)
+            ILogger<EmployeesController> logger,
+            IHostingEnvironment env)
         {
             _repo = repo;
             _logger = logger;
+            _env = env;
         }
         
         // GET api/dashboard/employees
@@ -45,7 +51,7 @@ namespace Dashboard.API.Controllers
         }
 
         // GET api/dashboard/Commitments/5
-        [HttpGet("{id}", Name = "GetUser")]
+        [HttpGet("{id}", Name = "GetEmployee")]
         public async Task<IActionResult> Get(int id)
         {
             try
@@ -63,17 +69,33 @@ namespace Dashboard.API.Controllers
 
         }
 
-        // POST api/dashboard/Commitments
+        // POST api/dashboard/employees
         [HttpPost("")]
-        public async Task<IActionResult> Post([FromBody]Employee employee)
+        public async Task<IActionResult> Post([FromBody]EmployeePost employee)
         {
             if (ModelState.IsValid)
             {
+                var newEmployee = new Employee
+                {
+                    FirstName = employee.FirstName,
+                    LastName = employee.LastName,
+                    PersonNr = employee.PersonNr
+                    
+                };
+                var webRootPath = _env.WebRootPath;
+                var fileName = newEmployee.FirstName + ".jpg";
+                var filePath = Path.Combine($"{webRootPath}/Images/{fileName}");
+                await System.IO.File.WriteAllBytesAsync(filePath, employee.Bytes);
+                
+
                 //var newCommitment = Mapper.Map<Commitment>(commitment);
-                var addedEmployee = await _repo.AddAsync(employee);
+                newEmployee.ImageName = fileName;
+                newEmployee.ImagePath = filePath;
+
+                var addedEmployee = await _repo.AddAsync(newEmployee);
                 if (await _repo.SaveChangesAsync())
                 {
-                    return Created($"api/dashboard/commitments/{addedEmployee.EmployeeId}", addedEmployee);
+                    return CreatedAtRoute("GetEmployee", new { id = addedEmployee.EmployeeId}, addedEmployee);
                 }
             }
             return BadRequest("Failed to save changes to the database");
@@ -81,22 +103,54 @@ namespace Dashboard.API.Controllers
 
         // PUT api/dashboard/Commitments/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody]Employee employee)
+        public async Task<IActionResult> Put(int id, [FromBody]EmployeePost employee)
         {
             if (ModelState.IsValid)
             {
+                
                 //var projectId = 0;
                 //var userId = 0;
                 var employeeFromRepo = _repo.Get<Employee>(id);
                 //Mapper.Map(commitmentVM, commiFromRepo);
+                if (employeeFromRepo == null)
+                {
+                    return NotFound();
+                }
+                
+                var webRootPath = _env.WebRootPath;
+                
 
+
+                //var newCommitment = Mapper.Map<Commitment>(commitment);
+                
                 employeeFromRepo.FirstName = employee.FirstName ?? employeeFromRepo.FirstName;
                 employeeFromRepo.LastName = employee.LastName ?? employeeFromRepo.LastName;
                 employeeFromRepo.PersonNr = employee.PersonNr ?? employeeFromRepo.PersonNr;
-                employeeFromRepo.ImageName = employee.ImageName ?? employeeFromRepo.ImageName;
-                employeeFromRepo.ImagePath = employee.ImagePath ?? employeeFromRepo.ImagePath;
+                if(employee.Bytes != null)
+                {
+                    System.IO.File.Delete(Path.Combine($"{webRootPath}/Images/{employeeFromRepo.FirstName}" + "jpg"));
+                    var newEmployee = new Employee
+                    {
+                        FirstName = employee.FirstName,
+                        LastName = employee.LastName,
+                        PersonNr = employee.PersonNr
+
+                    };
+                    var fileName = newEmployee.FirstName + ".jpg";
+                    var filePath = Path.Combine($"{webRootPath}/Images/{fileName}");
+
+                    await System.IO.File.WriteAllBytesAsync(filePath, employee.Bytes);
+
+                    newEmployee.ImageName = fileName;
+                    newEmployee.ImagePath = filePath;
+                }
+               
                 employeeFromRepo.Assignments = employee.Assignments ?? employeeFromRepo.Assignments;
                 employeeFromRepo.AcquiredKnowledge = employee.AcquiredKnowledge ?? employeeFromRepo.AcquiredKnowledge;
+                //employeeFromRepo.ImageName = employee.ImageName ?? employeeFromRepo.ImageName;
+                //employeeFromRepo.ImagePath = employee.ImagePath ?? employeeFromRepo.ImagePath;
+                //employeeFromRepo.Assignments = employee.Assignments ?? employeeFromRepo.Assignments;
+                //employeeFromRepo.AcquiredKnowledge = employee.AcquiredKnowledge ?? employeeFromRepo.AcquiredKnowledge;
 
                 var employeeUpdated = _repo.Update(employeeFromRepo);
 
@@ -118,7 +172,7 @@ namespace Dashboard.API.Controllers
             var employeeToDel = _repo.Get<Employee>(id);
             _repo.Delete(employeeToDel);
             if (await _repo.SaveChangesAsync())
-                return Ok($"Commitment deleted!");
+                return Ok($"Employee deleted!");
             else
                 return BadRequest($"Commitment {employeeToDel.FirstName } wasn't deleted!");
         }

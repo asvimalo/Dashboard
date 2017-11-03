@@ -14,7 +14,7 @@ using Dashboard.Data.EF.Contracts;
 
 namespace Dashboard.Data.Controllers
 {
-    [Produces("application/json")]
+   
     [Route("api/dashboard/[controller]")]
     public class AssignmentsController : Controller
     {

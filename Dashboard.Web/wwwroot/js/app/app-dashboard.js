@@ -1,7 +1,9 @@
 ﻿(function () {
     "use strict";
     angular.module("app-dashboard",
-        ["ngRoute","projectList",
+        ["ngRoute",
+            'ngFileUpload',
+            "projectList",
             "employeeList",
             "assignmentList",
             "dashboardView",
@@ -11,7 +13,8 @@
             "knowledgeList",
             "phaseList",
             "taskList",
-            "locationList"
+            "locationList",
+            "employeeAdd"
             //"assignProjectToEmployee"
             ]);
 })();
