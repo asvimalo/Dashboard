@@ -52,21 +52,18 @@
                 //        });
                 };
 
-                //console.log(holder.formInfo);
                 $scope.assignProjectToEmployee = function () {
                     console.log("in the function");
                     holder.isBusy = true;
                     holder.errorMessage = "";
 
-                    holder.newAssignment = {};
-
-
-                    $http.post("http://localhost:8899/api/dashboard/assignments", holder.newAssignment)
+                    //holder.newAssignment = {};
+                    $http.post("http://localhost:8899/api/dashboard/assignments", JSON.stringify($scope.formInfo), { headers: { "Content-Type": "application/json" }})
                         .then(function (response) {
                             console.log("Success")
                             //success
-                            holder.assignments.push(response.data);
-                            holder.assignments = {}; //??
+                            $scope.assignments.push(response.data);
+                            $scope.formInfo = {}; 
                         }, function () {
                             console.log("failure");
                             //failure
