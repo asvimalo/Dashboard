@@ -57,12 +57,12 @@
                     holder.isBusy = true;
                     holder.errorMessage = "";
 
-                    //holder.newAssignment = {};
-                    $http.post("http://localhost:8899/api/dashboard/assignments", JSON.stringify($scope.formInfo), { headers: { "Content-Type": "application/json" }})
+                    var data = { "ProjectId": $scope.formInfo.project.projectId, "EmployeeId": $scope.formInfo.employee.employeeId, "JobTitle": $scope.formInfo.jobtitle, "Location": $scope.formInfo.location };
+
+                    var dataTmp = JSON.stringify(data);
+                    $http.post("http://localhost:8899/api/dashboard/assignments", dataTmp)  
                         .then(function (response) {
-                            console.log("Success")
-                            //success
-                            $scope.assignments.push(response.data);
+                            console.log("Response from server api" + response.data);
                             $scope.formInfo = {}; 
                         }, function () {
                             console.log("failure");

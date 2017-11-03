@@ -1,17 +1,33 @@
 ﻿angular.module('modal', ['ui.bootstrap']);
-angular.module('modal').controller('ModalDemoCtrl', function ($scope, $modal, $log) {
+angular.module('modal').controller('ModalDemoCtrl', function ($http, $scope, $modal, $log) {
 
-    $scope.items = ['item1', 'item2', 'item3'];
+    //$scope.items = ['item1', 'item2', 'item3'];
+
+    //var holder = this;
+    $scope.employees = [];
+    $http.get("http://localhost:8899/api/dashboard/employees")
+        .then(function (response) {
+            //success
+            angular.copy(response.data, $scope.employees);
+        }, function (error) {
+            //failure
+            $scope.errorMessage = "Failed to load data: " + error;
+        })
+        .finally(function () {
+            $scope.isBusy = false;
+        });
+    
 
     $scope.open = function (size) {
 
         var modalInstance = $modal.open({
             templateUrl: 'testpage.html',
-            controller: 'ModalInstanceCtrl',
+            controller:'ModalInstanceCtrl',
             size: size,
             resolve: {
                 items: function () {
-                    return $scope.items;
+                    //return $scope.items;
+                    return $scope.employees;
                 }
             }
         });
@@ -29,9 +45,9 @@ angular.module('modal').controller('ModalDemoCtrl', function ($scope, $modal, $l
 
 angular.module('modal').controller('ModalInstanceCtrl', function ($scope, $modalInstance, items) {
 
-    $scope.items = items;
+    $scope.employees = items;
     $scope.selected = {
-        item: $scope.items[0]
+        item: $scope.employees[0]
     };
 
     $scope.ok = function () {

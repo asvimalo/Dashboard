@@ -14,11 +14,8 @@
             "phaseList",
             "taskList",
             "locationList",
-            "employeeAdd"
-            //"assignProjectToEmployee"
+            "employeeAdd",
+            "assignProjectToEmployee"
             ]);
 })();
 
-//"locationList",
-//    "projectAdd",
-//    "assignProjectToEmployee"
