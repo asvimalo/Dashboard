@@ -44,13 +44,13 @@
 
 
                     }
-                    //var newJsonEmployee = JSON.stringify(holder.newEmployee);
+                    var newJsonEmployee = JSON.stringify(holder.newEmployee);
 
-                    $http.post('http://localhost:8899/api/dashboard/employees/', holder.newEmployee)
+                    $http.post('http://localhost:8899/api/dashboard/employees/', newJsonEmployee)
                         .then(function (response) {
                             //success
                             console.log("Response from server api" + response.data);
-                            window.location.href = '#/employees';
+                            window.location.templateUrl  = '#!/employees';
                         }, function () {
                             //failure
                             holder.errorMessage = "Failure to save new employee";

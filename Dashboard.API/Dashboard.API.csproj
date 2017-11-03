@@ -6,6 +6,7 @@
   </PropertyGroup>
   
   <ItemGroup>
+    <Folder Include="Images\" />
     <Folder Include="Services\" />
     <Folder Include="Views\Dashboard\" />
     <Folder Include="wwwroot\Images\" />
