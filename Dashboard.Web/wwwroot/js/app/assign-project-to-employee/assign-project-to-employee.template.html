@@ -7,23 +7,23 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label>Employee:</label>
-                    <select class="form-control" ng-options="item.firstName for item in $ctrl.employees" ng-model="$ctrl.employees.singleSelect">
+                    <select class="form-control" ng-options="item.firstName for item in $ctrl.employees" ng-model="formInfo.employee">
                         <option value="" disabled selected></option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label>Project:</label>
-                    <select class="form-control" ng-options="item.projectName for item in $ctrl.projects" ng-model="$ctrl.projects.singleSelect">
+                    <select class="form-control" ng-options="item.projectName for item in $ctrl.projects" ng-model="formInfo.project"> <!--$ctrl.projects.singleSelect-->
                         <option value="" disabled selected></option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label>Job title:</label>
-                    <input type="text" ng-model="$ctrl.assigment.jobTitle" class="form-control">
+                    <input type="text" ng-model="formInfo.jobtitle" class="form-control"> <!--$ctrl.assigment.jobTitle-->
                 </div>
                 <div class="form-group">
                     <label>Location:</label>
-                    <input type="text" ng-model="$ctrl.assigment.location" class="form-control">
+                    <input type="text" ng-model="formInfo.location" class="form-control"> <!--$ctrl.assigment.location-->
                 </div>
             </div>
         </div>
@@ -63,6 +63,11 @@
         <button class="btn btn-warning" type="button" ng-click="$ctrl.cancel()">Cancel</button>
     </div>-->
 
-    <input type="submit" ng-click="assignProjectToEmployee($ctrl.assigments)" value="Save" />
+    <!--<input type="submit" value="Save" />-->
 
+    <div class="form-group">
+            <button type="submit" ng-click="assignProjectToEmployee()" class="btn btn-success">Save</button>
+    </div>
+
+    <span>{{formInfo}}</span>
 </form>

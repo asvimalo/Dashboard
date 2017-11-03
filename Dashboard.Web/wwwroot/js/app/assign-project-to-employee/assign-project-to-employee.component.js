@@ -50,20 +50,25 @@
                 //        });
                 };
 
+                console.log(holder.formInfo);
                 holder.assignProjectToEmployee = function () {
+                    console.log("in the function");
                     holder.isBusy = true;
                     holder.errorMessage = "";
 
                     $http.post("http://localhost:8899/api/dashboard/assignments", { header: { "Content-Type": "application/json" } } ) //$routeProvider.project
                         .then(function (response) {
+                            console.log("Success")
                             //success
                             holder.assignments.push(response.data);
                             holder.assignments = {}; //??
                         }, function () {
+                            console.log("failure");
                             //failure
                             holder.errorMessage = "Failure to save new project";
                         })
                         .finally(function () {
+                            console.log("finally");
                             holder.isBusy = false;
                         });
                 };
