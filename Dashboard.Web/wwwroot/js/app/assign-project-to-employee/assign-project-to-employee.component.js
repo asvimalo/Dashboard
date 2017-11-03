@@ -50,7 +50,7 @@
                 //        });
                 };
 
-                console.log(holder.formInfo);
+                console.log("Before the function call!");
                 holder.assignProjectToEmployee = function () {
                     console.log("in the function");
                     holder.isBusy = true;
@@ -60,6 +60,7 @@
                         .then(function (response) {
                             console.log("Success")
                             //success
+                            alert("Hello");
                             holder.assignments.push(response.data);
                             holder.assignments = {}; //??
                         }, function () {
