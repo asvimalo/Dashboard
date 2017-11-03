@@ -3,7 +3,8 @@
 </div>
 <div class="modal-body">
     <ul>
-        <li ng-repeat="item in items">
+        <!--<li ng-repeat="item in items">-->
+        <li ng-repeat="item in $ctrl.employees">
             <a ng-click="selected.item = item">{{ item }}</a>
         </li>
     </ul>
