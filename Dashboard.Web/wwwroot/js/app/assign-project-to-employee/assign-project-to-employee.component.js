@@ -1,12 +1,14 @@
 ﻿(function () {
     "use strict";
-    angular.module("assignProjectToEmployee")
+    angular.module("assignProjectToEmployee", [])
         .component("assignProjectToEmployee", {
             templateUrl: "/js/app/assign-project-to-employee/assign-project-to-employee.template.html",
-            controller: function assignProjectToEmployeeController($http) {
+            controller: function assignProjectToEmployeeController($http, $scope) {
                 //$routeProvider
                 var holder = this;
                 holder.employees = [];
+                // Här sparar jag mitt objekt för assignment
+
                 $http.get("http://localhost:8899/api/dashboard/employees")
                     .then(function (response) {
                         //success
@@ -50,13 +52,16 @@
                 //        });
                 };
 
-                console.log(holder.formInfo);
-                holder.assignProjectToEmployee = function () {
+                //console.log(holder.formInfo);
+                $scope.assignProjectToEmployee = function () {
                     console.log("in the function");
                     holder.isBusy = true;
                     holder.errorMessage = "";
 
-                    $http.post("http://localhost:8899/api/dashboard/assignments", { header: { "Content-Type": "application/json" } } ) //$routeProvider.project
+                    holder.newAssignment = {};
+
+
+                    $http.post("http://localhost:8899/api/dashboard/assignments", holder.newAssignment)
                         .then(function (response) {
                             console.log("Success")
                             //success
