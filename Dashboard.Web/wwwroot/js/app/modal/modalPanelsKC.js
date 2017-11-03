@@ -1,59 +1,44 @@
-﻿angular.module('modal', ['ngAnimate', 'ui.bootstrap']);
+﻿angular.module('modal', ['ui.bootstrap']);
+angular.module('modal').controller('ModalDemoCtrl', function ($scope, $modal, $log) {
 
-angular.module('modal')
-  .component('projectAddModal', {
-    template: 'I am content! <button type="button" class="btn btn-default" ng-click="$ctrl.open()">Open Modal</button>',
-    controller: function($uibModal) {
-      $ctrl = this;
-      $ctrl.dataForModal = {
-        name: 'NameToEdit',
-        value: 'ValueToEdit'
-      }
-      $ctrl.open = function() {
-        $uibModal.open({
-          component: "myModal",
-          resolve: {
-            modalData: function() {
-              return $ctrl.dataForModal;
+    $scope.items = ['item1', 'item2', 'item3'];
+
+    $scope.open = function (size) {
+
+        var modalInstance = $modal.open({
+            templateUrl: 'testpage.html',
+            controller: 'ModalInstanceCtrl',
+            size: size,
+            resolve: {
+                items: function () {
+                    return $scope.items;
+                }
             }
-          }
-        }).result.then(function(result) {
-          console.info("I was closed, so do what I need to do myContent's controller now.  Result was->");
-          console.info(result);
-        }, function(reason) {
-          console.info("I was dimissed, so do what I need to do myContent's controller now.  Reason was->" + reason);
         });
-      };
-    }
-  });
 
-angular.module('modal')
-  .component('myModal', {
-    template: `<div class="modal-body"><div>{{$ctrl.greeting}}</div> 
-    <label>Name To Edit</label> <input ng-model="$ctrl.modalData.name"><br>
-    <label>Value To Edit</label> <input ng-model="$ctrl.modalData.value"><br>
-    <button class="btn btn-warning" type="button" ng-click="$ctrl.handleClose()">Close Modal</button>
-    <button class="btn btn-warning" type="button" ng-click="$ctrl.handleDismiss()">Dimiss Modal</button>
-    </div>`,
-    bindings: {
-      modalInstance: "<",
-      resolve: "<"
-    },
-    controller: [function() {
-      var $ctrl = this;
+        modalInstance.result.then(function (selectedItem) {
+            $scope.selected = selectedItem;
+        }, function () {
+            $log.info('Modal dismissed at: ' + new Date());
+        });
+    };
+});
 
-      $ctrl.$init = function() {
-        $ctrl.modalData = $ctrl.resolve.modalData;
-      }
+// Please note that $modalInstance represents a modal window (instance) dependency.
+// It is not the same as the $modal service used above.
 
-      $ctrl.handleClose = function() {
-        console.info("in handle close");
-        $ctrl.modalInstance.close($ctrl.modalData);
-      };
+angular.module('modal').controller('ModalInstanceCtrl', function ($scope, $modalInstance, items) {
 
-      $ctrl.handleDismiss = function() {
-        console.info("in handle dismiss");
-        $ctrl.modalInstance.dismiss("cancel");
-      };
-    }]
-  });
+    $scope.items = items;
+    $scope.selected = {
+        item: $scope.items[0]
+    };
+
+    $scope.ok = function () {
+        $modalInstance.close($scope.selected.item);
+    };
+
+    $scope.cancel = function () {
+        $modalInstance.dismiss('cancel');
+    };
+});

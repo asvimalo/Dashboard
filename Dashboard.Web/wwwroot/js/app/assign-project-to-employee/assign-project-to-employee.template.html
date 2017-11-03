@@ -5,63 +5,71 @@
     <div class="modal-body" id="modal-body">
         <div class="row">
             <div class="col-md-6">
-                    <div class="form-group">
-                        <label>Employee</label>
-                        <select class="form-control" ng-model="$ctrl.employees.firstName" ng-options="for o in employees.options"></select>
-                    </div>
-                    <div class="form-group">
-                        <label>Project</label>
-                        <select class="form-control" ng-model="$ctrl.project.projectName" ng-options="for o in project.options"></select>
-                    </div>
-                    <div class="form-group">
-                        <label>Job title:</label>
-                        <input type="text" ng-model="$ctrl.assigment.jobTitle" class="form-control">
-                        <!--<select class="form-control" ng-model="jobtitle.selected" ng-options="o as o for o in jobtitle.options"></select>   // in case 2 -->
-                    </div>
-                    <div class="form-group">
-                        <label>Location:</label>
-                        <input type="text" ng-model="$ctrl.assigment.location" class="form-control">
-                        <!--<select class="form-control" ng-model="location.selected" ng-options="o as o for o in location.options">   //in case 2 -->
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Add a new commitment -->
-        <div class="col-md-6">
-            <h4>Add a new commitment</h4>
-            <div ng-controller="assigments">
                 <div class="form-group">
-                    <label>From</label>
-                    <p class="input-group">
-                        <input type="text" class="form-control" uib-datepicker-popup ng-model="dt1" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
-                        <span class="input-group-btn">
-                            <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
-                        </span>
-                    </p>
+                    <label>Employee:</label>
+                    <select class="form-control" ng-options="item.firstName for item in $ctrl.employees" ng-model="formInfo.employee">
+                        <option value="" disabled selected></option>
+                    </select>
                 </div>
                 <div class="form-group">
-                    <label>To</label>
-                    <p class="input-group">
-                        <input type="text" class="form-control" uib-datepicker-popup ng-model="dt2" is-open="popup2.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
-                        <span class="input-group-btn">
-                            <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
-                        </span>
-                    </p>
+                    <label>Project:</label>
+                    <select class="form-control" ng-options="item.projectName for item in $ctrl.projects" ng-model="formInfo.project"> <!--$ctrl.projects.singleSelect-->
+                        <option value="" disabled selected></option>
+                    </select>
                 </div>
                 <div class="form-group">
-                    <label>Commitment</label>
-                    <input type="text" ng-model="" class="form-control">
+                    <label>Job title:</label>
+                    <input type="text" ng-model="formInfo.jobtitle" class="form-control"> <!--$ctrl.assigment.jobTitle-->
                 </div>
-                <button class="btn btn-primary" type="button" ng-click="addCommitment($ctrl.assigment)" value="Add"/>  <!--ng-click="$ctrl.AddCommitment"-->
+                <div class="form-group">
+                    <label>Location:</label>
+                    <input type="text" ng-model="formInfo.location" class="form-control"> <!--$ctrl.assigment.location-->
+                </div>
             </div>
         </div>
     </div>
+    <!-- Add a new commitment -->
+    <!--<div class="col-md-6">
+        <h4>Add a new commitment</h4>
+        <div ng-controller="assigments">
+            <div class="form-group">
+                <label>From</label>
+                <p class="input-group">
+                    <input type="text" class="form-control" uib-datepicker-popup ng-model="dt1" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </p>
+            </div>
+            <div class="form-group">
+                <label>To</label>
+                <p class="input-group">
+                    <input type="text" class="form-control" uib-datepicker-popup ng-model="dt2" is-open="popup2.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </p>
+            </div>-->
+            <!--<div class="form-group">
+                <label>Commitment</label>
+                <input type="text" ng-model="" class="form-control">
+            </div>
+            <button class="btn btn-primary" type="button" ng-click="addCommitment($ctrl.assigment)" value="Add" />-->  <!--ng-click="$ctrl.AddCommitment"-->
+        <!--</div>
+    </div>-->
 
-    <div class="modal-footer">
+    <!--<div class="modal-footer">
         <button class="btn btn-primary" type="button" ng-click="$ctrl.ok()">Add</button>
         <button class="btn btn-warning" type="button" ng-click="$ctrl.cancel()">Cancel</button>
-    </div>
+    </div>-->
 
-    <input type="submit" ng-click="assignProjectToEmployee($ctrl.assigment)" value="Save"/>
-   
+    <!--<input type="submit" value="Save" />-->
+
+    <!--<div class="form-group">
+            <button type="submit" ng-click="assignProjectToEmployee()" class="btn btn-success">Save</button>
+    </div>-->
+
+    <button type="submit" ng-click="assignProjectToEmployee()">Save</button>/>
+
+    <span>{{formInfo}}</span>
 </form>

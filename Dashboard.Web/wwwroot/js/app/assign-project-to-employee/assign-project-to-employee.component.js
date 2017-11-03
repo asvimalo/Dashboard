@@ -1,10 +1,14 @@
 ﻿(function () {
     "use strict";
-    angular.module("assignProjectToEmployee")
+    angular.module("assignProjectToEmployee", [])
         .component("assignProjectToEmployee", {
             templateUrl: "/js/app/assign-project-to-employee/assign-project-to-employee.template.html",
-            controller: function assignProjectToEmployeeController($http, $routeProvider) {
+            controller: function assignProjectToEmployeeController($http, $scope) {
+                //$routeProvider
                 var holder = this;
+                holder.employees = [];
+                // Här sparar jag mitt objekt för assignment
+
                 $http.get("http://localhost:8899/api/dashboard/employees")
                     .then(function (response) {
                         //success
@@ -17,6 +21,7 @@
                         holder.isBusy = false;
                     });
 
+                holder.projects = [];
                 $http.get("http://localhost:8899/api/dashboard/projects")
                     .then(function (response) {
                         //success
@@ -30,37 +35,42 @@
                     });
 
                 holder.addCommitment = function () {
-                    holder.isBusy = true;
-                    holder.errorMessage = "";
+                //    holder.isBusy = true;
+                //    holder.errorMessage = "";
 
-                    $http.post("http://localhost:8899/api/dashboard/commitments", $routeProvider.project)
-                        .then(function (response) {
-                            //success
-                            holder.commitments.push(response.data);
-                            holder.newCommitment = {}; //??
-                        }, function () {
-                            //failure
-                            holder.errorMessage = "Failure to save new project";
-                        })
-                        .finally(function () {
-                            holder.isBusy = false;
-                        });
+                //    $http.post("http://localhost:8899/api/dashboard/commitments", $routeProvider.project)
+                //        .then(function (response) {
+                //            //success
+                //            holder.commitments.push(response.data);
+                //            holder.newCommitment = {}; //??
+                //        }, function () {
+                //            //failure
+                //            holder.errorMessage = "Failure to save new project";
+                //        })
+                //        .finally(function () {
+                //            holder.isBusy = false;
+                //        });
                 };
 
-                holder.assignProjectToEmployee = function () {
+                $scope.assignProjectToEmployee = function () {
+                    console.log("in the function");
                     holder.isBusy = true;
                     holder.errorMessage = "";
 
-                    $http.post("http://localhost:8899/api/dashboard/assignments", $routeProvider.project)
+                    //holder.newAssignment = {};
+                    $http.post("http://localhost:8899/api/dashboard/assignments", JSON.stringify($scope.formInfo), { headers: { "Content-Type": "application/json" }})
                         .then(function (response) {
+                            console.log("Success")
                             //success
-                            holder.assignments.push(response.data);
-                            holder.assignments = {}; //??
+                            $scope.assignments.push(response.data);
+                            $scope.formInfo = {}; 
                         }, function () {
+                            console.log("failure");
                             //failure
                             holder.errorMessage = "Failure to save new project";
                         })
                         .finally(function () {
+                            console.log("finally");
                             holder.isBusy = false;
                         });
                 };
