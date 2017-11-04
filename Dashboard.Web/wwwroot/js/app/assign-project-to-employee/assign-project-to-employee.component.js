@@ -6,8 +6,8 @@
             controller: function assignProjectToEmployeeController($http, $scope) {
                 //$routeProvider
                 var holder = this;
-                holder.employees = [];
 
+                holder.employees = [];
                 $http.get("http://localhost:8899/api/dashboard/employees")
                     .then(function (response) {
                         //success
@@ -47,27 +47,31 @@
                     });
 
                 $scope.addCommitment = function () {
-                    console.log("in the addCommitment function");
-                    holder.isBusy = true;
-                    holder.errorMessage = "";
 
-                    //var commitments = $scope.commitment;
-                    var data = { "StartDate": $scope.commitment.startDate, "StopDate": $scope.commitment.stopDate, "Hours": $scope.commitment.hours }
+                    holder.commitments = holder.commitments.concat(JSON.stringify($scope.commitment));
 
-                    $http.post("http://localhost:8899/api/dashboard/commitments", JSON.stringify(data))
-                        .then(function (response) {
-                            //success
-                            console.log("Response from server api" + response.data);
-                            $scope.commitment = {}; 
-                        }, function () {
-                            //failure
-                            console.log("failure");
-                            holder.errorMessage = "Failure to save commitment.";
-                        })
-                        .finally(function () {
-                            console.log("finally");
-                            holder.isBusy = false;
-                        });
+                    //$scope.HouseBasket = $scope.HouseBasket.concat(data);
+                    //console.log("in the addCommitment function");
+                    //holder.isBusy = true;
+                    //holder.errorMessage = "";
+
+                    ////var commitments = $scope.commitment;
+                    //var data = { "StartDate": $scope.commitment.startDate, "StopDate": $scope.commitment.stopDate, "Hours": $scope.commitment.hours }
+
+                    //$http.post("http://localhost:8899/api/dashboard/commitments", JSON.stringify(data))
+                    //    .then(function (response) {
+                    //        //success
+                    //        console.log("Response from server api" + response.data);
+                    //        $scope.commitment = {}; 
+                    //    }, function () {
+                    //        //failure
+                    //        console.log("failure");
+                    //        holder.errorMessage = "Failure to save commitment.";
+                    //    })
+                    //    .finally(function () {
+                    //        console.log("finally");
+                    //        holder.isBusy = false;
+                    //    });
                 };
 
                 $scope.assignProjectToEmployee = function () {
