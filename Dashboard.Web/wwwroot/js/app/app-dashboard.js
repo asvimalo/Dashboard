@@ -7,7 +7,7 @@
             "employeeList",
             "assignmentList",
             "dashboardView",
-            "clientList",
+            "clientList", 
             "commitmentList",
             "acquiredKnowledgeList",
             "knowledgeList",
@@ -16,7 +16,8 @@
             "locationList",
             "employeeAdd",
             "assignProjectToEmployee",
-            "projectAdd"
+            "projectAdd",
+            "clientAdd"
             ]);
 })();
 
