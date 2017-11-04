@@ -7,7 +7,6 @@
                 //$routeProvider
                 var holder = this;
                 holder.employees = [];
-                // Här sparar jag mitt objekt för assignment
 
                 $http.get("http://localhost:8899/api/dashboard/employees")
                     .then(function (response) {
@@ -34,22 +33,41 @@
                         holder.isBusy = false;
                     });
 
-                holder.addCommitment = function () {
-                //    holder.isBusy = true;
-                //    holder.errorMessage = "";
+                holder.commitments = [];
+                $http.get("http://localhost:8899/api/dashboard/commitments")
+                    .then(function (response) {
+                        //success
+                        angular.copy(response.data, holder.commitments);
+                    }, function (error) {
+                        //failure
+                        holder.errorMessage = "Failed to load data: " + error;
+                    })
+                    .finally(function () {
+                        holder.isBusy = false;
+                    });
 
-                //    $http.post("http://localhost:8899/api/dashboard/commitments", $routeProvider.project)
-                //        .then(function (response) {
-                //            //success
-                //            holder.commitments.push(response.data);
-                //            holder.newCommitment = {}; //??
-                //        }, function () {
-                //            //failure
-                //            holder.errorMessage = "Failure to save new project";
-                //        })
-                //        .finally(function () {
-                //            holder.isBusy = false;
-                //        });
+                $scope.addCommitment = function () {
+                    console.log("in the addCommitment function");
+                    holder.isBusy = true;
+                    holder.errorMessage = "";
+
+                    //var commitments = $scope.commitment;
+                    var data = { "StartDate": $scope.commitment.startDate, "StopDate": $scope.commitment.stopDate, "Hours": $scope.commitment.hours }
+
+                    $http.post("http://localhost:8899/api/dashboard/commitments", JSON.stringify(data))
+                        .then(function (response) {
+                            //success
+                            console.log("Response from server api" + response.data);
+                            $scope.commitment = {}; 
+                        }, function () {
+                            //failure
+                            console.log("failure");
+                            holder.errorMessage = "Failure to save commitment.";
+                        })
+                        .finally(function () {
+                            console.log("finally");
+                            holder.isBusy = false;
+                        });
                 };
 
                 $scope.assignProjectToEmployee = function () {
@@ -59,15 +77,15 @@
 
                     var data = { "ProjectId": $scope.formInfo.project.projectId, "EmployeeId": $scope.formInfo.employee.employeeId, "JobTitle": $scope.formInfo.jobtitle, "Location": $scope.formInfo.location };
 
-                    var dataTmp = JSON.stringify(data);
-                    $http.post("http://localhost:8899/api/dashboard/assignments", dataTmp)  
+                    //var dataTmp = JSON.stringify(data);
+                    $http.post("http://localhost:8899/api/dashboard/assignments", JSON.stringify(data))  
                         .then(function (response) {
                             console.log("Response from server api" + response.data);
                             $scope.formInfo = {}; 
                         }, function () {
                             console.log("failure");
                             //failure
-                            holder.errorMessage = "Failure to save new project";
+                            holder.errorMessage = "Failure to save assign a project to an employee.";
                         })
                         .finally(function () {
                             console.log("finally");
