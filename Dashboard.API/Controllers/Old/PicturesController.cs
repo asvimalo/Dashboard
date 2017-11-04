@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Dashboard.Data.EF.Contracts;
-using Dashboard.Data.EF.IRepository;
+
 using Dashboard.Entities;
 using Dashboard.Models;
 using Microsoft.AspNetCore.Hosting;
@@ -18,11 +18,11 @@ namespace Dashboard.Data.Controllers
     [Route("api/dashboard/[controller]")]
     public class PicturesController : Controller
     {
-        private IRepoPicture _repo;
+        private IRepo _repo;
         private ILogger<PicturesController> _logger;
         private IHostingEnvironment _env;
 
-        public PicturesController(IRepoPicture repo,
+        public PicturesController(IRepo repo,
             ILogger<PicturesController> logger,
             IHostingEnvironment env)
         {

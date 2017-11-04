@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Dashboard.Data.EF.Contracts;
+using Dashboard.Data.EF.IRepository;
 using Dashboard.Data.Controllers;
 using Microsoft.Extensions.Logging;
 using Dashboard.Entities;

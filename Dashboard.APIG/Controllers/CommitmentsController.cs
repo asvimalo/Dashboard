@@ -2,41 +2,35 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Dashboard.Data.EF.Contracts;
-using Dashboard.Entities;
-using Dashboard.Models;
-using AutoMapper;
 using Microsoft.Extensions.Logging;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.IdentityModel.Protocols.OpenIdConnect;
+using Dashboard.Entities;
 
-namespace Dashboard.Data.Controllers
+namespace Dashboard.API.Controllers
 {
    
-    [Route("api/dashboard/[controller]")]
-    public class AssignmentsController : Controller
+    [Route("api/dashboard/commitments")]
+    public class CommitmentsController : Controller
     {
         public IRepo _repo;
-        private ILogger<AssignmentsController> _logger;
+        private ILogger<CommitmentsController> _logger;
 
-        public AssignmentsController(IRepo repo, 
-            ILogger<AssignmentsController> logger)
+        public CommitmentsController(IRepo repo,
+            ILogger<CommitmentsController> logger)
         {
             _repo = repo;
             _logger = logger;
         }
-        public IActionResult Index()
-        {
-            return View();
-        }
-        // GET api/dashboard/Assignments
+
+        // GET api/dashboard/commitments
         [HttpGet("")]
         public async Task<IActionResult> Get()
         {
             try
             {
-                var result = await _repo.GetAll<Assignment>();
+                var result = await _repo.GetAll<Commitment>();
                 return Ok(result);
                 //return Ok(Mapper.Map<IEnumerable<CommitmentViewModel>>(result));
             }
@@ -49,12 +43,12 @@ namespace Dashboard.Data.Controllers
         }
 
         // GET api/dashboard/Commitments/5
-        [HttpGet("{id}", Name = "GetAssigment")]
+        [HttpGet("{id}", Name = "GetCommitment")]
         public async Task<IActionResult> Get(int id)
         {
             try
             {
-                var result =  _repo.Get<Assignment>(id);
+                var result = _repo.Get<Commitment>(id);
                 return Ok(result);
                 //return Ok(Mapper.Map<CommitmentViewModel>(result));
             }
@@ -69,15 +63,15 @@ namespace Dashboard.Data.Controllers
 
         // POST api/dashboard/Commitments
         [HttpPost("")]
-        public async Task<IActionResult> Post([FromBody]Assignment assignment)
+        public async Task<IActionResult> Post([FromBody]Commitment commitment)
         {
             if (ModelState.IsValid)
             {
                 //var newCommitment = Mapper.Map<Commitment>(commitment);
-                var addedAssignment =  await _repo.AddAsync(assignment);
+                var addedCommitment = await _repo.AddAsync(commitment);
                 if (await _repo.SaveChangesAsync())
                 {
-                    return Created($"api/dashboard/assignments/{addedAssignment.AssignmentId}", addedAssignment);
+                    return Created($"api/dashboard/commitments/{addedCommitment.CommitmentId}", addedCommitment);
                 }
             }
             return BadRequest("Failed to save changes to the database");
@@ -85,46 +79,43 @@ namespace Dashboard.Data.Controllers
 
         // PUT api/dashboard/Commitments/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody]Assignment assignment)
+        public async Task<IActionResult> Put(int id, [FromBody]Commitment commitment)
         {
             if (ModelState.IsValid)
             {
-                var projectId = 0;
-                var employeeId = 0;
-                var assignFromRepo =  _repo.Get<Assignment>(id);
+                //var projectId = 0;
+                //var userId = 0;
+                var commitmentFromRepo = _repo.Get<Commitment>(id);
                 //Mapper.Map(commitmentVM, commiFromRepo);
-                //assignFromRepo.Location = assignment.Location ?? assignFromRepo.Location;
-                //assignFromRepo.JobTitle = assignment.JobTitle ?? assignFromRepo.JobTitle;
-                assignFromRepo.ProjectId = projectId;
-                Int32.TryParse((assignment.ProjectId.ToString() ?? assignFromRepo.ProjectId.ToString()), out projectId);
-                assignFromRepo.EmployeeId = employeeId;
-                Int32.TryParse((assignment.EmployeeId.ToString() ?? assignFromRepo.EmployeeId.ToString()), out employeeId);             
-                
 
-                var commitUpdated =  _repo.Update(assignFromRepo);
+                commitmentFromRepo.Assignment = commitment.Assignment ?? commitmentFromRepo.Assignment;
+                commitmentFromRepo.Hours = commitment.Hours != 0 ? commitment.Hours : commitmentFromRepo.Hours;
+                commitmentFromRepo.AssigmentId = commitment.AssigmentId != 0 ? commitment.AssigmentId : commitmentFromRepo.AssigmentId;
+
+                var commitmentUpdated = _repo.Update(commitmentFromRepo);
+
                 if (!await _repo.SaveChangesAsync())
                 {
                     _logger.LogError($"Thrown exception when updating");
                     BadRequest("Something when wrong while updating");
                 }
-                return Ok(/*Mapper.Map<CommitmentViewModel>(*/commitUpdated/*)*/); 
+                return Ok(/*Mapper.Map<CommitmentViewModel>(*/commitmentUpdated/*)*/);
             }
             return BadRequest("Error occured");
-            
+
         }
 
-        // DELETE api/dashboard/Assignments/5
+        // DELETE api/dashboard/Commitments/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var assignmentToDel = _repo.Get<Assignment>(id);
-            _repo.Delete(assignmentToDel);
+            var commitmentToDel = _repo.Get<Commitment>(id);
+            _repo.Delete(commitmentToDel);
             if (await _repo.SaveChangesAsync())
-                return Ok($"Assignment deleted!");
+                return Ok($"Commitment deleted!");
             else
-                return BadRequest($"Assignment {assignmentToDel.AssignmentId} wasn't deleted!");
+                return BadRequest($"Commitment {commitmentToDel.CommitmentId } wasn't deleted!");
         }
 
-        
     }
 }

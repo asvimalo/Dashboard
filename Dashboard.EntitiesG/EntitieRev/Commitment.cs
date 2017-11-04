@@ -1,0 +1,18 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Dashboard.EntitiesG.EntitiesRev
+{
+    [Table("Commitment")]
+    public class Commitment : BaseEntity
+    {          
+        public int AssigmentId { get; set; }
+        [ForeignKey("AssigmentId")]
+        public Assignment Assignment { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime StopDate { get; set; }
+        public int Hours { get; set; }
+    }
+}
