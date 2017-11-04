@@ -15,7 +15,8 @@
             "taskList",
             "locationList",
             "employeeAdd",
-            "assignProjectToEmployee"
+            "assignProjectToEmployee",
+            "projectAdd"
             ]);
 })();
 

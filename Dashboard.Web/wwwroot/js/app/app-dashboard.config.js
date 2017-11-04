@@ -24,6 +24,9 @@
                     //when('/projects/:projectId', {
                     //    template: '<project-detail></phone-detail>'
                     //}).
+                    when('/projects/project-add', {
+                        template: '<project-add></project-add>'
+                    }).
                     when('/assignments', {
                         template: '<assignment-list></assignment-list>'
                     }).
