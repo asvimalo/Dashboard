@@ -6,51 +6,43 @@
             controller: function EmployeeListController($scope,$http,$location) {
 
                 var holder = this;
-                holder.pictureFile = null;
-
-                //holder.submit = function () {
-                //    if ($scope.form.file.$valid && $scope.file) {
-                //        $scope.addEmployee(employee);
-                //    }
-                //};
-
-
                 
+                $scope.addEmployee = function () {
+                    var newEmployee = {};
+                    var employee = $scope.employee;
+                    
+                    
+                    //var fi = this.fileInput.nativeElement;
+                    //var file = $scope.file;
+                    //var form = new FormData();
+                    //form.append("file", file);
+                    //newEmployee.file = form;
 
-                //holder.employees = [];
+                    newEmployee.firstName = employee.firstName;
+                    newEmployee.lastName = employee.lastName;
+                    newEmployee.personNr = employee.personNr;
+                    newEmployee.assignments = [];
+                    newEmployee.acquiredKnowledges = []; 
+                    
 
-                holder.newEmployee = {};
-                console.log("inside employees Controller ");
-                holder.errorMessage = "";
-                holder.isBusy = true;
+                    console.log("inside employees Controller ");
 
-                holder.progress = "";
+                    holder.errorMessage = "";
+                    holder.isBusy = true;
 
-                holder.addEmployee = function (employee, file) {
-                    var fileReader = new FileReader();
-                    fileReader.onload = function (file) {
+                    holder.progress = "";
 
-                        // split so we only get the bytes (descriptive info before ',')
-                        var imagestr = file.target.result.split(',')[1];
+                    
+                    var json = JSON.stringify(newEmployee);
+                    
 
-                        debugger;
-
-                        var imagestr = event.target.result.split(',')[1];
-                        holder.newEmployee.bytes = imagestr;
-                        holder.newEmployee.firstName = employee.firstName;
-                        holder.newEmployee.lastName = employee.lastName;
-                        holder.newEmployee.personNr = employee.personNr;
-
-
-
-                    }
-                    var newJsonEmployee = JSON.stringify(holder.newEmployee);
-
-                    $http.post('http://localhost:8899/api/dashboard/employees/', newJsonEmployee)
+                    $http.post('http://localhost:8899/api/dashboard/employees/', json)
                         .then(function (response) {
                             //success
                             console.log("Response from server api" + response.data);
-                            window.location.templateUrl  = '#!/employees';
+                            newEmployee = {};
+                            //file = {};
+                            window.location.templateUrl  = '#/employees';
                         }, function () {
                             //failure
                             holder.errorMessage = "Failure to save new employee";
