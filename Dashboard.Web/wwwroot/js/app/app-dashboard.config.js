@@ -24,6 +24,9 @@
                     //when('/projects/:projectId', {
                     //    template: '<project-detail></phone-detail>'
                     //}).
+                    when('/projects/project-add', {
+                        template: '<project-add></project-add>'
+                    }).
                     when('/assignments', {
                         template: '<assignment-list></assignment-list>'
                     }).
@@ -42,6 +45,9 @@
                     //when('/client/:client', {
                     //    template: '<acquiredKnowledge-detail></acquiredKnowledge-detail>'
                     //}).
+                    when('/clients/client-add', {
+                        template: '<client-add></client-add>'
+                    }).
                     when('/commitments', {
                         template: '<commitment-list></commitment-list>'
                     }).
