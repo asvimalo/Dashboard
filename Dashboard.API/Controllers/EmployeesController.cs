@@ -79,18 +79,22 @@ namespace Dashboard.API.Controllers
                 {
                     FirstName = employee.FirstName,
                     LastName = employee.LastName,
-                    PersonNr = employee.PersonNr
+                    PersonNr = employee.PersonNr,
+                    Assignments = employee.Assignments,
+                    AcquiredKnowledges = employee.AcquiredKnowledges
                     
                 };
-                var webRootPath = _env.WebRootPath;
-                var fileName = newEmployee.FirstName + ".jpg";
-                var filePath = Path.Combine($"{webRootPath}/Images/{fileName}");
-                await System.IO.File.WriteAllBytesAsync(filePath, employee.Bytes);
-                
+                #region Write picture to Image folder
+                //var webRootPath = _env.WebRootPath;
+                //var fileName = newEmployee.FirstName + ".jpg";
+                //var filePath = Path.Combine($"{webRootPath}/Images/{fileName}");
+                //await System.IO.File.WriteAllBytesAsync(filePath, employee.Bytes);
+
 
                 //var newCommitment = Mapper.Map<Commitment>(commitment);
-                newEmployee.ImageName = fileName;
-                newEmployee.ImagePath = filePath;
+                //newEmployee.ImageName = fileName;
+                //newEmployee.ImagePath = filePath; 
+                #endregion
 
                 var addedEmployee = await _repo.AddAsync(newEmployee);
                 if (await _repo.SaveChangesAsync())
@@ -106,8 +110,7 @@ namespace Dashboard.API.Controllers
         public async Task<IActionResult> Put(int id, [FromBody]EmployeePost employee)
         {
             if (ModelState.IsValid)
-            {
-                
+            {               
                 //var projectId = 0;
                 //var userId = 0;
                 var employeeFromRepo = _repo.Get<Employee>(id);
@@ -117,40 +120,41 @@ namespace Dashboard.API.Controllers
                     return NotFound();
                 }
                 
-                var webRootPath = _env.WebRootPath;
-                
-
-
+                //var webRootPath = _env.WebRootPath;               
                 //var newCommitment = Mapper.Map<Commitment>(commitment);
                 
                 employeeFromRepo.FirstName = employee.FirstName ?? employeeFromRepo.FirstName;
                 employeeFromRepo.LastName = employee.LastName ?? employeeFromRepo.LastName;
                 employeeFromRepo.PersonNr = employee.PersonNr ?? employeeFromRepo.PersonNr;
-                if(employee.Bytes != null)
-                {
-                    System.IO.File.Delete(Path.Combine($"{webRootPath}/Images/{employeeFromRepo.FirstName}" + "jpg"));
-                    var newEmployee = new Employee
-                    {
-                        FirstName = employee.FirstName,
-                        LastName = employee.LastName,
-                        PersonNr = employee.PersonNr
 
-                    };
-                    var fileName = newEmployee.FirstName + ".jpg";
-                    var filePath = Path.Combine($"{webRootPath}/Images/{fileName}");
+                #region file handling
+                //if(employee.File != null)
+                //{
+                //    System.IO.File.Delete(Path.Combine($"{webRootPath}/Images/{employeeFromRepo.FirstName}" + "jpg"));
+                //    var newEmployee = new Employee
+                //    {
+                //        FirstName = employee.FirstName,
+                //        LastName = employee.LastName,
+                //        PersonNr = employee.PersonNr
 
-                    await System.IO.File.WriteAllBytesAsync(filePath, employee.Bytes);
+                //    };
+                //    var fileName = newEmployee.FirstName + ".jpg";
+                //    var filePath = Path.Combine($"{webRootPath}/Images/{fileName}");
 
-                    newEmployee.ImageName = fileName;
-                    newEmployee.ImagePath = filePath;
-                }
-               
+                //    //await System.IO.File.WriteAllBytesAsync(filePath, employee.Bytes);
+
+                //    newEmployee.ImageName = fileName;
+                //    newEmployee.ImagePath = filePath;
+                //} 
+                #endregion
+
                 employeeFromRepo.Assignments = employee.Assignments ?? employeeFromRepo.Assignments;
-                employeeFromRepo.AcquiredKnowledge = employee.AcquiredKnowledge ?? employeeFromRepo.AcquiredKnowledge;
+                employeeFromRepo.AcquiredKnowledges = employee.AcquiredKnowledges ?? employeeFromRepo.AcquiredKnowledges;
+
                 //employeeFromRepo.ImageName = employee.ImageName ?? employeeFromRepo.ImageName;
                 //employeeFromRepo.ImagePath = employee.ImagePath ?? employeeFromRepo.ImagePath;
                 //employeeFromRepo.Assignments = employee.Assignments ?? employeeFromRepo.Assignments;
-                //employeeFromRepo.AcquiredKnowledge = employee.AcquiredKnowledge ?? employeeFromRepo.AcquiredKnowledge;
+                //employeeFromRepo.AcquiredKnowledges = employee.AcquiredKnowledge ?? employeeFromRepo.AcquiredKnowledges;
 
                 var employeeUpdated = _repo.Update(employeeFromRepo);
 

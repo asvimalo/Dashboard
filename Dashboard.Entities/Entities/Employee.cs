@@ -17,7 +17,7 @@ namespace Dashboard.Entities
         public string ImageName { get; set; }
         public string ImagePath { get; set; }
 
-        public ICollection <AcquiredKnowledge> AcquiredKnowledge { get; set; } 
+        public ICollection <AcquiredKnowledge> AcquiredKnowledges { get; set; } 
         public ICollection <Assignment> Assignments { get; set; }
     }
 }

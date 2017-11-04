@@ -1,27 +1,6 @@
 ﻿<h2 class="text-center">Add Employee</h2>
-<form name="form" class="form-group">
-    <div class="col-md-6">
-        
-        <div class="form-group" novalidate>
-            
-                <img class="img-responsive thumbnail" ngf-thumbnail="file">
-           
-           
-            <label  class="form-control">
-                First Name: {{ employee.firstName }}
-            </label>
-            <label class="form-control">
-                Last Name: {{ employee.lastName }}
-            </label>
-            <label class="form-control">
-                Personal Number(ssn): {{ employee.personalNr }}
-            </label>
-    
-        </div>
-        <div class="jumbotron" ngf-select ng-model="file" name="file" ngf-pattern="'image/*'"
-             ngf-accept="'image/*'" ngf-max-size="20MB" ngf-min-height="100"
-             ngf-resize="{width: 100, height: 100}">Select</div>
-    </div>
+<form name="form" class="form-group" novalidate>
+   
 
     <div class="form-group">
         <label>
@@ -49,11 +28,34 @@
         <div ng-show="form.$submitted || form.uPersonNr.$touched">
             <div class="form-control" ng-show="form.uPersonNr.$error.required">Tell us your Personal Number.</div>
         </div>
+        <div>
+            <button class="btn btn-default" ng-click="addEmployee()">Add Employee</button>
+        </div>
+
+    </div>
+    <div class="col-md-6">
+
+        <div class="form-group">
+
+            <!--<img class="img-responsive thumbnail" ngf-thumbnail="file">-->
+
+
+            <label class="form-control">
+                First Name: {{ employee.firstName }}
+            </label>
+            <label class="form-control">
+                Last Name: {{ employee.lastName }}
+            </label>
+            <label class="form-control">
+                Personal Number(ssn): {{ employee.personalNr }}
+            </label>
+
+        </div>
+        <!--<div class="jumbotron" ngf-select ng-model="file" id="fileInput" name="file" ngf-pattern="'image/*'"
+             ngf-accept="'image/*'" ngf-max-size="20MB" ngf-min-height="100"
+             ngf-resize="{width: 100, height: 100}">Upload your picture</div>-->
     </div>
     
-    <div>
-        <button class="btn btn-default" ng-click="$ctrl.addEmployee(employee,file)">Add Employee</button>
-    </div>
     
 
     <!--<input type="button" ng-click="reset(form)" value="Reset" />-->
