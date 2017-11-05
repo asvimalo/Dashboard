@@ -29,7 +29,7 @@
                 <div class="row">
                     <label>Commitment:</label>
                     <div ng-repeat="item in $ctrl.commitments">
-                        <div> {{item.hours}}h from {{item.startDate}} to {{item.stopDate}}</div>
+                        {{item.hours}}h from {{item.startDate | date: 'dd-MM-yyyy'}} to {{item.stopDate | date: 'dd-MM-yyyy'}} <!-- Denna skriver ut ENDAST "h from to"-->
                     </div>
                 </div>
             </div>

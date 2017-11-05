@@ -27,7 +27,7 @@
                     var json = JSON.stringify(newCommitment);
                     
 
-                    $http.post('http://localhost:8899/api/dashboard/commitments/', json)
+                    $http.post('http://localhost:8890/api/dashboard/commitments/', json)
                         .then(function (response) {
                             //success
                             console.log("Response from server api" + response.data);

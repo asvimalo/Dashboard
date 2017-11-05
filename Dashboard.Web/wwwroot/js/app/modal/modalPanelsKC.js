@@ -5,7 +5,7 @@ angular.module('modal').controller('ModalDemoCtrl', function ($http, $scope, $mo
 
     //var holder = this;
     $scope.employees = [];
-    $http.get("http://localhost:8899/api/dashboard/employees")
+    $http.get("http://localhost:8890/api/dashboard/employees")
         .then(function (response) {
             //success
             angular.copy(response.data, $scope.employees);

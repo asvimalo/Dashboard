@@ -16,7 +16,7 @@
 
                     holder.progress = "";
 
-                    $http.delete('http://localhost:8899/api/dashboard/acquiredknowledges/', $routeParams.acquiredKnowledge.acquiredKnowledgeId)
+                    $http.delete('http://localhost:8890/api/dashboard/acquiredknowledges/', $routeParams.acquiredKnowledge.acquiredKnowledgeId)
                         .then(function (response) {
                             //success
                             console.log("Response from server api" + response.data);
