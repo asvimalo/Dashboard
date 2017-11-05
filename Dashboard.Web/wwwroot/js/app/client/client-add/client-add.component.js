@@ -19,11 +19,11 @@
                     self.isBusy = true;
                     self.errorMessage = "";
 
-                    var locationsData = { "City": self.location.city, "Address": self.location.adress };
-                    var dataTmpLocation = JSON.stringify(locationsData);
+                    var data = { "ClientName": self.client.clientName, "City": self.location.city, "Address": self.location.adress };
+                    var dataTmp = JSON.stringify(data);
 
                     // Http Post for Location 
-                    $http.post("http://localhost:8899/api/dashboard/locations", dataTmpLocation)
+                    $http.post("http://localhost:8899/api/dashboard/clients", dataTmp)
                         .then(function (response) {
                             console.log("Response from server api" + response.data);
                             // Sparar datan i $scope.locationObj för att få locationId
@@ -41,24 +41,24 @@
 
                         }); 
 
-                    var clientData = { "clientName": self.client.clientName, "description": self.client.description, "locationId": $scope.locationObj.locationId };
-                    var dataTmpClient = JSON.stringify(clientData);
+                    //var clientData = { "clientName": self.client.clientName, "LocationId": $scope.locationObj.id };
+                    //var dataTmpClient = JSON.stringify(clientData);
 
-                    // Http Post for Client 
-                    $http.post("http://localhost:8899/api/dashboard/clients", dataTmpClient)
-                        .then(function (response) {
-                            console.log("Response from server api" + response.data);
-                            console.log("Client Post")
+                    //// Http Post for Client 
+                    //$http.post("http://localhost:8899/api/dashboard/clients", dataTmpClient)
+                    //    .then(function (response) {
+                    //        console.log("Response from server api" + response.data);
+                    //        console.log("Client Post")
 
-                        }, function () {
-                            //failure
-                            console.log("failure");
-                            self.errorMessage = "Failure to save new project";
-                        })
-                        .finally(function () {
-                            console.log("finally");
-                            self.isBusy = false;
-                        });
+                    //    }, function () {
+                    //        //failure
+                    //        console.log("failure");
+                    //        self.errorMessage = "Failure to save new project";
+                    //    })
+                    //    .finally(function () {
+                    //        console.log("finally");
+                    //        self.isBusy = false;
+                    //    });
 
                 };
 
