@@ -34,44 +34,12 @@
                     });
 
                 holder.commitments = [];
-                //$http.get("http://localhost:8890/api/dashboard/commitments")
-                //    .then(function (response) {
-                //        //success
-                //        angular.copy(response.data, holder.commitments);
-                //    }, function (error) {
-                //        //failure
-                //        holder.errorMessage = "Failed to load data: " + error;
-                //    })
-                //    .finally(function () {
-                //        holder.isBusy = false;
-                //    });
 
                 $scope.addCommitment = function () {
 
-                    holder.commitments.push($scope.commitment);                    //holder.commitments = holder.commitments.concat($scope.commitment);
+                    holder.commitments.push($scope.commitment);                   
                     $scope.commitment = {};
                     
-                    //console.log("in the addCommitment function");
-                    //holder.isBusy = true;
-                    //holder.errorMessage = "";
-
-                    ////var commitments = $scope.commitment;
-                    //var data = { "StartDate": $scope.commitment.startDate, "StopDate": $scope.commitment.stopDate, "Hours": $scope.commitment.hours }
-
-                    //$http.post("http://localhost:8899/api/dashboard/commitments", JSON.stringify(data))
-                    //    .then(function (response) {
-                    //        //success
-                    //        console.log("Response from server api" + response.data);
-                    //        $scope.commitment = {}; 
-                    //    }, function () {
-                    //        //failure
-                    //        console.log("failure");
-                    //        holder.errorMessage = "Failure to save commitment.";
-                    //    })
-                    //    .finally(function () {
-                    //        console.log("finally");
-                    //        holder.isBusy = false;
-                    //    });
                 };
 
                 $scope.assignProjectToEmployee = function () {
@@ -87,6 +55,7 @@
                             console.log("Response from server api" + response.data);
                             $scope.formInfo = {};
                             holder.commitments = [];
+                            $location.path("/dasboard");
                         }, function () {
                             console.log("failure");
                             //failure
