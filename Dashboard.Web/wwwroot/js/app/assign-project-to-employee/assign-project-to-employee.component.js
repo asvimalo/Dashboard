@@ -3,7 +3,7 @@
     angular.module("assignProjectToEmployee", [])
         .component("assignProjectToEmployee", {
             templateUrl: "/js/app/assign-project-to-employee/assign-project-to-employee.template.html",
-            controller: function assignProjectToEmployeeController($http, $scope) {
+            controller: function assignProjectToEmployeeController($http, $scope, $location) {
                 //$routeProvider
                 var holder = this;
 
@@ -55,7 +55,7 @@
                             console.log("Response from server api" + response.data);
                             $scope.formInfo = {};
                             holder.commitments = [];
-                            $location.path("/dasboard");
+                            $location.path("/dashboard");
                         }, function () {
                             console.log("failure");
                             //failure
