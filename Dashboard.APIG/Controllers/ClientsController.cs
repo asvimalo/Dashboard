@@ -1,4 +1,5 @@
-﻿using Dashboard.DataG.EF.Contracts;
+﻿using Dashboard.APIG.Models;
+using Dashboard.DataG.EF.Contracts;
 using Dashboard.EntitiesG.EntitiesRev;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -14,12 +15,14 @@ namespace Dashboard.APIG.Controllers
     public class ClientsController : Controller
     {
         public IRepoClient _repo;
+        private IRepoLocation _repoLoc;
         private ILogger<ClientsController> _logger;
 
-        public ClientsController(IRepoClient repo,
+        public ClientsController(IRepoClient repo, IRepoLocation repoLoc,
             ILogger<ClientsController> logger)
         {
             _repo = repo;
+            _repoLoc = repoLoc;
             _logger = logger;
         }
 
@@ -46,7 +49,7 @@ namespace Dashboard.APIG.Controllers
         public async Task<IActionResult> Get(int id)
         {
             try
-            {
+            {   
                 var result = _repo.GetById(id);
                 return Ok(result);
                 //return Ok(Mapper.Map<CommitmentViewModel>(result));
@@ -62,15 +65,21 @@ namespace Dashboard.APIG.Controllers
 
         // POST api/dashboard/clients
         [HttpPost("")]
-        public async Task<IActionResult> Post([FromBody]Client client)
+        public async Task<IActionResult> Post([FromBody] ClientLocation client)
         {
             if (ModelState.IsValid)
             {
+                var location = new Location
+                {
+                    Address = client.Address,
+                    City = client.City
+                };
                 //var newCommitment = Mapper.Map<Commitment>(commitment);
-                
+                var newClient = new Client{ ClientName = client.ClientName};
                 try
                 {
-                    await _repo.Create(client);
+                    await _repoLoc.Create(location);
+                    await _repo.Create(newClient);
                     return Ok($"Client created");
                 }
                 catch (Exception ex)
@@ -140,6 +149,7 @@ namespace Dashboard.APIG.Controllers
             }
             return BadRequest($"Client {clientToDel.ClientName } wasn't deleted!");
         }
+        
 
     }
 }

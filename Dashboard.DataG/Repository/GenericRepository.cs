@@ -22,10 +22,11 @@ namespace Dashboard.DataG.EF.Repository
         {
             _ctx = ctx;
         }
-        public async System.Threading.Tasks.Task Create(TEntity entity)
+        public async System.Threading.Tasks.Task<int> Create(TEntity entity)
         {
             await _ctx.Set<TEntity>().AddAsync(entity);
-            await _ctx.SaveChangesAsync();
+            
+            return await _ctx.SaveChangesAsync();
         }
 
         public async System.Threading.Tasks.Task Delete(int id)
@@ -50,10 +51,10 @@ namespace Dashboard.DataG.EF.Repository
             //return null;
         }
 
-        public async System.Threading.Tasks.Task Update(int id, TEntity entity)
+        public async System.Threading.Tasks.Task<int> Update(int id, TEntity entity)
         {
             _ctx.Set<TEntity>().Update(entity);
-            await _ctx.SaveChangesAsync();
+            return await _ctx.SaveChangesAsync();
 
 
         }

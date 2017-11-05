@@ -17,7 +17,7 @@ namespace Dashboard.DataG.EF.Db
             {
                 var builder = new DbContextOptionsBuilder<DashboardGenericContext>();
 
-                builder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=DashboardGenericdDb;Trusted_Connection=True;MultipleActiveResultSets=true",
+                builder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=DashboardGenericDb;Trusted_Connection=True;MultipleActiveResultSets=true",
                     optionsBuilder => optionsBuilder.MigrationsAssembly(typeof(DashboardGenericContext).GetTypeInfo().Assembly.GetName().Name));
                 
                 return new DashboardGenericContext(builder.Options);
