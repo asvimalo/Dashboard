@@ -10,6 +10,13 @@
                 $http.get('http://localhost:8899/api/dashboard/knowledges').then(function (response) {
                     angular.copy(response.data, self.knowledges);
                 });
+
+                self.acquiredKnowledges = [];
+                $http.get('http://localhost:8899/api/dashboard/acquiredknowledges').then(function (response) {
+                    //self.projects = response.data;
+                    angular.copy(response.data, self.acquiredKnowledges);
+
+                });
             }
             
         });

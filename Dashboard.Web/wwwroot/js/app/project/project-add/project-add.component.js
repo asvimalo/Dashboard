@@ -23,6 +23,7 @@
                     angular.copy(response.data, self.employees);
                 });
 
+                // Add Project Function
                 $scope.addProject = function () {
                     console.log("in the addProject function");
                     self.isBusy = true;
@@ -44,6 +45,7 @@
                             console.log("finally");
                             self.isBusy = false;
                         });
+
 
                 };
                 

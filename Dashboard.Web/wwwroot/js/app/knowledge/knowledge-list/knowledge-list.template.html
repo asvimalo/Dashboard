@@ -11,12 +11,12 @@
     </thead>
     <tr ng-repeat="knowledge in $ctrl.knowledges">
         <td>{{ knowledge.knowledgeId }}</td>
-        <td>{{ knowledge.Description  }}</td>
-        <td>{{ knowledge.KnowledgeName  }}</td>
-        <td>{{ knowledge.acquiredKnowledges  }}</td>
+        <td>{{ knowledge.description }}</td>
+        <td>{{ knowledge.knowledgeName }}</td>
+        <td ng-repeat="acquiredKnowledge in $ctrl.acquiredknowledges"><p>{{ acquiredKnowledge.knowledgeId }}</p></td>
        
        
-        <td><a ng-href="#/knowledge/{{ knowledge.knowledgeId }}" class="btn btn-sm btn-primary">Manage</a></td>
+        <td><!--<a ng-href="#/knowledge/{{ knowledge.knowledgeId }}" class="btn btn-sm btn-primary">Manage</a>--></td>
 
     </tr>
 </table>

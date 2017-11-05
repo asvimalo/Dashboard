@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Dashboard.Data.EF.Contracts;
-using Dashboard.Data.EF.IRepository;
+using Dashboard.Data.EF.Contracts;
 using Dashboard.Entities;
 using Dashboard.Models;
 using Microsoft.AspNetCore.Mvc;

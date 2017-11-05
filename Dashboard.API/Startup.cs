@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Dashboard.Data.EF.IRepository;
+using Dashboard.Data.EF.Contracts;
 using Microsoft.AspNetCore.Identity;
 using Dashboard.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -22,7 +22,7 @@ using IdentityServer4.AccessTokenValidation;
 using Microsoft.AspNetCore.Authentication;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
-using Dashboard.Data.EF.Contracts;
+
 
 namespace Dashboard.Data
 {
@@ -52,7 +52,7 @@ namespace Dashboard.Data
                 option.ConfigureWarnings(warnings => warnings.Throw(CoreEventId.IncludeIgnoredWarning));
 
             });
-
+           
             //services.AddIdentity<User, IdentityRole>()
             //    .AddEntityFrameworkStores<DashboardContext>()
             //    .AddDefaultTokenProviders();

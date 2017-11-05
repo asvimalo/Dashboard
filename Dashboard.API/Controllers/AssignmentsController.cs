@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Dashboard.Data.EF.IRepository;
+using Dashboard.Data.EF.Contracts;
 using Dashboard.Entities;
 using Dashboard.Models;
 using AutoMapper;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
-using Dashboard.Data.EF.Contracts;
 
 namespace Dashboard.Data.Controllers
 {
