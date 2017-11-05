@@ -15,7 +15,7 @@
         <td>{{ client.locationId  }}</td>
         <td>{{ client.clientName  }}</td>
         <td>{{ client.description  }}</td>
-        <td ng-repeat="project in $ctrl.projects"><p>{{ project.projectId }}</p></td> 
+        <td ng-repeat="project in client.projects"><p>{{ project.projectName }}</p></td> 
         <td><a ng-href="#/employees/{{ assignment.assignmentId }}" class="btn btn-sm btn-primary">Manage</a></td>
 
     </tr>
