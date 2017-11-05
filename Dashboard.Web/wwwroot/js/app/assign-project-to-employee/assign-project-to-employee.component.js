@@ -48,9 +48,9 @@
 
                 $scope.addCommitment = function () {
 
-                    holder.commitments = holder.commitments.concat(JSON.stringify($scope.commitment));
-
-                    //$scope.HouseBasket = $scope.HouseBasket.concat(data);
+                    holder.commitments.push($scope.commitment);
+                    $scope.commitment = [];
+                    
                     //console.log("in the addCommitment function");
                     //holder.isBusy = true;
                     //holder.errorMessage = "";
@@ -79,10 +79,10 @@
                     holder.isBusy = true;
                     holder.errorMessage = "";
 
-                    var data = { "ProjectId": $scope.formInfo.project.projectId, "EmployeeId": $scope.formInfo.employee.employeeId, "JobTitle": $scope.formInfo.jobtitle, "Location": $scope.formInfo.location };
-
-                    //var dataTmp = JSON.stringify(data);
-                    $http.post("http://localhost:8899/api/dashboard/assignments", JSON.stringify(data))  
+                    var data = { "ProjectId": $scope.formInfo.project.projectId, "EmployeeId": $scope.formInfo.employee.employeeId, "JobTitle": $scope.formInfo.jobtitle, "Location": $scope.formInfo.location, "Commitments": holder.commitments };
+                    var dataTmp = JSON.stringify(data);
+                    
+                    $http.post("http://localhost:8899/api/dashboard/assignments", dataTmp)  
                         .then(function (response) {
                             console.log("Response from server api" + response.data);
                             $scope.formInfo = {}; 
