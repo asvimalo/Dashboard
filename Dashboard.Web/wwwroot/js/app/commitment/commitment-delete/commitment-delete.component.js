@@ -16,7 +16,7 @@
 
                     holder.progress = "";
 
-                    $http.delete('http://localhost:8899/api/dashboard/commitments/', $routeParams.commitment.assignmentId)
+                    $http.delete('http://localhost:8890/api/dashboard/commitments/', $routeParams.commitment.assignmentId)
                         .then(function (response) {
                             //success
                             console.log("Response from server api" + response.data);

@@ -7,7 +7,7 @@
                 var self = this;
                 //self.orderProp = 'projectName';
                 self.locations = [];
-                $http.get('http://localhost:8899/api/dashboard/locations').then(function (response) {
+                $http.get('http://localhost:8890/api/dashboard/locations').then(function (response) {
                     angular.copy(response.data, self.locations);
                 });
             }

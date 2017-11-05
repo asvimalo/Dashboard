@@ -7,7 +7,7 @@
                 var self = this;
                 //self.orderProp = 'projectName';
                 self.phases = [];
-                $http.get('http://localhost:8899/api/dashboard/phases').then(function (response) {
+                $http.get('http://localhost:8890/api/dashboard/phases').then(function (response) {
                     angular.copy(response.data, self.phases);
                 });
             }

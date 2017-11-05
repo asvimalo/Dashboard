@@ -36,7 +36,7 @@
                     var json = JSON.stringify(newEmployee);
                     
 
-                    $http.post('http://localhost:8899/api/dashboard/employees/', json)
+                    $http.post('http://localhost:8890/api/dashboard/employees/', json)
                         .then(function (response) {
                             //success
                             console.log("Response from server api" + response.data);

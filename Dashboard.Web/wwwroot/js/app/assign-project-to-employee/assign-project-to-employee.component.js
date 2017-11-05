@@ -8,7 +8,7 @@
                 var holder = this;
 
                 holder.employees = [];
-                $http.get("http://localhost:8899/api/dashboard/employees")
+                $http.get("http://localhost:8890/api/dashboard/employees")
                     .then(function (response) {
                         //success
                         angular.copy(response.data, holder.employees);
@@ -21,7 +21,7 @@
                     });
 
                 holder.projects = [];
-                $http.get("http://localhost:8899/api/dashboard/projects")
+                $http.get("http://localhost:8890/api/dashboard/projects")
                     .then(function (response) {
                         //success
                         angular.copy(response.data, holder.projects);
@@ -34,7 +34,7 @@
                     });
 
                 holder.commitments = [];
-                //$http.get("http://localhost:8899/api/dashboard/commitments")
+                //$http.get("http://localhost:8890/api/dashboard/commitments")
                 //    .then(function (response) {
                 //        //success
                 //        angular.copy(response.data, holder.commitments);
@@ -81,8 +81,8 @@
 
                     var data = { "ProjectId": $scope.formInfo.project.projectId, "EmployeeId": $scope.formInfo.employee.employeeId, "JobTitle": $scope.formInfo.jobtitle, "Location": $scope.formInfo.location, "Commitments": holder.commitments };
                     var dataTmp = JSON.stringify(data);
-                    
-                    $http.post("http://localhost:8899/api/dashboard/assignments", dataTmp)  
+                    //var dataTmp = JSON.stringify(data);
+                    $http.post("http://localhost:8890/api/dashboard/assignments", dataTmp)  
                         .then(function (response) {
                             console.log("Response from server api" + response.data);
                             $scope.formInfo = {};

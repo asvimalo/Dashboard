@@ -7,7 +7,7 @@
                 var self = this;
                 //self.orderProp = 'projectName';
                 self.employees = [];
-                $http.get('http://localhost:8899/api/dashboard/employees').then(function (response) {
+                $http.get('http://localhost:8890/api/dashboard/employees').then(function (response) {
                     angular.copy(response.data, self.employees);
                 });
             }

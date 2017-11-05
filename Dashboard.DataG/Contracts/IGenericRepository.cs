@@ -13,9 +13,9 @@ namespace Dashboard.DataG.EF.Contracts
 
         Task<TEntity> GetById(int id);
 
-        Task<int> Create(TEntity entity);
+        Task<TEntity> Create(TEntity entity);
 
-        Task<int> Update(int id, TEntity entity);
+        Task<TEntity> Update(int id, TEntity entity);
 
         Task Delete(int id);
 
