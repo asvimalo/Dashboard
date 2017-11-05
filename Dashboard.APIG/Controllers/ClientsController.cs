@@ -29,7 +29,7 @@ namespace Dashboard.APIG.Controllers
         {
             try
             {
-                var result =  _repo.GetAll();
+                var result =  _repo.Include(p => p.Projects, l => l.Location);
                 return Ok(result);
                 //return Ok(Mapper.Map<IEnumerable<CommitmentViewModel>>(result));
             }

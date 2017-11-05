@@ -4,9 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Dashboard.Data.EF.Contracts;
+using Dashboard.DataG.EF.Contracts;
 using Microsoft.Extensions.Logging;
-using Dashboard.Entities;
+using Dashboard.EntitiesG.EntitiesRev;
 
 namespace Dashboard.API.Controllers
 {
@@ -14,10 +14,10 @@ namespace Dashboard.API.Controllers
     [Route("api/dashboard/phases")]
     public class PhasesController : Controller
     {
-        public IRepo _repo;
+        public IRepoPhase _repo;
         private ILogger<PhasesController> _logger;
 
-        public PhasesController(IRepo repo,
+        public PhasesController(IRepoPhase repo,
             ILogger<PhasesController> logger)
         {
             _repo = repo;
@@ -30,7 +30,7 @@ namespace Dashboard.API.Controllers
         {
             try
             {
-                var result = await _repo.GetAll<Phase>();
+                var result =  _repo.Include(x => x.Project, y => y.Tasks);
                 return Ok(result);
                 //return Ok(Mapper.Map<IEnumerable<CommitmentViewModel>>(result));
             }
@@ -48,7 +48,7 @@ namespace Dashboard.API.Controllers
         {
             try
             {
-                var result = _repo.Get<Phase>(id);
+                var result = _repo.GetById(id);
                 return Ok(result);
                 //return Ok(Mapper.Map<CommitmentViewModel>(result));
             }
@@ -67,12 +67,20 @@ namespace Dashboard.API.Controllers
         {
             if (ModelState.IsValid)
             {
-                //var newCommitment = Mapper.Map<Commitment>(commitment);
-                var addedPhase = await _repo.AddAsync(phase);
-                if (await _repo.SaveChangesAsync())
+                try
                 {
-                    return Created($"api/dashboard/commitments/{addedPhase.PhaseId}", addedPhase);
+                    var addedPhase = _repo.Create(phase);
+                    return Created($"api/dashboard/commitments/{addedPhase.Id}", addedPhase);
+                    //return Ok(Mapper.Map<CommitmentViewModel>(result));
                 }
+                catch (Exception ex)
+                {
+
+                    _logger.LogError($"Exception thrown while getting commitment: {ex}");
+                    return BadRequest($"Error ocurred");
+                }
+                //var newCommitment = Mapper.Map<Commitment>(commitment);
+                
             }
             return BadRequest("Failed to save changes to the database");
         }
@@ -83,27 +91,35 @@ namespace Dashboard.API.Controllers
         {
             if (ModelState.IsValid)
             {
+                try
+                {
+                    var phaseFromRepo = await _repo.GetById(id);
+                    //Mapper.Map(commitmentVM, commiFromRepo);
+
+                    phaseFromRepo.PhaseName = phase.PhaseName ?? phaseFromRepo.PhaseName;
+                    phaseFromRepo.Project = phase.Project ?? phaseFromRepo.Project;
+                    phaseFromRepo.Comments = phase.Comments ?? phaseFromRepo.Comments;
+                    phaseFromRepo.Tasks = phase.Tasks ?? phaseFromRepo.Tasks;
+                    phaseFromRepo.ProjectId = phase.ProjectId != 0 ? phase.ProjectId : phaseFromRepo.ProjectId;
+
+
+
+                    var phaseUpdated = _repo.Update(phaseFromRepo.Id, phaseFromRepo);
+                    return Ok(/*Mapper.Map<CommitmentViewModel>(*/phaseFromRepo/*)*/);
+                }
+                catch (Exception ex)
+                {
+
+                    _logger.LogError($"Exception thrown while getting commitment: {ex}");
+                    return BadRequest($"Error ocurred");
+                }
                 //var projectId = 0;
                 //var userId = 0;
-                var phaseFromRepo = _repo.Get<Phase>(id);
-                //Mapper.Map(commitmentVM, commiFromRepo);
+               
 
-                phaseFromRepo.PhaseName = phase.PhaseName ?? phaseFromRepo.PhaseName;
-                phaseFromRepo.Project = phase.Project ?? phaseFromRepo.Project;
-                phaseFromRepo.Comments = phase.Comments ?? phaseFromRepo.Comments;
-                phaseFromRepo.Tasks = phase.Tasks ?? phaseFromRepo.Tasks;
-                phaseFromRepo.ProjectId = phase.ProjectId != 0 ? phase.ProjectId : phaseFromRepo.ProjectId;
-
-
-
-                var phaseUpdated = _repo.Update(phaseFromRepo);
-
-                if (!await _repo.SaveChangesAsync())
-                {
-                    _logger.LogError($"Thrown exception when updating");
-                    BadRequest("Something when wrong while updating");
-                }
-                return Ok(/*Mapper.Map<CommitmentViewModel>(*/phaseFromRepo/*)*/);
+               
+               
+               
             }
             return BadRequest("Error occured");
 
@@ -113,12 +129,18 @@ namespace Dashboard.API.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var phaseToDel = _repo.Get<Phase>(id);
-            _repo.Delete(phaseToDel);
-            if (await _repo.SaveChangesAsync())
+            try
+            {
+                var phaseToDel = await _repo.GetById(id);
+               await _repo.Delete(phaseToDel.Id);
+
                 return Ok($"Commitment deleted!");
-            else
-                return BadRequest($"Commitment {phaseToDel.PhaseName } wasn't deleted!");
+            }
+            catch (Exception)
+            {
+
+                return BadRequest($"Phase  wasn't deleted!");
+            }                        
         }
 
     }

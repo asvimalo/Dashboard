@@ -22,7 +22,7 @@ using IdentityServer4.AccessTokenValidation;
 using Microsoft.AspNetCore.Authentication;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
-using Dashboard.Data.EF.Contracts;
+
 
 namespace Dashboard.Data
 {

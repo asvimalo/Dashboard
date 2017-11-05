@@ -10,6 +10,12 @@ using Microsoft.Extensions.Logging;
 using Dashboard.DataG.EF.Db;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore;
+using Dashboard.DataG.EF.Contracts;
+using Dashboard.DataG.EF.Repository;
+using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Serialization;
+using Microsoft.AspNetCore.Diagnostics;
 
 namespace Dashboard.APIG
 {
@@ -35,19 +41,84 @@ namespace Dashboard.APIG
                 option.ConfigureWarnings(warnings => warnings.Throw(CoreEventId.IncludeIgnoredWarning));
 
             });
+            services.AddEntityFrameworkSqlServer()
+                .AddDbContext<DashboardGenericContext>();
 
+            services.AddScoped(typeof(IRepoCommitment), typeof(RepoCommitment));
+            services.AddScoped(typeof(IRepoAssignment), typeof(RepoAssignment));
+            services.AddScoped(typeof(IRepoEmployee), typeof(RepoEmployee));
+            services.AddScoped(typeof(IRepoKnowledge), typeof(RepoKnowledge));
+            services.AddScoped(typeof(IRepoLocation), typeof(RepoLocation));
+            services.AddScoped(typeof(IRepoPhase), typeof(RepoPhase));
+            services.AddScoped(typeof(IRepoTask), typeof(RepoTask));
+            services.AddScoped(typeof(IRepoClient), typeof(RepoClient));
+            services.AddScoped(typeof(IRepoAcquiredKnowledge), typeof(RepoAcquiredKnowledge));
+            services.AddScoped(typeof(IRepoProject), typeof(RepoProject));
+
+            services.AddScoped(typeof(IDesignTimeDbContextFactory<DashboardGenericContext>), typeof(TempCtxDashboardGeneric));
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("access", builder =>
+                {
+                    builder.AllowAnyHeader();
+                    builder.AllowAnyMethod();
+                    builder.AllowAnyOrigin();
+                });
+            });
             // Add framework services.
-            services.AddMvc();
+            services.AddMvc()
+                .AddJsonOptions(config =>
+                {
+                config.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver(); // It was already camelcasing before this config
+                config.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+                });
+
             services.AddLogging();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        private Action<MvcOptions> AddJsonOptions(Func<object, object> p)
         {
+            throw new NotImplementedException();
+        }
+
+        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        public void Configure(IApplicationBuilder app, 
+            IHostingEnvironment env, 
+            ILoggerFactory loggerFactory)
+        {
+            app.UseStaticFiles();
+
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
-            app.UseMvc();
+            if (env.IsEnvironment("Development"))
+            {
+                app.UseDeveloperExceptionPage();
+                loggerFactory.AddDebug(LogLevel.Information);
+            }
+            else
+                loggerFactory.AddDebug(LogLevel.Error);
+
+            app.UseCors("access");
+            
+            if (Configuration["DesignTime"] != "true")
+            {
+                using (var scope = app.ApplicationServices.CreateScope())
+                {
+                    //DashboardContextSeedData.SeedData();
+                    //var initializer = scope.ServiceProvider.GetRequiredService<DashboardContextSeedData>();
+                    //initializer.SeedData().Wait();
+                }
+            }
+
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Dashboard}/{action=Index}/{id?}");
+            });
+
         }
     }
 }

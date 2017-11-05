@@ -4,9 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Dashboard.Data.EF.Contracts;
+using Dashboard.DataG.EF.Contracts;
 using Microsoft.Extensions.Logging;
-using Dashboard.Entities;
+using Dashboard.EntitiesG.EntitiesRev;
 
 namespace Dashboard.API.Controllers
 {
@@ -14,10 +14,10 @@ namespace Dashboard.API.Controllers
     [Route("api/dashboard/locations")]
     public class LocationsController : Controller
     {
-        public IRepo _repo;
+        public IRepoLocation _repo;
         private ILogger<LocationsController> _logger;
 
-        public LocationsController(IRepo repo,
+        public LocationsController(IRepoLocation repo,
             ILogger<LocationsController> logger)
         {
             _repo = repo;
@@ -30,7 +30,7 @@ namespace Dashboard.API.Controllers
         {
             try
             {
-                var result = await _repo.GetAll<Location>();
+                var result =  _repo.GetAll();
                 return Ok(result);
                 //return Ok(Mapper.Map<IEnumerable<CommitmentViewModel>>(result));
             }
@@ -48,7 +48,7 @@ namespace Dashboard.API.Controllers
         {
             try
             {
-                var result = _repo.Get<Location>(id);
+                var result = await _repo.GetById(id);
                 return Ok(result);
                 //return Ok(Mapper.Map<CommitmentViewModel>(result));
             }
@@ -67,12 +67,18 @@ namespace Dashboard.API.Controllers
         {
             if (ModelState.IsValid)
             {
-                //var newCommitment = Mapper.Map<Commitment>(commitment);
-                var addedLocation = await _repo.AddAsync(location);
-                if (await _repo.SaveChangesAsync())
+                try
                 {
-                    return Created($"api/dashboard/commitments/{addedLocation.LocationId}", addedLocation);
+                    var addedLocation =  _repo.Create(location);
+                    return Created($"api/dashboard/commitments/{addedLocation.Id}", addedLocation);
+                    //return Ok(Mapper.Map<CommitmentViewModel>(result));
                 }
+                catch (Exception ex)
+                {
+                    _logger.LogError($"Exception thrown while getting location: {ex}");
+                    return BadRequest($"Error ocurred");
+                }
+                //var newCommitment = Mapper.Map<Commitment>(commitment);                             
             }
             return BadRequest("Failed to save changes to the database");
         }
@@ -85,23 +91,23 @@ namespace Dashboard.API.Controllers
             {
                 //var projectId = 0;
                 //var userId = 0;
-                var locationFromRepo = _repo.Get<Location>(id);
-                //Mapper.Map(commitmentVM, commiFromRepo);
-
-                locationFromRepo.City = location.City ?? locationFromRepo.City;
-                locationFromRepo.Address = location.Address ?? locationFromRepo.Address;
-                locationFromRepo.Clients = location.Clients ?? locationFromRepo.Clients;
-                
-               
-
-                var locationUpdated = _repo.Update(locationFromRepo);
-
-                if (!await _repo.SaveChangesAsync())
+                try
                 {
-                    _logger.LogError($"Thrown exception when updating");
-                    BadRequest("Something when wrong while updating");
+                    var locationFromRepo = await _repo.GetById(id);
+                    //Mapper.Map(commitmentVM, commiFromRepo);
+
+                    locationFromRepo.City = location.City ?? locationFromRepo.City;
+                    locationFromRepo.Address = location.Address ?? locationFromRepo.Address;
+                    locationFromRepo.Clients = location.Clients ?? locationFromRepo.Clients;
+                    var locationUpdated = _repo.Update(locationFromRepo.Id, locationFromRepo);
+
+                    return Ok(/*Mapper.Map<CommitmentViewModel>(*/locationUpdated/*)*/);
                 }
-                return Ok(/*Mapper.Map<CommitmentViewModel>(*/locationUpdated/*)*/);
+                catch (Exception ex)
+                {
+                    _logger.LogError($"Thrown exception when updating {ex}");
+                    BadRequest("Something when wrong while updating");
+                }                                                         
             }
             return BadRequest("Error occured");
 
@@ -111,12 +117,22 @@ namespace Dashboard.API.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var locationToDel = _repo.Get<Location>(id);
-            _repo.Delete(locationToDel);
-            if (await _repo.SaveChangesAsync())
+            try
+            {
+                var locationToDel = await _repo.GetById(id);
+                await _repo.Delete(locationToDel.Id);
+
                 return Ok($"Commitment deleted!");
-            else
-                return BadRequest($"Location {locationToDel.LocationId } wasn't deleted!");
+            }
+            catch (Exception ex)
+            {
+
+                _logger.LogError($"Thrown exception when updating {ex}");
+                
+                return BadRequest($"Location wasn't deleted!");
+            }
+           
+                
         }
 
     }

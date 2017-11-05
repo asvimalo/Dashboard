@@ -1,13 +1,13 @@
 ﻿using Dashboard.DataG.EF.Contracts;
 using Dashboard.DataG.EF.Db;
-using Dashboard.DataG.EF.Repository;
+
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Dashboard.Data.EF.Repository
+namespace Dashboard.DataG.EF.Repository
 {
     public class RepoCommitment : 
         GenericRepository<EntitiesG.EntitiesRev.Commitment>, 

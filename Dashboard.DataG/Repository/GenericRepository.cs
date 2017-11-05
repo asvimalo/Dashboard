@@ -7,6 +7,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Dashboard.DataG.EF.Db;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
+
+using static Microsoft.AspNetCore.Hosting.Internal.HostingApplication;
 
 namespace Dashboard.DataG.EF.Repository
 {
@@ -34,7 +37,8 @@ namespace Dashboard.DataG.EF.Repository
 
         public IQueryable<TEntity> GetAll()
         {
-            return  _ctx.Set<TEntity>().AsNoTracking();
+
+            return  _ctx.Set<TEntity>();
         }
 
         public async Task<TEntity> GetById(int id)
@@ -53,9 +57,17 @@ namespace Dashboard.DataG.EF.Repository
 
 
         }
-        public async Task<bool> SaveChangesAsync()
+        public IQueryable<TEntity> Include(params Expression<Func<TEntity, object>>[] includeExpressions)
         {
-            return (await _ctx.SaveChangesAsync() > 0);
+            IQueryable<TEntity> dbQuery = _ctx.Set<TEntity>();
+
+            //Apply eager loading
+            foreach (Expression<Func<TEntity, object>> navigationProperty in includeExpressions)
+                dbQuery = dbQuery.Include<TEntity, object>(navigationProperty);
+
+            return dbQuery
+                 .AsNoTracking();
+                 
         }
 
     }

@@ -4,20 +4,20 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Dashboard.Data.EF.Contracts;
+using Dashboard.DataG.EF.Contracts;
 using Microsoft.Extensions.Logging;
-using Dashboard.Entities;
+using Dashboard.EntitiesG.EntitiesRev;
 
-namespace Dashboard.API.Controllers
+namespace Dashboard.APIG.Controllers
 {
    
     [Route("api/dashboard/commitments")]
     public class CommitmentsController : Controller
     {
-        public IRepo _repo;
+        public IRepoCommitment _repo;
         private ILogger<CommitmentsController> _logger;
 
-        public CommitmentsController(IRepo repo,
+        public CommitmentsController(IRepoCommitment repo,
             ILogger<CommitmentsController> logger)
         {
             _repo = repo;
@@ -30,7 +30,7 @@ namespace Dashboard.API.Controllers
         {
             try
             {
-                var result = await _repo.GetAll<Commitment>();
+                var result =  _repo.Include(x => x.Assignment);
                 return Ok(result);
                 //return Ok(Mapper.Map<IEnumerable<CommitmentViewModel>>(result));
             }
@@ -48,7 +48,7 @@ namespace Dashboard.API.Controllers
         {
             try
             {
-                var result = _repo.Get<Commitment>(id);
+                var result = await _repo.GetById(id);
                 return Ok(result);
                 //return Ok(Mapper.Map<CommitmentViewModel>(result));
             }
@@ -68,10 +68,19 @@ namespace Dashboard.API.Controllers
             if (ModelState.IsValid)
             {
                 //var newCommitment = Mapper.Map<Commitment>(commitment);
-                var addedCommitment = await _repo.AddAsync(commitment);
-                if (await _repo.SaveChangesAsync())
+                try
                 {
-                    return Created($"api/dashboard/commitments/{addedCommitment.CommitmentId}", addedCommitment);
+                    var addedCommitment = _repo.Create(commitment);
+                    
+                    
+                        return Created($"api/dashboard/commitments/{addedCommitment.Id}", addedCommitment);
+                    
+                }
+                catch (Exception ex)
+                {
+
+                    _logger.LogError($"Exception thrown white getting clients: {ex}");
+                    
                 }
             }
             return BadRequest("Failed to save changes to the database");
@@ -85,36 +94,47 @@ namespace Dashboard.API.Controllers
             {
                 //var projectId = 0;
                 //var userId = 0;
-                var commitmentFromRepo = _repo.Get<Commitment>(id);
-                //Mapper.Map(commitmentVM, commiFromRepo);
-
-                commitmentFromRepo.Assignment = commitment.Assignment ?? commitmentFromRepo.Assignment;
-                commitmentFromRepo.Hours = commitment.Hours != 0 ? commitment.Hours : commitmentFromRepo.Hours;
-                commitmentFromRepo.AssigmentId = commitment.AssigmentId != 0 ? commitment.AssigmentId : commitmentFromRepo.AssigmentId;
-
-                var commitmentUpdated = _repo.Update(commitmentFromRepo);
-
-                if (!await _repo.SaveChangesAsync())
+                try
                 {
-                    _logger.LogError($"Thrown exception when updating");
-                    BadRequest("Something when wrong while updating");
+                    var commitmentFromRepo = await _repo.GetById(id);
+                    //Mapper.Map(commitmentVM, commiFromRepo);
+
+                    commitmentFromRepo.Assignment = commitment.Assignment ?? commitmentFromRepo.Assignment;
+                    commitmentFromRepo.Hours = commitment.Hours != 0 ? commitment.Hours : commitmentFromRepo.Hours;
+                    commitmentFromRepo.AssigmentId = commitment.AssigmentId != 0 ? commitment.AssigmentId : commitmentFromRepo.AssigmentId;
+
+                    var commitmentUpdated = _repo.Update(commitmentFromRepo.Id, commitmentFromRepo);
+                    return Ok(/*Mapper.Map<CommitmentViewModel>(*/commitmentUpdated/*)*/);
                 }
-                return Ok(/*Mapper.Map<CommitmentViewModel>(*/commitmentUpdated/*)*/);
+                catch (Exception ex)
+                {
+
+                    _logger.LogError($"Exception thrown white getting clients: {ex}");
+                    BadRequest("Something when wrong while updating");
+                }                     
+                
             }
             return BadRequest("Error occured");
-
         }
 
         // DELETE api/dashboard/Commitments/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var commitmentToDel = _repo.Get<Commitment>(id);
-            _repo.Delete(commitmentToDel);
-            if (await _repo.SaveChangesAsync())
+            try
+            {
+                var commitmentToDel = _repo.GetById(id);
+                await _repo.Delete(commitmentToDel.Id);
+
                 return Ok($"Commitment deleted!");
-            else
-                return BadRequest($"Commitment {commitmentToDel.CommitmentId } wasn't deleted!");
+            }
+            catch (Exception)
+            {
+
+                return BadRequest($"Commitment wasn't deleted!");
+            }
+           
+                
         }
 
     }
