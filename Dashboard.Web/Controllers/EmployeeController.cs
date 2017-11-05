@@ -148,6 +148,7 @@ namespace Dashboard.Web.Controllers
         public async Task<IActionResult> GetUserInfo()
         {
             var discoveryClient = new DiscoveryClient("https://localhost:44394");
+            //var discoveryClient = new DiscoveryClient("https://localhost:8898");
             var metaDataResponse = await discoveryClient.GetAsync();
 
             var userInfoClient = new UserInfoClient(metaDataResponse.UserInfoEndpoint);
