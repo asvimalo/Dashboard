@@ -98,7 +98,7 @@ namespace Dashboard.APIG.Controllers
                     taskFromRepo.TaskName = task.TaskName ?? taskFromRepo.TaskName;
                     taskFromRepo.Phase = task.Phase ?? taskFromRepo.Phase;
                     taskFromRepo.PhaseId = task.PhaseId != 0 ? task.PhaseId : taskFromRepo.PhaseId;
-                    var taskUpdated = _repo.Update(taskFromRepo.Id, taskFromRepo);
+                    var taskUpdated = _repo.Update(taskFromRepo.TaskId, taskFromRepo);
                     return Ok(/*Mapper.Map<CommitmentViewModel>(*/taskUpdated/*)*/);
                 }
                 catch (Exception)
@@ -119,7 +119,7 @@ namespace Dashboard.APIG.Controllers
             try
             {
                 var taskToDel = await _repo.GetById(id);
-                await _repo.Delete(taskToDel.Id);
+                await _repo.Delete(taskToDel.TaskId);
 
                 return Ok($"Commitment deleted!");
             }

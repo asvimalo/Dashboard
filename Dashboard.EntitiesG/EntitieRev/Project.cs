@@ -6,9 +6,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Dashboard.EntitiesG.EntitiesRev
 {
     [Table("Project")]
-    public class Project : BaseEntity
+    public class Project 
     {
-        
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int ProjectId { get; set; }
         public int ClientId { get; set; }
         [ForeignKey("ClientId")]
         public Client Client { get; set; }

@@ -4,9 +4,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Dashboard.EntitiesG.EntitiesRev
 {
  
-    public class Picture : BaseEntity
+    public class Picture 
     {
-        
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int PictureId { get; set; }
         [Required]
         public string Title { get; set; }
         [Required]

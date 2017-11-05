@@ -92,7 +92,7 @@ namespace Dashboard.APIG.Controllers
                     //Mapper.Map(commitmentVM, commiFromRepo);
 
                     acquiredKnowledgeFromRepo.Employee = acquiredKnowledge.Employee ?? acquiredKnowledgeFromRepo.Employee;
-                    acquiredKnowledgeFromRepo.Id = acquiredKnowledge.EmployeeId != 0 ? acquiredKnowledge.EmployeeId : acquiredKnowledgeFromRepo.EmployeeId;
+                    acquiredKnowledgeFromRepo.EmployeeId = acquiredKnowledge.EmployeeId != 0 ? acquiredKnowledge.EmployeeId : acquiredKnowledgeFromRepo.EmployeeId;
                     acquiredKnowledgeFromRepo.Knowledge = acquiredKnowledge.Knowledge ?? acquiredKnowledgeFromRepo.Knowledge;
                     acquiredKnowledgeFromRepo.KnowledgeId = acquiredKnowledge.KnowledgeId != 0 ? acquiredKnowledge.KnowledgeId : acquiredKnowledgeFromRepo.KnowledgeId;
 

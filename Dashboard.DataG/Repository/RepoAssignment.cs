@@ -22,9 +22,16 @@ namespace Dashboard.DataG.EF.Repository
             _ctx = ctx;
         }
 
-        public Task<ICollection<Assignment>> GetProjectsByEmployeeId(int id)
+        public async Task<IQueryable<Assignment>> GetProjectsByEmployeeId(int id)
         {
-            throw new NotImplementedException();
+            return  _ctx.Assignments
+                .Include(a => a.Commitments)
+                .Include(b => b.Location)
+                    .Include(x => x.Project)
+                    .ThenInclude(c => c.Phases)
+                .Where(p => p.EmployeeId == id).AsNoTracking();
+
+
         }
     }
 }

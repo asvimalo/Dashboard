@@ -130,7 +130,7 @@ namespace Dashboard.API.Controllers
             try
             {
                 var knowledgeToDel = await _repo.GetById(id);
-                await _repo.Delete(knowledgeToDel.Id);
+                await _repo.Delete(knowledgeToDel.KnowledgeId);
 
                 return Ok($"Commitment deleted!");
             }

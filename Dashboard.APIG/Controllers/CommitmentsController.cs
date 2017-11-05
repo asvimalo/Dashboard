@@ -103,7 +103,7 @@ namespace Dashboard.APIG.Controllers
                     commitmentFromRepo.Hours = commitment.Hours != 0 ? commitment.Hours : commitmentFromRepo.Hours;
                     commitmentFromRepo.AssigmentId = commitment.AssigmentId != 0 ? commitment.AssigmentId : commitmentFromRepo.AssigmentId;
 
-                    var commitmentUpdated = _repo.Update(commitmentFromRepo.Id, commitmentFromRepo);
+                    var commitmentUpdated = _repo.Update(commitmentFromRepo.CommitmentId, commitmentFromRepo);
                     return Ok(/*Mapper.Map<CommitmentViewModel>(*/commitmentUpdated/*)*/);
                 }
                 catch (Exception ex)

@@ -6,8 +6,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Dashboard.EntitiesG.EntitiesRev
 {
     [Table("Commitment")]
-    public class Commitment : BaseEntity
-    {          
+    public class Commitment 
+    {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int CommitmentId { get; set; }
         public int AssigmentId { get; set; }
         [ForeignKey("AssigmentId")]
         public Assignment Assignment { get; set; }

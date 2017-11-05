@@ -104,7 +104,7 @@ namespace Dashboard.API.Controllers
 
 
 
-                    var phaseUpdated = _repo.Update(phaseFromRepo.Id, phaseFromRepo);
+                    var phaseUpdated = _repo.Update(phaseFromRepo.PhaseId, phaseFromRepo);
                     return Ok(/*Mapper.Map<CommitmentViewModel>(*/phaseFromRepo/*)*/);
                 }
                 catch (Exception ex)
@@ -132,7 +132,7 @@ namespace Dashboard.API.Controllers
             try
             {
                 var phaseToDel = await _repo.GetById(id);
-               await _repo.Delete(phaseToDel.Id);
+               await _repo.Delete(phaseToDel.PhaseId);
 
                 return Ok($"Commitment deleted!");
             }

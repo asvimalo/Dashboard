@@ -102,13 +102,13 @@ namespace Dashboard.DataG.Controllers
 
                 try
                 {
-                    assignFromRepo.Id = projectId;
-                    Int32.TryParse((assignment.ProjectId.ToString() ?? assignFromRepo.Id.ToString()), out projectId);
+                    assignFromRepo.ProjectId = projectId;
+                    Int32.TryParse((assignment.ProjectId.ToString() ?? assignFromRepo.ProjectId.ToString()), out projectId);
                     assignFromRepo.EmployeeId = employeeId;
-                    Int32.TryParse((assignment.EmployeeId.ToString() ?? assignFromRepo.Id.ToString()), out employeeId);
+                    Int32.TryParse((assignment.EmployeeId.ToString() ?? assignFromRepo.EmployeeId.ToString()), out employeeId);
 
 
-                    var AssignUpdated = _repo.Update(assignFromRepo.Id, assignFromRepo);
+                    var AssignUpdated = _repo.Update(assignFromRepo.AssignmentId, assignFromRepo);
                     return Ok(/*Mapper.Map<CommitmentViewModel>(*/AssignUpdated/*)*/);
 
                 }
@@ -141,7 +141,7 @@ namespace Dashboard.DataG.Controllers
             {
                 try
                 {
-                    await _repo.Delete(assingmentToDel.Id);
+                    await _repo.Delete(assingmentToDel.AssignmentId);
                     return Ok($"Commitment deleted!");
                 }
                 catch (Exception ex)
@@ -149,7 +149,7 @@ namespace Dashboard.DataG.Controllers
                     _logger.LogError($"Thrown exception when updating: {ex}");
                 }
             }
-            return BadRequest($"Client {assingmentToDel.Id } wasn't deleted!");
+            return BadRequest($"Client {assingmentToDel.AssignmentId } wasn't deleted!");
         }
 
         

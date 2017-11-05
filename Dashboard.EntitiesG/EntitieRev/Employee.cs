@@ -6,9 +6,10 @@ using System;
 namespace Dashboard.EntitiesG.EntitiesRev
 {
     [Table("Employee")]
-    public class Employee : BaseEntity
+    public class Employee 
     {
-        
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int EmployeeId { get; set; }
         [Required]
         public string FirstName { get; set; }
         [Required]

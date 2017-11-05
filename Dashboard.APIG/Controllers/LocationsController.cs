@@ -99,7 +99,7 @@ namespace Dashboard.API.Controllers
                     locationFromRepo.City = location.City ?? locationFromRepo.City;
                     locationFromRepo.Address = location.Address ?? locationFromRepo.Address;
                     locationFromRepo.Clients = location.Clients ?? locationFromRepo.Clients;
-                    var locationUpdated = _repo.Update(locationFromRepo.Id, locationFromRepo);
+                    var locationUpdated = _repo.Update(locationFromRepo.LocationId, locationFromRepo);
 
                     return Ok(/*Mapper.Map<CommitmentViewModel>(*/locationUpdated/*)*/);
                 }
@@ -120,7 +120,7 @@ namespace Dashboard.API.Controllers
             try
             {
                 var locationToDel = await _repo.GetById(id);
-                await _repo.Delete(locationToDel.Id);
+                await _repo.Delete(locationToDel.LocationId);
 
                 return Ok($"Commitment deleted!");
             }

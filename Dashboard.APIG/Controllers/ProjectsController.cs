@@ -102,7 +102,7 @@ namespace Dashboard.Data.Controllers
                 {
                     var projectFromRepo = await _repo.GetById(id);
                     //_mapper.Map(projectVM, projectFromRepo);
-                    var projectUpdated = _repo.Update(projectFromRepo.Id, projectFromRepo);
+                    var projectUpdated = _repo.Update(projectFromRepo.ProjectId, projectFromRepo);
                     return Ok(/*_mapper.Map<ProjectViewModel>(projectUpdated)*/projectUpdated);
                 }
                 catch (Exception)
@@ -123,7 +123,7 @@ namespace Dashboard.Data.Controllers
             try
             {
                 var projectToDel = await _repo.GetById(id);
-                await _repo.Delete(projectToDel.Id);
+                await _repo.Delete(projectToDel.ProjectId);
 
                 return Ok($"Project deleted!");
 

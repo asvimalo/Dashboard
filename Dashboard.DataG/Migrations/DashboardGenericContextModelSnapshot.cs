@@ -6,7 +6,6 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
-using Microsoft.EntityFrameworkCore.ValueGeneration;
 using System;
 
 namespace Dashboard.DataG.Migrations
@@ -21,44 +20,30 @@ namespace Dashboard.DataG.Migrations
                 .HasAnnotation("ProductVersion", "2.0.0-rtm-26452")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Dashboard.EntitiesG.EntitiesRev.BaseEntity", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired();
-
-                    b.HasKey("Id");
-
-                    b.ToTable("BaseEntity");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("BaseEntity");
-                });
-
             modelBuilder.Entity("Dashboard.EntitiesG.EntitiesRev.AcquiredKnowledge", b =>
                 {
-                    b.HasBaseType("Dashboard.EntitiesG.EntitiesRev.BaseEntity");
+                    b.Property<int>("AcquiredKnowledgeId")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<int>("EmployeeId");
 
                     b.Property<int>("KnowledgeId");
+
+                    b.HasKey("AcquiredKnowledgeId");
 
                     b.HasIndex("EmployeeId");
 
                     b.HasIndex("KnowledgeId");
 
                     b.ToTable("EmployeeKnowledge");
-
-                    b.HasDiscriminator().HasValue("AcquiredKnowledge");
                 });
 
             modelBuilder.Entity("Dashboard.EntitiesG.EntitiesRev.Assignment", b =>
                 {
-                    b.HasBaseType("Dashboard.EntitiesG.EntitiesRev.BaseEntity");
+                    b.Property<int>("AssignmentId")
+                        .ValueGeneratedOnAdd();
 
-                    b.Property<int>("EmployeeId")
-                        .HasColumnName("Assignment_EmployeeId");
+                    b.Property<int>("EmployeeId");
 
                     b.Property<string>("JobTitle");
 
@@ -70,18 +55,19 @@ namespace Dashboard.DataG.Migrations
 
                     b.Property<DateTime>("StopDate");
 
+                    b.HasKey("AssignmentId");
+
                     b.HasIndex("EmployeeId");
 
                     b.HasIndex("ProjectId");
 
                     b.ToTable("EmployeeProject");
-
-                    b.HasDiscriminator().HasValue("Assignment");
                 });
 
             modelBuilder.Entity("Dashboard.EntitiesG.EntitiesRev.Client", b =>
                 {
-                    b.HasBaseType("Dashboard.EntitiesG.EntitiesRev.BaseEntity");
+                    b.Property<int>("ClientId")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("ClientName");
 
@@ -89,37 +75,37 @@ namespace Dashboard.DataG.Migrations
 
                     b.Property<int>("LocationId");
 
+                    b.HasKey("ClientId");
+
                     b.HasIndex("LocationId");
 
                     b.ToTable("Client");
-
-                    b.HasDiscriminator().HasValue("Client");
                 });
 
             modelBuilder.Entity("Dashboard.EntitiesG.EntitiesRev.Commitment", b =>
                 {
-                    b.HasBaseType("Dashboard.EntitiesG.EntitiesRev.BaseEntity");
+                    b.Property<int>("CommitmentId")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<int>("AssigmentId");
 
                     b.Property<int>("Hours");
 
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnName("Commitment_StartDate");
+                    b.Property<DateTime>("StartDate");
 
-                    b.Property<DateTime>("StopDate")
-                        .HasColumnName("Commitment_StopDate");
+                    b.Property<DateTime>("StopDate");
+
+                    b.HasKey("CommitmentId");
 
                     b.HasIndex("AssigmentId");
 
                     b.ToTable("Commitment");
-
-                    b.HasDiscriminator().HasValue("Commitment");
                 });
 
             modelBuilder.Entity("Dashboard.EntitiesG.EntitiesRev.Employee", b =>
                 {
-                    b.HasBaseType("Dashboard.EntitiesG.EntitiesRev.BaseEntity");
+                    b.Property<int>("EmployeeId")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("FirstName")
                         .IsRequired();
@@ -133,79 +119,61 @@ namespace Dashboard.DataG.Migrations
 
                     b.Property<string>("PersonNr");
 
-                    b.ToTable("Employee");
+                    b.HasKey("EmployeeId");
 
-                    b.HasDiscriminator().HasValue("Employee");
+                    b.ToTable("Employee");
                 });
 
             modelBuilder.Entity("Dashboard.EntitiesG.EntitiesRev.Knowledge", b =>
                 {
-                    b.HasBaseType("Dashboard.EntitiesG.EntitiesRev.BaseEntity");
+                    b.Property<int>("KnowledgeId")
+                        .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Description")
-                        .HasColumnName("Knowledge_Description");
+                    b.Property<string>("Description");
 
                     b.Property<string>("KnowledgeName");
 
-                    b.ToTable("Knowledge");
+                    b.HasKey("KnowledgeId");
 
-                    b.HasDiscriminator().HasValue("Knowledge");
+                    b.ToTable("Knowledge");
                 });
 
             modelBuilder.Entity("Dashboard.EntitiesG.EntitiesRev.Location", b =>
                 {
-                    b.HasBaseType("Dashboard.EntitiesG.EntitiesRev.BaseEntity");
+                    b.Property<int>("LocationId")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("Address");
 
                     b.Property<string>("City");
 
-                    b.ToTable("Location");
+                    b.HasKey("LocationId");
 
-                    b.HasDiscriminator().HasValue("Location");
+                    b.ToTable("Location");
                 });
 
             modelBuilder.Entity("Dashboard.EntitiesG.EntitiesRev.Phase", b =>
                 {
-                    b.HasBaseType("Dashboard.EntitiesG.EntitiesRev.BaseEntity");
+                    b.Property<int>("PhaseId")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("Comments");
 
                     b.Property<string>("PhaseName");
 
-                    b.Property<int>("ProjectId")
-                        .HasColumnName("Phase_ProjectId");
+                    b.Property<int>("ProjectId");
+
+                    b.HasKey("PhaseId");
 
                     b.HasIndex("ProjectId");
 
                     b.ToTable("Phase");
-
-                    b.HasDiscriminator().HasValue("Phase");
-                });
-
-            modelBuilder.Entity("Dashboard.EntitiesG.EntitiesRev.Picture", b =>
-                {
-                    b.HasBaseType("Dashboard.EntitiesG.EntitiesRev.BaseEntity");
-
-                    b.Property<int?>("EmployeeId")
-                        .HasColumnName("Picture_EmployeeId");
-
-                    b.Property<string>("FileName")
-                        .IsRequired();
-
-                    b.Property<string>("Title")
-                        .IsRequired();
-
-                    b.HasIndex("EmployeeId");
-
-                    b.ToTable("BaseEntity");
-
-                    b.HasDiscriminator().HasValue("Picture");
                 });
 
             modelBuilder.Entity("Dashboard.EntitiesG.EntitiesRev.Project", b =>
                 {
-                    b.HasBaseType("Dashboard.EntitiesG.EntitiesRev.BaseEntity");
+                    b.Property<int>("ProjectId")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<int>("ClientId");
 
@@ -214,34 +182,33 @@ namespace Dashboard.DataG.Migrations
                     b.Property<string>("ProjectName")
                         .IsRequired();
 
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnName("Project_StartDate");
+                    b.Property<DateTime>("StartDate");
 
-                    b.Property<DateTime>("StopDate")
-                        .HasColumnName("Project_StopDate");
+                    b.Property<DateTime>("StopDate");
 
                     b.Property<int>("TimeBudget");
+
+                    b.HasKey("ProjectId");
 
                     b.HasIndex("ClientId");
 
                     b.ToTable("Project");
-
-                    b.HasDiscriminator().HasValue("Project");
                 });
 
             modelBuilder.Entity("Dashboard.EntitiesG.EntitiesRev.Task", b =>
                 {
-                    b.HasBaseType("Dashboard.EntitiesG.EntitiesRev.BaseEntity");
+                    b.Property<int>("TaskId")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<int>("PhaseId");
 
                     b.Property<string>("TaskName");
 
+                    b.HasKey("TaskId");
+
                     b.HasIndex("PhaseId");
 
                     b.ToTable("Task");
-
-                    b.HasDiscriminator().HasValue("Task");
                 });
 
             modelBuilder.Entity("Dashboard.EntitiesG.EntitiesRev.AcquiredKnowledge", b =>
@@ -292,13 +259,6 @@ namespace Dashboard.DataG.Migrations
                         .WithMany("Phases")
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Dashboard.EntitiesG.EntitiesRev.Picture", b =>
-                {
-                    b.HasOne("Dashboard.EntitiesG.EntitiesRev.Employee", "Employee")
-                        .WithMany()
-                        .HasForeignKey("EmployeeId");
                 });
 
             modelBuilder.Entity("Dashboard.EntitiesG.EntitiesRev.Project", b =>

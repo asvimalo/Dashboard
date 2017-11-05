@@ -85,9 +85,9 @@ namespace Dashboard.DataG.EF.Db
             }
             var clients = new Client[]
             {
-                new Client{ ClientName = "Sigma",Description ="It Consulting", LocationId = ctx.Locations.FirstOrDefault(x => x.Address == "Storgatan 1").Id},
-                new Client{ ClientName = "Combitech",Description ="It Consulting", LocationId = ctx.Locations.FirstOrDefault(x => x.Address == "Storgatan 2").Id },
-                new Client { ClientName = "ÅF",Description ="It Consulting", LocationId = ctx.Locations.FirstOrDefault(x => x.Address == "Storgatan 200").Id}
+                new Client{ ClientName = "Sigma",Description ="It Consulting", LocationId = ctx.Locations.FirstOrDefault(x => x.Address == "Storgatan 1").LocationId},
+                new Client{ ClientName = "Combitech",Description ="It Consulting", LocationId = ctx.Locations.FirstOrDefault(x => x.Address == "Storgatan 2").LocationId },
+                new Client { ClientName = "ÅF",Description ="It Consulting", LocationId = ctx.Locations.FirstOrDefault(x => x.Address == "Storgatan 200").LocationId}
             };
             foreach (Client client in clients)
             {
@@ -120,16 +120,16 @@ namespace Dashboard.DataG.EF.Db
             }
             var phases = new Phase[]
             {
-                new Phase { PhaseName = "Analisys", ProjectId = projects.Single(x => x.ProjectName == "Dashboard").Id},
-                new Phase { PhaseName = "Design", ProjectId = projects.Single(x => x.ProjectName == "Dashboard").Id},
-                new Phase { PhaseName = "Implementation", ProjectId = projects.Single(x => x.ProjectName == "Dashboard").Id},
-                new Phase { PhaseName = "Testing",ProjectId = projects.Single(x => x.ProjectName == "Dashboard").Id },
-                new Phase { PhaseName = "Deployment", ProjectId = projects.Single(x => x.ProjectName == "Dashboard").Id},
-                new Phase { PhaseName = "Analisys", ProjectId = projects.Single(x => x.ProjectName == "Booking System").Id},
-                new Phase { PhaseName = "Design", ProjectId = projects.Single(x => x.ProjectName == "Booking System").Id},
-                new Phase { PhaseName = "Implementation", ProjectId = projects.Single(x => x.ProjectName == "Booking System").Id},
-                new Phase { PhaseName = "Testing",ProjectId = projects.Single(x => x.ProjectName == "Booking System").Id },
-                new Phase { PhaseName = "Deployment", ProjectId = projects.Single(x => x.ProjectName == "Booking System").Id}
+                new Phase { PhaseName = "Analisys", ProjectId = projects.Single(x => x.ProjectName == "Dashboard").ProjectId},
+                new Phase { PhaseName = "Design", ProjectId = projects.Single(x => x.ProjectName == "Dashboard").ProjectId},
+                new Phase { PhaseName = "Implementation", ProjectId = projects.Single(x => x.ProjectName == "Dashboard").ProjectId},
+                new Phase { PhaseName = "Testing",ProjectId = projects.Single(x => x.ProjectName == "Dashboard").ProjectId },
+                new Phase { PhaseName = "Deployment", ProjectId = projects.Single(x => x.ProjectName == "Dashboard").ProjectId},
+                new Phase { PhaseName = "Analisys", ProjectId = projects.Single(x => x.ProjectName == "Booking System").ProjectId},
+                new Phase { PhaseName = "Design", ProjectId = projects.Single(x => x.ProjectName == "Booking System").ProjectId},
+                new Phase { PhaseName = "Implementation", ProjectId = projects.Single(x => x.ProjectName == "Booking System").ProjectId},
+                new Phase { PhaseName = "Testing",ProjectId = projects.Single(x => x.ProjectName == "Booking System").ProjectId },
+                new Phase { PhaseName = "Deployment", ProjectId = projects.Single(x => x.ProjectName == "Booking System").ProjectId}
             };
             foreach (Phase phase in phases)
             {
@@ -142,26 +142,26 @@ namespace Dashboard.DataG.EF.Db
             }
             var tasks = new EntitiesG.EntitiesRev.Task[]
             {
-                new EntitiesG.EntitiesRev.Task { TaskName = "Customer Requirements", PhaseId = ctx.Phases.FirstOrDefault(x => x.PhaseName == "Analisys").Id},
-                new EntitiesG.EntitiesRev.Task { TaskName = "User Requirements",  PhaseId = ctx.Phases.FirstOrDefault(x => x.PhaseName == "Analisys").Id},
-                new EntitiesG.EntitiesRev.Task { TaskName = "Customer Requirements", PhaseId = ctx.Phases.FirstOrDefault(x => x.PhaseName == "Analisys").Id},
-                new EntitiesG.EntitiesRev.Task { TaskName = "Entities Design",  PhaseId = ctx.Phases.FirstOrDefault(x => x.PhaseName == "Analisys").Id},
-                new EntitiesG.EntitiesRev.Task { TaskName = "Db Design", PhaseId = ctx.Phases.FirstOrDefault(x => x.PhaseName == "Design").Id},
-                new EntitiesG.EntitiesRev.Task { TaskName = "Entities Design",  PhaseId = ctx.Phases.FirstOrDefault(x => x.PhaseName == "Design").Id},
-                new EntitiesG.EntitiesRev.Task { TaskName = "UI Design", PhaseId = ctx.Phases.FirstOrDefault(x => x.PhaseName == "Design").Id},
-                new EntitiesG.EntitiesRev.Task { TaskName = "Mockups",  PhaseId = ctx.Phases.FirstOrDefault(x => x.PhaseName == "Design").Id},
-                new EntitiesG.EntitiesRev.Task { TaskName = "Customer Requirements", PhaseId = ctx.Phases.FirstOrDefault(x => x.PhaseName == "Implementation").Id},
-                new EntitiesG.EntitiesRev.Task { TaskName = "User Requirements",  PhaseId = ctx.Phases.FirstOrDefault(x => x.PhaseName == "Implementation").Id},
-                new EntitiesG.EntitiesRev.Task { TaskName = "Customer Requirements", PhaseId = ctx.Phases.FirstOrDefault(x => x.PhaseName == "Implementation").Id},
-                new EntitiesG.EntitiesRev.Task { TaskName = "Entities Design",  PhaseId = ctx.Phases.FirstOrDefault(x => x.PhaseName == "Implementation").Id},
-                new EntitiesG.EntitiesRev.Task { TaskName = "Db Design", PhaseId = ctx.Phases.FirstOrDefault(x => x.PhaseName == "Testing").Id},
-                new EntitiesG.EntitiesRev.Task { TaskName = "Entities Design",  PhaseId = ctx.Phases.FirstOrDefault(x => x.PhaseName == "Testing").Id},
-                new EntitiesG.EntitiesRev.Task { TaskName = "UI Design", PhaseId = ctx.Phases.FirstOrDefault(x => x.PhaseName == "Testing").Id},
-                new EntitiesG.EntitiesRev.Task { TaskName = "Mockups",  PhaseId = ctx.Phases.FirstOrDefault(x => x.PhaseName == "Testing").Id},
-                new EntitiesG.EntitiesRev.Task { TaskName = "Db Design", PhaseId = ctx.Phases.FirstOrDefault(x => x.PhaseName == "Deployment").Id},
-                new EntitiesG.EntitiesRev.Task { TaskName = "Entities Design",  PhaseId = ctx.Phases.FirstOrDefault(x => x.PhaseName == "Deployment").Id},
-                new EntitiesG.EntitiesRev.Task { TaskName = "UI Design", PhaseId = ctx.Phases.FirstOrDefault(x => x.PhaseName == "Deployment").Id},
-                new EntitiesG.EntitiesRev.Task { TaskName = "Mockups",  PhaseId = ctx.Phases.FirstOrDefault(x => x.PhaseName == "Deployment").Id}
+                new EntitiesG.EntitiesRev.Task { TaskName = "Customer Requirements", PhaseId = ctx.Phases.FirstOrDefault(x => x.PhaseName == "Analisys").PhaseId},
+                new EntitiesG.EntitiesRev.Task { TaskName = "User Requirements",  PhaseId = ctx.Phases.FirstOrDefault(x => x.PhaseName == "Analisys").PhaseId},
+                new EntitiesG.EntitiesRev.Task { TaskName = "Customer Requirements", PhaseId = ctx.Phases.FirstOrDefault(x => x.PhaseName == "Analisys").PhaseId},
+                new EntitiesG.EntitiesRev.Task { TaskName = "Entities Design",  PhaseId = ctx.Phases.FirstOrDefault(x => x.PhaseName == "Analisys").PhaseId},
+                new EntitiesG.EntitiesRev.Task { TaskName = "Db Design", PhaseId = ctx.Phases.FirstOrDefault(x => x.PhaseName == "Design").PhaseId},
+                new EntitiesG.EntitiesRev.Task { TaskName = "Entities Design",  PhaseId = ctx.Phases.FirstOrDefault(x => x.PhaseName == "Design").PhaseId},
+                new EntitiesG.EntitiesRev.Task { TaskName = "UI Design", PhaseId = ctx.Phases.FirstOrDefault(x => x.PhaseName == "Design").PhaseId},
+                new EntitiesG.EntitiesRev.Task { TaskName = "Mockups",  PhaseId = ctx.Phases.FirstOrDefault(x => x.PhaseName == "Design").PhaseId},
+                new EntitiesG.EntitiesRev.Task { TaskName = "Customer Requirements", PhaseId = ctx.Phases.FirstOrDefault(x => x.PhaseName == "Implementation").PhaseId},
+                new EntitiesG.EntitiesRev.Task { TaskName = "User Requirements",  PhaseId = ctx.Phases.FirstOrDefault(x => x.PhaseName == "Implementation").PhaseId},
+                new EntitiesG.EntitiesRev.Task { TaskName = "Customer Requirements", PhaseId = ctx.Phases.FirstOrDefault(x => x.PhaseName == "Implementation").PhaseId},
+                new EntitiesG.EntitiesRev.Task { TaskName = "Entities Design",  PhaseId = ctx.Phases.FirstOrDefault(x => x.PhaseName == "Implementation").PhaseId},
+                new EntitiesG.EntitiesRev.Task { TaskName = "Db Design", PhaseId = ctx.Phases.FirstOrDefault(x => x.PhaseName == "Testing").PhaseId},
+                new EntitiesG.EntitiesRev.Task { TaskName = "Entities Design",  PhaseId = ctx.Phases.FirstOrDefault(x => x.PhaseName == "Testing").PhaseId},
+                new EntitiesG.EntitiesRev.Task { TaskName = "UI Design", PhaseId = ctx.Phases.FirstOrDefault(x => x.PhaseName == "Testing").PhaseId},
+                new EntitiesG.EntitiesRev.Task { TaskName = "Mockups",  PhaseId = ctx.Phases.FirstOrDefault(x => x.PhaseName == "Testing").PhaseId},
+                new EntitiesG.EntitiesRev.Task { TaskName = "Db Design", PhaseId = ctx.Phases.FirstOrDefault(x => x.PhaseName == "Deployment").PhaseId},
+                new EntitiesG.EntitiesRev.Task { TaskName = "Entities Design",  PhaseId = ctx.Phases.FirstOrDefault(x => x.PhaseName == "Deployment").PhaseId},
+                new EntitiesG.EntitiesRev.Task { TaskName = "UI Design", PhaseId = ctx.Phases.FirstOrDefault(x => x.PhaseName == "Deployment").PhaseId},
+                new EntitiesG.EntitiesRev.Task { TaskName = "Mockups",  PhaseId = ctx.Phases.FirstOrDefault(x => x.PhaseName == "Deployment").PhaseId}
             };
             foreach (EntitiesG.EntitiesRev.Task task in tasks)
             {
@@ -174,10 +174,10 @@ namespace Dashboard.DataG.EF.Db
             }
             var assignments = new Assignment[]
             {
-            new Assignment{EmployeeId = employees.Single(x => x.FirstName == "Andrés").Id, ProjectId = projects.Single(x => x.ProjectName == "Dashboard").Id},
-            new Assignment{EmployeeId = employees.Single(x => x.FirstName == "Kat").Id, ProjectId = projects.Single(x => x.ProjectName == "Dashboard").Id},
-            new Assignment{EmployeeId = employees.Single(x => x.FirstName == "Kriszt").Id, ProjectId = projects.Single(x => x.ProjectName == "Dashboard").Id},
-            new Assignment{EmployeeId = employees.Single(x => x.FirstName == "Jeff").Id, ProjectId = projects.Single(x => x.ProjectName == "Dashboard").Id},
+            new Assignment{EmployeeId = employees.Single(x => x.FirstName == "Andrés").EmployeeId, ProjectId = projects.Single(x => x.ProjectName == "Dashboard").ProjectId},
+            new Assignment{EmployeeId = employees.Single(x => x.FirstName == "Kat").EmployeeId, ProjectId = projects.Single(x => x.ProjectName == "Dashboard").ProjectId},
+            new Assignment{EmployeeId = employees.Single(x => x.FirstName == "Kriszt").EmployeeId, ProjectId = projects.Single(x => x.ProjectName == "Dashboard").ProjectId},
+            new Assignment{EmployeeId = employees.Single(x => x.FirstName == "Jeff").EmployeeId, ProjectId = projects.Single(x => x.ProjectName == "Dashboard").ProjectId},
 
             };
 
@@ -211,10 +211,10 @@ namespace Dashboard.DataG.EF.Db
             }
             var acquiredKnowledges = new AcquiredKnowledge[]
             {
-                new AcquiredKnowledge{ EmployeeId = employees.Single(x => x.FirstName == "Andres").Id, KnowledgeId = knowledges.Single(x => x.KnowledgeName == "C#" ).Id},
-                new AcquiredKnowledge{EmployeeId = employees.Single(x => x.FirstName == "Katrina").Id, KnowledgeId = knowledges.Single(x => x.KnowledgeName == "JavaScript" ).Id},
-                new AcquiredKnowledge{EmployeeId = employees.Single(x => x.FirstName == "Kriszta").Id, KnowledgeId = knowledges.Single(x => x.KnowledgeName == "Java" ).Id},
-                new AcquiredKnowledge{EmployeeId = employees.Single(x => x.FirstName == "Jeff").Id, KnowledgeId = knowledges.Single(x => x.KnowledgeName == "Project Manager" ).Id}
+                new AcquiredKnowledge{EmployeeId = employees.Single(x => x.FirstName == "Andres").EmployeeId, KnowledgeId = knowledges.Single(x => x.KnowledgeName == "C#" ).KnowledgeId},
+                new AcquiredKnowledge{EmployeeId = employees.Single(x => x.FirstName == "Katrina").EmployeeId, KnowledgeId = knowledges.Single(x => x.KnowledgeName == "JavaScript" ).KnowledgeId},
+                new AcquiredKnowledge{EmployeeId = employees.Single(x => x.FirstName == "Kriszta").EmployeeId, KnowledgeId = knowledges.Single(x => x.KnowledgeName == "Java" ).KnowledgeId},
+                new AcquiredKnowledge{EmployeeId = employees.Single(x => x.FirstName == "Jeff").EmployeeId, KnowledgeId = knowledges.Single(x => x.KnowledgeName == "Project Manager" ).KnowledgeId}
 
             };
 

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using Dashboard.EntitiesG.EntitiesRev;
+using System.Linq;
 
 namespace Dashboard.DataG.EF.Repository
 {
@@ -18,9 +19,12 @@ namespace Dashboard.DataG.EF.Repository
         {
             _ctx = ctx;
         }
-        public Task<Employee> GetSomething()
+
+        public IQueryable<Employee> GetAllEmployees()
         {
             throw new NotImplementedException();
         }
+
+        
     }         
 }

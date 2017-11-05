@@ -8,7 +8,7 @@ using Dashboard.Data.EF.Contracts;
 using Dashboard.Data.Controllers;
 using Microsoft.Extensions.Logging;
 using Dashboard.Entities;
-using Dashboard.Data.EF.Contracts;
+
 using Dashboard.Entities.Entities;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;

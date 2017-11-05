@@ -107,7 +107,7 @@ namespace Dashboard.APIG.Controllers
                     clientFromRepo.Location = client.Location ?? clientFromRepo.Location;
                     clientFromRepo.Projects = client.Projects ?? clientFromRepo.Projects;
                     clientFromRepo.LocationId = client.LocationId != 0 ? client.LocationId : clientFromRepo.LocationId;
-                    var clientUpdated = _repo.Update(clientFromRepo.Id, clientFromRepo);
+                    var clientUpdated = _repo.Update(clientFromRepo.ClientId, clientFromRepo);
                     return Ok(/*Mapper.Map<CommitmentViewModel>(*/clientUpdated/*)*/);
                 }
                 catch (Exception ex)
@@ -130,7 +130,7 @@ namespace Dashboard.APIG.Controllers
             {
                 try
                 {
-                    await _repo.Delete(clientToDel.Id);
+                    await _repo.Delete(clientToDel.ClientId);
                     return Ok($"Commitment deleted!");
                 }
                 catch (Exception ex)

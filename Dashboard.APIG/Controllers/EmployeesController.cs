@@ -166,7 +166,7 @@ namespace Dashboard.APIG.Controllers
                 //employeeFromRepo.AcquiredKnowledges = employee.AcquiredKnowledge ?? employeeFromRepo.AcquiredKnowledges;
                 try
                 {
-                    var employeeUpdated = _repo.Update(employeeFromRepo.Id, employeeFromRepo);
+                    var employeeUpdated = _repo.Update(employeeFromRepo.EmployeeId, employeeFromRepo);
                     return Ok(/*Mapper.Map<CommitmentViewModel>(*/employeeUpdated/*)*/);
                 }
                 catch (Exception ex)
@@ -186,7 +186,7 @@ namespace Dashboard.APIG.Controllers
             try
             {
                 var employeeToDel = await _repo.GetById(id);
-                await _repo.Delete(employeeToDel.Id);
+                await _repo.Delete(employeeToDel.EmployeeId);
 
                 return Ok($"Employee deleted!");
             }
