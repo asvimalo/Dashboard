@@ -16,7 +16,7 @@
 
                     holder.progress = "";
 
-                    $http.detete('http://localhost:8899/api/dashboard/employees/', $routeParams.employee.employeeId)
+                    $http.detete('http://localhost:8890/api/dashboard/employees/', $routeParams.employee.employeeId)
                         .then(function (response) {
                             //success
                             console.log("Response from server api" + response.data);

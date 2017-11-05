@@ -79,11 +79,11 @@ namespace Dashboard.APIG.Controllers
                 try
                 {
                     //a
-                    var id = await _repoLoc.Create(location);
-                    newClient.LocationId = id;
-                    await _repo.Create(newClient);
+                    var locationAdded = await _repoLoc.Create(location);
+                    newClient.LocationId = locationAdded.LocationId;
+                    var addedClient = await _repo.Create(newClient);
 
-                    return Ok($"Client created");
+                    return Ok(addedClient);
                 }
                 catch (Exception ex)
                 {
@@ -119,8 +119,8 @@ namespace Dashboard.APIG.Controllers
                     clientFromRepo.Location = client.Location ?? clientFromRepo.Location;
                     clientFromRepo.Projects = client.Projects ?? clientFromRepo.Projects;
                     clientFromRepo.LocationId = client.LocationId != 0 ? client.LocationId : clientFromRepo.LocationId;
-                    var clientUpdatedId = await _repo.Update(clientFromRepo.ClientId, clientFromRepo);
-                    return Ok(/*Mapper.Map<CommitmentViewModel>(*/clientUpdatedId/*)*/);
+                    var clientUpdated = await _repo.Update(clientFromRepo.ClientId, clientFromRepo);
+                    return Ok(/*Mapper.Map<CommitmentViewModel>(*/clientUpdated/*)*/);
                 }
                 catch (Exception ex)
                 {

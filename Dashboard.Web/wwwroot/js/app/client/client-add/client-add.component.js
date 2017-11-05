@@ -23,11 +23,11 @@
                     var dataTmp = JSON.stringify(data);
 
                     // Http Post for Location 
-                    $http.post("http://localhost:8899/api/dashboard/clients", dataTmp)
+                    $http.post("http://localhost:8890/api/dashboard/clients", dataTmp)
                         .then(function (response) {
                             console.log("Response from server api" + response.data);
                             // Sparar datan i $scope.locationObj för att få locationId
-                            $scope.locationObj = response.data;
+                            angular.copy(response.data, $scope.locationObj);
 
                         }, function () {
                             //failure
@@ -37,7 +37,7 @@
                         .finally(function () {
                             console.log("finally");
                             self.isBusy = false;
-                            console.log(locationdata)
+                            //console.log(locationdata)
 
                         }); 
 

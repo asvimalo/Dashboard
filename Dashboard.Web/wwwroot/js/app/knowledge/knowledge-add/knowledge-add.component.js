@@ -28,7 +28,7 @@
                     var json = JSON.stringify(newKnowledge);
 
 
-                    $http.post('http://localhost:8899/api/dashboard/knowledges/', json)
+                    $http.post('http://localhost:8890/api/dashboard/knowledges/', json)
                         .then(function (response) {
                             //success
                             console.log("Response from server api" + response.data);

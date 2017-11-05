@@ -22,11 +22,12 @@ namespace Dashboard.DataG.EF.Repository
         {
             _ctx = ctx;
         }
-        public async System.Threading.Tasks.Task<int> Create(TEntity entity)
+        public async System.Threading.Tasks.Task<TEntity> Create(TEntity entity)
         {
-            await _ctx.Set<TEntity>().AddAsync(entity);
+             var added = await _ctx.Set<TEntity>().AddAsync(entity);
             
-            return await _ctx.SaveChangesAsync();
+             await _ctx.SaveChangesAsync();
+            return added.Entity;
         }
 
         public async System.Threading.Tasks.Task Delete(int id)
@@ -51,11 +52,12 @@ namespace Dashboard.DataG.EF.Repository
             //return null;
         }
 
-        public async System.Threading.Tasks.Task<int> Update(int id, TEntity entity)
+        public async System.Threading.Tasks.Task<TEntity> Update(int id, TEntity entity)
         {
-            _ctx.Set<TEntity>().Update(entity);
-            return await _ctx.SaveChangesAsync();
-
+            var updated = _ctx.Set<TEntity>().Update(entity);
+             await _ctx.SaveChangesAsync();
+            return updated.Entity;
+     
 
         }
         public IQueryable<TEntity> Include(params Expression<Func<TEntity, object>>[] includeExpressions)

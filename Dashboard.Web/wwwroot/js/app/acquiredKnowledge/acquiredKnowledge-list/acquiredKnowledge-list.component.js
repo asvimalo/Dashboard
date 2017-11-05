@@ -7,17 +7,17 @@
                 var self = this;
                 //self.orderProp = 'projectName';
                 self.acquiredKnowledges = [];
-                $http.get('http://localhost:8899/api/dashboard/acquiredKnowledges').then(function (response) {
+                $http.get('http://localhost:8890/api/dashboard/acquiredKnowledges').then(function (response) {
                     angular.copy(response.data, self.acquiredKnowledges);
                 });
 
                 self.knowledges = [];
-                $http.get('http://localhost:8899/api/dashboard/knowledges').then(function (response) {
+                $http.get('http://localhost:8890/api/dashboard/knowledges').then(function (response) {
                     angular.copy(response.data, self.knowledges);
                 });
 
                 self.employees = [];
-                $http.get('http://localhost:8899/api/dashboard/employees').then(function (response) {
+                $http.get('http://localhost:8890/api/dashboard/employees').then(function (response) {
                     angular.copy(response.data, self.employees);
                 });
             }
