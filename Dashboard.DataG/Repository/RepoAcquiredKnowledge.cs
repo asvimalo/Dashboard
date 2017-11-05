@@ -23,7 +23,13 @@ namespace Dashboard.DataG.EF.Repository
         {
             _ctx = ctx;
         }
+        public IQueryable<AcquiredKnowledge> GetEmployeeKnowledge()
+        {
+            return _ctx.Set<AcquiredKnowledge>()
+                .Include(e => e.Employee)
+                .Include(k => k.Knowledge)
+                .AsNoTracking();
+        }
 
-        
     }
 }

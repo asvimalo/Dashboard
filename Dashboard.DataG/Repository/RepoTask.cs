@@ -7,9 +7,8 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-using Dashboard.DataG.EF.Repository;
 
-namespace Dashboard.Data.EF.Repository
+namespace Dashboard.DataG.EF.Repository
 {
     public class RepoTask : 
         GenericRepository<EntitiesG.EntitiesRev.Task>, 

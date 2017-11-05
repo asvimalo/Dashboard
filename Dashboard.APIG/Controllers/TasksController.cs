@@ -4,19 +4,19 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Dashboard.Data.EF.Contracts;
+using Dashboard.DataG.EF.Contracts;
 using Microsoft.Extensions.Logging;
 
-namespace Dashboard.API.Controllers
+namespace Dashboard.APIG.Controllers
 {
     
     [Route("api/dashboard/tasks")]
     public class TasksController : Controller
     {
-        public IRepo _repo;
+        public IRepoTask _repo;
         private ILogger<TasksController> _logger;
 
-        public TasksController(IRepo repo,
+        public TasksController(IRepoTask repo,
             ILogger<TasksController> logger)
         {
             _repo = repo;
@@ -29,7 +29,7 @@ namespace Dashboard.API.Controllers
         {
             try
             {
-                var result = await _repo.GetAll<Entities.Task>();
+                var result =  _repo.Include(x => x.Phase).ToList();
                 return Ok(result);
                 //return Ok(Mapper.Map<IEnumerable<CommitmentViewModel>>(result));
             }
@@ -47,7 +47,7 @@ namespace Dashboard.API.Controllers
         {
             try
             {
-                var result = _repo.Get<Entities.Task>(id);
+                var result = await _repo.GetById(id);
                 return Ok(result);
                 //return Ok(Mapper.Map<CommitmentViewModel>(result));
             }
@@ -62,44 +62,51 @@ namespace Dashboard.API.Controllers
 
         // POST api/dashboard/tasks
         [HttpPost("")]
-        public async Task<IActionResult> Post([FromBody]Entities.Task task)
+        public async Task<IActionResult> Post([FromBody]EntitiesG.EntitiesRev.Task task)
         {
             if (ModelState.IsValid)
             {
                 //var newCommitment = Mapper.Map<Commitment>(commitment);
-                var addedTask = await _repo.AddAsync(task);
-                if (await _repo.SaveChangesAsync())
+                try
                 {
-                    return Created($"api/dashboard/tasks/{addedTask.TaskId}", addedTask);
+                    var addedTask = _repo.Create(task);
+
+                    return Created($"api/dashboard/tasks/{addedTask.Id}", addedTask);
                 }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+               
             }
             return BadRequest("Failed to save changes to the database");
         }
 
         // PUT api/dashboard/Commitments/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody]Entities.Task task)
+        public async Task<IActionResult> Put(int id, [FromBody]EntitiesG.EntitiesRev.Task task)
         {
             if (ModelState.IsValid)
             {
-                //var projectId = 0;
-                //var userId = 0;
-                var taskFromRepo = _repo.Get<Entities.Task>(id);
-                //Mapper.Map(commitmentVM, commiFromRepo);
-
-                taskFromRepo.TaskName = task.TaskName ?? taskFromRepo.TaskName;
-                taskFromRepo.Phase = task.Phase ?? taskFromRepo.Phase;
-                taskFromRepo.PhaseId = task.PhaseId != 0 ? task.PhaseId : taskFromRepo.PhaseId;
-                
-
-                var taskUpdated = _repo.Update(taskFromRepo);
-
-                if (!await _repo.SaveChangesAsync())
+           
+                try
                 {
+                    var taskFromRepo = await _repo.GetById(id);
+                    //Mapper.Map(commitmentVM, commiFromRepo);
+
+                    taskFromRepo.TaskName = task.TaskName ?? taskFromRepo.TaskName;
+                    taskFromRepo.Phase = task.Phase ?? taskFromRepo.Phase;
+                    taskFromRepo.PhaseId = task.PhaseId != 0 ? task.PhaseId : taskFromRepo.PhaseId;
+                    var taskUpdated = _repo.Update(taskFromRepo.Id, taskFromRepo);
+                    return Ok(/*Mapper.Map<CommitmentViewModel>(*/taskUpdated/*)*/);
+                }
+                catch (Exception)
+                {
+
                     _logger.LogError($"Thrown exception when updating");
                     BadRequest("Something when wrong while updating");
                 }
-                return Ok(/*Mapper.Map<CommitmentViewModel>(*/taskUpdated/*)*/);
             }
             return BadRequest("Error occured");
 
@@ -109,12 +116,20 @@ namespace Dashboard.API.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var taskToDel = _repo.Get<Entities.Task>(id);
-            _repo.Delete(taskToDel);
-            if (await _repo.SaveChangesAsync())
+            try
+            {
+                var taskToDel = await _repo.GetById(id);
+                await _repo.Delete(taskToDel.Id);
+
                 return Ok($"Commitment deleted!");
-            else
-                return BadRequest($"Commitment {taskToDel.TaskName } wasn't deleted!");
+            }
+            catch (Exception)
+            {
+
+                return BadRequest($"Task wasn't deleted!");
+            }
+            
+                
         }
 
     }

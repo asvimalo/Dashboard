@@ -9,7 +9,7 @@ using System.Linq;
 using Dashboard.DataG.EF.Contracts;
 
 
-namespace Dashboard.DataG.EF.Repository.Old
+namespace Dashboard.DataG.EF.Repository
 {
     public class RepoAssignment : 
         GenericRepository<EntitiesG.EntitiesRev.Assignment>, 

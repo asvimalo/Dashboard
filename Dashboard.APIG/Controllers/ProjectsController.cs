@@ -1,8 +1,8 @@
-﻿using AutoMapper;
-using Dashboard.Data.EF.Contracts;
-using Dashboard.Data.EF.IRepository;
-using Dashboard.Entities;
-using Dashboard.Models;
+﻿
+using Dashboard.DataG.EF.Contracts;
+
+using Dashboard.EntitiesG.EntitiesRev;
+
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -16,11 +16,11 @@ namespace Dashboard.Data.Controllers
     [Route("api/dashboard/[controller]")]
     public class ProjectsController : Controller
     {
-        public IRepo _repo;
+        public IRepoProject _repo;
         private ILogger<ProjectsController> _logger;
         //private IMapper _mapper;
 
-        public ProjectsController(IRepo repo, 
+        public ProjectsController(IRepoProject repo, 
             ILogger<ProjectsController> logger/*,
             IMapper mapper*/)
         {
@@ -38,7 +38,7 @@ namespace Dashboard.Data.Controllers
         {
             try
             {
-                var result = await _repo.GetAll<Project>();
+                var result =  _repo.Include(x => x.Assignments, y => y.Client, z => z.Phases);
                 return Ok(result);
                 //return Ok(_mapper.Map<IEnumerable<ProjectViewModel>>(result));
             }
@@ -56,7 +56,7 @@ namespace Dashboard.Data.Controllers
         {
             try
             {
-                var result = _repo.Get<Project>(id);
+                var result = await _repo.GetById(id);
                 return Ok(result);
                 //return Ok(_mapper.Map<ProjectViewModel>(result));
             }
@@ -75,12 +75,19 @@ namespace Dashboard.Data.Controllers
         {
             if (ModelState.IsValid)
             {
-                //var newProject = _mapper.Map<Project>(project);
-                var addedProject = await _repo.AddAsync(project);
-                if (await _repo.SaveChangesAsync())
+                try
                 {
-                    return Created($"api/dashboard/projects/{addedProject.ProjectName}", /*_mapper.Map<ProjectViewModel>(newProject)*/ addedProject);
+                    var addedProject =  _repo.Create(project);
+                    return Created($"api/dashboard/projects/{addedProject.Id}", /*_mapper.Map<ProjectViewModel>(newProject)*/ addedProject);
+                    //return Ok(_mapper.Map<ProjectViewModel>(result));
                 }
+                catch (Exception ex)
+                {
+
+                    _logger.LogError($"Exception thrown while getting project: {ex}");
+                    return BadRequest($"Error ocurred");
+                }
+                
             }
             return BadRequest("Failed to save changes to the database");
         }
@@ -91,15 +98,19 @@ namespace Dashboard.Data.Controllers
         {
             if (ModelState.IsValid)
             {
-                var projectFromRepo = _repo.Get<Project>(id);
-                //_mapper.Map(projectVM, projectFromRepo);
-                var projectUpdated = _repo.Update(projectFromRepo);
-                if (!await _repo.SaveChangesAsync())
+                try
                 {
+                    var projectFromRepo = await _repo.GetById(id);
+                    //_mapper.Map(projectVM, projectFromRepo);
+                    var projectUpdated = _repo.Update(projectFromRepo.Id, projectFromRepo);
+                    return Ok(/*_mapper.Map<ProjectViewModel>(projectUpdated)*/projectUpdated);
+                }
+                catch (Exception)
+                {
+
                     _logger.LogError($"Thrown exception when updating");
                     BadRequest("Something when wrong while updating");
                 }
-                return Ok(/*_mapper.Map<ProjectViewModel>(projectUpdated)*/projectUpdated);
             }
             return BadRequest("Error occured");
 
@@ -109,12 +120,21 @@ namespace Dashboard.Data.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var projectToDel = _repo.Get<Project>(id);
-            _repo.Delete(projectToDel);
-            if (await _repo.SaveChangesAsync())
+            try
+            {
+                var projectToDel = await _repo.GetById(id);
+                await _repo.Delete(projectToDel.Id);
+
                 return Ok($"Project deleted!");
-            else
-                return BadRequest($"Project {projectToDel.ProjectName} wasn't deleted!");
+
+            }
+            catch (Exception)
+            {
+
+                return BadRequest($"Project wasn't deleted!");
+            };
+          
+                
         }
     }
 

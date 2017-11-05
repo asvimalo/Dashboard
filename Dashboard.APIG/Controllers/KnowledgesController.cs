@@ -4,9 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Dashboard.Data.EF.Contracts;
+using Dashboard.DataG.EF.Contracts;
 using Microsoft.Extensions.Logging;
-using Dashboard.Entities;
+using Dashboard.EntitiesG.EntitiesRev;
 
 namespace Dashboard.API.Controllers
 {
@@ -14,10 +14,10 @@ namespace Dashboard.API.Controllers
     [Route("api/dashboard/knowledges")]
     public class KnowledgesController : Controller
     {
-        public IRepo _repo;
+        public IRepoKnowledge _repo;
         private ILogger<KnowledgesController> _logger;
 
-        public KnowledgesController(IRepo repo,
+        public KnowledgesController(IRepoKnowledge repo,
             ILogger<KnowledgesController> logger)
         {
             _repo = repo;
@@ -30,7 +30,7 @@ namespace Dashboard.API.Controllers
         {
             try
             {
-                var result = await _repo.GetAll<Knowledge>();
+                var result = _repo.Include(x => x.AcquiredKnowledges);
                 return Ok(result);
                 //return Ok(Mapper.Map<IEnumerable<CommitmentViewModel>>(result));
             }
@@ -48,7 +48,7 @@ namespace Dashboard.API.Controllers
         {
             try
             {
-                var result = _repo.Get<Knowledge>(id);
+                var result = _repo.GetById(id);
                 return Ok(result);
                 //return Ok(Mapper.Map<CommitmentViewModel>(result));
             }
@@ -67,12 +67,22 @@ namespace Dashboard.API.Controllers
         {
             if (ModelState.IsValid)
             {
-                //var newCommitment = Mapper.Map<Commitment>(commitment);
-                var addedKnowledgee = await _repo.AddAsync(knowledge);
-                if (await _repo.SaveChangesAsync())
+                try
                 {
-                    return Created($"api/dashboard/commitments/{addedKnowledgee.KnowledgeId}", addedKnowledgee);
+                    var addedKnowledgee = _repo.Create(knowledge);
+                    return Created($"api/dashboard/commitments/{addedKnowledgee.Id}", addedKnowledgee);
                 }
+                catch (Exception ex)
+                {
+
+                    _logger.LogError($"Exception thrown while getting knowledge: {ex}");
+                    return BadRequest($"Error ocurred");
+                }
+                //var newCommitment = Mapper.Map<Commitment>(commitment);
+                
+               
+                    
+              
             }
             return BadRequest("Failed to save changes to the database");
         }
@@ -85,22 +95,29 @@ namespace Dashboard.API.Controllers
             {
                 //var projectId = 0;
                 //var userId = 0;
-                var knowledgeFromRepo = _repo.Get<Knowledge>(id);
-                //Mapper.Map(commitmentVM, commiFromRepo);
-
-                knowledgeFromRepo.KnowledgeName = knowledge.KnowledgeName ?? knowledgeFromRepo.KnowledgeName;
-                knowledgeFromRepo.Description = knowledge.Description ?? knowledgeFromRepo.Description;
-                knowledgeFromRepo.AcquiredKnowledges = knowledge.AcquiredKnowledges ?? knowledgeFromRepo.AcquiredKnowledges;
-                
-
-                var knowledgeUpdated = _repo.Update(knowledgeFromRepo);
-
-                if (!await _repo.SaveChangesAsync())
+                try
                 {
-                    _logger.LogError($"Thrown exception when updating");
+                    var knowledgeFromRepo = await _repo.GetById(id);
+                    //Mapper.Map(commitmentVM, commiFromRepo);
+
+                    knowledgeFromRepo.KnowledgeName = knowledge.KnowledgeName ?? knowledgeFromRepo.KnowledgeName;
+                    knowledgeFromRepo.Description = knowledge.Description ?? knowledgeFromRepo.Description;
+                    knowledgeFromRepo.AcquiredKnowledges = knowledge.AcquiredKnowledges ?? knowledgeFromRepo.AcquiredKnowledges;
+
+
+                    var knowledgeUpdated = _repo.Create(knowledgeFromRepo);
+
+
+                    
+
+                    return Ok(/*Mapper.Map<CommitmentViewModel>(*/knowledgeUpdated/*)*/);
+                }
+                catch (Exception ex)
+                {
+
+                    _logger.LogError($"Thrown exception when updating {ex}");
                     BadRequest("Something when wrong while updating");
                 }
-                return Ok(/*Mapper.Map<CommitmentViewModel>(*/knowledgeUpdated/*)*/);
             }
             return BadRequest("Error occured");
 
@@ -110,12 +127,20 @@ namespace Dashboard.API.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var knowledgeToDel = _repo.Get<Knowledge>(id);
-            _repo.Delete(knowledgeToDel);
-            if (await _repo.SaveChangesAsync())
+            try
+            {
+                var knowledgeToDel = await _repo.GetById(id);
+                await _repo.Delete(knowledgeToDel.Id);
+
                 return Ok($"Commitment deleted!");
-            else
-                return BadRequest($"Commitment {knowledgeToDel.KnowledgeName } wasn't deleted!");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Thrown exception when updating {ex}");
+                return BadRequest($"Knowledge  wasn't deleted!");
+            }
+            
+                
         }
 
     }

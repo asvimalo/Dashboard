@@ -4,26 +4,26 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Dashboard.Data.EF.IRepository;
+using Dashboard.DataG.EF.Contracts;
 using Dashboard.Data.Controllers;
 using Microsoft.Extensions.Logging;
-using Dashboard.Entities;
-using Dashboard.Data.EF.Contracts;
-using Dashboard.Entities.Entities;
+using Dashboard.EntitiesG.EntitiesRev;
+
+
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
 
-namespace Dashboard.API.Controllers
+namespace Dashboard.APIG.Controllers
 {
     
     [Route("api/dashboard/[controller]")]
     public class EmployeesController : Controller
     {
-        public IRepo _repo;
+        public IRepoEmployee _repo;
         private ILogger<EmployeesController> _logger;
         private IHostingEnvironment _env;
 
-        public EmployeesController(IRepo repo, 
+        public EmployeesController(IRepoEmployee repo, 
             ILogger<EmployeesController> logger,
             IHostingEnvironment env)
         {
@@ -38,7 +38,8 @@ namespace Dashboard.API.Controllers
         {
             try
             {
-                var result = await _repo.GetAll<Employee>();
+                var result = _repo.Include(x => x.AcquiredKnowledges, y => y.Assignments);
+
                 return Ok(result);
                 //return Ok(Mapper.Map<IEnumerable<CommitmentViewModel>>(result));
             }
@@ -56,7 +57,7 @@ namespace Dashboard.API.Controllers
         {
             try
             {
-                var result =  _repo.Get<Employee>(id);
+                var result =  _repo.GetById(id);
                 return Ok(result);
                 //return Ok(Mapper.Map<CommitmentViewModel>(result));
             }
@@ -75,31 +76,39 @@ namespace Dashboard.API.Controllers
         {
             if (ModelState.IsValid)
             {
-                var newEmployee = new Employee
+                try
                 {
-                    FirstName = employee.FirstName,
-                    LastName = employee.LastName,
-                    PersonNr = employee.PersonNr,
-                    Assignments = employee.Assignments,
-                    AcquiredKnowledges = employee.AcquiredKnowledges
-                    
-                };
-                #region Write picture to Image folder
-                //var webRootPath = _env.WebRootPath;
-                //var fileName = newEmployee.FirstName + ".jpg";
-                //var filePath = Path.Combine($"{webRootPath}/Images/{fileName}");
-                //await System.IO.File.WriteAllBytesAsync(filePath, employee.Bytes);
+                    var newEmployee = new Employee
+                    {
+                        FirstName = employee.FirstName,
+                        LastName = employee.LastName,
+                        PersonNr = employee.PersonNr,
+                        Assignments = employee.Assignments,
+                        AcquiredKnowledges = employee.AcquiredKnowledges
+
+                    };
+                    #region Write picture to Image folder
+                    //var webRootPath = _env.WebRootPath;
+                    //var fileName = newEmployee.FirstName + ".jpg";
+                    //var filePath = Path.Combine($"{webRootPath}/Images/{fileName}");
+                    //await System.IO.File.WriteAllBytesAsync(filePath, employee.Bytes);
 
 
-                //var newCommitment = Mapper.Map<Commitment>(commitment);
-                //newEmployee.ImageName = fileName;
-                //newEmployee.ImagePath = filePath; 
-                #endregion
+                    //var newCommitment = Mapper.Map<Commitment>(commitment);
+                    //newEmployee.ImageName = fileName;
+                    //newEmployee.ImagePath = filePath; 
+                    #endregion
 
-                var addedEmployee = await _repo.AddAsync(newEmployee);
-                if (await _repo.SaveChangesAsync())
+                    var addedEmployee =  _repo.Create(newEmployee);
+                    return CreatedAtRoute("GetEmployee", new { id = addedEmployee.Id }, addedEmployee);
+                  
+                    //return Ok(Mapper.Map<CommitmentViewModel>(result));
+                }
+                catch (Exception ex)
                 {
-                    return CreatedAtRoute("GetEmployee", new { id = addedEmployee.EmployeeId}, addedEmployee);
+
+                    _logger.LogError($"Exception thrown while getting commitment: {ex}");
+                    return BadRequest($"Error ocurred");
                 }
             }
             return BadRequest("Failed to save changes to the database");
@@ -113,7 +122,7 @@ namespace Dashboard.API.Controllers
             {               
                 //var projectId = 0;
                 //var userId = 0;
-                var employeeFromRepo = _repo.Get<Employee>(id);
+                var employeeFromRepo = await _repo.GetById(id);
                 //Mapper.Map(commitmentVM, commiFromRepo);
                 if (employeeFromRepo == null)
                 {
@@ -155,15 +164,16 @@ namespace Dashboard.API.Controllers
                 //employeeFromRepo.ImagePath = employee.ImagePath ?? employeeFromRepo.ImagePath;
                 //employeeFromRepo.Assignments = employee.Assignments ?? employeeFromRepo.Assignments;
                 //employeeFromRepo.AcquiredKnowledges = employee.AcquiredKnowledge ?? employeeFromRepo.AcquiredKnowledges;
-
-                var employeeUpdated = _repo.Update(employeeFromRepo);
-
-                if (!await _repo.SaveChangesAsync())
+                try
                 {
-                    _logger.LogError($"Thrown exception when updating");
-                    BadRequest("Something when wrong while updating");
+                    var employeeUpdated = _repo.Update(employeeFromRepo.Id, employeeFromRepo);
+                    return Ok(/*Mapper.Map<CommitmentViewModel>(*/employeeUpdated/*)*/);
                 }
-                return Ok(/*Mapper.Map<CommitmentViewModel>(*/employeeUpdated/*)*/);
+                catch (Exception ex)
+                {
+                    _logger.LogError($"Thrown exception when updating {ex}");
+                    BadRequest("Something when wrong while updating"); 
+                }    
             }
             return BadRequest("Error occured");
 
@@ -173,12 +183,20 @@ namespace Dashboard.API.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var employeeToDel = _repo.Get<Employee>(id);
-            _repo.Delete(employeeToDel);
-            if (await _repo.SaveChangesAsync())
+            try
+            {
+                var employeeToDel = await _repo.GetById(id);
+                await _repo.Delete(employeeToDel.Id);
+
                 return Ok($"Employee deleted!");
-            else
-                return BadRequest($"Commitment {employeeToDel.FirstName } wasn't deleted!");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Thrown exception when updating {ex}");
+                return BadRequest($"Employee  wasn't deleted! ");
+            }
+           
+                
         }
 
     }

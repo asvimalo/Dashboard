@@ -32,7 +32,7 @@ namespace Dashboard.APIG.Controllers
         {
             try
             {
-                var result = _repo.GetAll();
+                var result = _repo.Include(x => x.Employee, y => y.Knowledge);
                 return Ok(result);
                 //return Ok(Mapper.Map<IEnumerable<CommitmentViewModel>>(result));
             }
@@ -86,25 +86,29 @@ namespace Dashboard.APIG.Controllers
             {
                 //var projectId = 0;
                 //var userId = 0;
-                var acquiredKnowledgeFromRepo = await _repo.GetById(id);
-                //Mapper.Map(commitmentVM, commiFromRepo);
-
-                acquiredKnowledgeFromRepo.Employee = acquiredKnowledge.Employee ?? acquiredKnowledgeFromRepo.Employee;
-                acquiredKnowledgeFromRepo.Id = acquiredKnowledge.EmployeeId != 0 ? acquiredKnowledge.EmployeeId : acquiredKnowledgeFromRepo.EmployeeId;
-                acquiredKnowledgeFromRepo.Knowledge = acquiredKnowledge.Knowledge ?? acquiredKnowledgeFromRepo.Knowledge;
-                acquiredKnowledgeFromRepo.KnowledgeId = acquiredKnowledge.KnowledgeId != 0 ? acquiredKnowledge.KnowledgeId : acquiredKnowledgeFromRepo.KnowledgeId;
-
-
-                var acquiredKnowledgeUpdated = _repo.Update(id,acquiredKnowledgeFromRepo);
-
-                if (!await _repo.SaveChangesAsync())
+                try
                 {
-                    _logger.LogError($"Thrown exception when updating");
-                    BadRequest("Something when wrong while updating");
+                    var acquiredKnowledgeFromRepo = await _repo.GetById(id);
+                    //Mapper.Map(commitmentVM, commiFromRepo);
+
+                    acquiredKnowledgeFromRepo.Employee = acquiredKnowledge.Employee ?? acquiredKnowledgeFromRepo.Employee;
+                    acquiredKnowledgeFromRepo.Id = acquiredKnowledge.EmployeeId != 0 ? acquiredKnowledge.EmployeeId : acquiredKnowledgeFromRepo.EmployeeId;
+                    acquiredKnowledgeFromRepo.Knowledge = acquiredKnowledge.Knowledge ?? acquiredKnowledgeFromRepo.Knowledge;
+                    acquiredKnowledgeFromRepo.KnowledgeId = acquiredKnowledge.KnowledgeId != 0 ? acquiredKnowledge.KnowledgeId : acquiredKnowledgeFromRepo.KnowledgeId;
+
+                    var acquiredKnowledgeUpdated = _repo.Update(id, acquiredKnowledgeFromRepo);
+
+                    return Ok(/*Mapper.Map<CommitmentViewModel>(*/acquiredKnowledgeUpdated/*)*/);
                 }
-                return Ok(/*Mapper.Map<CommitmentViewModel>(*/acquiredKnowledgeUpdated/*)*/);
+                catch (Exception)
+                {
+
+                    _logger.LogError($"Thrown exception when updating");
+                    return BadRequest("Error occured");
+                }
             }
-            return BadRequest("Error occured");
+            return BadRequest("Failed to save changes to the database");
+
 
         }
 

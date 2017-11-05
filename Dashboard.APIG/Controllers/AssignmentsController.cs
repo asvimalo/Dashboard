@@ -36,7 +36,7 @@ namespace Dashboard.DataG.Controllers
         {
             try
             {
-                var result = _repo.GetAll();
+                var result = _repo.Include(x=>x.Commitments,y=> y.Employee, z => z.Location, w => w.Project);
                 return Ok(result);
                 //return Ok(Mapper.Map<IEnumerable<CommitmentViewModel>>(result));
             }
@@ -74,11 +74,18 @@ namespace Dashboard.DataG.Controllers
             if (ModelState.IsValid)
             {
                 //var newCommitment = Mapper.Map<Commitment>(commitment);
-                var addedAssignment =  _repo.Create(assignment);
-                if (await _repo.SaveChangesAsync())
+                try
                 {
+                    var addedAssignment = _repo.Create(assignment);
+
                     return Created($"api/dashboard/assignments/{addedAssignment.Id}", addedAssignment);
                 }
+                catch (Exception ex)
+                {
+
+                    _logger.LogError($"Thrown exception when updating: {ex}");
+                }
+                
             }
             return BadRequest("Failed to save changes to the database");
         }
@@ -92,22 +99,34 @@ namespace Dashboard.DataG.Controllers
                 var projectId = 0;
                 var employeeId = 0;
                 var assignFromRepo = await _repo.GetById(id);
+
+                try
+                {
+                    assignFromRepo.Id = projectId;
+                    Int32.TryParse((assignment.ProjectId.ToString() ?? assignFromRepo.Id.ToString()), out projectId);
+                    assignFromRepo.EmployeeId = employeeId;
+                    Int32.TryParse((assignment.EmployeeId.ToString() ?? assignFromRepo.Id.ToString()), out employeeId);
+
+
+                    var AssignUpdated = _repo.Update(assignFromRepo.Id, assignFromRepo);
+                    return Ok(/*Mapper.Map<CommitmentViewModel>(*/AssignUpdated/*)*/);
+
+                }
+                catch (Exception ex)
+                {
+
+                    _logger.LogError($"Thrown exception when updating: {ex}");                   
+                    BadRequest("Something when wrong while updating");
+                }
+                
                 //Mapper.Map(commitmentVM, commiFromRepo);
                 //assignFromRepo.Location = assignment.Location ?? assignFromRepo.Location;
                 //assignFromRepo.JobTitle = assignment.JobTitle ?? assignFromRepo.JobTitle;
-                assignFromRepo.Id = projectId;
-                Int32.TryParse((assignment.ProjectId.ToString() ?? assignFromRepo.Id.ToString()), out projectId);
-                assignFromRepo.EmployeeId = employeeId;
-                Int32.TryParse((assignment.EmployeeId.ToString() ?? assignFromRepo.Id.ToString()), out employeeId);             
                 
-
-                var AssignUpdated =  _repo.Update(assignFromRepo.Id, assignFromRepo);
-                if (!await _repo.SaveChangesAsync())
-                {
-                    _logger.LogError($"Thrown exception when updating");
-                    BadRequest("Something when wrong while updating");
-                }
-                return Ok(/*Mapper.Map<CommitmentViewModel>(*/AssignUpdated/*)*/); 
+                
+                   
+               
+                
             }
             return BadRequest("Error occured");
             
