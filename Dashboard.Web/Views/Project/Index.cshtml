@@ -1,81 +1,253 @@
-﻿@{
-    ViewData["Title"] = "Dashboard";
-}
+﻿@section Scripts {
+    <script src="~/lib/angular/angular.min.js"></script>
+    <script src="~/lib/angular-route/angular-route.min.js"></script>
+    <script src="~/lib/ng-file-upload-shim/ng-file-upload-shim.min.js"></script>
+    <script src="~/lib/ng-file-upload-shim/ng-file-upload.min.js"></script>
+
+    <script src="~/js/app/app-dashboard.js"></script>
 
 
-<div id="gantt_here" style="margin-top: 5%; margin-bottom: 3%; width: 100%; height: 450px;"></div>
-@section Scripts
-{
+    <script src="~/js/app/dashboard-view/dashboard-view.module.js"></script>
+    <script src="~/js/app/dashboard-view/dashboard-view.component.js"></script>
+
+    @*/////////////            PROJECT                  ///////////////////////*@
+
+    <script src="~/js/app/project/project-list/project-list.module.js"></script>
+    <script src="~/js/app/project/project-list/project-list.component.js"></script>
+
+    <script src="~/js/app/project/project-add/project-add.module.js"></script>
+    <script src="~/js/app/project/project-add/project-add.component.js"></script>
+
+    @*/////////////            EMPLOYEE                  ///////////////////////*@
+
+    <script src="~/js/app/employee/employee-list/employee-list.module.js"></script>
+    <script src="~/js/app/employee/employee-list/employee-list.component.js"></script>
+
+    <script src="~/js/app/employee/employee-add/employee-add.module.js"></script>
+    <script src="~/js/app/employee/employee-add/employee-add.component.js"></script>
+
+    @*/////////////            ASSIGNMENT                  ///////////////////////*@
+
+    <script src="~/js/app/assignment/assignment-list/assignment-list.module.js"></script>
+    <script src="~/js/app/assignment/assignment-list/assignment-list.component.js"></script>
+
+    @*/////////////            ACQUIRED KNOWLEDGE                  ///////////////////////*@
+
+    <script src="~/js/app/acquiredKnowledge/acquiredKnowledge-list/acquiredKnowledge-list.module.js"></script>
+    <script src="~/js/app/acquiredKnowledge/acquiredKnowledge-list/acquiredKnowledge-list.component.js"></script>
+
+    @*/////////////            CLIENT                  ///////////////////////*@
+
+    <script src="~/js/app/client/client-list/client-list.module.js"></script>
+    <script src="~/js/app/client/client-list/client-list.component.js"></script>
+
+    <script src="~/js/app/client/client-add/client-add.module.js"></script>
+    <script src="~/js/app/client/client-add/client-add.component.js"></script>
+
+    @*/////////////           COMMITMENT                  ///////////////////////*@
+
+    <script src="~/js/app/commitment/commitment-list/commitment-list.module.js"></script>
+    <script src="~/js/app/commitment/commitment-list/commitment-list.component.js"></script>
+
+    @*/////////////            KNOWLEDGE                  ///////////////////////*@
+
+    <script src="~/js/app/knowledge/knowledge-list/knowledge-list.module.js"></script>
+    <script src="~/js/app/knowledge/knowledge-list/knowledge-list.component.js"></script>
+
+    @*/////////////            PHASE                  ///////////////////////*@
+
+    <script src="~/js/app/phase/phase-list/phase-list.module.js"></script>
+    <script src="~/js/app/phase/phase-list/phase-list.component.js"></script>
+
+    @*/////////////            LOCATION                  ///////////////////////*@
+
+    <script src="~/js/app/location/location-list/location-list.module.js"></script>
+    <script src="~/js/app/location/location-list/location-list.component.js"></script>
+
+    <script src="~/js/app/assign-project-to-employee/assign-project-to-employee.module.js"></script>
+    <script src="~/js/app/assign-project-to-employee/assign-project-to-employee.component.js"></script>
+
+    <script src="~/js/app/task/task-list/task-list.module.js"></script>
+    <script src="~/js/app/task/task-list/task-list.component.js"></script>
+
+
+    <script src="~/js/app/app-dashboard.config.js"></script>
+
     <script>
-    (function () {
-        console.log("I am here");
-        gantt.init("gantt_here");
-        gantt.config.columns = [
-            { name: "text", label: "Task name", tree: true, width: "*" },
-            { name: "start_date", label: "Start time", align: "center" },
-            {
-                name: "priority", label: "Priority", align: "center", template: function (obj) {
-                    if (obj.priority == 1) { return "High" }
-                    if (obj.priority == 2) { return "Medium" }
-                    return "Low"
+        (function () {
+            console.log("I am here");
+            gantt.init("gantt_here");
+            gantt.config.columns = [
+                { name: "text", label: "Projects", tree: true, width: "*" },
+                //{ name: "start_date", label: "Start time", align: "center" },
+                //{
+                //    name: "priority", label: "Priority", align: "center", template: function (obj) {
+                //        if (obj.priority == 1) { return "High" }
+                //        if (obj.priority == 2) { return "Medium" }
+                //        return "Low"
+                //    }
+                //}
+            ];
+            gantt.templates.task_class = function (start, end, task) {
+                switch (task.priority) {
+                    case "1":
+                        return "high";
+                        break;
+                    case "2":
+                        return "medium";
+                        break;
+                    case "3":
+                        return "low";
+                        break;
                 }
-            }
-        ];
-        gantt.templates.task_class = function (start, end, task) {
-            switch (task.priority) {
-                case "1":
-                    return "high";
-                    break;
-                case "2":
-                    return "medium";
-                    break;
-                case "3":
-                    return "low";
-                    break;
-            }
-        };
+            };
 
-        gantt.parse({
-            "data": [
-                { "id": 1, "text": "Project #1", "start_date": "01-04-2013", "duration": "11", "progress": 0.6, "open": true, "users": ["John", "Mike", "Anna"], "priority": "2" },
-                { "id": 2, "text": "Task #1", "start_date": "03-04-2013", "duration": "5", "parent": "1", "progress": 1, "open": true, "users": ["John", "Mike"], "priority": "1" },
-                { "id": 3, "text": "Task #2", "start_date": "02-04-2013", "duration": "7", "parent": "1", "progress": 0.5, "open": true, "users": ["Anna"], "priority": "1" },
-                { "id": 4, "text": "Task #3", "start_date": "02-04-2013", "duration": "6", "parent": "1", "progress": 0.8, "open": true, "users": ["Mike", "Anna"], "priority": "2" },
-                { "id": 5, "text": "Task #4", "start_date": "02-04-2013", "duration": "5", "parent": "1", "progress": 0.2, "open": true, "users": ["John"], "priority": "3" },
-                { "id": 6, "text": "Task #5", "start_date": "02-04-2013", "duration": "7", "parent": "1", "progress": 0, "open": true, "users": ["John"], "priority": "2" },
-                { "id": 7, "text": "Task #2.1", "start_date": "03-04-2013", "duration": "2", "parent": "3", "progress": 1, "open": true, "users": ["Mike", "Anna"], "priority": "2" },
-                { "id": 8, "text": "Task #2.2", "start_date": "06-04-2013", "duration": "3", "parent": "3", "progress": 0.8, "open": true, "users": ["Anna"], "priority": "3" },
-                { "id": 9, "text": "Task #2.3", "start_date": "10-04-2013", "duration": "4", "parent": "3", "progress": 0.2, "open": true, "users": ["Mike", "Anna"], "priority": "1" },
-                { "id": 10, "text": "Task #2.4", "start_date": "10-04-2013", "duration": "4", "parent": "3", "progress": 0, "open": true, "users": ["John", "Mike"], "priority": "1" },
-                { "id": 11, "text": "Task #4.1", "start_date": "03-04-2013", "duration": "4", "parent": "5", "progress": 0.5, "open": true, "users": ["John", "Anna"], "priority": "3" },
-                { "id": 12, "text": "Task #4.2", "start_date": "03-04-2013", "duration": "4", "parent": "5", "progress": 0.1, "open": true, "users": ["John"], "priority": "3" },
-                { "id": 13, "text": "Task #4.3", "start_date": "03-04-2013", "duration": "5", "parent": "5", "progress": 0, "open": true, "users": ["Anna"], "priority": "3" }
-            ],
-            "links": [
-                { "id": "10", "source": "11", "target": "12", "type": "1" },
-                { "id": "11", "source": "11", "target": "13", "type": "1" },
-                { "id": "12", "source": "11", "target": "14", "type": "1" },
-                { "id": "13", "source": "11", "target": "15", "type": "1" },
-                { "id": "14", "source": "11", "target": "16", "type": "1" },
+            gantt.parse({
+                "data": [
+                    { "id": 1, "text": "Project A", "start_date": "01-04-2013", "duration": "11", "progress": 0.6, "open": true, "users": ["John", "Mike", "Anna"], "priority": "2" },
+                    { "id": 11, "text": "Developer A", "start_date": "03-04-2013", "duration": "5", "parent": "1", "progress": 1, "open": true, "users": ["John", "Mike"], "priority": "1" },
+                    { "id": 12, "text": "Developer B", "start_date": "10-04-2013", "duration": "5", "parent": "1", "progress": 1, "open": true, "users": ["John", "Mike"], "priority": "1" },
+                    { "id": 13, "text": "Developer C", "start_date": "01-04-2013", "duration": "5", "parent": "1", "progress": 1, "open": true, "users": ["John", "Mike"], "priority": "1" },
+                    { "id": 2, "text": "Project B", "start_date": "01-04-2013", "duration": "11", "progress": 0.6, "open": true, "users": ["John", "Mike", "Anna"], "priority": "2" },
+                    { "id": 3, "text": "Project C", "start_date": "01-04-2013", "duration": "11", "progress": 0.6, "open": true, "users": ["John", "Mike", "Anna"], "priority": "2" },
 
-                { "id": "15", "source": "13", "target": "17", "type": "1" },
-                { "id": "16", "source": "17", "target": "18", "type": "0" },
-                { "id": "17", "source": "18", "target": "19", "type": "0" },
-                { "id": "18", "source": "19", "target": "20", "type": "0" },
-                { "id": "19", "source": "15", "target": "21", "type": "2" },
-                { "id": "20", "source": "15", "target": "22", "type": "2" },
-                { "id": "21", "source": "15", "target": "23", "type": "2" }
-            ]
-        });
-        gantt.load("/api/data");
-        // initializing dataProcessor
-        var dp = new gantt.dataProcessor("/api/data/");
-        // and attaching it to gantt
-        dp.init(gantt);
-        // setting the REST mode for dataProcessor
-        dp.setTransactionMode("REST");
+                    //{ "id": 3, "text": "Task #2", "start_date": "02-04-2013", "duration": "7", "parent": "1", "progress": 0.5, "open": true, "users": ["Anna"], "priority": "1" },
+                    //{ "id": 4, "text": "Task #3", "start_date": "02-04-2013", "duration": "6", "parent": "1", "progress": 0.8, "open": true, "users": ["Mike", "Anna"], "priority": "2" },
+                    //{ "id": 5, "text": "Task #4", "start_date": "02-04-2013", "duration": "5", "parent": "1", "progress": 0.2, "open": true, "users": ["John"], "priority": "3" },
+                    //{ "id": 6, "text": "Task #5", "start_date": "02-04-2013", "duration": "7", "parent": "1", "progress": 0, "open": true, "users": ["John"], "priority": "2" },
+                    { "id": 7, "text": "Developer A", "start_date": "03-04-2013", "duration": "2", "parent": "2", "progress": 1, "open": true, "users": ["Mike", "Anna"], "priority": "2" },
+                    //{ "id": 8, "text": "Task #2.2", "start_date": "06-04-2013", "duration": "3", "parent": "3", "progress": 0.8, "open": true, "users": ["Anna"], "priority": "3" },
+                    { "id": 9, "text": "Developer A", "start_date": "10-04-2013", "duration": "4", "parent": "3", "progress": 0.2, "open": true, "users": ["Mike", "Anna"], "priority": "1" },
+                    //{ "id": 10, "text": "Task #2.4", "start_date": "10-04-2013", "duration": "4", "parent": "3", "progress": 0, "open": true, "users": ["John", "Mike"], "priority": "1" },
+                    //{ "id": 11, "text": "Task #4.1", "start_date": "03-04-2013", "duration": "4", "parent": "5", "progress": 0.5, "open": true, "users": ["John", "Anna"], "priority": "3" },
+                    //{ "id": 12, "text": "Task #4.2", "start_date": "03-04-2013", "duration": "4", "parent": "5", "progress": 0.1, "open": true, "users": ["John"], "priority": "3" },
+                    //{ "id": 13, "text": "Task #4.3", "start_date": "03-04-2013", "duration": "5", "parent": "5", "progress": 0, "open": true, "users": ["Anna"], "priority": "3" }
+                ],
+                "links": [
+                    { "id": "10", "source": "11", "target": "12", "type": "1" },
+                    { "id": "11", "source": "11", "target": "13", "type": "1" },
+                    { "id": "12", "source": "11", "target": "14", "type": "1" },
+                    { "id": "13", "source": "11", "target": "15", "type": "1" },
+                    { "id": "14", "source": "11", "target": "16", "type": "1" },
 
-    })();
+                    { "id": "15", "source": "13", "target": "17", "type": "1" },
+                    { "id": "16", "source": "17", "target": "18", "type": "0" },
+                    { "id": "17", "source": "18", "target": "19", "type": "0" },
+                    { "id": "18", "source": "19", "target": "20", "type": "0" },
+                    { "id": "19", "source": "15", "target": "21", "type": "2" },
+                    { "id": "20", "source": "15", "target": "22", "type": "2" },
+                    { "id": "21", "source": "15", "target": "23", "type": "2" }
+                ]
+            });
+            //gantt.load("/api/data");
+            //// initializing dataProcessor
+            //var dp = new gantt.dataProcessor("/api/data/");
+            //// and attaching it to gantt
+            //dp.init(gantt);
+            //// setting the REST mode for dataProcessor
+            //dp.setTransactionMode("REST");
+
+        })();
     </script>
 
 }
+<div ng-app="app-dashboard">
+    <div class="container-fluid">
+        @*<ul class="nav navbar-nav">
+            @*<li><a ng-href="#!/dashboard">Dashboard</a></li>*@
+            @*<li><a ng-href="#!/employees">Employees</a></li>
+                <li><a ng-href="#!/knowledges">Knowledges</a></li>
+                <li><a ng-href="#!/acquiredKnowledges">Acquired Knowledges</a></li>
+                <li><a ng-href="#!/clients">Clients</a></li>
+                <li><a ng-href="#!/locations">Locations</a></li>
+                <li><a ng-href="#!/projects">Projects</a></li>
+                <li><a ng-href="#!/assignments">Assignments</a></li>
+                <li><a ng-href="#!/phases">Phases</a></li>
+                <li><a ng-href="#!/tasks">Tasks</a></li>
+                <li><a ng-href="#!/commitments">Commitments</a></li>*@
+            @*<li><a ng-href="#!/assignProjectToEmployee">AssignProjectToEmployee</a></li>*@
+            @*<li><a ng-href="#!/projects/project-add">Add Project</a></li>*@
+            @*<li><a ng-href="#!/clients/client-add">Add Client</a></li>*@
+        @*</ul>*@
+
+        <div class="row">
+            <div class="col-md-9">
+
+                <div id="gantt_here" style="margin-top: 5%; margin-bottom: 3%; width: 100%; height: 450px;"></div>
+
+                @*<div ng-view></div>*@
+
+            </div>
+            <div class="col-md-3">
+                <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#projectAdd">Add a new project</button>
+                <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#employeeAdd">Add a new Employee</button>
+                <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#assignEmployeeToProject">Assign an employee to a project</button>
+            </div>
+        </div>
+
+    </div>
+
+    @* Modals start here *@
+    <!-- Modal Create Project -->
+    <div class="modal fade" id="projectAdd" role="dialog">
+        <div class="modal-dialog modal-lg">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <project-add></project-add>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Modal Add a new Employee -->
+    <div class="modal fade" id="employeeAdd" role="dialog">
+        <div class="modal-dialog modal-lg">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <employee-add></employee-add>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Modal Assign an employee to a project -->
+    <div class="modal fade" id="assignEmployeeToProject" role="dialog">
+        <div class="modal-dialog modal-lg">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <assign-project-to-employee></assign-project-to-employee>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
