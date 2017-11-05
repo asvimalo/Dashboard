@@ -3,7 +3,7 @@
     angular.module("clientAdd")
         .component("clientAdd", {
             templateUrl: "/js/app/client/client-add/client-add.template.html",
-            controller: function ClientAddController($http, $scope, $routeParams) {
+            controller: function ClientAddController($http, $scope, $routeParams, $location) {
 
                 var self = this;
 
@@ -28,15 +28,17 @@
                             console.log("Response from server api" + response.data);
                             // Sparar datan i $scope.locationObj för att få locationId
                             angular.copy(response.data, $scope.locationObj);
-
+                            $location.path("/clients");
                         }, function () {
                             //failure
                             console.log("failure");
                             self.errorMessage = "Failure to save new project";
+                            $location.path("/clients");
                         })
                         .finally(function () {
                             console.log("finally");
                             self.isBusy = false;
+                            $location.path("/clients");
                             //console.log(locationdata)
 
                         }); 
