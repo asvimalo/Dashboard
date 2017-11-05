@@ -3,7 +3,7 @@
     angular.module("assignProjectToEmployee", [])
         .component("assignProjectToEmployee", {
             templateUrl: "/js/app/assign-project-to-employee/assign-project-to-employee.template.html",
-            controller: function assignProjectToEmployeeController($http, $scope) {
+            controller: function assignProjectToEmployeeController($http, $scope, $location) {
                 //$routeProvider
                 var holder = this;
 
@@ -34,45 +34,12 @@
                     });
 
                 holder.commitments = [];
-                $http.get("http://localhost:8890/api/dashboard/commitments")
-                    .then(function (response) {
-                        //success
-                        angular.copy(response.data, holder.commitments);
-                    }, function (error) {
-                        //failure
-                        holder.errorMessage = "Failed to load data: " + error;
-                    })
-                    .finally(function () {
-                        holder.isBusy = false;
-                    });
 
                 $scope.addCommitment = function () {
 
-                    holder.commitments.push($scope.commitment);
-                    $scope.commitment = [];
-
-                    //$scope.HouseBasket = $scope.HouseBasket.concat(data);
-                    //console.log("in the addCommitment function");
-                    //holder.isBusy = true;
-                    //holder.errorMessage = "";
-
-                    ////var commitments = $scope.commitment;
-                    //var data = { "StartDate": $scope.commitment.startDate, "StopDate": $scope.commitment.stopDate, "Hours": $scope.commitment.hours }
-
-                    //$http.post("http://localhost:8899/api/dashboard/commitments", JSON.stringify(data))
-                    //    .then(function (response) {
-                    //        //success
-                    //        console.log("Response from server api" + response.data);
-                    //        $scope.commitment = {}; 
-                    //    }, function () {
-                    //        //failure
-                    //        console.log("failure");
-                    //        holder.errorMessage = "Failure to save commitment.";
-                    //    })
-                    //    .finally(function () {
-                    //        console.log("finally");
-                    //        holder.isBusy = false;
-                    //    });
+                    holder.commitments.push($scope.commitment);                   
+                    $scope.commitment = {};
+                    
                 };
 
                 $scope.assignProjectToEmployee = function () {
@@ -80,13 +47,15 @@
                     holder.isBusy = true;
                     holder.errorMessage = "";
 
-                    var data = { "ProjectId": $scope.formInfo.project.projectId, "EmployeeId": $scope.formInfo.employee.employeeId, "JobTitle": $scope.formInfo.jobtitle, "Location": $scope.formInfo.location };
+                    var data = { "ProjectId": $scope.formInfo.project.projectId, "EmployeeId": $scope.formInfo.employee.employeeId, "JobTitle": $scope.formInfo.jobtitle, "Location": $scope.formInfo.location, "Commitments": holder.commitments };
                     var dataTmp = JSON.stringify(data);
                     //var dataTmp = JSON.stringify(data);
                     $http.post("http://localhost:8890/api/dashboard/assignments", dataTmp)  
                         .then(function (response) {
                             console.log("Response from server api" + response.data);
-                            $scope.formInfo = {}; 
+                            $scope.formInfo = {};
+                            holder.commitments = [];
+                            $location.path("/dashboard");
                         }, function () {
                             console.log("failure");
                             //failure

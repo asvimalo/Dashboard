@@ -29,7 +29,7 @@
                     self.isBusy = true;
                     self.errorMessage = "";
 
-                    var data = { "projectName": self.project.projectName, "startDate": self.project.startDate, "stopDate": self.project.stopDate, "timeBudget": self.project.timeBudget, "ClientId": $scope.formInfo.clients.clientId, "EmployeeId": $scope.formInfo.employees.employeeId, "notes": self.project.notes };
+                    var data = { "projectName": self.project.projectName, "startDate": new Date(self.project.startDate).toLocaleDateString(), "stopDate": new Date(self.project.stopDate).toLocaleDateString(), "timeBudget": self.project.timeBudget, "ClientId": $scope.formInfo.clients.clientId, "EmployeeId": $scope.formInfo.employees.employeeId, "notes": self.project.notes };
                     var dataTmp = JSON.stringify(data);
 
                     $http.post("http://localhost:8890/api/dashboard/projects", dataTmp)
@@ -44,6 +44,8 @@
                         .finally(function () {
                             console.log("finally");
                             self.isBusy = false;
+                            window.location.reload();
+
                         });
 
 
