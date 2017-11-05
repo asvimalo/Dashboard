@@ -6,7 +6,13 @@
             controller: function EmployeeListController($scope,$http,$location) {
 
                 var holder = this;
-                
+
+                holder.employees = [];
+                holder.knowledges = [];
+                $http.get('http://localhost:8890/api/dashboard/knowledges').then(function (response) {
+                    angular.copy(response.data, holder.knowledges);
+                });
+
                 $scope.addEmployee = function () {
                     var newEmployee = {};
                     var employee = $scope.employee;
@@ -21,8 +27,9 @@
                     newEmployee.firstName = employee.firstName;
                     newEmployee.lastName = employee.lastName;
                     newEmployee.personNr = employee.personNr;
-                    newEmployee.assignments = [];
-                    newEmployee.acquiredKnowledges = []; 
+                    newEmployee.newKnowledge = employee.newKnowledge;
+                    newEmployee.knowledge = employee.kowledge;
+                    
                     
 
                     console.log("inside employees Controller ");

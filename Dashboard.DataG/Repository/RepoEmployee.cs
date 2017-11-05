@@ -20,11 +20,8 @@ namespace Dashboard.DataG.EF.Repository
             _ctx = ctx;
         }
 
-        public IQueryable<Employee> GetAllEmployees()
-        {
-            throw new NotImplementedException();
-        }
-
         
+        
+
     }         
 }

@@ -11,8 +11,8 @@ namespace Dashboard.EntitiesG.EntitiesRev
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string PersonNr { get; set; }
-        public ICollection<AcquiredKnowledge> AcquiredKnowledges { get; set; }
-        public ICollection<Assignment> Assignments { get; set; }
+        public string NewKnowledgeName { get; set; }
+        public string KnowledgeName { get; set; }
 
     }
 

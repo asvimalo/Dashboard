@@ -9,7 +9,8 @@ namespace Dashboard.DataG.EF.Contracts
 {
     public interface IRepoEmployee : IGenericRepository<Employee>
     {
-        IQueryable<Employee> GetAllEmployees();
+         
+         
     }
 
 

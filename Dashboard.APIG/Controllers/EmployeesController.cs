@@ -20,16 +20,23 @@ namespace Dashboard.APIG.Controllers
     public class EmployeesController : Controller
     {
         public IRepoEmployee _repo;
+        private IRepoEmployee _empRepo;
         private ILogger<EmployeesController> _logger;
         private IHostingEnvironment _env;
+        private IRepoKnowledge _KnRepo;
+        private IRepoAcquiredKnowledge _AcqRepo;
 
-        public EmployeesController(IRepoEmployee repo, 
+        public EmployeesController(IRepoEmployee empRepo, 
+            IRepoAcquiredKnowledge AcqRepo,
+            IRepoKnowledge KnRepo,
             ILogger<EmployeesController> logger,
             IHostingEnvironment env)
         {
-            _repo = repo;
+            _empRepo = empRepo;
             _logger = logger;
             _env = env;
+            _KnRepo = KnRepo;
+            _AcqRepo = AcqRepo;
         }
         
         // GET api/dashboard/employees
@@ -38,7 +45,7 @@ namespace Dashboard.APIG.Controllers
         {
             try
             {
-                var result = _repo.Include(x => x.AcquiredKnowledges, y => y.Assignments);
+                var result = _empRepo.Include(x => x.AcquiredKnowledges, y => y.Assignments);
 
                 return Ok(result);
                 //return Ok(Mapper.Map<IEnumerable<CommitmentViewModel>>(result));
@@ -50,14 +57,30 @@ namespace Dashboard.APIG.Controllers
                 return BadRequest($"Error ocurred");
             }
         }
+        [HttpGet("load")]
+        public async Task<IActionResult> Load()
+        {
+            try
+            {
+                var result = _empRepo.GetAll();
 
+                return Ok(result);
+                //return Ok(Mapper.Map<IEnumerable<CommitmentViewModel>>(result));
+            }
+            catch (Exception ex)
+            {
+                // LOGGING TODO
+                _logger.LogError($"Exception thrown white getting commitments: {ex}");
+                return BadRequest($"Error ocurred");
+            }
+        }
         // GET api/dashboard/Commitments/5
         [HttpGet("{id}", Name = "GetEmployee")]
         public async Task<IActionResult> Get(int id)
         {
             try
             {
-                var result =  _repo.GetById(id);
+                var result = _empRepo.GetById(id);
                 return Ok(result);
                 //return Ok(Mapper.Map<CommitmentViewModel>(result));
             }
@@ -78,15 +101,44 @@ namespace Dashboard.APIG.Controllers
             {
                 try
                 {
+                    var newKnowledge = new Knowledge { KnowledgeName = employee.NewKnowledgeName };
+                    var knowledge = new Knowledge { KnowledgeName = employee.KnowledgeName };
+                    var acquiredKnowledge = new AcquiredKnowledge();
                     var newEmployee = new Employee
                     {
                         FirstName = employee.FirstName,
                         LastName = employee.LastName,
                         PersonNr = employee.PersonNr,
-                        Assignments = employee.Assignments,
-                        AcquiredKnowledges = employee.AcquiredKnowledges
+
 
                     };
+                    var addedEmployee = await _empRepo.Create(newEmployee);
+
+                    if (string.IsNullOrEmpty(employee.KnowledgeName) && !string.IsNullOrEmpty(employee.NewKnowledgeName))
+                        newKnowledge = await _KnRepo.Create(newKnowledge);                                          
+                    else if(!string.IsNullOrEmpty(employee.KnowledgeName) && string.IsNullOrEmpty(employee.KnowledgeName))
+                    {
+                        acquiredKnowledge.Employee = addedEmployee;
+                        acquiredKnowledge.Knowledge = knowledge;
+                        acquiredKnowledge = await _AcqRepo.Create(acquiredKnowledge);
+                    }                       
+                    else if(!string.IsNullOrEmpty(employee.KnowledgeName) && !string.IsNullOrEmpty(employee.KnowledgeName))
+                    {
+                        //1
+                        var createdKnowledge = await _KnRepo.Create(newKnowledge);
+
+                        acquiredKnowledge.Employee = addedEmployee;
+                        acquiredKnowledge.Knowledge = createdKnowledge;
+
+                        var addedAcqKnowledge = await _AcqRepo.Create(acquiredKnowledge);
+
+                        //2
+                        var addedAcqknowledge = await _AcqRepo.Create(new AcquiredKnowledge { Knowledge = knowledge, Employee = newEmployee});
+                    }
+
+
+
+                    
                     #region Write picture to Image folder
                     //var webRootPath = _env.WebRootPath;
                     //var fileName = newEmployee.FirstName + ".jpg";
@@ -99,15 +151,15 @@ namespace Dashboard.APIG.Controllers
                     //newEmployee.ImagePath = filePath; 
                     #endregion
 
-                    var addedEmployee =  _repo.Create(newEmployee);
-                    return CreatedAtRoute("GetEmployee", new { id = addedEmployee.Id }, addedEmployee);
+                    
+                    return CreatedAtRoute("GetEmployee", new { id = addedEmployee.EmployeeId }, addedEmployee);
                   
                     //return Ok(Mapper.Map<CommitmentViewModel>(result));
                 }
                 catch (Exception ex)
                 {
 
-                    _logger.LogError($"Exception thrown while getting commitment: {ex}");
+                    _logger.LogError($"Exception thrown while getting employee: {ex}");
                     return BadRequest($"Error ocurred");
                 }
             }
@@ -122,7 +174,7 @@ namespace Dashboard.APIG.Controllers
             {               
                 //var projectId = 0;
                 //var userId = 0;
-                var employeeFromRepo = await _repo.GetById(id);
+                var employeeFromRepo = await _empRepo.GetById(id);
                 //Mapper.Map(commitmentVM, commiFromRepo);
                 if (employeeFromRepo == null)
                 {
@@ -157,8 +209,7 @@ namespace Dashboard.APIG.Controllers
                 //} 
                 #endregion
 
-                employeeFromRepo.Assignments = employee.Assignments ?? employeeFromRepo.Assignments;
-                employeeFromRepo.AcquiredKnowledges = employee.AcquiredKnowledges ?? employeeFromRepo.AcquiredKnowledges;
+               
 
                 //employeeFromRepo.ImageName = employee.ImageName ?? employeeFromRepo.ImageName;
                 //employeeFromRepo.ImagePath = employee.ImagePath ?? employeeFromRepo.ImagePath;
@@ -166,7 +217,7 @@ namespace Dashboard.APIG.Controllers
                 //employeeFromRepo.AcquiredKnowledges = employee.AcquiredKnowledge ?? employeeFromRepo.AcquiredKnowledges;
                 try
                 {
-                    var employeeUpdated = _repo.Update(employeeFromRepo.EmployeeId, employeeFromRepo);
+                    var employeeUpdated = _empRepo.Update(employeeFromRepo.EmployeeId, employeeFromRepo);
                     return Ok(/*Mapper.Map<CommitmentViewModel>(*/employeeUpdated/*)*/);
                 }
                 catch (Exception ex)
@@ -185,8 +236,8 @@ namespace Dashboard.APIG.Controllers
         {
             try
             {
-                var employeeToDel = await _repo.GetById(id);
-                await _repo.Delete(employeeToDel.EmployeeId);
+                var employeeToDel = await _empRepo.GetById(id);
+                await _empRepo.Delete(employeeToDel.EmployeeId);
 
                 return Ok($"Employee deleted!");
             }
