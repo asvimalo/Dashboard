@@ -28,13 +28,9 @@
                 </div>
                 <div class="row">
                     <label>Commitment:</label>
-                    <table class="table table-responsive table-striped">
-                        <tr ng-repeat="item in $ctrl.commitments">
-                            <td>{{ item.hours }}</td>
-                            <td>{{ item.startDate | date: 'dd-MM-yyyy' }}</td>
-                            <td>{{ item.stopDate  | date: 'dd-MM-yyyy' }}</td>
-                        </tr>
-                    </table>
+                    <div ng-repeat="item in $ctrl.commitments">
+                        <div> {{item.hours}}h from {{item.startDate}} to {{item.stopDate}}</div>
+                    </div>
                 </div>
             </div>
         </div>
