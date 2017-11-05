@@ -78,7 +78,8 @@ namespace Dashboard.APIG.Controllers
                 var newClient = new Client{ ClientName = client.ClientName};
                 try
                 {
-                    await _repoLoc.Create(location);
+                    var id = await _repoLoc.Create(location);
+                    newClient.LocationId = id;
                     await _repo.Create(newClient);
                     return Ok($"Client created");
                 }
