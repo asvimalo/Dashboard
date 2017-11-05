@@ -44,6 +44,8 @@
                         .finally(function () {
                             console.log("finally");
                             self.isBusy = false;
+                            window.location.reload();
+
                         });
 
 

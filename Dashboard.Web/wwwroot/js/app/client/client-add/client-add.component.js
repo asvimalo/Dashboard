@@ -28,17 +28,18 @@
                             console.log("Response from server api" + response.data);
                             // Sparar datan i $scope.locationObj för att få locationId
                             angular.copy(response.data, $scope.locationObj);
-                            $location.path("/clients");
+                            window.location.reload();
+
                         }, function () {
                             //failure
                             console.log("failure");
                             self.errorMessage = "Failure to save new project";
-                            $location.path("/clients");
+                            window.location.reload();
                         })
                         .finally(function () {
                             console.log("finally");
                             self.isBusy = false;
-                            $location.path("/clients");
+                            window.location.reload();
                             //console.log(locationdata)
 
                         }); 
