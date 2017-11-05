@@ -34,22 +34,22 @@
                     });
 
                 holder.commitments = [];
-                $http.get("http://localhost:8899/api/dashboard/commitments")
-                    .then(function (response) {
-                        //success
-                        angular.copy(response.data, holder.commitments);
-                    }, function (error) {
-                        //failure
-                        holder.errorMessage = "Failed to load data: " + error;
-                    })
-                    .finally(function () {
-                        holder.isBusy = false;
-                    });
+                //$http.get("http://localhost:8899/api/dashboard/commitments")
+                //    .then(function (response) {
+                //        //success
+                //        angular.copy(response.data, holder.commitments);
+                //    }, function (error) {
+                //        //failure
+                //        holder.errorMessage = "Failed to load data: " + error;
+                //    })
+                //    .finally(function () {
+                //        holder.isBusy = false;
+                //    });
 
                 $scope.addCommitment = function () {
 
-                    holder.commitments.push($scope.commitment);
-                    $scope.commitment = [];
+                    holder.commitments.push($scope.commitment);                    //holder.commitments = holder.commitments.concat($scope.commitment);
+                    $scope.commitment = {};
                     
                     //console.log("in the addCommitment function");
                     //holder.isBusy = true;
@@ -85,7 +85,8 @@
                     $http.post("http://localhost:8899/api/dashboard/assignments", dataTmp)  
                         .then(function (response) {
                             console.log("Response from server api" + response.data);
-                            $scope.formInfo = {}; 
+                            $scope.formInfo = {};
+                            holder.commitments = [];
                         }, function () {
                             console.log("failure");
                             //failure
