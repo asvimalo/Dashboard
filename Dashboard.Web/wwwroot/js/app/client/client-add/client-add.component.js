@@ -26,7 +26,7 @@
                     $http.post("http://localhost:8899/api/dashboard/locations", dataTmpLocation)
                         .then(function (response) {
                             console.log("Response from server api" + response.data);
-                            console.log(response.data)
+                            // Sparar datan i $scope.locationObj för att få locationId
                             $scope.locationObj = response.data;
 
                         }, function () {
