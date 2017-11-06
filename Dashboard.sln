@@ -15,11 +15,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dashboard.Entities", "Dashb
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dashboard.Models", "Dashboard.Models\Dashboard.Models.csproj", "{478F93B5-C9B4-45D9-86E2-0829E8F93175}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dashboard.APIG", "Dashboard.APIG\Dashboard.APIG.csproj", "{3C0E281B-A367-4E95-BF87-BA7371ADA27A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dashboard.APIG", "Dashboard.APIG\Dashboard.APIG.csproj", "{3C0E281B-A367-4E95-BF87-BA7371ADA27A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dashboard.DataG", "Dashboard.DataG\Dashboard.DataG.csproj", "{A2BBAEF3-871C-4250-AFA8-3B16E5D195BB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dashboard.DataG", "Dashboard.DataG\Dashboard.DataG.csproj", "{A2BBAEF3-871C-4250-AFA8-3B16E5D195BB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dashboard.EntitiesG", "Dashboard.EntitiesG\Dashboard.EntitiesG.csproj", "{D84D6DCB-F57C-4FB0-862B-EAFC78731BEF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dashboard.EntitiesG", "Dashboard.EntitiesG\Dashboard.EntitiesG.csproj", "{D84D6DCB-F57C-4FB0-862B-EAFC78731BEF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Clients", "Clients", "{562E9DCC-6B6F-4565-B597-616938B966C3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Service", "Service", "{ADE5FDD3-8992-4F68-B9A7-E9A470F0E80A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Old", "Old", "{9041EC1E-216A-4ABE-AC52-4C09A0B3E72A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -66,6 +72,13 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E069BF73-FB4B-4969-9C7D-5620D59C2B5D} = {9041EC1E-216A-4ABE-AC52-4C09A0B3E72A}
+		{E5E744E1-5B61-4863-A051-F0BC419A7478} = {9041EC1E-216A-4ABE-AC52-4C09A0B3E72A}
+		{080B1A79-1FBA-480E-99AF-8447DF372681} = {ADE5FDD3-8992-4F68-B9A7-E9A470F0E80A}
+		{3BFDE734-D2DD-4A39-831F-B943B2B3C6D9} = {9041EC1E-216A-4ABE-AC52-4C09A0B3E72A}
+		{478F93B5-C9B4-45D9-86E2-0829E8F93175} = {9041EC1E-216A-4ABE-AC52-4C09A0B3E72A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B313C480-B59A-469D-ABBC-27A23E0B758F}
