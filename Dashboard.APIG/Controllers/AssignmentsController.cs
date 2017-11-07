@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Dashboard.DataG.EF.Contracts;
+using Dashboard.DataG.Contracts;
 using Dashboard.EntitiesG.EntitiesRev;
 
 

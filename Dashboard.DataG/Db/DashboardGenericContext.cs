@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Dashboard.DataG.EF.Db
+namespace Dashboard.DataG.Db
 {
     public class DashboardGenericContext : DbContext
     {
@@ -19,7 +19,7 @@ namespace Dashboard.DataG.EF.Db
         //public DbSet<Picture> Pictures { get; set; }
         public DbSet<Project> Projects { get; set; }
         public DbSet<Employee> Employees { get; set; }
-
+        public DbSet<JobTitle> JobTitles { get; set; }
         public DbSet<Assignment> Assignments { get; set; }
         public DbSet<Client> Clients { get; set; }
         public DbSet<Knowledge> Knowledges { get; set; }
@@ -27,6 +27,7 @@ namespace Dashboard.DataG.EF.Db
         public DbSet<Phase> Phases { get; set; }
         public DbSet<EntitiesG.EntitiesRev.Task> Tasks { get; set; }
         public DbSet<Location> Locations { get; set; }
+        public DbSet<JobTitleAssignment> JobTitleAssignments { get; set; }
 
 
 

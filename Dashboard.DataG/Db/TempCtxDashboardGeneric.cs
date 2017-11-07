@@ -7,7 +7,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 
-namespace Dashboard.DataG.EF.Db
+namespace Dashboard.DataG.Db
 {
     public class TempCtxDashboardGeneric
     {

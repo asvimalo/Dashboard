@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Dashboard.DataG.EF.Contracts
+namespace Dashboard.DataG.Contracts
 {
     public interface IRepoAcquiredKnowledge : IGenericRepository<AcquiredKnowledge>
     {

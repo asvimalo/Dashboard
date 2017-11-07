@@ -18,12 +18,13 @@ namespace Dashboard.EntitiesG.EntitiesRev
         [ForeignKey("ProjectId")]
         public Project Project { get; set; }
 
-        public string JobTitle { get; set; }
+        
         public DateTime StartDate { get; set; }
         public DateTime StopDate { get; set; }
         public string Location { get; set; }
 
         public ICollection<Commitment> Commitments { get; set; }
+        public ICollection<JobTitleAssignment> JobTitleAssignments { get; set; }
 
 
 

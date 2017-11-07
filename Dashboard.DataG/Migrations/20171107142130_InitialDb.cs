@@ -27,6 +27,19 @@ namespace Dashboard.DataG.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "JobTitles",
+                columns: table => new
+                {
+                    JobTitleId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    TitleName = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_JobTitles", x => x.JobTitleId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Knowledge",
                 columns: table => new
                 {
@@ -132,7 +145,6 @@ namespace Dashboard.DataG.Migrations
                     AssignmentId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     EmployeeId = table.Column<int>(type: "int", nullable: false),
-                    JobTitle = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Location = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ProjectId = table.Column<int>(type: "int", nullable: false),
                     StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -199,6 +211,32 @@ namespace Dashboard.DataG.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "JobTitleAssignments",
+                columns: table => new
+                {
+                    JobTitleAssignmentId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    AssignmentId = table.Column<int>(type: "int", nullable: false),
+                    JobTitleId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_JobTitleAssignments", x => x.JobTitleAssignmentId);
+                    table.ForeignKey(
+                        name: "FK_JobTitleAssignments_EmployeeProject_AssignmentId",
+                        column: x => x.AssignmentId,
+                        principalTable: "EmployeeProject",
+                        principalColumn: "AssignmentId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_JobTitleAssignments_JobTitles_JobTitleId",
+                        column: x => x.JobTitleId,
+                        principalTable: "JobTitles",
+                        principalColumn: "JobTitleId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Task",
                 columns: table => new
                 {
@@ -249,6 +287,16 @@ namespace Dashboard.DataG.Migrations
                 column: "ProjectId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_JobTitleAssignments_AssignmentId",
+                table: "JobTitleAssignments",
+                column: "AssignmentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_JobTitleAssignments_JobTitleId",
+                table: "JobTitleAssignments",
+                column: "JobTitleId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Phase_ProjectId",
                 table: "Phase",
                 column: "ProjectId");
@@ -273,13 +321,19 @@ namespace Dashboard.DataG.Migrations
                 name: "EmployeeKnowledge");
 
             migrationBuilder.DropTable(
+                name: "JobTitleAssignments");
+
+            migrationBuilder.DropTable(
                 name: "Task");
+
+            migrationBuilder.DropTable(
+                name: "Knowledge");
 
             migrationBuilder.DropTable(
                 name: "EmployeeProject");
 
             migrationBuilder.DropTable(
-                name: "Knowledge");
+                name: "JobTitles");
 
             migrationBuilder.DropTable(
                 name: "Phase");
