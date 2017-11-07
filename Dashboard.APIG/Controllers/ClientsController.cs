@@ -1,5 +1,5 @@
 ﻿using Dashboard.APIG.Models;
-using Dashboard.DataG.EF.Contracts;
+using Dashboard.DataG.Contracts;
 using Dashboard.EntitiesG.EntitiesRev;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
