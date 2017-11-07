@@ -11,6 +11,7 @@
                 $http.get("http://localhost:8890/api/dashboard/employees")
                     .then(function (response) {
                         //success
+                        console.log("Check");
                         angular.copy(response.data, holder.employees);
                     }, function (error) {
                         //failure
@@ -34,12 +35,16 @@
                     });
 
                 holder.commitments = [];
-
                 $scope.addCommitment = function () {
 
                     holder.commitments.push($scope.commitment);                   
                     $scope.commitment = {};
                     
+                };
+
+                $scope.remove = function (array, index) {
+                    array.splice(index, 1);
+                    var y = holder.commitments;
                 };
 
                 $scope.assignProjectToEmployee = function () {

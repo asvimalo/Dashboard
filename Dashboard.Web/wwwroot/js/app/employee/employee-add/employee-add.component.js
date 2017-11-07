@@ -27,8 +27,8 @@
                     newEmployee.firstName = employee.firstName;
                     newEmployee.lastName = employee.lastName;
                     newEmployee.personNr = employee.personNr;
-                    newEmployee.newKnowledge = employee.newKnowledge;
-                    newEmployee.knowledge = employee.kowledge;
+                    newEmployee.newKnowledgeName = employee.newKnowledgeName;
+                    newEmployee.knowledgeName = employee.knowledgeName;
                     
                     
 
