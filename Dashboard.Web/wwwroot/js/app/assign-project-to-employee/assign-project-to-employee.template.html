@@ -7,7 +7,7 @@
                 <div class="col-md-6">
                     <div class="row">
                         <label>Employee:</label>
-                        <select class="form-control" ng-options="item.firstName for item in $ctrl.employees" ng-model="formInfo.employee">
+                        <select class="form-control" ng-options="item.id as item.firstName + ' ' + item.lastName for item in $ctrl.employees" ng-model="formInfo.employee">
                             <option value="" disabled selected></option>
                         </select>
                     </div>
@@ -30,6 +30,7 @@
                         <label>Commitment:</label>
                         <div ng-repeat="item in $ctrl.commitments">
                             {{item.hours}}h from {{item.startDate | date: 'dd-MM-yyyy'}} to {{item.stopDate | date: 'dd-MM-yyyy'}} <!-- Denna skriver ut ENDAST "h from to"-->
+                            <button class="glyphicon glyphicon-remove" type="button" ng-click="remove($ctrl.commitments, $index)"></button>
                         </div>
                     </div>
                 </div>

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.16
+VisualStudioVersion = 15.0.26730.15
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dashboard.Data", "Dashboard.Data\Dashboard.Data.csproj", "{E069BF73-FB4B-4969-9C7D-5620D59C2B5D}"
 EndProject
@@ -20,10 +20,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dashboard.DataG", "Dashboard.DataG\Dashboard.DataG.csproj", "{A2BBAEF3-871C-4250-AFA8-3B16E5D195BB}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dashboard.EntitiesG", "Dashboard.EntitiesG\Dashboard.EntitiesG.csproj", "{D84D6DCB-F57C-4FB0-862B-EAFC78731BEF}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "JsClients", "JsClients", "{761E47AB-71F8-4A07-BC43-42A03A0D6B51}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dashboard.Angular", "Dashboard.Angular\Dashboard.Angular.csproj", "{5F9479DA-D07B-4E75-9302-52DB86C785F5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -67,16 +63,9 @@ Global
 		{D84D6DCB-F57C-4FB0-862B-EAFC78731BEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D84D6DCB-F57C-4FB0-862B-EAFC78731BEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D84D6DCB-F57C-4FB0-862B-EAFC78731BEF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5F9479DA-D07B-4E75-9302-52DB86C785F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5F9479DA-D07B-4E75-9302-52DB86C785F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5F9479DA-D07B-4E75-9302-52DB86C785F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5F9479DA-D07B-4E75-9302-52DB86C785F5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{5F9479DA-D07B-4E75-9302-52DB86C785F5} = {761E47AB-71F8-4A07-BC43-42A03A0D6B51}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B313C480-B59A-469D-ABBC-27A23E0B758F}
