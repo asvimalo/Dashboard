@@ -47,6 +47,23 @@ namespace Dashboard.DataG.Controllers
                 return BadRequest($"Error ocurred");
             }
         }
+        [HttpGet("load")]
+        public async Task<IActionResult> Load()
+        {
+            try
+            {
+                var result = _repo.GetAll();
+
+                return Ok(result);
+                //return Ok(Mapper.Map<IEnumerable<CommitmentViewModel>>(result));
+            }
+            catch (Exception ex)
+            {
+                // LOGGING TODO
+                _logger.LogError($"Exception thrown white getting commitments: {ex}");
+                return BadRequest($"Error ocurred");
+            }
+        }
 
         // GET api/dashboard/Commitments/5
         [HttpGet("{id}", Name = "GetAssigment")]
