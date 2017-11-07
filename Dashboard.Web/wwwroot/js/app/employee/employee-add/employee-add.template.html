@@ -14,7 +14,7 @@
                 Last Name: {{ employee.lastName }}
             </label>
             <label class="form-control">
-                Personal Number(ssn): {{ employee.personalNr }}
+                Personal Number(ssn): {{ employee.personNr }}
             </label>
             <label class="form-control">
                 New Knowledge: {{ employee.newKnowledge }}
@@ -51,7 +51,7 @@
 
             <label>
                 Personal Number(ssn):
-                <input class="form-control" type="text" ng-model="employee.personalNr" name="uPersonNr" required="" />
+                <input class="form-control" type="text" ng-model="employee.personNr" name="uPersonNr" required="" />
             </label>
             <br />
             <div ng-show="form.$submitted || form.uPersonNr.$touched">
