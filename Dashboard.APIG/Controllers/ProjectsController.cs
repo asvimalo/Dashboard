@@ -1,4 +1,5 @@
 ﻿
+using Dashboard.APIG.Models;
 using Dashboard.DataG.EF.Contracts;
 
 using Dashboard.EntitiesG.EntitiesRev;
@@ -16,15 +17,21 @@ namespace Dashboard.Data.Controllers
     [Route("api/dashboard/[controller]")]
     public class ProjectsController : Controller
     {
-        public IRepoProject _repo;
+        public IRepoProject _repoProject;
+        private IRepoClient _repoClient;
+        private IRepoAssignment _repoAssignment;
         private ILogger<ProjectsController> _logger;
         //private IMapper _mapper;
 
-        public ProjectsController(IRepoProject repo, 
-            ILogger<ProjectsController> logger/*,
+        public ProjectsController(IRepoProject repoProject,
+            IRepoClient repoClient,
+            IRepoAssignment repoAssignment,
+        ILogger<ProjectsController> logger/*,
             IMapper mapper*/)
         {
-            _repo = repo;
+            _repoProject = repoProject;
+            _repoClient = repoClient;
+            _repoAssignment = repoAssignment;
             _logger = logger;
             //_mapper = mapper;
         }
@@ -38,7 +45,7 @@ namespace Dashboard.Data.Controllers
         {
             try
             {
-                var result =  _repo.Include(x => x.Assignments, y => y.Client, z => z.Phases);
+                var result =  _repoProject.Include(x => x.Assignments, y => y.Client, z => z.Phases);
                 return Ok(result);
                 //return Ok(_mapper.Map<IEnumerable<ProjectViewModel>>(result));
             }
@@ -56,7 +63,7 @@ namespace Dashboard.Data.Controllers
         {
             try
             {
-                var result = await _repo.GetById(id);
+                var result = await _repoProject.GetById(id);
                 return Ok(result);
                 //return Ok(_mapper.Map<ProjectViewModel>(result));
             }
@@ -71,14 +78,33 @@ namespace Dashboard.Data.Controllers
 
         // POST api/values
         [HttpPost("")]
-        public async Task<IActionResult> Post([FromBody]Project project)
+        public async Task<IActionResult> Post([FromBody]ProjectForm project)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    var addedProject =  _repo.Create(project);
-                    return Created($"api/dashboard/projects/{addedProject.Id}", /*_mapper.Map<ProjectViewModel>(newProject)*/ addedProject);
+                    var newProject = new Project
+                    {
+                        ProjectName = project.ProjectName,
+                        StartDate = project.StartDate,
+                        StopDate = project.StopDate,
+                        TimeBudget = project.TimeBudget,
+                        Notes = project.Notes,
+                        ClientId = project.ClientId
+                    };
+                    
+                    var addedProject = await _repoProject.Create(newProject);
+                   
+                    var addedAssignment = await _repoAssignment.Create(new Assignment
+                    {
+                        ProjectId = addedProject.ProjectId, // products table
+                        Project = addedProject,
+                        EmployeeId = project.EmployeeId
+                    });
+
+                  
+                    return Created($"api/dashboard/projects/{addedAssignment}", /*_mapper.Map<ProjectViewModel>(newProject)*/ addedAssignment);
                     //return Ok(_mapper.Map<ProjectViewModel>(result));
                 }
                 catch (Exception ex)
@@ -100,9 +126,9 @@ namespace Dashboard.Data.Controllers
             {
                 try
                 {
-                    var projectFromRepo = await _repo.GetById(id);
+                    var projectFromRepo = await _repoProject.GetById(id);
                     //_mapper.Map(projectVM, projectFromRepo);
-                    var projectUpdated = _repo.Update(projectFromRepo.ProjectId, projectFromRepo);
+                    var projectUpdated = _repoProject.Update(projectFromRepo.ProjectId, projectFromRepo);
                     return Ok(/*_mapper.Map<ProjectViewModel>(projectUpdated)*/projectUpdated);
                 }
                 catch (Exception)
@@ -122,8 +148,8 @@ namespace Dashboard.Data.Controllers
         {
             try
             {
-                var projectToDel = await _repo.GetById(id);
-                await _repo.Delete(projectToDel.ProjectId);
+                var projectToDel = await _repoProject.GetById(id);
+                await _repoProject.Delete(projectToDel.ProjectId);
 
                 return Ok($"Project deleted!");
 
