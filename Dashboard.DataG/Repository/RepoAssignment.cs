@@ -24,7 +24,7 @@ namespace Dashboard.DataG.EF.Repository
 
         public async Task<IQueryable<Assignment>> GetProjectsByEmployeeId(int id)
         {
-            return  _ctx.Assignments
+            return _ctx.Assignments
                 .Include(a => a.Commitments)
                 .Include(b => b.Location)
                     .Include(x => x.Project)
