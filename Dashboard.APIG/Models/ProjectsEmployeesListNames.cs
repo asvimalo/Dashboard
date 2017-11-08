@@ -8,7 +8,7 @@ namespace Dashboard.APIG.Models
 {
     public class ProjectsEmployeesListNames
     {
-        public ICollection<Employee> Employees { get; set; }
-        public ICollection<Project> Projects { get; set; }
+        public IQueryable<Employee> Employees { get; set; }
+        public IQueryable<Project> Projects { get; set; }
     }
 }

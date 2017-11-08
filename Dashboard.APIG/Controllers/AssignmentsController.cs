@@ -181,8 +181,8 @@ namespace Dashboard.DataG.Controllers
             
                 try
                 {
-                    var employees =  _repoEmp.GetAll().ToList();
-                    var projects = _repoPro.GetAll().ToList();
+                    var employees =  _repoEmp.GetAll();
+                    var projects = _repoPro.GetAll();
                     var both = new ProjectsEmployeesListNames { Employees = employees, Projects = projects };
                     return Ok(both);
                 }

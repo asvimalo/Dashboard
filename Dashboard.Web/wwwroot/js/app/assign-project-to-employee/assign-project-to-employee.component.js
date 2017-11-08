@@ -21,18 +21,7 @@
                         holder.isBusy = false;
                     });
 
-                //holder.projects = [];
-                //$http.get("http://localhost:8890/api/dashboard/projects")
-                //    .then(function (response) {
-                //        //success
-                //        angular.copy(response.data, holder.projects);
-                //    }, function (error) {
-                //        //failure
-                //        holder.errorMessage = "Failed to load data: " + error;
-                //    })
-                //    .finally(function () {
-                //        holder.isBusy = false;
-                //    });
+               
 
                 holder.commitments = [];
                 $scope.addCommitment = function () {

@@ -49,10 +49,11 @@
                             console.log("Response from server api" + response.data);
                             newEmployee = {};
                             //file = {};
-                            window.location.templateUrl  = '#/employees';
-                        }, function () {
+                            $location.path('/employees');
+                        }, function (err) {
                             //failure
                             holder.errorMessage = "Failure to save new employee";
+                            alert("Failure to save new employee" + err)
                         })
                         .finally(function () {
                             holder.isBusy = false;
