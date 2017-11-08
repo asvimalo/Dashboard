@@ -9,7 +9,7 @@ using Dashboard.EntitiesG.EntitiesRev;
 
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Authorization;
-
+using Dashboard.APIG.Models;
 
 namespace Dashboard.DataG.Controllers
 {
@@ -17,12 +17,18 @@ namespace Dashboard.DataG.Controllers
     [Route("api/dashboard/[controller]")]
     public class AssignmentsController : Controller
     {
+        public IRepoProject _repoPro;
+        public IRepoEmployee _repoEmp;
         public IRepoAssignment _repo;
         private ILogger<AssignmentsController> _logger;
 
         public AssignmentsController(IRepoAssignment repo, 
+            IRepoEmployee repoEmp,
+            IRepoProject repoPro,
             ILogger<AssignmentsController> logger)
         {
+            _repoPro = repoPro;
+            _repoEmp = repoEmp;
             _repo = repo;
             _logger = logger;
         }
@@ -169,6 +175,24 @@ namespace Dashboard.DataG.Controllers
             return BadRequest($"Client {assingmentToDel.AssignmentId } wasn't deleted!");
         }
 
-        
+        [HttpGet("projectsemployeeslist")]
+        public async Task<IActionResult> GetProjectsEmployees()
+        {
+            
+                try
+                {
+                    var employees =  _repoEmp.GetAll().ToList();
+                    var projects = _repoPro.GetAll().ToList();
+                    var both = new ProjectsEmployeesListNames { Employees = employees, Projects = projects };
+                    return Ok(both);
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError($"Thrown exception when updating: {ex}");
+                    return BadRequest($"Client wasn't deleted!");
+                }
+            
+        }
+
     }
 }
