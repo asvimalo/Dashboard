@@ -11,9 +11,10 @@ using System;
 namespace Dashboard.DataG.Migrations
 {
     [DbContext(typeof(DashboardGenericContext))]
-    partial class DashboardGenericContextModelSnapshot : ModelSnapshot
+    [Migration("20171107142130_InitialDb")]
+    partial class InitialDb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

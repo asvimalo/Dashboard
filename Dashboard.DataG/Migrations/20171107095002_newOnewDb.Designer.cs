@@ -11,9 +11,10 @@ using System;
 namespace Dashboard.DataG.Migrations
 {
     [DbContext(typeof(DashboardGenericContext))]
-    partial class DashboardGenericContextModelSnapshot : ModelSnapshot
+    [Migration("20171107095002_newOnewDb")]
+    partial class newOnewDb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -44,6 +45,8 @@ namespace Dashboard.DataG.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<int>("EmployeeId");
+
+                    b.Property<string>("JobTitle");
 
                     b.Property<string>("Location");
 
@@ -120,36 +123,6 @@ namespace Dashboard.DataG.Migrations
                     b.HasKey("EmployeeId");
 
                     b.ToTable("Employee");
-                });
-
-            modelBuilder.Entity("Dashboard.EntitiesG.EntitiesRev.JobTitle", b =>
-                {
-                    b.Property<int>("JobTitleId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("TitleName");
-
-                    b.HasKey("JobTitleId");
-
-                    b.ToTable("JobTitles");
-                });
-
-            modelBuilder.Entity("Dashboard.EntitiesG.EntitiesRev.JobTitleAssignment", b =>
-                {
-                    b.Property<int>("JobTitleAssignmentId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("AssignmentId");
-
-                    b.Property<int>("JobTitleId");
-
-                    b.HasKey("JobTitleAssignmentId");
-
-                    b.HasIndex("AssignmentId");
-
-                    b.HasIndex("JobTitleId");
-
-                    b.ToTable("JobTitleAssignments");
                 });
 
             modelBuilder.Entity("Dashboard.EntitiesG.EntitiesRev.Knowledge", b =>
@@ -278,19 +251,6 @@ namespace Dashboard.DataG.Migrations
                     b.HasOne("Dashboard.EntitiesG.EntitiesRev.Assignment", "Assignment")
                         .WithMany("Commitments")
                         .HasForeignKey("AssigmentId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Dashboard.EntitiesG.EntitiesRev.JobTitleAssignment", b =>
-                {
-                    b.HasOne("Dashboard.EntitiesG.EntitiesRev.Assignment", "Assignment")
-                        .WithMany("JobTitleAssignments")
-                        .HasForeignKey("AssignmentId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Dashboard.EntitiesG.EntitiesRev.JobTitle", "JobTitle")
-                        .WithMany("JobTitleAssignments")
-                        .HasForeignKey("JobTitleId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

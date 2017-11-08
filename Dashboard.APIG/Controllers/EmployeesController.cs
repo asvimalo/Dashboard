@@ -1,17 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Dashboard.DataG.EF.Contracts;
-using Dashboard.Data.Controllers;
+using Dashboard.DataG.Contracts;
 using Microsoft.Extensions.Logging;
 using Dashboard.EntitiesG.EntitiesRev;
-
-
 using Microsoft.AspNetCore.Hosting;
-using System.IO;
+
 
 namespace Dashboard.APIG.Controllers
 {

@@ -1,4 +1,4 @@
-﻿using Dashboard.DataG.EF.Db;
+﻿using Dashboard.DataG.Db;
 using Dashboard.EntitiesG.EntitiesRev;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -6,10 +6,10 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using System.Linq;
-using Dashboard.DataG.EF.Contracts;
+using Dashboard.DataG.Contracts;
 
 
-namespace Dashboard.DataG.EF.Repository
+namespace Dashboard.DataG.Repository
 {
     public class RepoAssignment : 
         GenericRepository<EntitiesG.EntitiesRev.Assignment>, 

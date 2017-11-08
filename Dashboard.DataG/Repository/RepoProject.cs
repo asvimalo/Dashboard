@@ -1,5 +1,5 @@
-﻿using Dashboard.DataG.EF.Contracts;
-using Dashboard.DataG.EF.Db;
+﻿using Dashboard.DataG.Contracts;
+using Dashboard.DataG.Db;
 using Dashboard.EntitiesG.EntitiesRev;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -7,8 +7,8 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Dashboard.DataG.EF.Repository
-{
+namespace Dashboard.DataG.Repository
+{ 
     public class RepoProject :
         GenericRepository<EntitiesG.EntitiesRev.Project>,
         IRepoProject

@@ -1,17 +1,17 @@
-﻿using Dashboard.DataG.EF.Contracts;
+﻿using Dashboard.DataG.Contracts;
 using Dashboard.EntitiesG.EntitiesRev;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 using System.Threading.Tasks;
-using Dashboard.DataG.EF.Db;
+using Dashboard.DataG.Db;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
 using static Microsoft.AspNetCore.Hosting.Internal.HostingApplication;
 
-namespace Dashboard.DataG.EF.Repository
+namespace Dashboard.DataG.Repository
 {
     public class GenericRepository<TEntity> : IGenericRepository<TEntity>
     where TEntity : class

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Dashboard.DataG.EF.Contracts
+namespace Dashboard.DataG.Contracts
 {
     public interface IRepoAssignment : IGenericRepository<Assignment>
     {
