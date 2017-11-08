@@ -95,16 +95,19 @@ namespace Dashboard.Data.Controllers
                     };
                     
                     var addedProject = await _repoProject.Create(newProject);
-                   
-                    var addedAssignment = await _repoAssignment.Create(new Assignment
-                    {
-                        ProjectId = addedProject.ProjectId, // products table
-                        Project = addedProject,
-                        EmployeeId = project.EmployeeId
-                    });
 
-                  
-                    return Created($"api/dashboard/projects/{addedAssignment}", /*_mapper.Map<ProjectViewModel>(newProject)*/ addedAssignment);
+                    foreach (var employeeId in project.Employees)
+                    { 
+                        var addedAssignment = await _repoAssignment.Create(new Assignment
+                        {
+                            ProjectId = addedProject.ProjectId, // products table
+                            Project = addedProject,
+                            EmployeeId = employeeId
+                        });
+
+                    }
+                    return Ok();
+                        
                     //return Ok(_mapper.Map<ProjectViewModel>(result));
                 }
                 catch (Exception ex)
