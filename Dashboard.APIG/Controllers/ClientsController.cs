@@ -18,7 +18,8 @@ namespace Dashboard.APIG.Controllers
         private IRepoLocation _repoLoc;
         private ILogger<ClientsController> _logger;
 
-        public ClientsController(IRepoClient repo, IRepoLocation repoLoc,
+        public ClientsController(IRepoClient repo, 
+            IRepoLocation repoLoc,
             ILogger<ClientsController> logger)
         {
             _repo = repo;
