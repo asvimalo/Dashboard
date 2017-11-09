@@ -21,8 +21,6 @@
                         holder.isBusy = false;
                     });
 
-               
-
                 holder.commitments = [];
                 $scope.addCommitment = function () {
 
@@ -62,6 +60,8 @@
                     console.log("in the function");
                     holder.isBusy = true;
                     holder.errorMessage = "";
+
+                    var test = $scope.formInfo.employee;
 
                     var data = { "ProjectId": $scope.formInfo.project.projectId, "EmployeeId": $scope.formInfo.employee.employeeId, "JobTitle": $scope.formInfo.jobtitle, "Location": $scope.formInfo.location, "Commitments": holder.commitments };
                     var dataTmp = JSON.stringify(data);
