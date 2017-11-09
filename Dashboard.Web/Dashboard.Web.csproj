@@ -32,13 +32,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Dashboard.Entities\Dashboard.Entities.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Folder Include="wwwroot\js\app\all-projects\" />
     <Folder Include="wwwroot\js\app\one-project-details\" />
     <Folder Include="wwwroot\views\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Dashboard.EntitiesG\Dashboard.EntitiesG.csproj" />
   </ItemGroup>
 
 </Project>

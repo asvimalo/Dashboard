@@ -1,5 +1,5 @@
 ﻿using Dashboard.APIG.Models;
-using Dashboard.DataG.EF.Contracts;
+using Dashboard.DataG.Contracts;
 using Dashboard.EntitiesG.EntitiesRev;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -18,7 +18,8 @@ namespace Dashboard.APIG.Controllers
         private IRepoLocation _repoLoc;
         private ILogger<ClientsController> _logger;
 
-        public ClientsController(IRepoClient repo, IRepoLocation repoLoc,
+        public ClientsController(IRepoClient repo, 
+            IRepoLocation repoLoc,
             ILogger<ClientsController> logger)
         {
             _repo = repo;

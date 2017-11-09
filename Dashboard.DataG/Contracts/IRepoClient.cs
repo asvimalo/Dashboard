@@ -5,8 +5,8 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Dashboard.DataG.EF.Contracts
-{
+namespace Dashboard.DataG.Contracts
+{ 
     public interface IRepoClient : IGenericRepository<Client>
     {
         

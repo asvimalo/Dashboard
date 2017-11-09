@@ -2,26 +2,27 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Dashboard.Web.Services.Contracts;
-using Dashboard.Web.ViewModels;
 using Newtonsoft.Json;
+using Dashboard.EntitiesG.EntitiesRev;
 using System.Net.Http;
-
-using Microsoft.AspNetCore.Authorization;
 using IdentityModel.Client;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
+using Dashboard.Web.ViewModels;
 using System.Diagnostics;
-using Dashboard.EntitiesG.EntitiesRev;
 
 namespace Dashboard.Web.Controllers
 {
-    public class EmployeeController : Controller
+    [Produces("application/json")]
+    [Route("api/Assignment")]
+    public class AssignmentController : Controller
     {
         private IHttpClientDashboard _httpClientDashboard;
 
-        public EmployeeController(IHttpClientDashboard httpClientDashboard)
+        public AssignmentController(IHttpClientDashboard httpClientDashboard)
         {
             _httpClientDashboard = httpClientDashboard;
         }
@@ -35,7 +36,7 @@ namespace Dashboard.Web.Controllers
                 if (responseEmployee.IsSuccessStatusCode)
                 {
                     var employeesAsString = await responseEmployee.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    List<Employee> employees = JsonConvert.DeserializeObject<IList<Employee>>(employeesAsString).ToList();
+                    List<Assignment> employees = JsonConvert.DeserializeObject<IList<Assignment>>(employeesAsString).ToList();
                     return View(employees);
                 }
                 else
@@ -55,7 +56,7 @@ namespace Dashboard.Web.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Add([FromBody] Employee employee)
+        public async Task<IActionResult> Add([FromBody] Assignment employee)
         {
 
             if (ModelState.IsValid)
@@ -66,7 +67,7 @@ namespace Dashboard.Web.Controllers
                     var serializedEmployee = JsonConvert.SerializeObject(employee);
 
                     var response = await httpClient.PostAsync(
-                            $"api/dashboard/employees",
+                            $"api/dashboard/assignments",
                             new StringContent(serializedEmployee,
                                 System.Text.Encoding.Unicode,
                                 "application/json")).ConfigureAwait(false);
@@ -74,7 +75,7 @@ namespace Dashboard.Web.Controllers
                     if (response.IsSuccessStatusCode)
                     {
                         var employeeAsString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        var desEmployee = JsonConvert.DeserializeObject<Employee>(employeeAsString);
+                        var desEmployee = JsonConvert.DeserializeObject<Assignment>(employeeAsString);
                         return View(desEmployee);
                     }
                     else
@@ -98,7 +99,7 @@ namespace Dashboard.Web.Controllers
 
         [HttpPut]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit([FromBody] Employee employee)
+        public async Task<IActionResult> Edit([FromBody] Assignment employee)
         {
 
             if (ModelState.IsValid)
@@ -118,7 +119,7 @@ namespace Dashboard.Web.Controllers
                     if (response.IsSuccessStatusCode)
                     {
                         var employeeAsString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        var desEmployee = JsonConvert.DeserializeObject<Employee>(employeeAsString);
+                        var desEmployee = JsonConvert.DeserializeObject<Assignment>(employeeAsString);
                         return View(desEmployee);
                     }
                     else

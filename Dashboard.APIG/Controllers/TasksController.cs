@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Dashboard.DataG.EF.Contracts;
+using Dashboard.DataG.Contracts;
 using Microsoft.Extensions.Logging;
 
 namespace Dashboard.APIG.Controllers

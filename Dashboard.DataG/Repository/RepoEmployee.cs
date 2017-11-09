@@ -1,14 +1,8 @@
-﻿using Dashboard.DataG.EF.Contracts;
-using Dashboard.DataG.EF.Db;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using Dashboard.EntitiesG.EntitiesRev;
-using System.Linq;
+﻿using Dashboard.DataG.Contracts;
+using Dashboard.DataG.Db;
 
-namespace Dashboard.DataG.EF.Repository
+
+namespace Dashboard.DataG.Repository
 {
     public class RepoEmployee :
         GenericRepository<EntitiesG.EntitiesRev.Employee>,

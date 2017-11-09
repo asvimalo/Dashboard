@@ -6,9 +6,8 @@ using System.Text;
 
 namespace Dashboard.DataG.Contracts
 {
-    public interface IRepoCommitment : 
-        IGenericRepository<Commitment>
+    public interface IRepoJobTitleAssignment :
+         IGenericRepository<JobTitle>
     {
-
     }
 }

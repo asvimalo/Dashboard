@@ -21,7 +21,7 @@ namespace Dashboard.Web.Services
 
         public async Task<HttpClient> GetClient()
         {
-            _httpClient.BaseAddress = new Uri("http://localhost:8899");
+            _httpClient.BaseAddress = new Uri("http://localhost:8890");
             _httpClient.DefaultRequestHeaders.Accept.Clear();
             _httpClient.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));

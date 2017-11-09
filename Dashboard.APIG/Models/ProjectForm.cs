@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Dashboard.EntitiesG.EntitiesRev;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,7 +15,7 @@ namespace Dashboard.APIG.Models
         public int TimeBudget { get; set; }
         public string Notes { get; set; }
         public int ClientId { get; set; }
-        public int EmployeeId { get; set; }
+        public List<int> Employees { get; set; }
 
     }
 }

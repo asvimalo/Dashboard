@@ -4,7 +4,7 @@
         .component("employeeAdd", {
             templateUrl: "/js/app/employee/employee-add/employee-add.template.html",
             controller: function EmployeeListController($scope,$http,$location) {
-
+                
                 var holder = this;
 
                 holder.employees = [];
@@ -15,8 +15,8 @@
 
                 $scope.addEmployee = function () {
                     var newEmployee = {};
-                    var employee = $scope.employee;
                     
+                    var employee = $scope.employee;
                     
                     //var fi = this.fileInput.nativeElement;
                     //var file = $scope.file;
@@ -47,12 +47,13 @@
                         .then(function (response) {
                             //success
                             console.log("Response from server api" + response.data);
-                            newEmployee = {};
-                            //file = {};
-                            window.location.templateUrl  = '#/employees';
-                        }, function () {
+                            employee = {};
+                            ////file = {};
+                            //window.location.reload();
+                        }, function (err) {
                             //failure
                             holder.errorMessage = "Failure to save new employee";
+                            alert("Failure to save new employee" + err)
                         })
                         .finally(function () {
                             holder.isBusy = false;

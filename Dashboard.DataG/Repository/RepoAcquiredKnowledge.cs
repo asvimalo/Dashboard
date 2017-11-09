@@ -1,5 +1,5 @@
-﻿using Dashboard.DataG.EF.Contracts;
-using Dashboard.DataG.EF.Db;
+﻿using Dashboard.DataG.Contracts;
+using Dashboard.DataG.Db;
 using Dashboard.EntitiesG.EntitiesRev;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using System.Linq;
 
 
-namespace Dashboard.DataG.EF.Repository
+namespace Dashboard.DataG.Repository
 {
     public class RepoAcquiredKnowledge : 
         GenericRepository<EntitiesG.EntitiesRev.AcquiredKnowledge>, 

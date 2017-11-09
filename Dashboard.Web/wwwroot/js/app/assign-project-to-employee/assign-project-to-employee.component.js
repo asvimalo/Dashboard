@@ -7,12 +7,12 @@
                 //$routeProvider
                 var holder = this;
 
-                holder.employees = [];
-                $http.get("http://localhost:8890/api/dashboard/employees")
+                holder.employeesAndProjects = [];
+                $http.get("http://localhost:8890/api/dashboard/assignments/projectsemployeeslist")
                     .then(function (response) {
                         //success
                         console.log("Check");
-                        angular.copy(response.data, holder.employees);
+                        angular.copy(response.data, holder.employeesAndProjects);
                     }, function (error) {
                         //failure
                         holder.errorMessage = "Failed to load data: " + error;
@@ -21,18 +21,7 @@
                         holder.isBusy = false;
                     });
 
-                holder.projects = [];
-                $http.get("http://localhost:8890/api/dashboard/projects")
-                    .then(function (response) {
-                        //success
-                        angular.copy(response.data, holder.projects);
-                    }, function (error) {
-                        //failure
-                        holder.errorMessage = "Failed to load data: " + error;
-                    })
-                    .finally(function () {
-                        holder.isBusy = false;
-                    });
+               
 
                 holder.commitments = [];
                 $scope.addCommitment = function () {

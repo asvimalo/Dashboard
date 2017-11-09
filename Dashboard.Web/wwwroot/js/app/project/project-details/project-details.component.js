@@ -1,9 +1,9 @@
 ﻿(function () {
     "use strict";
 
-    angular.module("projectAdd")
-        .component("projectAdd", {
-            templateUrl: "/js/app/project/project-add/project-add.template.html",
+    angular.module("projectDetails")
+        .component("projectDetails", {
+            templateUrl: "/js/app/project/project-details/project-details.template.html",
             controller: function ProjectAddController($http, $scope) {
                 var self = this;
                  
