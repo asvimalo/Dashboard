@@ -19,6 +19,7 @@ namespace Dashboard.Data.Controllers
     {
         public IRepoProject _repoProject;
         private IRepoClient _repoClient;
+        private IRepoEmployee _repoEmp;
         private IRepoAssignment _repoAssignment;
         private ILogger<ProjectsController> _logger;
         //private IMapper _mapper;
@@ -26,9 +27,11 @@ namespace Dashboard.Data.Controllers
         public ProjectsController(IRepoProject repoProject,
             IRepoClient repoClient,
             IRepoAssignment repoAssignment,
+            IRepoEmployee repoEmp,
         ILogger<ProjectsController> logger/*,
             IMapper mapper*/)
         {
+            _repoEmp = repoEmp;
             _repoProject = repoProject;
             _repoClient = repoClient;
             _repoAssignment = repoAssignment;
@@ -164,6 +167,23 @@ namespace Dashboard.Data.Controllers
             };
           
                 
+        }
+        [HttpGet("employeesclientslist")]
+        public async Task<IActionResult> GetList(int id)
+        {
+            try
+            {
+                var employees = _repoEmp.GetAll();
+                var clients = _repoClient.GetAll();
+                var both = new ClientsEmployeesListNames { Employees = employees, Clients = clients };
+                return Ok(both);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Thrown exception when updating: {ex}");
+                return BadRequest($"Client wasn't deleted!");
+            }
+
         }
     }
 
