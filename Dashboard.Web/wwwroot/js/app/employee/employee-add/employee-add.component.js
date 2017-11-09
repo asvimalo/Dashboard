@@ -53,7 +53,7 @@
                         }, function (err) {
                             //failure
                             holder.errorMessage = "Failure to save new employee";
-                            alert("Failure to save new employee" + err)
+                            alert("Failure to save new employee" + err.stringify)
                         })
                         .finally(function () {
                             holder.isBusy = false;

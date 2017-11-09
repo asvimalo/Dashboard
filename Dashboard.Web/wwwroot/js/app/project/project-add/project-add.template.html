@@ -35,7 +35,7 @@
                 </div>
                 <div class="form-group">
                     <label>Client:</label>
-                    <select class="form-control" ng-options="item.clientName for item in $ctrl.clients" ng-model="formInfo.clients" name="client" required>
+                    <select class="form-control" ng-options="item.clientName for item in $ctrl.employeesAndClients.clients" ng-model="formInfo.clients" name="client" required>
                         <option value="" disabled selected></option>
                     </select>
                     <div ng-show="addProjectForm.$submitted || addProjectForm.client.$touched">
@@ -44,7 +44,7 @@
                 </div>
                 <div class="form-group">
                     <label>Employee:</label>
-                    <select class="form-control" multiple ng-options="item.employeeId as item.firstName + ' ' + item.lastName for item in $ctrl.employees" ng-model="formInfo.employees" name="employee" required>
+                    <select class="form-control" multiple ng-options="item.employeeId as item.firstName + ' ' + item.lastName for item in $ctrl.employeesAndClients.employees" ng-model="formInfo.employees" name="employee" required>
                    </select>
                     <div ng-show="addProjectForm.$submitted || addProjectForm.employee.$touched">
                         <span ng-show="addProjectForm.employee.$error.required">Employees is required.</span>
