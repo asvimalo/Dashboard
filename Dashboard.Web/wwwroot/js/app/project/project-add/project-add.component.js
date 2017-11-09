@@ -7,16 +7,14 @@
             controller: function ProjectAddController($http, $scope) {
                 var self = this;
                  
-                self.clients = []; 
-                self.employees = [];
+                self.employeesAndClients = []; 
+               
                 
-                $http.get('http://localhost:8890/api/dashboard/clients').then(function (response) {
-                    angular.copy(response.data, self.clients);
+                $http.get('http://localhost:8890/api/dashboard/projects/employeesclientslist').then(function (response) {
+                    angular.copy(response.data, self.employeesAndClients);
                 });
 
-                $http.get('http://localhost:8890/api/dashboard/employees').then(function (response) {
-                    angular.copy(response.data, self.employees);
-                });
+                
                  
                 $scope.addProject = function () {
                     console.log("in the addProject function");
