@@ -56,8 +56,9 @@
                     </div>
                     <div class="row">
                         <label>To</label>
-                        <input type="date" ng-model="commitment.stopDate" class="form-control">
+                        <input type="date" ng-model="commitment.endDate" class="form-control" ng-change="validateEndDate(commitment.startDate, commitment.endDate)">
                     </div>
+                    <span>{{errorMessage}}</span>
                     <div class="row">
                         <label>Commitment</label>
                         <input type="number" ng-model="commitment.hours" class="form-control">

@@ -34,14 +34,13 @@
                     var y = holder.commitments;
                 };
 
-                //$scope.commitment.stopDate = {
-
-                //    if($scope.commitment.startDate > $scope.commitment.stopDate) {
-                //        alert("Start date is later then end date.");
-                //        $scope.commitment.stopDate = {};
-                //    }
-                        
-                //};
+                $scope.validateEndDate = function (start, end) {
+                    $scope.errorMessage = "";
+                    if (new Date(start) > new Date(end)) {
+                        $scope.errorMessage = "To:date should be greater than start date.";
+                        return false;
+                    }
+                };
 
                 //$('input[name="daterange"]').daterangepicker(
                 //    {
