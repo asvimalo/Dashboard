@@ -1,0 +1,141 @@
+.fc-dateranger {
+  position: relative;
+}
+
+.fc-dateranger button {
+  margin: 0;
+}
+
+.fc-dateranger-picker-container {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 3px 3px 8px 0px rgba(0, 0, 0, 0.2), -3px -0px 8px 0px rgba(0, 0, 0, 0.2);
+  margin-top: 5px;
+  padding-bottom: 60px;
+  position: absolute;
+  opacity: 0;
+  transition: all .3s ease-in-out;
+  visibility: collapse;
+  z-index: 99;
+}
+
+.show-dateranger-picker-container {
+  opacity: 1;
+  visibility: visible;
+}
+
+.hide-dateranger-picker-container {
+  opacity: 0;
+  visibility: collapse;
+}
+
+.fc-dateranger-picker-container .divide {
+  background-color: rgb(63, 81, 181);
+  margin: 10px 0 20px 0;
+  opacity: 0.05;
+  width: 1px;
+}
+
+.fc-dateranger-picker {
+  border-radius: 10px;
+  height: 280px;
+  width: 340px;
+}
+
+.fc-dateranger-picker-tempdate {
+  bottom: 5px;
+  left: 10px;
+  position: absolute;
+}
+
+.fc-dateranger-picker-tempdate.temp-end {
+  left: 350px;
+}
+
+.fc-dateranger-picker-tempdate span {
+  font-size: 2em;
+}
+
+.fc-dateranger-picker-actions {
+  bottom: 5px;
+  position: absolute;
+  right: 5px;
+}
+
+.fc-dateranger-picker-actions button {
+  font-size: 1em;
+  margin: 5px;
+  min-width: 50px;
+  width: 60px;
+}
+
+.fc-dateranger-picker-container .fc-dateranger-picker table {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+.fc-dateranger-picker-container .fc-dateranger-picker table > caption {
+  background-color: rgb(63, 81, 181);
+  border-radius: 10px 10px 0 0;
+  text-align: center;
+}
+
+.fc-dateranger-picker-container .fc-dateranger-picker table > caption .condition {
+  color: white;
+  float: left;
+  font-size: 1.2em;
+  height: 40px;
+  width: 50%;
+}
+
+.fc-dateranger-picker-container .fc-dateranger-picker table > caption .condition .arraw-btn {
+  font-size: 16px;
+  height: 40px;
+  line-height: 40px;
+  margin: 0;
+  width: 40px;
+}
+
+.fc-dateranger-picker-container .fc-dateranger-picker table tbody tr td {
+  border: none;
+  color: #626262;
+  padding: 5px 0;
+  text-align: center;
+}
+
+.fc-dateranger-picker-container .fc-dateranger-picker table tbody tr:first-child > td {
+  font-weight: bold;
+}
+
+button.day-button {
+  border-radius: 5px;
+  height: 20px;
+  line-height: 20px;
+  margin: 0;
+  min-height: 20px;
+  min-width: 30px;
+  width: 30px;
+}
+
+button.day-button:hover {
+  background-color: #e7e7e7;
+}
+
+button.day-button.selected {
+  background: rgb(63, 81, 181);
+  color: white;
+}
+
+button.day-button.selected:hover {
+  background: rgb(63, 81, 181);
+  color: #e7e7e7;
+}
+
+button.day-button.current-month {
+  color: rgb(63, 81, 181);
+}
+
+button.day-button.disabled {
+  color: #bfbfbf;
+}

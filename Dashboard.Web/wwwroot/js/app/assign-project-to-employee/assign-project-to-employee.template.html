@@ -39,6 +39,17 @@
             <div class="form-group">
                 <div class="col-md-6">
                     <h4>Add a new commitment</h4>
+                    <!--<div class="form-group">
+                        <label for="daterange1" class="control-label">Simple picker</label>
+                        <input date-range-picker id="daterange1" name="daterange1" class="form-control date-picker" type="text"
+                               ng-model="date" required ng-change="SimplePickerChange();" />
+                    </div>-->
+
+                    <!--<div class="row">
+                        <label>From</label>
+                        <input date-range-picker class="form-control date-picker" type="text" ng-model="commitment.date" required />
+                    </div>-->
+
                     <div class="row">
                         <label>From</label>
                         <input type="date" ng-model="commitment.startDate" class="form-control">
@@ -49,7 +60,7 @@
                     </div>
                     <div class="row">
                         <label>Commitment</label>
-                        <input type="text" ng-model="commitment.hours" class="form-control">
+                        <input type="number" ng-model="commitment.hours" class="form-control">
                     </div>
                     <br />
                     <button class="btn btn-secondary" type="button" ng-click="addCommitment()"> Add </button>

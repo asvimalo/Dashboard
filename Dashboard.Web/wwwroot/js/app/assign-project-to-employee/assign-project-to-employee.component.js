@@ -47,6 +47,28 @@
                     var y = holder.commitments;
                 };
 
+                //$scope.commitment.stopDate = {
+
+                //    if($scope.commitment.startDate > $scope.commitment.stopDate) {
+                //        alert("Start date is later then end date.");
+                //        $scope.commitment.stopDate = {};
+                //    }
+                        
+                //};
+
+                //$('input[name="daterange"]').daterangepicker(
+                //    {
+                //        locale: {
+                //            format: 'YYYY-MM-DD'
+                //        },
+                //        startDate: '2017-01-01',
+                //        endDate: '2017-12-31'
+                //    },
+                //    function (start, end, label) {
+                //        alert("A new date range was chosen: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+                //    }
+                //);
+
                 $scope.assignProjectToEmployee = function () {
                     console.log("in the function");
                     holder.isBusy = true;
