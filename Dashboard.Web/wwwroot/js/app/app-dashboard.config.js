@@ -27,6 +27,9 @@
                     when('/projects/project-add', {
                         template: '<project-add></project-add>'
                     }).
+                    when('/projects/project-details', {
+                        template: '<project-details></project-details>'
+                    }).
                     when('/assignments', {
                         template: '<assignment-list></assignment-list>'
                     }).

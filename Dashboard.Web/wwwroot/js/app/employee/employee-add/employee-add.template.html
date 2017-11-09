@@ -59,16 +59,20 @@
             </div>
             <label>
                 Knowledge:
-                <input class="form-control" type="text" ng-model="employee.newKnowledgeName" name="unewKnowledge" required="" />
+                <input class="form-control" type="text" ng-model="$ctrl.knowledges.knowledgeName" name="unewKnowledge" />
             </label>
             <br />
-            <div ng-show="form.$submitted || form.unewKnowledge.$touched">
-                <div class="form-control" ng-show="form.unewKnowledge.$error.required">Tell us your new knowledge.</div>
+            <button class="btn btn-secondary" type="button" ng-click="addKnowledges()"> Add </button>
+            <br /> 
+            <label>Added Knowledges:</label>
+            <div ng-repeat="items in $ctrl.newKnowledges">
+                {{items}} 
+                <button class="glyphicon glyphicon-remove" type="button" ng-click="remove($ctrl.newKnowledges, $index)"></button>
             </div>
+            <br />
             <label>
                 Choices:
-                <select class="form-control" ng-options="item.knowledgeName for item in $ctrl.knowledges" ng-model="employee.knowledgeName" name="uKnowledge">
-
+                <select class="form-control" multiple ng-options="item.knowledgeName for item in $ctrl.knowledges" ng-model="employee.knowledges" name="uKnowledge">
                     <option value="" disabled selected></option>
                 </select>
             </label>
