@@ -187,9 +187,17 @@ namespace Dashboard.DataG.Migrations
 
                     b.Property<string>("Comments");
 
+                    b.Property<DateTime>("EndDate");
+
                     b.Property<string>("PhaseName");
 
+                    b.Property<int>("Progress");
+
                     b.Property<int>("ProjectId");
+
+                    b.Property<DateTime>("StartDate");
+
+                    b.Property<int>("TimeBudget");
 
                     b.HasKey("PhaseId");
 

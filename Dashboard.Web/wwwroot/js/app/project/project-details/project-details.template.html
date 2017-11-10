@@ -1,69 +1,31 @@
 ﻿
-<h3 class="modal-title" id="modal-title">One Project Details</h3>
+<h3 class="modal-title" id="modal-title">{{projectName}}</h3>
+<table>
+    <tr class="success" ng-repeat="phase in $ctrl.phases">
+        <td>{{ phase.phaseName }}</td>
+    </tr>
+</table> 
 
-<form novalidate class="form-group" name="addProjectForm"> 
-    <div class="modal-body" id="modal-body">
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label>Name</label>
-                    <input type="text" name="projectname" ng-model="$ctrl.project.projectName" class="form-control" required>
-                    <div ng-show="addProjectForm.$submitted || addProjectForm.projectname.$touched">
-                        <span ng-show="addProjectForm.projectname.$error.required">Project name is required.</span>
-                    </div>
-                    </div>
-                <div class="form-group">
-                    <label>From</label>
-                    <input type="date" ng-model="$ctrl.project.startDate" class="form-control" name="startdate" required>
-                    <div ng-show="addProjectForm.$submitted || addProjectForm.startdate.$touched">
-                        <span ng-show="addProjectForm.startdate.$error.required">Start date is required.</span>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>To</label>
-                    <input type="date" ng-model="$ctrl.project.stopDate" class="form-control" name="stopdate" required>
-                    <div ng-show="addProjectForm.$submitted || addProjectForm.stopdate.$touched">
-                        <span ng-show="addProjectForm.stopdate.$error.required">Start date is required.</span>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>Timebudget</label>
-                    <input type="number" ng-model="$ctrl.project.timeBudget" class="form-control" name="timebudget" required>
-                    <div ng-show="addProjectForm.$submitted || addProjectForm.timebudget.$touched">
-                        <span ng-show="addProjectForm.timebudget.$error.required">Timebudget is required.</span>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>Client:</label>
-                    <select class="form-control" ng-options="item.clientName for item in $ctrl.clients" ng-model="formInfo.clients" name="client" required>
-                        <option value="" disabled selected></option>
-                    </select>
-                    <div ng-show="addProjectForm.$submitted || addProjectForm.client.$touched">
-                        <span ng-show="addProjectForm.client.$error.required">Client is required.</span>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>Employee:</label>
-                    <select class="form-control" multiple ng-options="item.employeeId as item.firstName + ' ' + item.lastName for item in $ctrl.employees" ng-model="formInfo.employees" name="employee" required>
-                   </select>
-                    <div ng-show="addProjectForm.$submitted || addProjectForm.employee.$touched">
-                        <span ng-show="addProjectForm.employee.$error.required">Employees is required.</span>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>Comments</label>
-                    <input type="text" ng-model="$ctrl.project.notes" class="form-control" >   
-                </div>
-                <button class="btn btn-primary" type="button" ng-click="addProject()">Save</button>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Phasename</th> 
+            <th>Date</th>
+            <th>Timebudget</th>
+            <th>Progress</th>
+            <th>Button</th>
+      </tr>
+    </thead>
+    <tbody ng-repeat="item in $ctrl.projects">
+        <tr> {{ item.phases.phaseName }} </tr> 
+    </tbody>
+</table>
 
-            </div>
-            <div class="col-md-6">
-                <client-add></client-add>
-            </div>
-        </div>
-    </div>
-     
-</form>
+<!--<button class="btn btn-lg btn-success col-xs-12">
+    <span class="glyphicon glyphicon-plus pull-right"></span> Phases
+</button>-->
+
+<!-- Fixa one Projects -->
 
 
 

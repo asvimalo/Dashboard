@@ -174,8 +174,12 @@ namespace Dashboard.DataG.Migrations
                     PhaseId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Comments = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     PhaseName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ProjectId = table.Column<int>(type: "int", nullable: false)
+                    Progress = table.Column<int>(type: "int", nullable: false),
+                    ProjectId = table.Column<int>(type: "int", nullable: false),
+                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    TimeBudget = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {

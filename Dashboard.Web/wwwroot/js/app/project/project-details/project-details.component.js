@@ -4,18 +4,12 @@
     angular.module("projectDetails")
         .component("projectDetails", {
             templateUrl: "/js/app/project/project-details/project-details.template.html",
-            controller: function ProjectAddController($http, $scope) {
+            controller: function ProjectListController($http, $scope) {
                 var self = this;
                  
-                self.clients = []; 
-                self.employees = [];
-                
-                $http.get('http://localhost:8890/api/dashboard/clients').then(function (response) {
-                    angular.copy(response.data, self.clients);
-                });
-
-                $http.get('http://localhost:8890/api/dashboard/employees').then(function (response) {
-                    angular.copy(response.data, self.employees);
+                self.projects = [];
+                $http.get('http://localhost:8890/api/dashboard/projects').then(function (response) {
+                    angular.copy(response.data, self.projects);
                 });
                  
                 $scope.addProject = function () {
