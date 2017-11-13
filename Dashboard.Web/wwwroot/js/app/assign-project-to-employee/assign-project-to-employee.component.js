@@ -21,8 +21,6 @@
                         holder.isBusy = false;
                     });
 
-               
-
                 holder.commitments = [];
                 $scope.addCommitment = function () {
 
@@ -36,14 +34,13 @@
                     var y = holder.commitments;
                 };
 
-                //$scope.commitment.stopDate = {
-
-                //    if($scope.commitment.startDate > $scope.commitment.stopDate) {
-                //        alert("Start date is later then end date.");
-                //        $scope.commitment.stopDate = {};
-                //    }
-                        
-                //};
+                $scope.validateEndDate = function (start, end) {
+                    $scope.errorMessage = "";
+                    if (new Date(start) > new Date(end)) {
+                        $scope.errorMessage = "To:date should be greater than start date.";
+                        return false;
+                    }
+                };
 
                 //$('input[name="daterange"]').daterangepicker(
                 //    {
@@ -62,6 +59,8 @@
                     console.log("in the function");
                     holder.isBusy = true;
                     holder.errorMessage = "";
+
+                    var test = $scope.formInfo.employee;
 
                     var data = { "ProjectId": $scope.formInfo.project.projectId, "EmployeeId": $scope.formInfo.employee.employeeId, "JobTitle": $scope.formInfo.jobtitle, "Location": $scope.formInfo.location, "Commitments": holder.commitments };
                     var dataTmp = JSON.stringify(data);

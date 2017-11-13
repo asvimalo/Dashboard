@@ -11,8 +11,8 @@ using System;
 namespace Dashboard.DataG.Migrations
 {
     [DbContext(typeof(DashboardGenericContext))]
-    [Migration("20171107095002_newOnewDb")]
-    partial class newOnewDb
+    [Migration("20171110105013_InitialDb")]
+    partial class InitialDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -45,8 +45,6 @@ namespace Dashboard.DataG.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<int>("EmployeeId");
-
-                    b.Property<string>("JobTitle");
 
                     b.Property<string>("Location");
 
@@ -125,6 +123,36 @@ namespace Dashboard.DataG.Migrations
                     b.ToTable("Employee");
                 });
 
+            modelBuilder.Entity("Dashboard.EntitiesG.EntitiesRev.JobTitle", b =>
+                {
+                    b.Property<int>("JobTitleId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("TitleName");
+
+                    b.HasKey("JobTitleId");
+
+                    b.ToTable("JobTitles");
+                });
+
+            modelBuilder.Entity("Dashboard.EntitiesG.EntitiesRev.JobTitleAssignment", b =>
+                {
+                    b.Property<int>("JobTitleAssignmentId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("AssignmentId");
+
+                    b.Property<int>("JobTitleId");
+
+                    b.HasKey("JobTitleAssignmentId");
+
+                    b.HasIndex("AssignmentId");
+
+                    b.HasIndex("JobTitleId");
+
+                    b.ToTable("JobTitleAssignments");
+                });
+
             modelBuilder.Entity("Dashboard.EntitiesG.EntitiesRev.Knowledge", b =>
                 {
                     b.Property<int>("KnowledgeId")
@@ -160,9 +188,17 @@ namespace Dashboard.DataG.Migrations
 
                     b.Property<string>("Comments");
 
+                    b.Property<DateTime>("EndDate");
+
                     b.Property<string>("PhaseName");
 
+                    b.Property<int>("Progress");
+
                     b.Property<int>("ProjectId");
+
+                    b.Property<DateTime>("StartDate");
+
+                    b.Property<int>("TimeBudget");
 
                     b.HasKey("PhaseId");
 
@@ -251,6 +287,19 @@ namespace Dashboard.DataG.Migrations
                     b.HasOne("Dashboard.EntitiesG.EntitiesRev.Assignment", "Assignment")
                         .WithMany("Commitments")
                         .HasForeignKey("AssigmentId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Dashboard.EntitiesG.EntitiesRev.JobTitleAssignment", b =>
+                {
+                    b.HasOne("Dashboard.EntitiesG.EntitiesRev.Assignment", "Assignment")
+                        .WithMany("JobTitleAssignments")
+                        .HasForeignKey("AssignmentId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Dashboard.EntitiesG.EntitiesRev.JobTitle", "JobTitle")
+                        .WithMany("JobTitleAssignments")
+                        .HasForeignKey("JobTitleId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

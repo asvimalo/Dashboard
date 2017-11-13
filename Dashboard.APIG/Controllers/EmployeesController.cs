@@ -95,45 +95,69 @@ namespace Dashboard.APIG.Controllers
             {
                 try
                 {
-                    var newKnowledge = new Knowledge { KnowledgeName = employee.NewKnowledgeName };
-                    var knowledge = new Knowledge { KnowledgeName = employee.KnowledgeName };
-                    var acquiredKnowledge = new AcquiredKnowledge();
+                    
                     var newEmployee = new Employee
                     {
                         FirstName = employee.FirstName,
                         LastName = employee.LastName,
-                        PersonNr = employee.PersonNr,
-
-
+                        PersonNr = employee.PersonNr
                     };
+                     
                     var addedEmployee = await _empRepo.Create(newEmployee);
+                                        
 
-                    if (string.IsNullOrEmpty(employee.KnowledgeName) && !string.IsNullOrEmpty(employee.NewKnowledgeName))
-                        newKnowledge = await _KnRepo.Create(newKnowledge);                                          
-                    else if(!string.IsNullOrEmpty(employee.KnowledgeName) && string.IsNullOrEmpty(employee.KnowledgeName))
+                    if (employee.knowledges == null && employee.newKnowledges != null)
+                        foreach (var newKnowledge in employee.newKnowledges)
+                        {
+                            var AddedKnowledges = await _KnRepo.Create(new Knowledge
+                            {
+                                KnowledgeName = newKnowledge
+                            });
+
+                            var addedAssignment = await _AcqRepo.Create(new AcquiredKnowledge
+                            {
+                                EmployeeId = addedEmployee.EmployeeId,
+                                KnowledgeId = AddedKnowledges.KnowledgeId
+                            });
+                        }
+                    else if (employee.knowledges != null && employee.newKnowledges == null)
                     {
-                        acquiredKnowledge.Employee = addedEmployee;
-                        acquiredKnowledge.Knowledge = knowledge;
-                        acquiredKnowledge = await _AcqRepo.Create(acquiredKnowledge);
-                    }                       
-                    else if(!string.IsNullOrEmpty(employee.KnowledgeName) && !string.IsNullOrEmpty(employee.KnowledgeName))
+                        foreach (var knowledge in employee.knowledges)
+                        {
+                            var addedAssignment = await _AcqRepo.Create(new AcquiredKnowledge
+                            {
+                                EmployeeId = addedEmployee.EmployeeId,
+                                KnowledgeId = knowledge.KnowledgeId
+                            });
+                        }
+                    }
+                    else if (employee.knowledges != null && employee.newKnowledges != null)
                     {
-                        //1
-                        var createdKnowledge = await _KnRepo.Create(newKnowledge);
+                        foreach (var newKnowledge in employee.newKnowledges)
+                        {
+                            var AddedKnowledges = await _KnRepo.Create(new Knowledge
+                            {
+                                KnowledgeName = newKnowledge
+                            });
 
-                        acquiredKnowledge.Employee = addedEmployee;
-                        acquiredKnowledge.Knowledge = createdKnowledge;
-
-                        var addedAcqKnowledge = await _AcqRepo.Create(acquiredKnowledge);
-
-                        //2
-                        var addedAcqknowledge = await _AcqRepo.Create(new AcquiredKnowledge { Knowledge = knowledge, Employee = newEmployee});
+                            var addedAssignment = await _AcqRepo.Create(new AcquiredKnowledge
+                            {
+                                EmployeeId = addedEmployee.EmployeeId,
+                                KnowledgeId = AddedKnowledges.KnowledgeId
+                            });
+                        }
+                        foreach (var knowledge in employee.knowledges)
+                        {
+                            var addedAssignment = await _AcqRepo.Create(new AcquiredKnowledge
+                            {
+                                EmployeeId = addedEmployee.EmployeeId,
+                                KnowledgeId = knowledge.KnowledgeId
+                            });
+                        }
                     }
 
-
-
-                    
-                    #region Write picture to Image folder
+                    return Ok();
+                    //#region Write picture to Image folder
                     //var webRootPath = _env.WebRootPath;
                     //var fileName = newEmployee.FirstName + ".jpg";
                     //var filePath = Path.Combine($"{webRootPath}/Images/{fileName}");
@@ -143,17 +167,13 @@ namespace Dashboard.APIG.Controllers
                     //var newCommitment = Mapper.Map<Commitment>(commitment);
                     //newEmployee.ImageName = fileName;
                     //newEmployee.ImagePath = filePath; 
-                    #endregion
-
-                    
-                    return CreatedAtRoute("GetEmployee", new { id = addedEmployee.EmployeeId }, addedEmployee);
-                  
+                    //#endregion
                     //return Ok(Mapper.Map<CommitmentViewModel>(result));
                 }
                 catch (Exception ex)
                 {
 
-                    _logger.LogError($"Exception thrown while getting employee: {ex}");
+                    _logger.LogError($"Exception thrown while getting employee: {ex.Message}");
                     return BadRequest($"Error ocurred");
                 }
             }

@@ -17,6 +17,7 @@
             "employeeAdd",
             "assignProjectToEmployee",
             "projectAdd",
+            "projectDetails",
             "clientAdd"
             ]);
 })();
