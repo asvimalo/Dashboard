@@ -66,7 +66,7 @@ namespace Dashboard.Data.Controllers
         {
             try
             {
-                var result = await _repoProject.GetById(id);
+                var result = _repoProject.Include(x => x.Assignments, y => y.Client, z => z.Phases).First(a => a.ProjectId == id);
                 return Ok(result);
                 //return Ok(_mapper.Map<ProjectViewModel>(result));
             }
