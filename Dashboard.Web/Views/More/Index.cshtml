@@ -4,25 +4,45 @@
 
 <div class="container-fluid">
     <div class="form-group">
-        <div class="col-md-9">
-            <br />
-            <br />
-            <div id="ganttchart"></div>
+        <div class="row">
+            <div class="col-md-3">
+                <button type="button" class="btn btn-info">Active</button>
+                <button type="button" class="btn">Archive</button>
+            </div>
+            <div class="col-md-3 col-md-offset-3">
+                <button type="button" class="btn btn-info">Days</button>
+                <button type="button" class="btn">Months</button>
+                <button type="button" class="btn">Years</button>
+            </div>
         </div>
-        <div class="col-md-3">
-            <h3>Panel buttons</h3>
-            <br />
+        <div class="row">
+            <div class="col-md-9">
+                <br />
+                <div class="table-responsive" id="ganttchart"></div>
+            </div>
+            <div class="col-md-3" id="panels">
+                <br />
+                <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#projectAdd">Add a new project</button>
+                <br />
+                <br />
+                <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#employeeAdd">Add a new Employee</button>
+                <br />
+                <br />
+                <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#assignEmployeeToProject">Assign an employee to a project</button>                
+                <br />
+            </div>
         </div>
     </div>
 </div>
 
 @section Scripts {
 
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <script src="~/lib/moment/moment.js"></script>
 
     <script>
         $(function () {
+
+            //$("#panels").css({ position: 'absolute' });
             //Mockup data
             var projectA = {
                 'name': 'Dashboard',
@@ -38,6 +58,10 @@
                     moment().add(10, 'days'),
                     moment().add(20, 'days'),
                 ],
+                'phaseName': ['Analys', 'Testing', 'Burgum'],
+                'phaseProgress': [60, 10, 20],
+                'phaseComments': ["Sg", "is", "good"],
+                'phaseTimebudget': [200, 300, 400],
                 'phases': 3,
                 'employees': [
                     {
@@ -89,6 +113,10 @@
                     moment().add(6, 'days'),
                     moment().add(15, 'days')
                 ],
+                'phaseName': ['Analys', 'Testing'],
+                'phaseProgress': [60, 10],
+                'phaseComments': ["Sg", "is"],
+                'phaseTimebudget': [200, 300],
                 'phases': 2,
                 'employees': [
                     {
@@ -129,6 +157,10 @@
                     moment().add(15, 'days'),
                     moment().add(17, 'days')
                 ],
+                'phaseName': ['Analys', 'Testing', 'Burgum', 'Gurgum'],
+                'phaseProgress': [60, 10, 20, 12],
+                'phaseComments': ["Sg", "is", "good", "or"],
+                'phaseTimebudget': [200, 300, 400, 100],
                 'phases': 4,
                 'employees': [
                     {
@@ -183,7 +215,7 @@
                 formatedDates.push(plusOneDayStr);
             }
 
-            var tabledate = $("<table></table>").addClass("table table-bordered"); //.css({ "height": "100px !important", "width": "400px", "overflow" : "scroll"});
+            var tabledate = $("<table></table>").addClass("table table-bordered table-condensed").css({ "width": "200" }); //.css({ "height": "100px !important", "width": "400px", "overflow" : "scroll"});
             tabledate[0].border = "1";
             var rowdate = $(tabledate[0].insertRow(-1));
             var columnCountDate = formatedDates.length;
@@ -196,8 +228,8 @@
             }
 
             //**********   PROJECTS   ***********
-            for (var i = 0; i < projects.length; i++) {                  
-                var data = []; 
+            for (var i = 0; i < projects.length; i++) {
+                var data = [];
                 for (var j = 0; j < dates.length; j++) {                 //for calendar
                     var projectStart = moment(projects[i].startDate).format('YYYY-MM-DD');
                     var projectEnd = moment(projects[i].endDate).format('YYYY-MM-DD');
@@ -235,17 +267,20 @@
 
                     var cell = $("<td></td>");
                     cell.html(projects[i].name);
-                    cell.addClass("insertButton"); //.attr('buttonId', projects[i]);
+                    cell.addClass("insertButton"); 
                     row.append(cell);
                     for (var j = 1; j < dates.length; j++) {
                         var cell = $("<td></td>");
                         cell.html(data[j]);
+                        if (!isEmpty(data[j])) { 
+                            cell.attr("data-trigger", "hover");
+                        }
                         row.append(cell);
                     }
                 }
                 //Projects/Employee
                 if (typeof projects[i].employees !== 'undefined') {
-                    for (var k = 0; k < projects[i].employees.length; k++) {    
+                    for (var k = 0; k < projects[i].employees.length; k++) {
                         data = [];
                         for (var j = 0; j < dates.length; j++) {                            //for calendar
                             for (var l = 0; l < projects[i].employees[k].commit; l++) {     //for commitments
@@ -293,8 +328,9 @@
             dateTable.find(".employee").hide();
             dateTable.find("tr").eq(0).show();
 
+            //Collapse
             $('<input></input>').attr({ 'type': 'button' }).val("button").click(function () {
-                var projectRow = $(this).parent().parent();             
+                var projectRow = $(this).parent().parent();
                 var projectId = projectRow.attr('projectId');
                 projectRow.siblings(".employee").each(function () {
                     var employeeProjectId = $(this).attr('projectId');
@@ -304,28 +340,26 @@
                 });
             }).appendTo($('td.insertButton'));
 
+            //Popover
+            $('[data-trigger="hover"]').popover({
+                'trigger': 'hover',
+                'placement': 'right',
+                'container': 'body',
+                'content': function () {
+                    var parentID = $(this).parent();
+                    var contentData = "Bababu";
+                    return contentData;
+                }
+            });
+
             //TODO: koppla in hit OneProject
             //dateTable.find(".project").click(function () {
             //    var projectId = $(this).attr('projectId');
-            //    $(this).siblings(".employee").each(function () {
-            //        var employeeProjectId = $(this).attr('projectId');
-            //        if (employeeProjectId == projectId) {
-            //            $(this).fadeToggle(500);
-            //        }
-            //    });
             //}).eq(0).trigger('click');
 
             //**********   Helper functions   ***********
-            function getEndDate() { 
-                var today = moment();
-                var end = projects[0].endDate;
-                for (var i = 1; i < projects.length; i++) {
-                    if (projects[i].endDate > end) {
-                        end = projects[i].endDate;
-                    }
-                }
-                var result = end.diff(today, 'days') + 10; //TODO kolla om lokalberoende
-                return result > 20 ? result : 20;
+            function isEmpty(val) {
+                return (val === undefined || val == null || val.length <= 0 || val === " ") ? true : false;
             }
 
             function getInitDateToCalendar() {
@@ -343,10 +377,21 @@
                 var tEnd = end.diff(today, 'days') + 10;
                 tEnd = tEnd > 20 ? tEnd : 20;
                 var tStart = today.diff(start, 'days') - 10;
-                var result = { "start" : start, "end" : tEnd };
+                var result = { "start": start, "end": tEnd };
                 return result;
             }
-            
+
+            //function getEndDate() {
+            //    var today = moment();
+            //    var end = projects[0].endDate;
+            //    for (var i = 1; i < projects.length; i++) {
+            //        if (projects[i].endDate > end) {
+            //            end = projects[i].endDate;
+            //        }
+            //    }
+            //    var result = end.diff(today, 'days') + 10; //TODO kolla om lokalberoende
+            //    return result > 20 ? result : 20;
+            //}
 
             //function create2DArray(rows) {
             //    var arr = [];
