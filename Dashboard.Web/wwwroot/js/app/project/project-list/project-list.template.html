@@ -25,8 +25,9 @@
                     <td>{{ project.notes  }}</td>
                     <td>{{ project.assignments  }}</td>
                     <td>{{ project.phases  }}</td>
-                    <td><a href="#/projects/{{project.id}}">{{project.projectName}}</a></td>
+                    <td><a ng-click="getAllPhases(project.projectId)" ng-href="#!/projects/project-details/project.projectId" class="glyphicon glyphicon-plus pull-right btn btn-primary"> Edit </a></td>
 
                 </tr>
             </table>
+ 
         

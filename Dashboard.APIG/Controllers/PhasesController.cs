@@ -43,12 +43,12 @@ namespace Dashboard.API.Controllers
         }
 
         // GET api/dashboard/phases/5
-        [HttpGet("{id}", Name = "GetPhase")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
             try
             {
-                var result = _repo.GetById(id);
+                var result = _repo.Include(x => x.Project, y => y.Tasks).First(x=>x.PhaseId == id);
                 return Ok(result);
                 //return Ok(Mapper.Map<CommitmentViewModel>(result));
             }

@@ -18,7 +18,9 @@
             "assignProjectToEmployee",
             "projectAdd",
             "projectDetails",
-            "clientAdd"
+            "clientAdd",
+            "phaseAdd",
+            "phaseDelete"
             ]);
 })();
 //'daterangerpicker',

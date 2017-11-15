@@ -27,7 +27,7 @@
                     when('/projects/project-add', {
                         template: '<project-add></project-add>'
                     }).
-                    when('/projects/project-details', {
+                    when('/projects/project-details/:projectId', {
                         template: '<project-details></project-details>'
                     }).
                     when('/assignments', {
@@ -69,6 +69,12 @@
                     //when('/phases/:phaseId', {
                     //    template: '<phase-detail></phase-detail>'
                     //}).
+                    when('/phases/phase-add', {
+                        template: '<phase-add></phase-add>'
+                    }).
+                    when('/phases/phase-delete/:phaseId', {
+                        template: '<phase-delete></phase-delete>'
+                    }).
                     when('/tasks', {
                         template: '<task-list></task-list>'
                     }).
