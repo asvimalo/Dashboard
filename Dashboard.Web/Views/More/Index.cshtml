@@ -42,7 +42,6 @@
     <script>
         $(function () {
 
-            //$("#panels").css({ position: 'absolute' });
             //Mockup data
             var projectA = {
                 'name': 'Dashboard',
@@ -201,8 +200,6 @@
             var startdate = moment();
             //var startdate = getInitDateToCalendar().start;
             var enddate = getInitDateToCalendar().end;
-            //var col1 = startdate.format('MMM');
-            //dates.push(col1);
             for (i = 0; i < enddate; i++) {
                 if (i == 0) {
                     dates.push(" ");
@@ -227,38 +224,6 @@
                 rowdate.append(celldate);
             }
 
-            //**********   PROJECTS   ***********
-            //for (var i = 0; i < projects.length; i++) {
-            //    var data = [];
-            //    for (var j = 0; j < dates.length; j++) {                 //for calendar
-            //        var projectStart = moment(projects[i].startDate).format('YYYY-MM-DD');
-            //        var projectEnd = moment(projects[i].endDate).format('YYYY-MM-DD');
-            //        data[j] = ' ';
-            //        if (projectStart == dates[j]) {
-            //            data[j] = 'S';
-            //            continue;
-            //        }
-            //        if (projectEnd == dates[j]) {
-            //            data[j] = 'E';
-            //            continue;
-            //        }
-            //        for (var l = 0; l < projects[i].phases; l++) {      //for project's phases
-            //            var phaseStart = moment(projects[i].startPhase[l]).format('YYYY-MM-DD');
-            //            var phaseEnd = moment(projects[i].endPhase[l]).format('YYYY-MM-DD');
-            //            if (phaseStart == dates[j]) {
-            //                data[j] = 'FS';
-            //                continue;
-            //            }
-            //            if (phaseEnd == dates[j]) {
-            //                data[j] = 'FE';
-            //                continue;
-            //            }
-            //            if ((phaseStart < dates[j]) && (phaseEnd > dates[j])) {
-            //                data[j] = 'x';
-            //                continue;
-            //            }
-            //        }
-            //    }
             for (var i = 0; i < projects.length; i++) {
                 var data = [];
                 var phaseId = [];
@@ -310,7 +275,7 @@
                         cell.html(data[j]);
                         if (!isEmpty(data[j])) {
                             cell.attr("data-trigger", "hover");
-                            cell.attr("proj", i);  //TODO how to get 'l'
+                            cell.attr("proj", i); 
                             cell.attr("phase", phaseId[j]);
                         }
                         row.append(cell);
@@ -368,8 +333,7 @@
             dateTable.find("tr").eq(0).show();
 
             //Collapse
-            $('<button></button>').attr({ 'type': 'submit' }).addClass("glyphicon glyphicon-triangle-bottom").click(function () { //.val('button') .addClass("glyphicon glyphicon-triangle-bottom")
-                var projectRow = $(this).parent().parent();
+            $('<button></button>').attr({ 'type': 'submit' }).addClass("glyphicon glyphicon-triangle-bottom").click(function () { 
                 var projectId = projectRow.attr('projectId');
                 projectRow.siblings(".employee").each(function () {
                     var employeeProjectId = $(this).attr('projectId');
