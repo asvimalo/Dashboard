@@ -363,7 +363,10 @@
             var rowdate = $(tabledate[0].insertRow(-1));
             var columnCountDate = formatedDates.length;
             //var str = "";
-            for (var i = 0; i < columnCountDate; i++) {
+            var celldate = $("<td colspan=\"2\"></td>");
+            celldate.html(formatedDates[i]);
+            rowdate.append(celldate);
+            for (var i = 1; i < columnCountDate; i++) {
                 //str += (dates[i].toString() + " | ");
                 var celldate = $("<td></td>");
                 celldate.html(formatedDates[i]);
@@ -415,8 +418,12 @@
 
                     var cell = $("<td></td>");
                     cell.html(projects[i].name);
-                    cell.addClass("insertButton");
+                    cell.addClass("projectName");
                     row.append(cell);
+
+                    var cell1 = $("<td></td>");
+                    cell1.addClass("insertButton");
+                    row.append(cell1);
                     for (var j = 1; j < dates.length; j++) {
                         var cell = $("<td></td>");
                         cell.html(data[j]);
@@ -456,7 +463,7 @@
                             row.addClass("employee");
                             row.attr('projectId', projects[i].name);
 
-                            var cell = $("<td></td>");
+                            var cell = $("<td colspan=\"2\"></td>");
                             cell.html(projects[i].employees[k].name);
                             row.append(cell);
                             for (var j = 1; j < dates.length; j++) {
@@ -487,13 +494,15 @@
                 'data-html': 'true',
                 'html': 'true',
                 'content': function () {
-                    var projectId = $(this).attr('proj');
                     var phaseId = $(this).attr('phase');
+                    if (phaseId == -1)
+                        return "";
+                    var projectId = $(this).attr('proj');
                     var projObj = projects[projectId];
                     var contentData =
                         projObj.phaseName[phaseId] + "<br/><br/>" +
-                        "From: " + projObj.startPhase[phaseId].format('YYYY-MM-DD') + "<br/>" +
-                        "To: " + projObj.endPhase[phaseId].format('YYYY-MM-DD') + "<br/><br/>" +
+                        "From: " + String(projObj.startPhase[phaseId].format('YYYY-MM-DD')) + " <br/>" +
+                        "To: " + String(projObj.endPhase[phaseId].format('YYYY-MM-DD')) + " <br/><br/>" +
                         "Progress: " + projObj.phaseProgress[phaseId] + "%<br/>" +
                         "Timebudget: " + projObj.phaseTimebudget[phaseId] + "h<br/>" +
                         "Comment: " + projObj.phaseComments[phaseId] + "<br/>";
@@ -514,10 +523,10 @@
             }).appendTo($('td.insertButton'));
 
             //Go to OneProject
-            dateTable.find("td.insertButton:not(button)").click(function () {
+            $(".projectName").click(function () {
                 //var projectId = $(this).attr('projectId');
                 window.location.assign("http://localhost:8899/#!/projects/project-details/2");
-            }).eq(0);//.trigger('click');
+            }).eq(0); 
 
             //**********   Helper functions   ***********
             function isEmpty(val) {
