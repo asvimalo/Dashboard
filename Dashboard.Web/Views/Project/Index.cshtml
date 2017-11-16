@@ -479,18 +479,6 @@
             dateTable.find(".employee").hide();
             dateTable.find("tr").eq(0).show();
 
-            //Collapse
-            $('<button></button>').attr({ 'type': 'submit' }).addClass("glyphicon glyphicon-triangle-bottom").click(function () {
-                var projectRow = $(this).parent().parent();
-                var projectId = projectRow.attr('projectId');
-                projectRow.siblings(".employee").each(function () {
-                    var employeeProjectId = $(this).attr('projectId');
-                    if (employeeProjectId == projectId) {
-                        $(this).fadeToggle(300);
-                    }
-                });
-            }).appendTo($('td.insertButton'));
-
             //Popover
             $('[data-trigger="hover"]').popover({
                 'trigger': 'hover',
@@ -513,12 +501,23 @@
                 }
             });
 
+            //Collapse
+            $('<button></button>').attr({ 'type': 'submit' }).addClass("glyphicon glyphicon-triangle-bottom").click(function () {
+                var projectRow = $(this).parent().parent();
+                var projectId = projectRow.attr('projectId');
+                projectRow.siblings(".employee").each(function () {
+                    var employeeProjectId = $(this).attr('projectId');
+                    if (employeeProjectId == projectId) {
+                        $(this).fadeToggle(300);
+                    }
+                });
+            }).appendTo($('td.insertButton'));
+
             //Go to OneProject
-            dateTable.find(".insertButton").click(function () { 
+            dateTable.find("td.insertButton:not(button)").click(function () {
                 //var projectId = $(this).attr('projectId');
-                //window.location.href = "http://localhost:8899/#!/projects/project-details/2";
-                //window.history.pushState('obj', 'newtitle', '/abc');
-            }).eq(0).trigger('click');
+                window.location.assign("http://localhost:8899/#!/projects/project-details/2");
+            }).eq(0);//.trigger('click');
 
             //**********   Helper functions   ***********
             function isEmpty(val) {
