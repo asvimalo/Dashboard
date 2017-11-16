@@ -1,22 +1,114 @@
-﻿@section Scripts {
+﻿<link href="~/css/allProject.css" rel="stylesheet" type="text/css" />
+
+<div ng-app="app-dashboard">
+    @*<a ng-href="#!/projects/project-details/2">One Project Details</a>*@
+    <div ng-view></div>
+
+    <div class="container-fluid">
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-3">
+                    <button type="button" class="btn">Archive</button>
+                    <button type="button" class="btn btn-info">Active</button>
+                </div>
+                <div class="col-md-3 col-md-offset-3">
+                    <button type="button" class="btn btn-info">Days</button>
+                    <button type="button" class="btn">Months</button>
+                    <button type="button" class="btn">Years</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-9">
+                    <br />
+                    <div class="table-responsive" id="ganttchart"></div>
+                </div>
+                <div class="col-md-3" id="panels">
+                    <br />
+                    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#projectAdd">Add a new project</button>
+                    <br />
+                    <br />
+                    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#employeeAdd">Add a new Employee</button>
+                    <br />
+                    <br />
+                    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#assignEmployeeToProject">Assign an employee to a project</button>
+                    <br />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @* Modals start here *@
+    <!-- Panel1: Create Project -->
+    <div class="modal fade" id="projectAdd" role="dialog">
+        <div class="modal-dialog modal-lg">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <project-add></project-add>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Panel2: Add a new Employee -->
+    <div class="modal fade" id="employeeAdd" role="dialog">
+        <div class="modal-dialog modal-lg">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <employee-add></employee-add>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Panel3: Assign an employee to a project -->
+    <div class="modal fade" id="assignEmployeeToProject" role="dialog">
+        <div class="modal-dialog modal-lg">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <assign-project-to-employee></assign-project-to-employee>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
     <script src="~/lib/angular/angular.min.js"></script>
     <script src="~/lib/angular-route/angular-route.min.js"></script>
     <script src="~/lib/ng-file-upload-shim/ng-file-upload-shim.min.js"></script>
     <script src="~/lib/ng-file-upload-shim/ng-file-upload.min.js"></script>
     <script src="bower_components/angular-modal-service/dst/angular-modal-service.min.js"></script>
 
-    @*///// Datarange test ///*@
-    
-
-    @*<script src="angular-daterangepicker-master/js/angular-daterangepicker.min.js"></script>*@
-
-    @*<script src="~/lib/jquery/jquery.js"></script>
-    <script src="~/lib/momentjs/moment.js"></script>
-    <script src="~/lib/bootstrap-daterangepicker/daterangepicker.js"></script>
-    <script src="~/lib/angular-daterangepicker/js/angular-daterangepicker.js"></script>*@
-
     @*////////*@
     <script src="~/js/app/app-dashboard.js"></script>
+    <script src="~/js/app/app-dashboard.config.js"></script>
 
     <script src="~/js/app/dashboard-view/dashboard-view.module.js"></script>
     <script src="~/js/app/dashboard-view/dashboard-view.component.js"></script>
@@ -42,31 +134,31 @@
 
     @*/////////////            ASSIGNMENT                  ///////////////////////*@
 
-    <script src="~/js/app/assignment/assignment-list/assignment-list.module.js"></script>
-    <script src="~/js/app/assignment/assignment-list/assignment-list.component.js"></script>
+    <script src="~/js/app/assignment/assignment-list/assignment-list.module.js"></script>                           @*Delete?*@
+    <script src="~/js/app/assignment/assignment-list/assignment-list.component.js"></script>                        @*Delete?*@
 
     @*/////////////            ACQUIRED KNOWLEDGE                  ///////////////////////*@
 
-    <script src="~/js/app/acquiredKnowledge/acquiredKnowledge-list/acquiredKnowledge-list.module.js"></script>
-    <script src="~/js/app/acquiredKnowledge/acquiredKnowledge-list/acquiredKnowledge-list.component.js"></script>
+    <script src="~/js/app/acquiredKnowledge/acquiredKnowledge-list/acquiredKnowledge-list.module.js"></script>      @*Delete?*@
+    <script src="~/js/app/acquiredKnowledge/acquiredKnowledge-list/acquiredKnowledge-list.component.js"></script>   @*Delete?*@
 
     @*/////////////            CLIENT                  ///////////////////////*@
 
-    <script src="~/js/app/client/client-list/client-list.module.js"></script>
-    <script src="~/js/app/client/client-list/client-list.component.js"></script>
+    <script src="~/js/app/client/client-list/client-list.module.js"></script>                                       @*Delete?*@
+    <script src="~/js/app/client/client-list/client-list.component.js"></script>                                    @*Delete?*@
 
-    <script src="~/js/app/client/client-add/client-add.module.js"></script>
-    <script src="~/js/app/client/client-add/client-add.component.js"></script>
+    <script src="~/js/app/client/client-add/client-add.module.js"></script>                                         @*Delete?*@
+    <script src="~/js/app/client/client-add/client-add.component.js"></script>                                      @*Delete?*@
 
     @*/////////////           COMMITMENT                  ///////////////////////*@
 
-    <script src="~/js/app/commitment/commitment-list/commitment-list.module.js"></script>
-    <script src="~/js/app/commitment/commitment-list/commitment-list.component.js"></script>
+    <script src="~/js/app/commitment/commitment-list/commitment-list.module.js"></script>                           @*Delete?*@
+    <script src="~/js/app/commitment/commitment-list/commitment-list.component.js"></script>                        @*Delete?*@
 
     @*/////////////            KNOWLEDGE                  ///////////////////////*@
 
-    <script src="~/js/app/knowledge/knowledge-list/knowledge-list.module.js"></script>
-    <script src="~/js/app/knowledge/knowledge-list/knowledge-list.component.js"></script>
+    <script src="~/js/app/knowledge/knowledge-list/knowledge-list.module.js"></script>                              @*Delete?*@
+    <script src="~/js/app/knowledge/knowledge-list/knowledge-list.component.js"></script>                           @*Delete?*@
 
     @*/////////////            PHASE                  ///////////////////////*@
 
@@ -84,19 +176,429 @@
     <script src="~/js/app/location/location-list/location-list.module.js"></script>
     <script src="~/js/app/location/location-list/location-list.component.js"></script>
 
-    <script src="~/js/app/assign-project-to-employee/assign-project-to-employee.module.js"></script>
-    <script src="~/js/app/assign-project-to-employee/assign-project-to-employee.component.js"></script>
-
     <script src="~/js/app/task/task-list/task-list.module.js"></script>
     <script src="~/js/app/task/task-list/task-list.component.js"></script>
 
-    @*<script type="text/javascript" src="//cdn.jsdelivr.net/jquery/1/jquery.min.js"></script>
-    <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-    <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>*@
+    @*/////////////            PANEL3                  ///////////////////////*@
+    <script src="~/js/app/assign-project-to-employee/assign-project-to-employee.module.js"></script>
+    <script src="~/js/app/assign-project-to-employee/assign-project-to-employee.component.js"></script>
 
-    <script src="~/js/app/app-dashboard.config.js"></script>
+
+    @*********************************************@
+    @**************  GANTTCHART   ****************@
+    @*********************************************@
+    <script src="~/lib/moment/moment.js"></script>
 
     <script>
+        $(function () {
+
+            //Mockup data
+            var projectA = {
+                'name': 'Dashboard',
+                'startDate': moment(),
+                'endDate': moment().add(40, 'days'),
+                'startPhase': [
+                    moment(),
+                    moment().add(6, 'days'),
+                    moment().add(11, 'days'),
+                ],
+                'endPhase': [
+                    moment().add(5, 'days'),
+                    moment().add(10, 'days'),
+                    moment().add(20, 'days'),
+                ],
+                'phaseName': ['Analys', 'Testing', 'Burgum'],
+                'phaseProgress': [60, 10, 20],
+                'phaseComments': ["Sg", "is", "good"],
+                'phaseTimebudget': [200, 300, 400],
+                'phases': 3,
+                'employees': [
+                    {
+                        'name': 'Katrina',
+                        'commitments': {
+                            'startDate': [
+                                moment(),
+                                moment().add(6, 'days'),
+                                moment().add(11, 'days'),
+                            ],
+                            'endDate': [
+                                moment().add(5, 'days'),
+                                moment().add(10, 'days'),
+                                moment().add(20, 'days'),
+                            ],
+                            'hours': [30, 0, 10]
+                        },
+                        'commit': 3
+                    },
+                    {
+                        'name': 'Evelin',
+                        'commitments': {
+                            'startDate': [
+                                moment().add(3, 'days'),
+                                moment().add(8, 'days'),
+                                moment().add(11, 'days'),
+                            ],
+                            'endDate': [
+                                moment().add(5, 'days'),
+                                moment().add(10, 'days'),
+                                moment().add(20, 'days'),
+                            ],
+                            'hours': [10, 10, 20]
+                        },
+                        'commit': 3
+                    }
+                ]
+            };
+
+            var projectB = {
+                'name': 'OrderApp',
+                'startDate': moment().add(2, 'days'),
+                'endDate': moment().add(15, 'days'),
+                'startPhase': [
+                    moment().add(2, 'days'),
+                    moment().add(7, 'days')
+                ],
+                'endPhase': [
+                    moment().add(6, 'days'),
+                    moment().add(15, 'days')
+                ],
+                'phaseName': ['Analys', 'Testing'],
+                'phaseProgress': [60, 10],
+                'phaseComments': ["Sg", "is"],
+                'phaseTimebudget': [200, 300],
+                'phases': 2,
+                'employees': [
+                    {
+                        'name': 'Elin',
+                        'commitments': {
+                            'startDate': [
+                                moment(),
+                                moment().add(6, 'days'),
+                                moment().add(11, 'days'),
+                                moment().add(15, 'days')
+                            ],
+                            'endDate': [
+                                moment().add(5, 'days'),
+                                moment().add(10, 'days'),
+                                moment().add(14, 'days'),
+                                moment().add(20, 'days')
+                            ],
+                            'hours': [30, 0, 10, 20]
+                        },
+                        'commit': 4
+                    }
+                ]
+            };
+
+            var projectC = {
+                'name': 'QlickTown',
+                'startDate': moment().add(1, 'days'),
+                'endDate': moment().add(17, 'days'),
+                'startPhase': [
+                    moment().add(1, 'days'),
+                    moment().add(7, 'days'),
+                    moment().add(12, 'days'),
+                    moment().add(16, 'days')
+                ],
+                'endPhase': [
+                    moment().add(6, 'days'),
+                    moment().add(11, 'days'),
+                    moment().add(15, 'days'),
+                    moment().add(17, 'days')
+                ],
+                'phaseName': ['Analys', 'Testing', 'Burgum', 'Gurgum'],
+                'phaseProgress': [60, 10, 20, 12],
+                'phaseComments': ["Sg", "is", "good", "or"],
+                'phaseTimebudget': [200, 300, 400, 100],
+                'phases': 4,
+                'employees': [
+                    {
+                        'name': 'Elin',
+                        'commitments': {
+                            'startDate': [
+                                moment(),
+                                moment().add(6, 'days'),
+                                moment().add(11, 'days'),
+                                moment().add(15, 'days')
+                            ],
+                            'endDate': [
+                                moment().add(5, 'days'),
+                                moment().add(10, 'days'),
+                                moment().add(14, 'days'),
+                                moment().add(20, 'days')
+                            ],
+                            'hours': [30, 0, 10, 20]
+                        },
+                        'commit': 4
+                    }
+                ]
+            };
+
+            //*****************************
+            //** LOGICAL part, the brain **
+            //*****************************
+
+            //Add data rows.
+            var projects = [];
+            projects.push(projectA);
+            projects.push(projectB);
+            projects.push(projectC);
+
+            //**********   CALENDAR   ***********
+            var dates = [];
+            var formatedDates = [];
+            var startdate = moment();
+            startdate = startdate.add(-1, 'days');
+            //var startdate = getInitDateToCalendar().start;
+            var enddate = getInitDateToCalendar().end;
+            for (i = 0; i < enddate; i++) {
+                if (i == 0) {
+                    dates.push(" ");
+                    formatedDates.push(" ");
+                    continue;
+                }
+                startdate = startdate.add(1, 'days');
+                dates.push(startdate.format('YYYY-MM-DD'));
+                var plusOneDayStr = startdate.format('DD MMM ddd'); //.format('DD ddd');
+                formatedDates.push(plusOneDayStr);
+            }
+
+            var tabledate = $("<table></table>").addClass("table table-bordered table-condensed").css({ "width": "200" }); //.css({ "height": "100px !important", "width": "400px", "overflow" : "scroll"});
+            tabledate[0].border = "1";
+            var rowdate = $(tabledate[0].insertRow(-1));
+            var columnCountDate = formatedDates.length;
+            //var str = "";
+            for (var i = 0; i < columnCountDate; i++) {
+                //str += (dates[i].toString() + " | ");
+                var celldate = $("<td></td>");
+                celldate.html(formatedDates[i]);
+                rowdate.append(celldate);
+            }
+
+            //**********   PROJECT   ***********
+            for (var i = 0; i < projects.length; i++) {
+                var data = [];
+                var phaseId = [];
+                for (var j = 0; j < dates.length; j++) {                 //for calendar
+                    var projectStart = moment(projects[i].startDate).format('YYYY-MM-DD');
+                    var projectEnd = moment(projects[i].endDate).format('YYYY-MM-DD');
+                    data[j] = ' ';
+                    phaseId[j] = -1;
+                    if (projectStart == dates[j]) {
+                        data[j] = 'S';
+                        continue;
+                    }
+                    if (projectEnd == dates[j]) {
+                        data[j] = 'E';
+                        continue;
+                    }
+                    for (var l = 0; l < projects[i].phases; l++) {      //for project's phases
+                        var phaseStart = moment(projects[i].startPhase[l]).format('YYYY-MM-DD');
+                        var phaseEnd = moment(projects[i].endPhase[l]).format('YYYY-MM-DD');
+                        if (phaseStart == dates[j]) {
+                            data[j] = 'FS';
+                            phaseId[j] = l;
+                            continue;
+                        }
+                        if (phaseEnd == dates[j]) {
+                            data[j] = 'FE';
+                            phaseId[j] = l;
+                            continue;
+                        }
+                        if ((phaseStart < dates[j]) && (phaseEnd > dates[j])) {
+                            data[j] = 'x';
+                            phaseId[j] = l;
+                            continue;
+                        }
+                    }
+                }
+                // Write project row to html
+                {
+                    var row = $(tabledate[0].insertRow(-1));
+                    row.addClass("project");
+                    row.attr('projectId', projects[i].name);
+
+                    var cell = $("<td></td>");
+                    cell.html(projects[i].name);
+                    cell.addClass("insertButton");
+                    row.append(cell);
+                    for (var j = 1; j < dates.length; j++) {
+                        var cell = $("<td></td>");
+                        cell.html(data[j]);
+                        if (!isEmpty(data[j])) {
+                            cell.attr("data-trigger", "hover");
+                            cell.attr("proj", i);
+                            cell.attr("phase", phaseId[j]);
+                        }
+                        row.append(cell);
+                    }
+                }
+                //Projects/Employee
+                if (typeof projects[i].employees !== 'undefined') {
+                    for (var k = 0; k < projects[i].employees.length; k++) {
+                        data = [];
+                        for (var j = 0; j < dates.length; j++) {                            //for calendar
+                            for (var l = 0; l < projects[i].employees[k].commit; l++) {     //for commitments
+                                var commitStart = moment(projects[i].employees[k].commitments.startDate[l]).format('YYYY-MM-DD');
+                                var commitEnd = moment(projects[i].employees[k].commitments.endDate[l]).format('YYYY-MM-DD');
+                                if (commitStart == dates[j]) {
+                                    data[j] = projects[i].employees[k].commitments.hours[l];
+                                    continue;
+                                }
+                                if (commitEnd == dates[j]) {
+                                    data[j] = 'CE';
+                                    continue;
+                                }
+                                if ((commitStart < dates[j]) && (commitEnd > dates[j])) {
+                                    data[j] = 'x';
+                                    continue;
+                                }
+                            }
+                        }
+                        // Write employee row to html
+                        {
+                            var row = $(tabledate[0].insertRow(-1));
+                            row.addClass("employee");
+                            row.attr('projectId', projects[i].name);
+
+                            var cell = $("<td></td>");
+                            cell.html(projects[i].employees[k].name);
+                            row.append(cell);
+                            for (var j = 1; j < dates.length; j++) {
+                                var cell = $("<td></td>");
+                                //cell.css({"width" : "10%"});
+                                cell.html(data[j]);
+                                row.append(cell);
+                            }
+                        }
+                    }
+                }
+            }
+
+            //**********   Data to HTML table   ***********
+            var dateTable = $("#ganttchart");
+            dateTable.html("");
+            dateTable.append(tabledate);
+
+            dateTable.find("tr").eq(".employee").hide;
+            dateTable.find(".employee").hide();
+            dateTable.find("tr").eq(0).show();
+
+            //Collapse
+            $('<button></button>').attr({ 'type': 'submit' }).addClass("glyphicon glyphicon-triangle-bottom").click(function () {
+                var projectRow = $(this).parent().parent();
+                var projectId = projectRow.attr('projectId');
+                projectRow.siblings(".employee").each(function () {
+                    var employeeProjectId = $(this).attr('projectId');
+                    if (employeeProjectId == projectId) {
+                        $(this).fadeToggle(300);
+                    }
+                });
+            }).appendTo($('td.insertButton'));
+
+            //Popover
+            $('[data-trigger="hover"]').popover({
+                'trigger': 'hover',
+                'placement': 'bottom',
+                'container': 'body',
+                'data-html': 'true',
+                'html': 'true',
+                'content': function () {
+                    var projectId = $(this).attr('proj');
+                    var phaseId = $(this).attr('phase');
+                    var projObj = projects[projectId];
+                    var contentData =
+                        projObj.phaseName[phaseId] + "<br/><br/>" +
+                        "From: " + projObj.startPhase[phaseId].format('YYYY-MM-DD') + "<br/>" +
+                        "To: " + projObj.endPhase[phaseId].format('YYYY-MM-DD') + "<br/><br/>" +
+                        "Progress: " + projObj.phaseProgress[phaseId] + "%<br/>" +
+                        "Timebudget: " + projObj.phaseTimebudget[phaseId] + "h<br/>" +
+                        "Comment: " + projObj.phaseComments[phaseId] + "<br/>";
+                    return contentData;
+                }
+            });
+
+            //Go to OneProject
+            dateTable.find(".insertButton").click(function () { 
+                //var projectId = $(this).attr('projectId');
+                window.location.href = "http://localhost:8899/#!/projects/project-details/2";
+            }).eq(0).trigger('click');
+
+            //**********   Helper functions   ***********
+            function isEmpty(val) {
+                return (val === undefined || val == null || val.length <= 0 || val === " ") ? true : false;
+            }
+
+            function getInitDateToCalendar() {
+                var today = moment();
+                var end = projects[0].endDate;
+                var start = projects[0].startDate;
+                for (var i = 1; i < projects.length; i++) {
+                    if (projects[i].endDate > end) {
+                        end = projects[i].endDate;
+                    }
+                    if (projects[i].startDate < start) {
+                        start = projects[i].startDate;
+                    }
+                }
+                var tEnd = end.diff(today, 'days') + 10;
+                tEnd = tEnd > 20 ? tEnd : 20;
+                var tStart = today.diff(start, 'days') - 10;
+                var result = { "start": start, "end": tEnd };
+                return result;
+            }
+        });
+    </script>
+}
+
+@*CLEANING THE HOUSE*@
+
+@*<div class="container-fluid">
+    @*<ul class="nav navbar-nav">
+        @*<li><a ng-href="#!/dashboard">Dashboard</a></li>*@
+@*<li><a ng-href="#!/employees">Employees</a></li>
+    <li><a ng-href="#!/knowledges">Knowledges</a></li>
+    <li><a ng-href="#!/acquiredKnowledges">Acquired Knowledges</a></li>
+    <li><a ng-href="#!/clients">Clients</a></li>
+    <li><a ng-href="#!/locations">Locations</a></li>
+    <li><a ng-href="#!/projects">Projects</a></li>
+    <li><a ng-href="#!/assignments">Assignments</a></li>
+    <li><a ng-href="#!/phases">Phases</a></li>
+    <li><a ng-href="#!/tasks">Tasks</a></li>
+    <li><a ng-href="#!/commitments">Commitments</a></li>*@
+@*<li><a ng-href="#!/assignProjectToEmployee">AssignProjectToEmployee</a></li>*@
+@*<li><a ng-href="#!/projects/project-add">Add Project</a></li>*@
+@*<li><a ng-href="#!/clients/client-add">Add Client</a></li>*@
+@*</ul>*@
+
+
+@*<div ng-view></div>
+
+        <div class="row">
+            <div class="col-md-9">
+
+                <div id="gantt_here" style="margin-top: 5%; margin-bottom: 3%; width: 100%; height: 450px;"></div>
+
+            </div>
+            <div class="col-md-3">
+                <br />
+                <br />
+                <br />
+                <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#projectAdd">Add a new project</button>
+                <br />
+                <br />
+                <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#employeeAdd">Add a new Employee</button>
+                <br />
+                <br />
+                <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#assignEmployeeToProject">Assign an employee to a project</button>
+            </div>
+        </div>
+
+    </div>*@
+
+
+
+@*<script>
         (function () {
             console.log("I am here");
             gantt.init("gantt_here");
@@ -171,115 +673,7 @@
             //dp.setTransactionMode("REST");
 
         })();
-    </script>
-
-}
-<div ng-app="app-dashboard">
-    <div class="container-fluid">
-        @*<ul class="nav navbar-nav">
-            @*<li><a ng-href="#!/dashboard">Dashboard</a></li>*@
-            @*<li><a ng-href="#!/employees">Employees</a></li>
-                <li><a ng-href="#!/knowledges">Knowledges</a></li>
-                <li><a ng-href="#!/acquiredKnowledges">Acquired Knowledges</a></li>
-                <li><a ng-href="#!/clients">Clients</a></li>
-                <li><a ng-href="#!/locations">Locations</a></li>
-                <li><a ng-href="#!/projects">Projects</a></li>
-                <li><a ng-href="#!/assignments">Assignments</a></li>
-                <li><a ng-href="#!/phases">Phases</a></li>
-                <li><a ng-href="#!/tasks">Tasks</a></li>
-                <li><a ng-href="#!/commitments">Commitments</a></li>*@
-            @*<li><a ng-href="#!/assignProjectToEmployee">AssignProjectToEmployee</a></li>*@
-            @*<li><a ng-href="#!/projects/project-add">Add Project</a></li>*@
-            @*<li><a ng-href="#!/clients/client-add">Add Client</a></li>*@
-        @*</ul>*@
-
-        <a ng-href="#!/projects/project-details/2">One Project Details</a>
-        <div  ng-view></div>
-
-        <div class="row">
-            <div class="col-md-9">
-
-                <div id="gantt_here" style="margin-top: 5%; margin-bottom: 3%; width: 100%; height: 450px;"></div>
-
-            </div>
-            <div class="col-md-3">
-                <br />
-                <br />
-                <br />
-                <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#projectAdd">Add a new project</button>
-                <br />
-                <br />
-                <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#employeeAdd">Add a new Employee</button>
-                <br />
-                <br />
-               <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#assignEmployeeToProject">Assign an employee to a project</button>                
-            </div>
-        </div>
-
-    </div>
-
-    @* Modals start here *@
-    <!-- Modal Create Project -->
-    <div class="modal fade" id="projectAdd" role="dialog">
-        <div class="modal-dialog modal-lg">
-
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-                <div class="modal-body">
-                    <project-add></project-add>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-
-        </div>
-    </div>
-
-    <!-- Modal Add a new Employee -->
-    <div class="modal fade" id="employeeAdd" role="dialog">
-        <div class="modal-dialog modal-lg">
-
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-                <div class="modal-body">
-                    <employee-add></employee-add>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-
-        </div>
-    </div>
-
-    <!-- Modal Assign an employee to a project -->
-    <div class="modal fade" id="assignEmployeeToProject" role="dialog">
-        <div class="modal-dialog modal-lg">
-
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-                <div class="modal-body">
-                    <assign-project-to-employee></assign-project-to-employee>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-
-        </div>
-    </div>
-     
-</div>
+    </script>*@
 
 
 

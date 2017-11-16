@@ -1,8 +1,437 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Index";
 }
 
-<h2>Index</h2>
+@*@{
+    ViewData["Title"] = "Index";
+}
 
+<div class="container-fluid">
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-3">
+                <button type="button" class="btn">Archive</button>
+                <button type="button" class="btn btn-info">Active</button>
+            </div>
+            <div class="col-md-3 col-md-offset-3">
+                <button type="button" class="btn btn-info">Days</button>
+                <button type="button" class="btn">Months</button>
+                <button type="button" class="btn">Years</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-9">
+                <br />
+                <div class="table-responsive" id="ganttchart"></div>
+            </div>
+            <div class="col-md-3" id="panels">
+                <br />
+                <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#projectAdd">Add a new project</button>
+                <br />
+                <br />
+                <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#employeeAdd">Add a new Employee</button>
+                <br />
+                <br />
+                <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#assignEmployeeToProject">Assign an employee to a project</button>                
+                <br />
+            </div>
+        </div>
+    </div>
+</div>
 
+@section Scripts {
+
+    <script src="~/lib/moment/moment.js"></script>
+
+    <script>
+        $(function () {
+
+            //Mockup data
+            var projectA = {
+                'name': 'Dashboard',
+                'startDate': moment(),
+                'endDate': moment().add(40, 'days'),
+                'startPhase': [
+                    moment(),
+                    moment().add(6, 'days'),
+                    moment().add(11, 'days'),
+                ],
+                'endPhase': [
+                    moment().add(5, 'days'),
+                    moment().add(10, 'days'),
+                    moment().add(20, 'days'),
+                ],
+                'phaseName': ['Analys', 'Testing', 'Burgum'],
+                'phaseProgress': [60, 10, 20],
+                'phaseComments': ["Sg", "is", "good"],
+                'phaseTimebudget': [200, 300, 400],
+                'phases': 3,
+                'employees': [
+                    {
+                        'name': 'Katrina',
+                        'commitments': {
+                            'startDate': [
+                                moment(),
+                                moment().add(6, 'days'),
+                                moment().add(11, 'days'),
+                            ],
+                            'endDate': [
+                                moment().add(5, 'days'),
+                                moment().add(10, 'days'),
+                                moment().add(20, 'days'),
+                            ],
+                            'hours': [30, 0, 10]
+                        },
+                        'commit': 3
+                    },
+                    {
+                        'name': 'Evelin',
+                        'commitments': {
+                            'startDate': [
+                                moment().add(3, 'days'),
+                                moment().add(8, 'days'),
+                                moment().add(11, 'days'),
+                            ],
+                            'endDate': [
+                                moment().add(5, 'days'),
+                                moment().add(10, 'days'),
+                                moment().add(20, 'days'),
+                            ],
+                            'hours': [10, 10, 20]
+                        },
+                        'commit': 3
+                    }
+                ]
+            };
+
+            var projectB = {
+                'name': 'OrderApp',
+                'startDate': moment().add(2, 'days'),
+                'endDate': moment().add(15, 'days'),
+                'startPhase': [
+                    moment().add(2, 'days'),
+                    moment().add(7, 'days')
+                ],
+                'endPhase': [
+                    moment().add(6, 'days'),
+                    moment().add(15, 'days')
+                ],
+                'phaseName': ['Analys', 'Testing'],
+                'phaseProgress': [60, 10],
+                'phaseComments': ["Sg", "is"],
+                'phaseTimebudget': [200, 300],
+                'phases': 2,
+                'employees': [
+                    {
+                        'name': 'Elin',
+                        'commitments': {
+                            'startDate': [
+                                moment(),
+                                moment().add(6, 'days'),
+                                moment().add(11, 'days'),
+                                moment().add(15, 'days')
+                            ],
+                            'endDate': [
+                                moment().add(5, 'days'),
+                                moment().add(10, 'days'),
+                                moment().add(14, 'days'),
+                                moment().add(20, 'days')
+                            ],
+                            'hours': [30, 0, 10, 20]
+                        },
+                        'commit': 4
+                    }
+                ]
+            };
+
+            var projectC = {
+                'name': 'QlickTown',
+                'startDate': moment().add(1, 'days'),
+                'endDate': moment().add(17, 'days'),
+                'startPhase': [
+                    moment().add(1, 'days'),
+                    moment().add(7, 'days'),
+                    moment().add(12, 'days'),
+                    moment().add(16, 'days')
+                ],
+                'endPhase': [
+                    moment().add(6, 'days'),
+                    moment().add(11, 'days'),
+                    moment().add(15, 'days'),
+                    moment().add(17, 'days')
+                ],
+                'phaseName': ['Analys', 'Testing', 'Burgum', 'Gurgum'],
+                'phaseProgress': [60, 10, 20, 12],
+                'phaseComments': ["Sg", "is", "good", "or"],
+                'phaseTimebudget': [200, 300, 400, 100],
+                'phases': 4,
+                'employees': [
+                    {
+                        'name': 'Elin',
+                        'commitments': {
+                            'startDate': [
+                                moment(),
+                                moment().add(6, 'days'),
+                                moment().add(11, 'days'),
+                                moment().add(15, 'days')
+                            ],
+                            'endDate': [
+                                moment().add(5, 'days'),
+                                moment().add(10, 'days'),
+                                moment().add(14, 'days'),
+                                moment().add(20, 'days')
+                            ],
+                            'hours': [30, 0, 10, 20]
+                        },
+                        'commit': 4
+                    }
+                ]
+            };
+
+            //*****************************
+            //** LOGICAL part, the brain **
+            //*****************************
+
+            //Add data rows.
+            var projects = [];
+            projects.push(projectA);
+            projects.push(projectB);
+            projects.push(projectC);
+
+            //**********   CALENDAR   ***********
+            var dates = [];
+            var formatedDates = [];
+            var startdate = moment();
+            startdate = startdate.add(-1, 'days');
+            //var startdate = getInitDateToCalendar().start;
+            var enddate = getInitDateToCalendar().end;
+            for (i = 0; i < enddate; i++) {
+                if (i == 0) {
+                    dates.push(" ");
+                    formatedDates.push(" ");
+                    continue;
+                }
+                startdate = startdate.add(1, 'days');
+                dates.push(startdate.format('YYYY-MM-DD'));
+                var plusOneDayStr = startdate.format('DD MMM ddd'); //.format('DD ddd');
+                formatedDates.push(plusOneDayStr);
+            }
+
+            var tabledate = $("<table></table>").addClass("table table-bordered"); //.css({ "height": "100px !important", "width": "400px", "overflow" : "scroll"});
+            tabledate[0].border = "1";
+            var rowdate = $(tabledate[0].insertRow(-1));
+            var columnCountDate = formatedDates.length;
+            //var str = "";
+            for (var i = 0; i < columnCountDate; i++) {
+                //str += (dates[i].toString() + " | ");
+                var celldate = $("<td></td>").addClass("tablecell").css({ "padding-left": "10%"});
+                celldate.html(formatedDates[i]);
+                rowdate.append(celldate);
+            }
+
+            //**********   PROJECT   ***********
+            for (var i = 0; i < projects.length; i++) {
+                var data = [];
+                var phaseId = [];
+                for (var j = 0; j < dates.length; j++) {                 //for calendar
+                    var projectStart = moment(projects[i].startDate).format('YYYY-MM-DD');
+                    var projectEnd = moment(projects[i].endDate).format('YYYY-MM-DD');
+                    data[j] = ' ';
+                    phaseId[j] = -1;
+                    if (projectStart == dates[j]) {
+                        data[j] = 'S';
+                        continue;
+                    }
+                    if (projectEnd == dates[j]) {
+                        data[j] = 'E';
+                        continue;
+                    }
+                    for (var l = 0; l < projects[i].phases; l++) {      //for project's phases
+                        var phaseStart = moment(projects[i].startPhase[l]).format('YYYY-MM-DD');
+                        var phaseEnd = moment(projects[i].endPhase[l]).format('YYYY-MM-DD');
+                        if (phaseStart == dates[j]) {
+                            data[j] = 'FS';
+                            phaseId[j] = l;
+                            continue;
+                        }
+                        if (phaseEnd == dates[j]) {
+                            data[j] = 'FE';
+                            phaseId[j] = l;
+                            continue;
+                        }
+                        if ((phaseStart < dates[j]) && (phaseEnd > dates[j])) {
+                            data[j] = 'x';
+                            phaseId[j] = l;
+                            continue;
+                        }
+                    }
+                }
+                // Write project row to html
+                {
+                    var row = $(tabledate[0].insertRow(-1));
+                    row.addClass("project");
+                    row.attr('projectId', projects[i].name);
+
+                    var cell = $("<td></td>");
+                    cell.html(projects[i].name);
+                    cell.addClass("insertButton"); 
+                    row.append(cell);
+                    for (var j = 1; j < dates.length; j++) {
+                        var cell = $("<td></td>").addClass("tablecell");
+                        cell.html(data[j]);
+                        if (!isEmpty(data[j])) {
+                            cell.attr("data-trigger", "hover");
+                            cell.attr("proj", i); 
+                            cell.attr("phase", phaseId[j]);
+                        }
+                        row.append(cell);
+                    }
+                }
+                //Projects/Employee
+                if (typeof projects[i].employees !== 'undefined') {
+                    for (var k = 0; k < projects[i].employees.length; k++) {
+                        data = [];
+                        for (var j = 0; j < dates.length; j++) {                            //for calendar
+                            for (var l = 0; l < projects[i].employees[k].commit; l++) {     //for commitments
+                                var commitStart = moment(projects[i].employees[k].commitments.startDate[l]).format('YYYY-MM-DD');
+                                var commitEnd = moment(projects[i].employees[k].commitments.endDate[l]).format('YYYY-MM-DD');
+                                if (commitStart == dates[j]) {
+                                    data[j] = projects[i].employees[k].commitments.hours[l];
+                                    continue;
+                                }
+                                if (commitEnd == dates[j]) {
+                                    data[j] = 'CE';
+                                    continue;
+                                }
+                                if ((commitStart < dates[j]) && (commitEnd > dates[j])) {
+                                    data[j] = 'x';
+                                    continue;
+                                }
+                            }
+                        }
+                        // Write employee row to html
+                        {
+                            var row = $(tabledate[0].insertRow(-1));
+                            row.addClass("employee");
+                            row.attr('projectId', projects[i].name);
+
+                            var cell = $("<td></td>").addClass("tablecell");
+                            cell.html(projects[i].employees[k].name);
+                            row.append(cell);
+                            for (var j = 1; j < dates.length; j++) {
+                                var cell = $("<td></td>");
+                                //cell.css({"width" : "10%"});
+                                cell.html(data[j]);
+                                row.append(cell);
+                            }
+                        }
+                    }
+                }
+            }
+
+            //**********   Data to HTML table   ***********
+            var dateTable = $("#ganttchart");
+            dateTable.html("");
+            dateTable.append(tabledate);
+
+            dateTable.find("tr").eq(".employee").hide;
+            dateTable.find(".employee").hide();
+            dateTable.find("tr").eq(0).show();
+
+            //Collapse
+            $('<button></button>').attr({ 'type': 'submit' }).addClass("glyphicon glyphicon-triangle-bottom").click(function () { 
+                var projectRow = $(this).parent().parent();
+                var projectId = projectRow.attr('projectId');
+                projectRow.siblings(".employee").each(function () {
+                    var employeeProjectId = $(this).attr('projectId');
+                    if (employeeProjectId == projectId) {
+                        $(this).fadeToggle(300);
+                    }
+                });
+            }).appendTo($('td.insertButton'));
+
+            //Popover
+            $('[data-trigger="hover"]').popover({
+                'trigger': 'hover',
+                'placement': 'bottom',
+                'container': 'body',
+                'data-html': 'true',
+                'html': 'true',
+                'content': function () {
+                    var projectId = $(this).attr('proj');
+                    var phaseId = $(this).attr('phase');
+                    var projObj = projects[projectId];
+                    var contentData =
+                        projObj.phaseName[phaseId] + "<br/><br/>" +
+                        "From: " + projObj.startPhase[phaseId].format('YYYY-MM-DD') + "<br/>" +
+                        "To: " + projObj.endPhase[phaseId].format('YYYY-MM-DD') + "<br/><br/>" +
+                        "Progress: " + projObj.phaseProgress[phaseId] + "%<br/>" +
+                        "Timebudget: " + projObj.phaseTimebudget[phaseId] + "h<br/>" +
+                        "Comment: " + projObj.phaseComments[phaseId] + "<br/>";
+                    return contentData;
+                }
+            });
+
+            //Link to OneProject
+            dateTable.find(".project").click(function () {
+                var projectId = $(this).attr('projectId');
+                $location.path("/projects/project-details/2"); //TODO: after db, add projectId to link
+            }).eq(0).trigger('click');
+
+            //**********   Helper functions   ***********
+            function isEmpty(val) {
+                return (val === undefined || val == null || val.length <= 0 || val === " ") ? true : false;
+            }
+
+            function getInitDateToCalendar() {
+                var today = moment();
+                var end = projects[0].endDate;
+                var start = projects[0].startDate;
+                for (var i = 1; i < projects.length; i++) {
+                    if (projects[i].endDate > end) {
+                        end = projects[i].endDate;
+                    }
+                    if (projects[i].startDate < start) {
+                        start = projects[i].startDate;
+                    }
+                }
+                var tEnd = end.diff(today, 'days') + 10;
+                tEnd = tEnd > 20 ? tEnd : 20;
+                var tStart = today.diff(start, 'days') - 10;
+                var result = { "start": start, "end": tEnd };
+                return result;
+            }
+
+            //function getEndDate() {
+            //    var today = moment();
+            //    var end = projects[0].endDate;
+            //    for (var i = 1; i < projects.length; i++) {
+            //        if (projects[i].endDate > end) {
+            //            end = projects[i].endDate;
+            //        }
+            //    }
+            //    var result = end.diff(today, 'days') + 10; //TODO kolla om lokalberoende
+            //    return result > 20 ? result : 20;
+            //}
+
+            //function create2DArray(rows) {
+            //    var arr = [];
+            //    for (var i = 0; i < rows; i++) {
+            //        arr[i] = [];
+            //    }
+            //    return arr;
+            //}
+
+            //function countTableRow() {
+            //    var counter = 0;
+            //    for (var i = 0; i < projects.length; i++) {
+            //        if (typeof projects[i].employees !== 'undefined') {
+            //            counter += projects[i].employees.length;
+            //        }
+            //    }
+            //    counter += projects.length;
+            //    return counter;
+            //}
+        });
+    </script>
+}*@
