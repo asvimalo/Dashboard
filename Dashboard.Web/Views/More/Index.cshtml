@@ -2,6 +2,10 @@
     ViewData["Title"] = "Index";
 }
 
+@*@{
+    ViewData["Title"] = "Index";
+}
+
 <div class="container-fluid">
     <div class="form-group">
         <div class="row">
@@ -368,10 +372,10 @@
                 }
             });
 
-            //TODO: koppla in hit OneProject
+            //Link to OneProject
             dateTable.find(".project").click(function () {
                 var projectId = $(this).attr('projectId');
-                $location.path("/projects/project-details/2");
+                $location.path("/projects/project-details/2"); //TODO: after db, add projectId to link
             }).eq(0).trigger('click');
 
             //**********   Helper functions   ***********
@@ -430,4 +434,4 @@
             //}
         });
     </script>
-}
+}*@

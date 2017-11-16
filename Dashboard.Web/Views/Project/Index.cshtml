@@ -374,6 +374,7 @@
                 rowdate.append(celldate);
             }
 
+            //**********   PROJECT   ***********
             for (var i = 0; i < projects.length; i++) {
                 var data = [];
                 var phaseId = [];
@@ -517,7 +518,7 @@
             });
 
             //Go to OneProject
-            dateTable.find(".insertButton").click(function () { //dateTable.find(.project) $("tr.project:first-child")
+            dateTable.find(".insertButton").click(function () { 
                 //var projectId = $(this).attr('projectId');
                 window.location.href = "http://localhost:8899/#!/projects/project-details/2";
             }).eq(0).trigger('click');
@@ -545,37 +546,6 @@
                 var result = { "start": start, "end": tEnd };
                 return result;
             }
-
-            //function getEndDate() {
-            //    var today = moment();
-            //    var end = projects[0].endDate;
-            //    for (var i = 1; i < projects.length; i++) {
-            //        if (projects[i].endDate > end) {
-            //            end = projects[i].endDate;
-            //        }
-            //    }
-            //    var result = end.diff(today, 'days') + 10; //TODO kolla om lokalberoende
-            //    return result > 20 ? result : 20;
-            //}
-
-            //function create2DArray(rows) {
-            //    var arr = [];
-            //    for (var i = 0; i < rows; i++) {
-            //        arr[i] = [];
-            //    }
-            //    return arr;
-            //}
-
-            //function countTableRow() {
-            //    var counter = 0;
-            //    for (var i = 0; i < projects.length; i++) {
-            //        if (typeof projects[i].employees !== 'undefined') {
-            //            counter += projects[i].employees.length;
-            //        }
-            //    }
-            //    counter += projects.length;
-            //    return counter;
-            //}
         });
     </script>
 }
