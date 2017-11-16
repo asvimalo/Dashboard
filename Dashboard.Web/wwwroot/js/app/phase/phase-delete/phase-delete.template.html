@@ -14,7 +14,7 @@
 
                     <div class="form-group">
                         <label>Phase name</label>
-                        <input type="text" name="phasename" ng-model="$ctrl.phase.phaseName" value="{{ $ctrl.phase.phaseName }}" class="form-control">
+                        <input type="text" name="phasename" ng-readonly="$ctrl.phase.phaseName" value="{{ $ctrl.phase.phaseName }}" class="form-control">
                     </div>
 
                 </form>
@@ -22,7 +22,7 @@
 
             <div class="modal-footer">
                 <button class="btn btn-success" type="button" ng-click="deletePhase()"> Yes </button>
-                <button class="btn btn-danger pull-right" type="button"> No </button>
+                <button class="btn btn-danger pull-right" type="button" data-dismiss="modal"> No </button>
             </div>
 
         </div>
