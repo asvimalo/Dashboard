@@ -198,6 +198,7 @@
             var dates = [];
             var formatedDates = [];
             var startdate = moment();
+            startdate = startdate.add(-1, 'days');
             //var startdate = getInitDateToCalendar().start;
             var enddate = getInitDateToCalendar().end;
             for (i = 0; i < enddate; i++) {
