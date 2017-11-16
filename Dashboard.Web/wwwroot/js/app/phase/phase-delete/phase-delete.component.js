@@ -3,7 +3,7 @@
     angular.module("phaseDelete", [])
         .component("phaseDelete", {
             templateUrl: "/js/app/phase/phase-delete/phase-delete.template.html",
-            controller: function PhaseListController(ModalService, $scope, close) {
+            controller: function PhaseListController($http, $scope, $routeParams, ModalService, close) {
                 //this.projectId = $routeParams.projectId;
                 var self = this; 
                 self.phase = {};
