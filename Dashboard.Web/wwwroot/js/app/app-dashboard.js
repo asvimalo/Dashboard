@@ -3,6 +3,7 @@
     angular.module("app-dashboard",
             ["ngRoute",
             'ngFileUpload',
+            'angularModalService',
             "projectList",
             "employeeList",
             "assignmentList",
