@@ -6,8 +6,8 @@
     <div class="form-group">
         <div class="row">
             <div class="col-md-3">
-                <button type="button" class="btn btn-info">Active</button>
                 <button type="button" class="btn">Archive</button>
+                <button type="button" class="btn btn-info">Active</button>
             </div>
             <div class="col-md-3 col-md-offset-3">
                 <button type="button" class="btn btn-info">Days</button>
@@ -211,7 +211,7 @@
                 }
                 startdate = startdate.add(1, 'days');
                 dates.push(startdate.format('YYYY-MM-DD'));
-                var plusOneDayStr = startdate.format('DD MMM'); //.format('DD ddd');
+                var plusOneDayStr = startdate.format('DD MMM ddd'); //.format('DD ddd');
                 formatedDates.push(plusOneDayStr);
             }
 
@@ -311,6 +311,7 @@
                             row.append(cell);
                             for (var j = 1; j < dates.length; j++) {
                                 var cell = $("<td></td>");
+                                //cell.css({"width" : "10%"});
                                 cell.html(data[j]);
                                 row.append(cell);
                             }
@@ -329,7 +330,7 @@
             dateTable.find("tr").eq(0).show();
 
             //Collapse
-            $('<input></input>').attr({ 'type': 'button' }).val("button").click(function () {
+            $('<button></button>').attr({ 'type': 'submit' }).addClass("glyphicon glyphicon-triangle-bottom").click(function () { //.val('button') .addClass("glyphicon glyphicon-triangle-bottom")
                 var projectRow = $(this).parent().parent();
                 var projectId = projectRow.attr('projectId');
                 projectRow.siblings(".employee").each(function () {
