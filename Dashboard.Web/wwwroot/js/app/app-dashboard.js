@@ -1,7 +1,8 @@
 ﻿(function () {
     "use strict";
     angular.module("app-dashboard",
-            ["ngRoute",
+        ["ngRoute",
+            "ngResource",
             'ngFileUpload',
             'angularModalService',
             "projectList",
@@ -21,7 +22,8 @@
             "projectDetails",
             "clientAdd",
             "phaseAdd",
-            "phaseDelete"
+            "phaseDelete",
+            "repo"
             ]);
 })();
 //'daterangerpicker',

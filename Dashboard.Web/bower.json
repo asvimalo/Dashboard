@@ -12,6 +12,7 @@
     "angular-route": "v1.6.7-build.5489+sha.9871ada",
     "ng-file-upload-shim": "12.2.13",
     "angular-daterange": "v0.1.0",
+    "angular-resource": "v1.6.7-build.5489+sha.9871ada",
     "angular-modal-service": "v0.13.0"
   },
   "resolutions": {
