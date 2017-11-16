@@ -51,10 +51,10 @@
                     holder.progress = "";
 
                     
-                    var json = JSON.stringify(newEmployee);
+                    var employeeJson = JSON.stringify(newEmployee);
                     
 
-                    $http.post('http://localhost:8890/api/dashboard/employees', json)
+                    $http.post('http://localhost:8890/api/dashboard/employees', employeeJson)
                         .then(function (response) {
                             //success
                             console.log("Response from server api" + response.data);
@@ -65,7 +65,7 @@
                             //failure
                             // review Error response is coming back....
                             holder.errorMessage = "Failure to save new employee";
-                            alert("Failure to save new employee" + err.stringify)
+                            alert("Failure to save new employee" + err.stringify);
                         })
                         .finally(function () {
                             holder.isBusy = false;
