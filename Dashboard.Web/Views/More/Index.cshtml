@@ -2,6 +2,10 @@
     ViewData["Title"] = "Index";
 }
 
+@*@{
+    ViewData["Title"] = "Index";
+}
+
 <div class="container-fluid">
     <div class="form-group">
         <div class="row">
@@ -213,18 +217,19 @@
                 formatedDates.push(plusOneDayStr);
             }
 
-            var tabledate = $("<table></table>").addClass("table table-bordered table-condensed").css({ "width": "200" }); //.css({ "height": "100px !important", "width": "400px", "overflow" : "scroll"});
+            var tabledate = $("<table></table>").addClass("table table-bordered"); //.css({ "height": "100px !important", "width": "400px", "overflow" : "scroll"});
             tabledate[0].border = "1";
             var rowdate = $(tabledate[0].insertRow(-1));
             var columnCountDate = formatedDates.length;
             //var str = "";
             for (var i = 0; i < columnCountDate; i++) {
                 //str += (dates[i].toString() + " | ");
-                var celldate = $("<td></td>");
+                var celldate = $("<td></td>").addClass("tablecell").css({ "padding-left": "10%"});
                 celldate.html(formatedDates[i]);
                 rowdate.append(celldate);
             }
 
+            //**********   PROJECT   ***********
             for (var i = 0; i < projects.length; i++) {
                 var data = [];
                 var phaseId = [];
@@ -272,7 +277,7 @@
                     cell.addClass("insertButton"); 
                     row.append(cell);
                     for (var j = 1; j < dates.length; j++) {
-                        var cell = $("<td></td>");
+                        var cell = $("<td></td>").addClass("tablecell");
                         cell.html(data[j]);
                         if (!isEmpty(data[j])) {
                             cell.attr("data-trigger", "hover");
@@ -310,7 +315,7 @@
                             row.addClass("employee");
                             row.attr('projectId', projects[i].name);
 
-                            var cell = $("<td></td>");
+                            var cell = $("<td></td>").addClass("tablecell");
                             cell.html(projects[i].employees[k].name);
                             row.append(cell);
                             for (var j = 1; j < dates.length; j++) {
@@ -335,6 +340,7 @@
 
             //Collapse
             $('<button></button>').attr({ 'type': 'submit' }).addClass("glyphicon glyphicon-triangle-bottom").click(function () { 
+                var projectRow = $(this).parent().parent();
                 var projectId = projectRow.attr('projectId');
                 projectRow.siblings(".employee").each(function () {
                     var employeeProjectId = $(this).attr('projectId');
@@ -366,10 +372,11 @@
                 }
             });
 
-            //TODO: koppla in hit OneProject
-            //dateTable.find(".project").click(function () {
-            //    var projectId = $(this).attr('projectId');
-            //}).eq(0).trigger('click');
+            //Link to OneProject
+            dateTable.find(".project").click(function () {
+                var projectId = $(this).attr('projectId');
+                $location.path("/projects/project-details/2"); //TODO: after db, add projectId to link
+            }).eq(0).trigger('click');
 
             //**********   Helper functions   ***********
             function isEmpty(val) {
@@ -427,4 +434,4 @@
             //}
         });
     </script>
-}
+}*@

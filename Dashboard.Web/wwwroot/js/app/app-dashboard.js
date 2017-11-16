@@ -4,6 +4,7 @@
         ["ngRoute",
             "ngResource",
             'ngFileUpload',
+            'angularModalService',
             "projectList",
             "employeeList",
             "assignmentList",
