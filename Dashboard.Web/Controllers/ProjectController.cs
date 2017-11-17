@@ -22,6 +22,10 @@ public class ProjectController : Controller
     {
         _httpClientDashboard = httpClientDashboard;
     }
+    public IActionResult AngApp()
+    {
+        return View();
+    }
     public async Task<IActionResult> Index()
     {
         //await WriteOutIdentityInformation();

@@ -1,9 +1,9 @@
 ﻿(function () {
     "use strict";
     angular.module("app-dashboard",
-        ["ngRoute",
-            "ngResource",
+        ["ngRoute",          
             'ngFileUpload',
+            "ngResource",
             'angularModalService',
             "projectList",
             "employeeList",
@@ -23,7 +23,7 @@
             "clientAdd",
             "phaseAdd",
             "phaseDelete",
-            "repo"
+            "repoEmployees"
             ]);
 })();
 //'daterangerpicker',

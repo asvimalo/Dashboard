@@ -1,1 +1,1 @@
-﻿angular.module('repoEmployee', ['ngResource']);
+﻿angular.module('repoEmployees', []);
