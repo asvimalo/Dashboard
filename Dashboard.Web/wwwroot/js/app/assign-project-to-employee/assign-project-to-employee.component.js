@@ -3,16 +3,22 @@
     angular.module("assignProjectToEmployee", [])
         .component("assignProjectToEmployee", {
             templateUrl: "/js/app/assign-project-to-employee/assign-project-to-employee.template.html",
-            controller: function assignProjectToEmployeeController($http, $scope, $location) {
+            controller: function assignProjectToEmployeeController(
+                $http,
+                $scope,
+                $location,
+                repoEmployees,
+                repoAssignments
+            ) {
                 //$routeProvider
                 var holder = this;
 
                 holder.employeesAndProjects = [];
-                $http.get("http://localhost:8890/api/dashboard/assignments/projectsemployeeslist")
+                repoAssignments.lists()
                     .then(function (response) {
                         //success
                         console.log("Check");
-                        angular.copy(response.data, holder.employeesAndProjects);
+                        angular.copy(response, holder.employeesAndProjects);
                     }, function (error) {
                         //failure
                         holder.errorMessage = "Failed to load data: " + error;
@@ -65,9 +71,9 @@
                     var data = { "ProjectId": $scope.formInfo.project.projectId, "EmployeeId": $scope.formInfo.employee.employeeId, "JobTitle": $scope.formInfo.jobtitle, "Location": $scope.formInfo.location, "Commitments": holder.commitments };
                     var dataTmp = JSON.stringify(data);
                     //var dataTmp = JSON.stringify(data);
-                    $http.post("http://localhost:8890/api/dashboard/assignments", dataTmp)  
+                    repoAssignments.Add(dataTmp)  
                         .then(function (response) {
-                            console.log("Response from server api" + response.data);
+                            console.log("Response from server api" + response);
                             $scope.formInfo = {};
                             holder.commitments = [];
                             $location.path("/dashboard");

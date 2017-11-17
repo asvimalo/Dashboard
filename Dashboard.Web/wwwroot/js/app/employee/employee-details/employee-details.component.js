@@ -3,14 +3,16 @@
     angular.module("employeeDetails")
         .component("employeeDetails", {
             templateUrl: "/js/app/employee/employee-details/employee-details.template.html",
-            controller: function EmployeeListController($scope,
+            controller: function EmployeeListController(
+                $scope,
                 $http,
                 $location,
-                $routeParams) {
+                $routeParams,
+                repoEmployee) {
 
                 var holder = this;
                 $scope.detailsEmployee = function () {
-                }
+                };
             }
         });
         

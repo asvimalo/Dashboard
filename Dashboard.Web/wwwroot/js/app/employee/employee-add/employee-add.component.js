@@ -3,7 +3,12 @@
     angular.module("employeeAdd")
         .component("employeeAdd", {
             templateUrl: "/js/app/employee/employee-add/employee-add.template.html",
-            controller: function EmployeeListController($scope,$http,$location) {
+            controller: function EmployeeListController($scope,
+                $http,
+                $location,
+                repoEmployees,
+                repoKnowledges
+            ) {
                 
                 var holder = this;
 
@@ -11,7 +16,7 @@
                 holder.knowledges = [];
                 holder.newKnowledges = [];
 
-                $http.get('http://localhost:8890/api/dashboard/knowledges').then(function (response) {
+                repoKnowledges.getAll().then(function (response) {
                     angular.copy(response.data, holder.knowledges);
                 });
 
@@ -54,12 +59,12 @@
                     var employeeJson = JSON.stringify(newEmployee);
                     
 
-                    $http.post('http://localhost:8890/api/dashboard/employees', employeeJson)
+                    repoEmployees.addEmployee(employeeJson)
                         .then(function (response) {
                             //success
-                            console.log("Response from server api" + response.data);
+                            console.log("Response from server api" + response);
                             employee = {};
-                            ////file = {};
+                            
                             //window.location.reload();
                         }, function (err) {
                             //failure

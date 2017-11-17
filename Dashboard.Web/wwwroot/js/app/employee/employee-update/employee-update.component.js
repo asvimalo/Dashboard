@@ -1,13 +1,17 @@
 ﻿(function () {
     "use strict";
-    angular.module("employeeAdd")
-        .component("employeeAdd", {
-            templateUrl: "/js/app/employee/employee-add/employee-add.template.html",
-            controller: function EmployeeListController($scope,$http,$location) {
+    angular.module("employeeUpdate")
+        .component("employeeUpdate", {
+            templateUrl: "/js/app/employee/employee-update/employee-update.template.html",
+            controller: function EmployeeListController(
+                $scope,
+                $http,
+                $location,
+                employeeUpdate) {
 
                 var holder = this;
                 
-                $scope.addEmployee = function () {
+                $scope.updateEmployee = function () {
                     var newEmployee = {};
                     var employee = $scope.employee;
                     
@@ -36,7 +40,7 @@
                     var json = JSON.stringify(newEmployee);
                     
 
-                    $http.post('http://localhost:8890/api/dashboard/employees/', json)
+                    repoEmployees(json)
                         .then(function (response) {
                             //success
                             console.log("Response from server api" + response.data);
