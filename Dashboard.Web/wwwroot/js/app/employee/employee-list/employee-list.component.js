@@ -8,8 +8,8 @@
                 //self.orderProp = 'projectName';
                 self.employees = [];
 
-                repoEmployees.getAll().then(function (response) {
-                    angular.copy(response.data, self.employees);
+                repoEmployees.getAll().then(function (data) {
+                    angular.copy(data, self.employees);
                 });
             }
             
