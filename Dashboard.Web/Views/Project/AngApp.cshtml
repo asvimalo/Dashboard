@@ -1,82 +1,4 @@
-﻿@section Scripts {
-    <script src="~/lib/angular/angular.min.js"></script>
-    <script src="~/lib/angular-route/angular-route.min.js"></script>
-    <script src="~/lib/ng-file-upload-shim/ng-file-upload-shim.min.js"></script>
-    <script src="~/lib/ng-file-upload-shim/ng-file-upload.min.js"></script>
-    
-    <script src="~/js/app/app-dashboard.js"></script>
-    
-    <script src="~/js/app/services/repo.module.js"></script>
-    <script src="~/js/app/services/employees/repoEmployees.module.js"></script>
-    <script src="~/js/app/services/employees/repoEmployees.service.js"></script>
-
-    <script src="~/js/app/dashboard-view/dashboard-view.module.js"></script>
-    <script src="~/js/app/dashboard-view/dashboard-view.component.js"></script>
-
-    @*/////////////            PROJECT                  ///////////////////////*@
-
-    <script src="~/js/app/project/project-list/project-list.module.js"></script>
-    <script src="~/js/app/project/project-list/project-list.component.js"></script>
-
-    <script src="~/js/app/project/project-add/project-add.module.js"></script>
-    <script src="~/js/app/project/project-add/project-add.component.js"></script>
-
-    @*/////////////            EMPLOYEE                  ///////////////////////*@
-
-    <script src="~/js/app/employee/employee-list/employee-list.module.js"></script>
-    <script src="~/js/app/employee/employee-list/employee-list.component.js"></script>
-
-    <script src="~/js/app/employee/employee-add/employee-add.module.js"></script>
-    <script src="~/js/app/employee/employee-add/employee-add.component.js"></script>
-    
-    @*/////////////            ASSIGNMENT                  ///////////////////////*@
-
-    <script src="~/js/app/assignment/assignment-list/assignment-list.module.js"></script>
-    <script src="~/js/app/assignment/assignment-list/assignment-list.component.js"></script>
-
-    @*/////////////            ACQUIRED KNOWLEDGE                  ///////////////////////*@
-
-    <script src="~/js/app/acquiredKnowledge/acquiredKnowledge-list/acquiredKnowledge-list.module.js"></script>
-    <script src="~/js/app/acquiredKnowledge/acquiredKnowledge-list/acquiredKnowledge-list.component.js"></script>
-
-    @*/////////////            CLIENT                  ///////////////////////*@
-
-    <script src="~/js/app/client/client-list/client-list.module.js"></script>
-    <script src="~/js/app/client/client-list/client-list.component.js"></script>
-
-    <script src="~/js/app/client/client-add/client-add.module.js"></script>
-    <script src="~/js/app/client/client-add/client-add.component.js"></script>
-      
-    @*/////////////           COMMITMENT                  ///////////////////////*@
-
-    <script src="~/js/app/commitment/commitment-list/commitment-list.module.js"></script>
-    <script src="~/js/app/commitment/commitment-list/commitment-list.component.js"></script>
-
-    @*/////////////            KNOWLEDGE                  ///////////////////////*@
-
-    <script src="~/js/app/knowledge/knowledge-list/knowledge-list.module.js"></script>
-    <script src="~/js/app/knowledge/knowledge-list/knowledge-list.component.js"></script>
-
-    @*/////////////            PHASE                  ///////////////////////*@
-
-    <script src="~/js/app/phase/phase-list/phase-list.module.js"></script>
-    <script src="~/js/app/phase/phase-list/phase-list.component.js"></script>
-
-    @*/////////////            LOCATION                  ///////////////////////*@
-
-    <script src="~/js/app/location/location-list/location-list.module.js"></script>
-    <script src="~/js/app/location/location-list/location-list.component.js"></script>
-
-    <script src="~/js/app/assign-project-to-employee/assign-project-to-employee.module.js"></script>
-    <script src="~/js/app/assign-project-to-employee/assign-project-to-employee.component.js"></script>
-
-    <script src="~/js/app/task/task-list/task-list.module.js"></script>
-    <script src="~/js/app/task/task-list/task-list.component.js"></script>
-
-
-    <script src="~/js/app/app-dashboard.config.js"></script>
-
-}
+﻿
 <div ng-app="app-dashboard">
     <div class="container-fluid">
         <div class="row">
@@ -85,15 +7,15 @@
                     
                     <li><a ng-href="#!/dashboard">Dashboard</a></li>
                     <li><a ng-href="#!/employees">Employees</a></li>
-                    <li><a ng-href="#!/knowledges">Knowledges</a></li>
+                    @*<li><a ng-href="#!/knowledges">Knowledges</a></li>
                     <li><a ng-href="#!/acquiredKnowledges">Acquired Knowledges</a></li>
                     <li><a ng-href="#!/clients">Clients</a></li>   
-                    <li><a ng-href="#!/locations">Locations</a></li>   
+                    <li><a ng-href="#!/locations">Locations</a></li>*@   
                     <li><a ng-href="#!/projects">Projects</a></li>
-                    <li><a ng-href="#!/assignments">Assignments</a></li>
+                    @*<li><a ng-href="#!/assignments">Assignments</a></li>
                     <li><a ng-href="#!/phases">Phases</a></li>
                     <li><a ng-href="#!/tasks">Tasks</a></li>     
-                    <li><a ng-href="#!/commitments">Commitments</a></li>                    
+                    <li><a ng-href="#!/commitments">Commitments</a></li>*@                    
                     <li><a ng-href="#!/assignProjectToEmployee">AssignProjectToEmployee</a></li>
                     <li><a ng-href="#!/projects/project-add">Add Project</a></li>
                     <li><a ng-href="#!/clients/client-add">Add Client</a></li>
@@ -106,3 +28,93 @@
         </div>
     </div>
 </div>
+section Scripts {
+<script src="~/lib/angular/angular.min.js"></script>
+<script src="~/lib/angular-route/angular-route.min.js"></script>
+<script src="~/lib/angular-resource/angular-resource.min.js"></script>
+<script src="~/lib/ng-file-upload-shim/ng-file-upload-shim.min.js"></script>
+<script src="~/lib/ng-file-upload-shim/ng-file-upload.min.js"></script>
+<script src="~/lib/angular-modal-service/dst/angular-modal-service.js"></script>
+
+@*////////*@
+<script src="~/js/app/app-dashboard.js"></script>
+<script src="~/js/app/app-dashboard.config.js"></script>
+
+
+<script src="~/js/app/services/employees/repoEmployees.service.js"></script>
+
+<script src="~/js/app/dashboard-view/dashboard-view.module.js"></script>
+<script src="~/js/app/dashboard-view/dashboard-view.component.js"></script>
+
+@*/////////////            PROJECT                  ///////////////////////*@
+
+<script src="~/js/app/project/project-list/project-list.module.js"></script>
+<script src="~/js/app/project/project-list/project-list.component.js"></script>
+
+<script src="~/js/app/project/project-add/project-add.module.js"></script>
+<script src="~/js/app/project/project-add/project-add.component.js"></script>
+
+<script src="~/js/app/project/project-details/project-details.module.js"></script>
+<script src="~/js/app/project/project-details/project-details.component.js"></script>
+
+@*/////////////            EMPLOYEE                  ///////////////////////*@
+
+<script src="~/js/app/employee/employee-list/employee-list.module.js"></script>
+<script src="~/js/app/employee/employee-list/employee-list.component.js"></script>
+
+<script src="~/js/app/employee/employee-add/employee-add.module.js"></script>
+<script src="~/js/app/employee/employee-add/employee-add.component.js"></script>
+
+@*/////////////            ASSIGNMENT                  ///////////////////////*@
+
+<script src="~/js/app/assignment/assignment-list/assignment-list.module.js"></script>                           @*Delete?*@
+<script src="~/js/app/assignment/assignment-list/assignment-list.component.js"></script>                        @*Delete?*@
+
+@*/////////////            ACQUIRED KNOWLEDGE                  ///////////////////////*@
+
+<script src="~/js/app/acquiredKnowledge/acquiredKnowledge-list/acquiredKnowledge-list.module.js"></script>      @*Delete?*@
+<script src="~/js/app/acquiredKnowledge/acquiredKnowledge-list/acquiredKnowledge-list.component.js"></script>   @*Delete?*@
+
+@*/////////////            CLIENT                  ///////////////////////*@
+
+<script src="~/js/app/client/client-list/client-list.module.js"></script>                                       @*Delete?*@
+<script src="~/js/app/client/client-list/client-list.component.js"></script>                                    @*Delete?*@
+
+<script src="~/js/app/client/client-add/client-add.module.js"></script>                                         @*Delete?*@
+<script src="~/js/app/client/client-add/client-add.component.js"></script>                                      @*Delete?*@
+
+@*/////////////           COMMITMENT                  ///////////////////////*@
+
+<script src="~/js/app/commitment/commitment-list/commitment-list.module.js"></script>                           @*Delete?*@
+<script src="~/js/app/commitment/commitment-list/commitment-list.component.js"></script>                        @*Delete?*@
+
+@*/////////////            KNOWLEDGE                  ///////////////////////*@
+
+<script src="~/js/app/knowledge/knowledge-list/knowledge-list.module.js"></script>                              @*Delete?*@
+<script src="~/js/app/knowledge/knowledge-list/knowledge-list.component.js"></script>                           @*Delete?*@
+
+@*/////////////            PHASE                  ///////////////////////*@
+
+<script src="~/js/app/phase/phase-list/phase-list.module.js"></script>
+<script src="~/js/app/phase/phase-list/phase-list.component.js"></script>
+
+<script src="~/js/app/phase/phase-add/phase-add.module.js"></script>
+<script src="~/js/app/phase/phase-add/phase-add.component.js"></script>
+
+<script src="~/js/app/phase/phase-delete/phase-delete.module.js"></script>
+<script src="~/js/app/phase/phase-delete/phase-delete.component.js"></script>
+
+@*/////////////            LOCATION                  ///////////////////////*@
+
+<script src="~/js/app/location/location-list/location-list.module.js"></script>
+<script src="~/js/app/location/location-list/location-list.component.js"></script>
+
+<script src="~/js/app/task/task-list/task-list.module.js"></script>
+<script src="~/js/app/task/task-list/task-list.component.js"></script>
+
+@*/////////////            PANEL3                  ///////////////////////*@
+<script src="~/js/app/assign-project-to-employee/assign-project-to-employee.module.js"></script>
+<script src="~/js/app/assign-project-to-employee/assign-project-to-employee.component.js"></script>
+
+
+}
