@@ -14,18 +14,18 @@
                 var holder = this;
 
                 holder.employeesAndProjects = [];
-                repoAssignments.lists()
-                    .then(function (response) {
-                        //success
-                        console.log("Check");
-                        angular.copy(response, holder.employeesAndProjects);
-                    }, function (error) {
-                        //failure
-                        holder.errorMessage = "Failed to load data: " + error;
-                    })
+                repoAssignments.lists().then(function (response) {
+                    //success
+                    console.log("Check");
+                    angular.copy(response, holder.employeesAndProjects);
+                }, function (error) {
+                    //failure
+                    holder.errorMessage = "Failed to load data: " + error;
+                })
                     .finally(function () {
                         holder.isBusy = false;
                     });
+                    
 
                 holder.commitments = [];
                 $scope.addCommitment = function () {

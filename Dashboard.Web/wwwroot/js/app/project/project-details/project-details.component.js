@@ -3,16 +3,22 @@
     angular.module("projectDetails")
         .component("projectDetails", {
             templateUrl: "/js/app/project/project-details/project-details.template.html",
-            controller: function ProjectListController($http, $scope, $location, $routeParams) {
+            controller: function ProjectListController(
+                $http,
+                $scope,
+                $location,
+                $routeParams,
+                repoProjects
+                ) {
                 this.projectId = $routeParams.projectId;
 
                 var self = this;
 
                 self.project = {};
 
-                //$http.get('http://localhost:8890/api/dashboard/projects/' + self.projectId).then(function (response) {
-                //    angular.copy(response.data, self.project);
-                //}); 
+                repoProjects.get(self.projectId).then(function (response) {
+                    angular.copy(response, self.project);
+                }); 
 
                 $scope.phaseId = {};
 

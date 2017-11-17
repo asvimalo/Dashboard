@@ -1,8 +1,8 @@
 ﻿
-var repoAssignments = function ($http) {
+var repoPhases = function ($http) {
 
-    var getAssignments = function () {
-        return $http.get('http://localhost:8890/api/dashboard/assignments')
+    var getPhases = function () {
+        return $http.get('http://localhost:8890/api/dashboard/phases')
             .then(function (response) {
 
                 return response.data;
@@ -16,23 +16,9 @@ var repoAssignments = function ($http) {
                 console.log("Finally...??");
             });
     };
-    var getLists = function () {
-        return $http.get("http://localhost:8890/api/dashboard/assignments/projectsemployeeslist")
-            .then(function (response) {
-
-                return response.data;
-
-            }, function (error) {
-
-                console.log("didn't get assignments: " + error.message);
-            })
-            .finally(function () {
-
-                console.log("Finally...??");
-            });
-    };
-    var getAssignmentById = function (id) {
-        return $http.get("http://localhost:8890/api/dashboard/assignments/", id)
+   
+    var getPhaseById = function (id) {
+        return $http.get('http://localhost:8890/api/dashboard/phases/', id)
             .then(function (response) {
                 return response.data;
             }, function (error) {
@@ -44,8 +30,8 @@ var repoAssignments = function ($http) {
                 console.log("Finally...??");
             });
     };
-    var getAssignmentByName = function (name) {
-        return $http.get("http://localhost:8890/api/dashboard/assignments/", name)
+    var getPhaseByName = function (name) {
+        return $http.get("http://localhost:8890/api/dashboard/phases/", name)
             .then(function (response) {
                 return response.data;
             }, function (error) {
@@ -57,8 +43,8 @@ var repoAssignments = function ($http) {
                 console.log("Finally...??");
             });
     };
-    var addAssignment = function (assignment) {
-        $http.post('http://localhost:8890/api/dashboard/assignments', assignment)
+    var addPhase = function (phase) {
+        $http.post('http://localhost:8890/api/dashboard/phases', phase)
             .then(function (response) {
                 return response.data;
             }, function (error) {
@@ -70,8 +56,8 @@ var repoAssignments = function ($http) {
                 console.log("Finally...??");
             });
     };
-    var updateAssignment = function (assignment) {
-        $http.put('http://localhost:8890/api/dashboard/assignments', assignment)
+    var updatePhase = function (phase) {
+        $http.put('http://localhost:8890/api/dashboard/phases', phase)
             .then(function (response) {
                 return response.data;
             }, function (error) {
@@ -83,8 +69,8 @@ var repoAssignments = function ($http) {
                 console.log("Finally...??");
             });
     };
-    var deleteAssignment = function (id) {
-        $http.delete('http://localhost:8890/api/dashboard/assignments', id)
+    var deletePhase = function (id) {
+        $http.delete('http://localhost:8890/api/dashboard/phases', id)
             .then(function (response) {
                 return response.data;
             }, function (error) {
@@ -97,15 +83,14 @@ var repoAssignments = function ($http) {
             });
     };
     return {
-        getAll: getAssignments,
-        lists: getLists,
-        get: getAssignmentById,
-        getByName: getAssignmentByName,
-        add: addAssignment,
-        update: updateAssignment,
-        delete: deleteAssignment
+        getAll: getPhases,
+        get: getPhaseById,
+        getByName: getPhaseByName,
+        add: addPhase,
+        update: updatePhase,
+        delete: deletePhase
     };
 };
 
 var module = angular.module('app-dashboard');
-module.factory('repoAssignments', repoAssignments);
+module.factory('repoPhases', repoPhases);
