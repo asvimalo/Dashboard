@@ -17,10 +17,8 @@
                 $scope.phaseId = {};
 
                 $scope.Send = function (phaseId) {
-                    location.replace("#!/phases/phase-delete/" + phaseId)
-                    $scope.$apply();
-
-                }
+                    location.replace("#!/phases/phase-delete/" + phaseId);
+                };
                 
             }
         });

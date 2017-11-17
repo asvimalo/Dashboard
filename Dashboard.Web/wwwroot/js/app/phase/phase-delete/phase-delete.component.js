@@ -3,7 +3,7 @@
     angular.module("phaseDelete", [])
         .component("phaseDelete", {
             templateUrl: "/js/app/phase/phase-delete/phase-delete.template.html",
-            controller: function PhaseListController($http, $scope, $routeParams, ModalService, close) {
+            controller: function PhaseListController($http, $scope, $routeParams) {
                 //this.projectId = $routeParams.projectId;
                 var self = this; 
                 self.phase = {};
@@ -31,7 +31,7 @@
                             $scope.message = result ? "You said Yes" : "You said No";
                         });
                     });
-                }
+                };
 
                 $scope.dismissModal = function (result) {
                     close(result, 200); // close, but give 200ms for bootstrap to animate
