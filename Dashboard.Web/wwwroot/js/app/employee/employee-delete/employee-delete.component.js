@@ -3,7 +3,13 @@
     angular.module("employeeDelete")
         .component("employeeDelete", {
             templateUrl: "/js/app/employee/employee-delete/employee-delete.template.html",
-            controller: function EmployeeListController($scope,$http,$location,$routeParams) {
+            controller: function EmployeeListController(
+                $scope,
+                $http,
+                $location,
+                $routeParams,
+                repoEmployees
+            ) {
 
                 var holder = this;
                 
@@ -16,7 +22,7 @@
 
                     holder.progress = "";
 
-                    $http.detete('http://localhost:8890/api/dashboard/employees/', $routeParams.employee.employeeId)
+                    repoEmployees.detete($routeParams.employee.employeeId)
                         .then(function (response) {
                             //success
                             console.log("Response from server api" + response.data);
