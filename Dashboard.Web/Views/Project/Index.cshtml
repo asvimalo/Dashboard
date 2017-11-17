@@ -1,7 +1,7 @@
 ﻿<link href="~/css/allProject.css" rel="stylesheet" type="text/css" />
 
 <div ng-app="app-dashboard">
-    @*<a ng-href="#!/projects/project-details/2">One Project Details</a>*@
+    <a ng-href="#!/projects/project-details/2">One Project Details</a>
     <div ng-view></div>
 
     <div class="container-fluid">
@@ -379,6 +379,7 @@
             for (var i = 1; i < columnCountDate; i++) {
                 //str += (dates[i].toString() + " | ");
                 var celldate = $("<td></td>");
+                celldate.addClass("cellDate");
                 celldate.html(formatedDates[i]);
                 rowdate.append(celldate);
             }
