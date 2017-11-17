@@ -1,18 +1,89 @@
 ﻿body {
     color: grey;
+    background-color: #eeeeee;
+}
+
+.borderless td, .borderless th {
+    border: none;
+}
+
+.table-borderless > tbody > tr > td,
+.table-borderless > tbody > tr > th,
+.table-borderless > tfoot > tr > td,
+.table-borderless > tfoot > tr > th,
+.table-borderless > thead > tr > td,
+.table-borderless > thead > tr > th {
+    border: none;
+}
+
+.mainpanel {
+    background-color: whitesmoke;
+    padding: 2%;
+    min-height: 440px;
+    /*padding-right: 5%;*/
+}
+
+.sidepanel {
+    background-color: whitesmoke;
+    padding: 2%;
+    /*padding-right: 5%;*/
 }
 
 .panelButton {
     background-color: #c2deee;
     /*display: block;*/
-    min-width: 100%;
+    min-width: 95%;
     padding-top: 20%;
     padding-bottom: 20%;
-    padding-right: 10%;
-    padding-left: 10%;
-    margin-left: 5%;
-    margin-bottom: 5%;
+    padding-right: 5%;
+    padding-left: 5%;
+    margin-left: 3%;
+    margin-right: 2%;
+    margin-bottom: 7%;
     /*padding: 20%;*/
 }
 
+.calendarbutton {
+    background-color: #cccccc;
+    color: whitesmoke;
+    border-radius: 4px;
+    padding: 2%;
+    padding-left: 3%;
+    padding-left: 3%;
+    border: none;
+}
 
+.activebutton {
+    background-color: #c2deee;
+    color: whitesmoke;
+    border-radius: 4px;
+    padding: 2%;
+    padding-left: 3%;
+    padding-left: 3%;
+    border: none;
+}
+
+.cellDate {
+    min-width: 60px;
+    text-align: center;
+}
+
+.projectName {
+    background-color: #eeeeee;
+}
+
+.insertButton {
+    background-color: #eeeeee;
+}
+
+    .insertButton > button {
+        border: none;
+        background: none;
+        padding: 0;
+    }
+
+.celldiv {
+    background-color: aquamarine;
+    width: 20px;
+    height: 10px;
+}
