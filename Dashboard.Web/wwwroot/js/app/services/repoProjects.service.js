@@ -18,20 +18,16 @@ var repoProjects = function ($http) {
     };
 
     var getProjectById = function (id) {
-        return $http.get("http://localhost:8890/api/dashboard/projects/", id)
+        return $http.get("http://localhost:8890/api/dashboard/projects/" + id)
             .then(function (response) {
                 return response.data;
             }, function (error) {
 
                 console.log("didn't get employees: " + error.message);
-            })
-            .finally(function () {
-
-                console.log("Finally...??");
-            });
+            }) 
     };
     var getProjectByName = function (name) {
-        return $http.get("http://localhost:8890/api/dashboard/projects/", name)
+        return $http.get("http://localhost:8890/api/dashboard/projects/" + name)
             .then(function (response) {
                 return response.data;
             }, function (error) {
@@ -70,7 +66,7 @@ var repoProjects = function ($http) {
             });
     };
     var deleteProject = function (id) {
-        $http.delete('http://localhost:8890/api/dashboard/projects', id)
+        $http.delete('http://localhost:8890/api/dashboard/projects/' + id)
             .then(function (response) {
                 return response.data;
             }, function (error) {
