@@ -3,7 +3,6 @@
     angular.module("app-dashboard",
         ["ngRoute",          
             'ngFileUpload',
-            "ngResource",
             'angularModalService',
             "projectList",
             "employeeList",
@@ -22,8 +21,8 @@
             "projectDetails",
             "clientAdd",
             "phaseAdd",
-            "phaseDelete",
-            "repoEmployees"
+            "phaseDelete"
+            
             ]);
 })();
 //'daterangerpicker',

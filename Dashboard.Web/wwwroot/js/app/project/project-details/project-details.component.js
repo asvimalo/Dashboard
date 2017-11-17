@@ -10,9 +10,9 @@
 
                 self.project = {};
 
-                $http.get('http://localhost:8890/api/dashboard/projects/' + self.projectId).then(function (response) {
-                    angular.copy(response.data, self.project);
-                }); 
+                //$http.get('http://localhost:8890/api/dashboard/projects/' + self.projectId).then(function (response) {
+                //    angular.copy(response.data, self.project);
+                //}); 
 
                 $scope.phaseId = {};
 
