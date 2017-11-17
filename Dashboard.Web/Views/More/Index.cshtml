@@ -259,12 +259,12 @@
                         var phaseStart = moment(projects[i].startPhase[l]).format('YYYY-MM-DD');
                         var phaseEnd = moment(projects[i].endPhase[l]).format('YYYY-MM-DD');
                         if (phaseStart == dates[j]) {
-                            data[j] = 'FS';
+                            data[j] = 'PS';
                             phaseId[j] = l;
                             continue;
                         }
                         if (phaseEnd == dates[j]) {
-                            data[j] = 'FE';
+                            data[j] = 'PE';
                             phaseId[j] = l;
                             continue;
                         }
@@ -291,9 +291,10 @@
                     row.append(cell1);
                     for (var j = 1; j < dates.length; j++) {
                         var cell = $("<td></td>");
+                        cell.addClass("datacell");
                         cell.html(data[j]);
+                        var celldiv = $("<div></div>");
                         if (!isEmpty(data[j])) {
-                            var celldiv = $("<div></div>");
                             celldiv.addClass("celldiv");
                             cell.attr("data-trigger", "hover");
                             cell.attr("proj", i);
@@ -335,8 +336,9 @@
                             row.append(cell);
                             for (var j = 1; j < dates.length; j++) {
                                 var cell = $("<td></td>");
+                                cell.addClass("datacell");
+                                var celldiv = $("<div></div>");
                                 if (!isEmpty(data[j])) {
-                                    var celldiv = $("<div></div>");
                                     celldiv.addClass("celldiv");
                                 }
                                 cell.html(data[j]);
@@ -399,6 +401,32 @@
             }).eq(0);
 
             //**********   Helper functions   ***********
+            function addCssClass(content, div) { 
+                switch (content) {
+                    case "S":
+                        div.addClass("projectstartenddiv");
+                        break;
+                    case "E":
+                        div.addClass("projectstartenddiv");
+                        break;
+                    case "PS":
+                        div.addClass("phasestartdiv");
+                        break;
+                    case "PE":
+                        div.addClass("phaseenddiv");
+                        break;
+                    case "x":
+                        div.addClass("celldiv");
+                        break;
+                    case "CE":
+                        div.addClass("phaseenddiv");
+                        break;
+
+                    default:
+                        div.addClass("");
+                }
+            }
+
             function isEmpty(val) {
                 return (val === undefined || val == null || val.length <= 0 || val === " ") ? true : false;
             }

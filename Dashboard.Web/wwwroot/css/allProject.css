@@ -20,18 +20,15 @@
     background-color: whitesmoke;
     padding: 2%;
     min-height: 440px;
-    /*padding-right: 5%;*/
 }
 
 .sidepanel {
     background-color: whitesmoke;
     padding: 2%;
-    /*padding-right: 5%;*/
 }
-
+/*#c2deee; #bedafd*/
 .panelButton {
     background-color: #c2deee;
-    /*display: block;*/
     min-width: 95%;
     padding-top: 20%;
     padding-bottom: 20%;
@@ -40,7 +37,6 @@
     margin-left: 3%;
     margin-right: 2%;
     margin-bottom: 7%;
-    /*padding: 20%;*/
 }
 
 .calendarbutton {
@@ -82,8 +78,38 @@
         padding: 0;
     }
 
-.celldiv {
-    background-color: aquamarine;
-    width: 20px;
-    height: 10px;
+/*gannt's cell deadlines*/
+
+.datacell {
+    font-size: 1%;
 }
+
+.celldiv {
+    background-color: #c2deee;
+    width: 100%;
+    height: 15px;
+    padding: 0%;
+}
+
+.projectstartenddiv {
+    background-color: #d04e4e;
+    width: 100%;
+    height: 15px;
+    padding: 0%;
+}
+
+.phasestartdiv {
+    background-color: #bef5c1;
+    width: 100%;
+    height: 25px;
+    padding: 0%;
+}
+
+.phaseenddiv {
+    background-color: #bef5c1;
+    width: 100%;
+    height: 25px;
+    padding: 0%;
+}
+
+
