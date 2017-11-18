@@ -8,7 +8,9 @@ namespace Dashboard.DataG.Db
 {
     public class DashboardGenericContext : DbContext
     {
-
+        public DashboardGenericContext()
+        {
+        }
 
         public DashboardGenericContext(DbContextOptions options)
                : base(options)

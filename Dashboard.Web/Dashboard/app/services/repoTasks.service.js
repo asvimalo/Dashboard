@@ -1,77 +1,80 @@
 ﻿
-var repoProjects = function ($http) {
+var repoTasks = function ($http) {
 
-    var getProjects = function () {
-        return $http.get('http://localhost:8890/api/dashboard/projects')
+    var getTasks = function () {
+        return $http.get('http://localhost:8890/api/dashboard/tasks')
             .then(function (response) {
 
                 return response.data;
 
             }, function (error) {
 
-                console.log("didn't get employees: " + error.message);
+                console.log("didn't get tasks: " + error.message);
             })
             .finally(function () {
 
                 console.log("Finally...??");
             });
     };
-
-    var getProjectById = function (id) {
-        return $http.get("http://localhost:8890/api/dashboard/projects/" + id)
+    
+    var getTaskById = function (id) {
+        return $http.get("http://localhost:8890/api/dashboard/tasks/" + id)
             .then(function (response) {
                 return response.data;
             }, function (error) {
 
                 console.log("didn't get employees: " + error.message);
+            }).finally(function () {
+
+                console.log("Finally...??");
             }); 
     };
-    var getProjectByName = function (name) {
-        return $http.get("http://localhost:8890/api/dashboard/projects/" + name)
+    var getTaskByName = function (name) {
+        return $http.get("http://localhost:8890/api/dashboard/tasks/" + name)
             .then(function (response) {
                 return response.data;
             }, function (error) {
 
-                console.log("didn't get employee: " + error.message);
+                console.log("didn't get task: " + error.message);
             })
             .finally(function () {
 
                 console.log("Finally...??");
             });
     };
-    var addProject = function (project) {
-        $http.post('http://localhost:8890/api/dashboard/projects', project)
+    var addTask = function (task) {
+        $http.post('http://localhost:8890/api/dashboard/tasks/', task)
             .then(function (response) {
                 return response.data;
             }, function (error) {
 
-                console.log("didn't add employee: " + error.message);
+                console.log("didn't add task: " + error.message);
             })
             .finally(function () {
 
                 console.log("Finally...??");
             });
     };
-    var updateProject = function (project) {
-        $http.put('http://localhost:8890/api/dashboard/projects', project)
+    var updateTask = function (task) {
+        $http.put('http://localhost:8890/api/dashboard/tasks/', task)
             .then(function (response) {
                 return response.data;
             }, function (error) {
 
-                console.log("didn't update employee: " + error.message);
+                console.log("didn't update task: " + error.message);
             })
             .finally(function () {
 
                 console.log("Finally...??");
             });
     };
-    var deleteProject = function (id) {
-        $http.delete('http://localhost:8890/api/dashboard/projects/' + id)
+    var deleteTask = function (id) {
+        $http.delete('http://localhost:8890/api/dashboard/tasks/' + id)
             .then(function (response) {
                 return response.data;
             }, function (error) {
 
-                console.log("didn't delete employee: " + error.message);
+                console.log("didn't delete task: " + error.message);
             })
             .finally(function () {
 
@@ -79,14 +82,14 @@ var repoProjects = function ($http) {
             });
     };
     return {
-        getAll: getProjects,
-        get: getProjectById,
-        getByName: getProjectByName,
-        add: addProject,
-        update: updateProject,
-        delete: deleteProject
+        getAll: getTasks,
+        get: getTaskById,
+        getByName: getTaskByName,
+        add: addTask,
+        update: updateTask,
+        delete: deleteTask
     };
 };
 
 var module = angular.module('app-dashboard');
-module.factory('repoProjects', repoProjects);
+module.factory('repoTasks', repoTasks);

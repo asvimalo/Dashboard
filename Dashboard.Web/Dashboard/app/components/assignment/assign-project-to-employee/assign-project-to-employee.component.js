@@ -2,9 +2,8 @@
     "use strict";
     angular.module("assignProjectToEmployee", [])
         .component("assignProjectToEmployee", {
-            templateUrl: "/js/app/assign-project-to-employee/assign-project-to-employee.template.html",
+            templateUrl: "/Dashboard/app/components/assign-project-to-employee/assign-project-to-employee.template.html",
             controller: function assignProjectToEmployeeController(
-                $http,
                 $scope,
                 $location,
                 repoEmployees,
@@ -14,6 +13,8 @@
                 var holder = this;
 
                 holder.employeesAndProjects = [];
+
+                // http call through repoAssignments
                 repoAssignments.lists().then(function (response) {
                     //success
                     console.log("Check");
@@ -71,6 +72,8 @@
                     var data = { "ProjectId": $scope.formInfo.project.projectId, "EmployeeId": $scope.formInfo.employee.employeeId, "JobTitle": $scope.formInfo.jobtitle, "Location": $scope.formInfo.location, "Commitments": holder.commitments };
                     var dataTmp = JSON.stringify(data);
                     //var dataTmp = JSON.stringify(data);
+
+                    // http post through repoAssignments
                     repoAssignments.add(dataTmp).then(function (response) {
                         console.log("Response from server api" + response);
                         $scope.formInfo = {};

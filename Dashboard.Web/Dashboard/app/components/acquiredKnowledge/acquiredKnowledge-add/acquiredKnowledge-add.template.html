@@ -1,0 +1,19 @@
+﻿<h2 class="text-center">Add Acquired Knowledge</h2>
+<form name="form" class="form-group" novalidate>
+
+    <div class="form-group">
+        <label>Client:</label>
+        <select class="form-control" ng-options="item.knowledgeName for item in $ctrl.knowledges" ng-model="formInfo.knowledges">
+            <option value="" disabled selected></option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label>Client:</label>
+        <select class="form-control" ng-options="item.firstName for item in $ctrl.employees" ng-model="formInfo.employees">
+            <option value="" disabled selected></option>
+        </select>
+    </div>
+    <button class="btn btn-primary" type="button" ng-click="addAcquiredKnowledges()">Save</button>
+</form>
+
+

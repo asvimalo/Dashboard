@@ -1,8 +1,8 @@
 ﻿
-var repoProjects = function ($http) {
+var repoKnowledges = function ($http) {
 
-    var getProjects = function () {
-        return $http.get('http://localhost:8890/api/dashboard/projects')
+    var getKnowledges = function () {
+        return $http.get('http://localhost:8890/api/dashboard/knowledges')
             .then(function (response) {
 
                 return response.data;
@@ -17,17 +17,21 @@ var repoProjects = function ($http) {
             });
     };
 
-    var getProjectById = function (id) {
-        return $http.get("http://localhost:8890/api/dashboard/projects/" + id)
+    var getKnowledgeById = function (id) {
+        return $http.get("http://localhost:8890/api/dashboard/knowledges/", id)
             .then(function (response) {
                 return response.data;
             }, function (error) {
 
                 console.log("didn't get employees: " + error.message);
-            }); 
+            })
+            .finally(function () {
+
+                console.log("Finally...??");
+            });
     };
-    var getProjectByName = function (name) {
-        return $http.get("http://localhost:8890/api/dashboard/projects/" + name)
+    var getKnowledgeByName = function (name) {
+        return $http.get("http://localhost:8890/api/dashboard/knowledges/", name)
             .then(function (response) {
                 return response.data;
             }, function (error) {
@@ -39,8 +43,8 @@ var repoProjects = function ($http) {
                 console.log("Finally...??");
             });
     };
-    var addProject = function (project) {
-        $http.post('http://localhost:8890/api/dashboard/projects', project)
+    var addKnowledge = function (knowledge) {
+        $http.post('http://localhost:8890/api/dashboard/knowledges', knowledge)
             .then(function (response) {
                 return response.data;
             }, function (error) {
@@ -52,8 +56,8 @@ var repoProjects = function ($http) {
                 console.log("Finally...??");
             });
     };
-    var updateProject = function (project) {
-        $http.put('http://localhost:8890/api/dashboard/projects', project)
+    var updateKnowledge = function (knowledge) {
+        $http.put('http://localhost:8890/api/dashboard/knowledges', knowledge)
             .then(function (response) {
                 return response.data;
             }, function (error) {
@@ -65,8 +69,8 @@ var repoProjects = function ($http) {
                 console.log("Finally...??");
             });
     };
-    var deleteProject = function (id) {
-        $http.delete('http://localhost:8890/api/dashboard/projects/' + id)
+    var deleteKnowledge = function (id) {
+        $http.delete('http://localhost:8890/api/dashboard/knowledges', id)
             .then(function (response) {
                 return response.data;
             }, function (error) {
@@ -79,14 +83,14 @@ var repoProjects = function ($http) {
             });
     };
     return {
-        getAll: getProjects,
-        get: getProjectById,
-        getByName: getProjectByName,
-        add: addProject,
-        update: updateProject,
-        delete: deleteProject
+        getAll: getKnowledges,
+        get: getKnowledgeById,
+        getByName: getKnowledgeByName,
+        add: addKnowledge,
+        update: updateKnowledge,
+        delete: deleteKnowledge
     };
 };
 
 var module = angular.module('app-dashboard');
-module.factory('repoProjects', repoProjects);
+module.factory('repoKnowledges', repoKnowledges);

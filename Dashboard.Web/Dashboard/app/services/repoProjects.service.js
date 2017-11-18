@@ -16,7 +16,21 @@ var repoProjects = function ($http) {
                 console.log("Finally...??");
             });
     };
+    var getLists = () => {
+        return $http.get('http://localhost:8890/api/dashboard/projects/employeesclientslist')
+            .then(function (response) {
 
+                return response.data;
+
+            }, function (error) {
+
+                console.log("didn't getting the projects and client lists: " + error.message);
+            })
+            .finally(function () {
+
+                console.log("Finally...??");
+            });
+    };
     var getProjectById = function (id) {
         return $http.get("http://localhost:8890/api/dashboard/projects/" + id)
             .then(function (response) {
@@ -24,6 +38,9 @@ var repoProjects = function ($http) {
             }, function (error) {
 
                 console.log("didn't get employees: " + error.message);
+            }).finally(function () {
+
+                console.log("Finally...??");
             }); 
     };
     var getProjectByName = function (name) {
@@ -80,6 +97,7 @@ var repoProjects = function ($http) {
     };
     return {
         getAll: getProjects,
+        lists: getLists,
         get: getProjectById,
         getByName: getProjectByName,
         add: addProject,

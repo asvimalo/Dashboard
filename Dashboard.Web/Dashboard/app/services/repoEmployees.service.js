@@ -1,12 +1,26 @@
 ﻿
-var repoProjects = function ($http) {
+var repoEmployees = function ($http) {
 
-    var getProjects = function () {
-        return $http.get('http://localhost:8890/api/dashboard/projects')
+    var getEmployees = function () {
+        return $http.get('http://localhost:8890/api/dashboard/employees')
             .then(function (response) {
+                
+                return response.data;   
+                
+            }, function (error) {
+                
+                console.log("didn't get employees: " + error.message);
+            })
+            .finally(function () {
+                
+                console.log("Finally...??");
+            });
+    };
 
+    var getEmployeeById = function (id) {
+        return $http.get("http://localhost:8890/api/dashboard/employees/", id)
+            .then(function (response) {
                 return response.data;
-
             }, function (error) {
 
                 console.log("didn't get employees: " + error.message);
@@ -16,18 +30,8 @@ var repoProjects = function ($http) {
                 console.log("Finally...??");
             });
     };
-
-    var getProjectById = function (id) {
-        return $http.get("http://localhost:8890/api/dashboard/projects/" + id)
-            .then(function (response) {
-                return response.data;
-            }, function (error) {
-
-                console.log("didn't get employees: " + error.message);
-            }); 
-    };
-    var getProjectByName = function (name) {
-        return $http.get("http://localhost:8890/api/dashboard/projects/" + name)
+    var getEmployeeByName = function (name) {
+        return $http.get("http://localhost:8890/api/dashboard/employees/", id)
             .then(function (response) {
                 return response.data;
             }, function (error) {
@@ -39,8 +43,8 @@ var repoProjects = function ($http) {
                 console.log("Finally...??");
             });
     };
-    var addProject = function (project) {
-        $http.post('http://localhost:8890/api/dashboard/projects', project)
+    var addEmployee = function (employee) {
+        $http.post('http://localhost:8890/api/dashboard/employees', employee)
             .then(function (response) {
                 return response.data;
             }, function (error) {
@@ -52,8 +56,8 @@ var repoProjects = function ($http) {
                 console.log("Finally...??");
             });
     };
-    var updateProject = function (project) {
-        $http.put('http://localhost:8890/api/dashboard/projects', project)
+    var updateEmployee = function (employee) {
+        $http.put('http://localhost:8890/api/dashboard/employees', employee)
             .then(function (response) {
                 return response.data;
             }, function (error) {
@@ -65,8 +69,8 @@ var repoProjects = function ($http) {
                 console.log("Finally...??");
             });
     };
-    var deleteProject = function (id) {
-        $http.delete('http://localhost:8890/api/dashboard/projects/' + id)
+    var deleteEmployee = function (id) {
+        $http.delete('http://localhost:8890/api/dashboard/employees', employee)
             .then(function (response) {
                 return response.data;
             }, function (error) {
@@ -79,14 +83,15 @@ var repoProjects = function ($http) {
             });
     };
     return {
-        getAll: getProjects,
-        get: getProjectById,
-        getByName: getProjectByName,
-        add: addProject,
-        update: updateProject,
-        delete: deleteProject
+        getAll: getEmployees,
+        get: getEmployeeById,
+        getByName: getEmployeeByName,
+        add: addEmployee,
+        update: updateEmployee,
+        delete: deleteEmployee
     };
 };
 
 var module = angular.module('app-dashboard');
-module.factory('repoProjects', repoProjects);
+module.factory('repoEmployees', repoEmployees);
+        
