@@ -37,9 +37,12 @@ namespace Dashboard.DataG.Repository
             await _ctx.SaveChangesAsync();
         }
 
-        public IQueryable<TEntity> GetAll()
+        public /*async Task<*/IQueryable<TEntity>/*>*/ GetAll()
         {
-
+            //using (var context = new DashboardGenericContext())
+            //{
+            //    return await context.Set<TEntity>();
+            //}
             return  _ctx.Set<TEntity>();
         }
 

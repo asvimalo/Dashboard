@@ -218,7 +218,7 @@
                 }
                 startdate = startdate.add(1, 'days');
                 dates.push(startdate.format('YYYY-MM-DD'));
-                var plusOneDayStr = startdate.format('DD MMM ddd'); //.format('DD ddd');
+                var plusOneDayStr = startdate.format('DD MMM'); //.format('DD MMM ddd');
                 formatedDates.push(plusOneDayStr);
             }
 
@@ -234,11 +234,16 @@
                 //str += (dates[i].toString() + " | ");
                 var celldate = $("<td></td>");
                 celldate.addClass("cellDate");
-                celldate.html(formatedDates[i]);
+                celldate.html(formatedDates[i].toString() + "  | ");
                 rowdate.append(celldate);
             }
 
             //**********   PROJECT   ***********
+            var row1 = $(tabledate[0].insertRow(-1));
+            row1.addClass("emptyRow");
+            var cell2 = $("<td colspan=\"" + (dates.length + 1) + "\"></td>");
+            row1.append(cell2);
+
             for (var i = 0; i < projects.length; i++) {
                 var data = [];
                 var phaseId = [];
@@ -281,8 +286,8 @@
                     row.addClass("project");
                     row.attr('projectId', projects[i].name);
 
-                    var cell = $("<td></td>");
-                    cell.html(projects[i].name);
+                    var cell = $("<td style=\"white-space:PRE\"></td>"); // TODO: Remove space hack
+                    cell.html("  " + projects[i].name); // TODO: Remove space hack
                     cell.addClass("projectName");
                     row.append(cell);
 
@@ -292,10 +297,10 @@
                     for (var j = 1; j < dates.length; j++) {
                         var cell = $("<td></td>");
                         cell.addClass("datacell");
-                        cell.html(data[j]);
                         var celldiv = $("<div></div>");
+                        celldiv.html(data[j]);
                         if (!isEmpty(data[j])) {
-                            celldiv.addClass("celldiv");
+                            addCssClass(data[j], celldiv);
                             cell.attr("data-trigger", "hover");
                             cell.attr("proj", i);
                             cell.attr("phase", phaseId[j]);
@@ -308,11 +313,12 @@
                     for (var k = 0; k < projects[i].employees.length; k++) {
                         data = [];
                         for (var j = 0; j < dates.length; j++) {                            //for calendar
+                            data[j] = ' ';
                             for (var l = 0; l < projects[i].employees[k].commit; l++) {     //for commitments
                                 var commitStart = moment(projects[i].employees[k].commitments.startDate[l]).format('YYYY-MM-DD');
                                 var commitEnd = moment(projects[i].employees[k].commitments.endDate[l]).format('YYYY-MM-DD');
                                 if (commitStart == dates[j]) {
-                                    data[j] = projects[i].employees[k].commitments.hours[l];
+                                    data[j] = projects[i].employees[k].commitments.hours[l] + "h";
                                     continue;
                                 }
                                 if (commitEnd == dates[j]) {
@@ -320,7 +326,7 @@
                                     continue;
                                 }
                                 if ((commitStart < dates[j]) && (commitEnd > dates[j])) {
-                                    data[j] = 'x';
+                                    data[j] = 'xC';
                                     continue;
                                 }
                             }
@@ -331,22 +337,27 @@
                             row.addClass("employee");
                             row.attr('projectId', projects[i].name);
 
-                            var cell = $("<td colspan=\"2\"></td>");
-                            cell.html(projects[i].employees[k].name);
+                            var cell = $("<td colspan=\"2\" style=\"white-space:PRE\"></td>"); // TODO: Remove space hack
+                            cell.addClass("employeeName");
+                            cell.html(projects[i].employees[k].name + "  "); // TODO: Remove space hack
                             row.append(cell);
                             for (var j = 1; j < dates.length; j++) {
                                 var cell = $("<td></td>");
                                 cell.addClass("datacell");
                                 var celldiv = $("<div></div>");
                                 if (!isEmpty(data[j])) {
-                                    celldiv.addClass("celldiv");
+                                    addCssClass(data[j], celldiv);
+                                    celldiv.html(data[j]);
                                 }
-                                cell.html(data[j]);
                                 row.append(cell.append(celldiv));
                             }
                         }
                     }
                 }
+                row1 = $(tabledate[0].insertRow(-1));
+                row1.addClass("emptyRow");
+                cell2 = $("<td colspan=\"" + (dates.length + 1) + "\"></td>");
+                row1.append(cell2);
             }
 
             //**********   Data to HTML table   ***********
@@ -404,10 +415,10 @@
             function addCssClass(content, div) { 
                 switch (content) {
                     case "S":
-                        div.addClass("projectstartenddiv");
+                        div.addClass("projectstartdiv");
                         break;
                     case "E":
-                        div.addClass("projectstartenddiv");
+                        div.addClass("projectenddiv");
                         break;
                     case "PS":
                         div.addClass("phasestartdiv");
@@ -419,11 +430,14 @@
                         div.addClass("celldiv");
                         break;
                     case "CE":
-                        div.addClass("phaseenddiv");
+                        div.addClass("comenddiv");
+                        break;
+                    case "xC":
+                        div.addClass("comdiv");
                         break;
 
                     default:
-                        div.addClass("");
+                        div.addClass("comstartdiv");
                 }
             }
 

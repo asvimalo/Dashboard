@@ -1,0 +1,20 @@
+﻿<h2 class="text-center">Locations</h2>
+<table class="table table-responsive table-striped">
+    <thead>
+        <tr>
+            <td>City</td>
+            <td>Address</td>
+            <td>Clients</td>
+            
+        </tr>
+    </thead>
+    <tr ng-repeat="location in $ctrl.locations">
+        <td>{{ location.city }}</td>
+        <td>{{ location.address  }}</td>
+        <td>{{ location.clients  }}</td>
+        
+       
+        <td><a ng-href="#/locations/{{ location.locationId }}" class="btn btn-sm btn-primary">Edit</a></td>
+
+    </tr>
+</table>

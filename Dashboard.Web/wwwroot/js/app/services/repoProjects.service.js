@@ -24,7 +24,7 @@ var repoProjects = function ($http) {
             }, function (error) {
 
                 console.log("didn't get employees: " + error.message);
-            }) 
+            }); 
     };
     var getProjectByName = function (name) {
         return $http.get("http://localhost:8890/api/dashboard/projects/" + name)
