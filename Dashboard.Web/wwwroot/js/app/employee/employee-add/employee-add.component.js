@@ -16,8 +16,8 @@
                 holder.knowledges = [];
                 holder.newKnowledges = [];
 
-                repoKnowledges.getAll().then(function (response) {
-                    angular.copy(response.data, holder.knowledges);
+                repoKnowledges.get().then(function (response) {
+                    angular.copy(response, holder.knowledges);
                 });
 
                 $scope.addKnowledges = function () {
