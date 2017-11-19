@@ -45,7 +45,17 @@ a {
 }
 
 .oneProjectTop {
-    background-color: #c2deee;
+    background-color: #bedafd;
     padding: 2%;
+    box-shadow: 3px 3px 5px #a3a3a3;
+    border-radius: 10px;
 }
- 
+
+.projectAdd {
+    border-right: solid 1px #d7d7d7;
+    margin-left: 2.5%;
+}
+
+.clientAdd {
+    margin-left: 2.5%;
+}

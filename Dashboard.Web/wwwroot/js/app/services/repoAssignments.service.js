@@ -73,6 +73,8 @@ var repoAssignments = function ($http) {
     var updateAssignment = function (assignment) {
         $http.put('http://localhost:8890/api/dashboard/assignments', assignment)
             .then(function (response) {
+                console.log("Response from server api" + response);
+                $location.path("/dashboard")
                 return response.data;
             }, function (error) {
 
@@ -81,6 +83,8 @@ var repoAssignments = function ($http) {
             .finally(function () {
 
                 console.log("Finally...??");
+                holder.isBusy = false;
+
             });
     };
     var deleteAssignment = function (id) {
