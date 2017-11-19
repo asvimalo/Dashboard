@@ -186,3 +186,11 @@ button:focus {
 }
 
 
+.projectAdd {
+    border-right: solid 1px #d7d7d7;
+    margin-left: 2.5%;
+}
+
+.clientAdd {
+    margin-left: 2.5%;
+}

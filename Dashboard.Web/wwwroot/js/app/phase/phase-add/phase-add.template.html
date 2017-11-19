@@ -1,4 +1,4 @@
-﻿<form name="addPhaseForm">
+﻿<form name="addPhaseForm"> 
     <div class="form-group">
         <label>Phase name</label>
         <input type="text" name="phasename" ng-model="$ctrl.phase.phaseName" class="form-control" required>
@@ -27,7 +27,5 @@
             <span ng-show="addPhaseForm.timebudget.$error.required">Timebudget is required.</span>
         </div>
     </div>
-    <button class="btn btn-success" type="button" ng-click="AddPhase()">
-        Add
-    </button>
+    <button class="btn btn-success" type="button" ng-click="addPhase()"> Add </button>
 </form>
