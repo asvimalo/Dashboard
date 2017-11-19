@@ -22,10 +22,10 @@
                     //failure
                     holder.errorMessage = "Failed to load data: " + error;
                 })
-                    .finally(function () {
-                        holder.isBusy = false;
-                    });
-
+                .finally(function () {
+                    holder.isBusy = false;
+                });
+                    
 
                 holder.commitments = [];
                 $scope.addCommitment = function () {
@@ -48,6 +48,19 @@
                     }
                 };
 
+                //$('input[name="daterange"]').daterangepicker(
+                //    {
+                //        locale: {
+                //            format: 'YYYY-MM-DD'
+                //        },
+                //        startDate: '2017-01-01',
+                //        endDate: '2017-12-31'
+                //    },
+                //    function (start, end, label) {
+                //        alert("A new date range was chosen: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+                //    }
+                //);
+
                 $scope.assignProjectToEmployee = function () {
                     console.log("in the function");
                     holder.isBusy = true;
@@ -57,7 +70,7 @@
 
                     var data = { "ProjectId": $scope.formInfo.project.projectId, "EmployeeId": $scope.formInfo.employee.employeeId, "JobTitle": $scope.formInfo.jobtitle, "Location": $scope.formInfo.location, "Commitments": holder.commitments };
                     var dataTmp = JSON.stringify(data);
-                    repoAssignments.Add(dataTmp)
+                    repoAssignments.add(dataTmp)
                         .then(function (response) {
                             console.log("Response from server api" + response);
                             $scope.formInfo = {};
