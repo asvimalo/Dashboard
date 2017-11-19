@@ -1,8 +1,109 @@
 ﻿
 @{
     
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
 }
 
-<h2>Dashboard</h2>
+<div class="container-fluid" ng-app="app-dashboard2">
+    <navbar></navbar>
+    <div class="container boby-content">
+        <div ng-view></div>
+    </div>
+</div>
 
+
+@section Scripts {
+    
+    
+    <script src="~/lib/ng-file-upload/ng-file-upload.min.js"></script>
+    <script src="~/lib/ng-file-upload/ng-file-upload-shim.min.js"></script>
+
+    @*////////*@
+    <script src="~/js/app2/app-dashboard2.js"></script>
+    <script src="~/js/app2/app-dashboard2.config.js"></script>
+    <script src="~/js/app2/services/repoAcquiredKnowledges.service.js"></script>
+    <script src="~/js/app2/services/repoAssignments.service.js"></script>
+    <script src="~/js/app2/services/repoClients.service.js"></script>
+    <script src="~/js/app2/services/repoEmployees.service.js"></script>
+    <script src="~/js/app2/services/repoKnowledges.service.js"></script>
+    <script src="~/js/app2/services/repoLocations.service.js"></script>
+    <script src="~/js/app2/services/repoPhases.service.js"></script>
+    <script src="~/js/app2/services/repoProjects.service.js"></script> 
+    <script src="~/js/app2/services/repoTasks.service.js"></script>    
+    
+    <script src="~/js/app2/directives/loader/loaderControl.js"></script>
+    <script src="~/js/app2/components/acquiredKnowledge/acquiredKnowledge-add/acquiredKnowledge-add.module.js"></script>
+    <script src="~/js/app2/components/acquiredKnowledge/acquiredKnowledge-add/acquiredKnowledge-add.component.js"></script>
+    <script src="~/js/app2/components/acquiredKnowledge/acquiredKnowledge-delete/acquiredKnowledge-delete.module.js"></script>
+    <script src="~/js/app2/components/acquiredKnowledge/acquiredKnowledge-delete/acquiredKnowledge-delete.component.js"></script>
+    <script src="~/js/app2/components/acquiredKnowledge/acquiredKnowledge-list/acquiredKnowledge-list.module.js"></script>      
+    <script src="~/js/app2/components/acquiredKnowledge/acquiredKnowledge-list/acquiredKnowledge-list.component.js"></script>   
+
+    <script src="~/js/app2/components/assignment/assignment-list/assignment-list.module.js"></script>                        
+    <script src="~/js/app2/components/assignment/assignment-list/assignment-list.component.js"></script>                       
+    <script src="~/js/app2/components/assignment/assign-project-to-employee/assign-project-to-employee.module.js"></script>
+    <script src="~/js/app2/components/assignment/assign-project-to-employee/assign-project-to-employee.component.js"></script>
+  
+    <script src="~/js/app2/components/client/client-add/client-add.module.js"></script>
+    <script src="~/js/app2/components/client/client-add/client-add.component.js"></script>
+    <script src="~/js/app2/components/client/client-list/client-list.module.js"></script>                                       
+    <script src="~/js/app2/components/client/client-list/client-list.component.js"></script>  
+    
+    <script src="~/js/app2/components/commitment/commitment-add/commitment-add.module.js"></script>
+    <script src="~/js/app2/components/commitment/commitment-add/commitment-add.component.js"></script>
+    <script src="~/js/app2/components/commitment/commitment-delete/commitment-delete.module.js"></script>
+    <script src="~/js/app2/components/commitment/commitment-delete/commitment-delete.component.js"></script>
+    <script src="~/js/app2/components/commitment/commitment-list/commitment-list.module.js"></script>                           
+    <script src="~/js/app2/components/commitment/commitment-list/commitment-list.component.js"></script>  
+
+    <script src="~/js/app2/components/dashboard-view/dashboard-view.module.js"></script>
+    <script src="~/js/app2/components/dashboard-view/dashboard-view.component.js"></script>
+
+    <script src="~/js/app2/components/employee/employee-add/employee-add.module.js"></script>
+    <script src="~/js/app2/components/employee/employee-add/employee-add.component.js"></script>
+    <script src="~/js/app2/components/employee/employee-delete/employee-delete.module.js"></script>
+    <script src="~/js/app2/components/employee/employee-delete/employee-delete.component.js"></script>
+    <script src="~/js/app2/components/employee/employee-details/employee-details.module.js"></script>
+    <script src="~/js/app2/components/employee/employee-details/employee-details.component.js"></script>
+    <script src="~/js/app2/components/employee/employee-list/employee-list.module.js"></script>
+    <script src="~/js/app2/components/employee/employee-list/employee-list.component.js"></script>
+    <script src="~/js/app2/components/employee/employee-update/employee-update.module.js"></script>
+    <script src="~/js/app2/components/employee/employee-update/employee-update.component.js"></script>
+
+    <script src="~/js/app2/components/knowledge/knowledge-add/knowledge-add.module.js"></script>
+    <script src="~/js/app2/components/knowledge/knowledge-add/knowledge-add.component.js"></script>
+    <script src="~/js/app2/components/knowledge/knowledge-delete/knowledge-delete.module.js"></script>
+    <script src="~/js/app2/components/knowledge/knowledge-delete/knowledge-delete.component.js"></script>
+    <script src="~/js/app2/components/knowledge/knowledge-list/knowledge-list.module.js"></script>
+    <script src="~/js/app2/components/knowledge/knowledge-list/knowledge-list.component.js"></script>
+
+    <script src="~/js/app2/components/location/location-list/location-list.module.js"></script>
+    <script src="~/js/app2/components/location/location-list/location-list.component.js"></script>
+    <script src="~/js/app2/components/navbar/navbar.module.js"></script>
+    <script src="~/js/app2/components/navbar/navbar.component.js"></script>
+    <script src="~/js/app2/components/phase/phase-add/phase-add.module.js"></script>
+    <script src="~/js/app2/components/phase/phase-add/phase-add.component.js"></script>
+    <script src="~/js/app2/components/phase/phase-delete/phase-delete.module.js"></script>
+    <script src="~/js/app2/components/phase/phase-delete/phase-delete.component.js"></script>
+    <script src="~/js/app2/components/phase/phase-list/phase-list.module.js"></script>
+    <script src="~/js/app2/components/phase/phase-list/phase-list.component.js"></script>
+
+    <script src="~/js/app2/components/project/project-add/project-add.module.js"></script>
+    <script src="~/js/app2/components/project/project-add/project-add.component.js"></script>
+    <script src="~/js/app2/components/project/project-details/project-details.module.js"></script>
+    <script src="~/js/app2/components/project/project-details/project-details.component.js"></script>
+    <script src="~/js/app2/components/project/project-list/project-list.module.js"></script>
+    <script src="~/js/app2/components/project/project-list/project-list.component.js"></script>
+    
+    <script src="~/js/app2/components/task/task-list/task-list.module.js"></script>
+    <script src="~/js/app2/components/task/task-list/task-list.component.js"></script>
+    
+
+
+
+    @*********************************************@
+    @**************  GANTTCHART   ****************@
+    @*********************************************@
+
+    <script src="~/lib/moment/moment.js"></script>
+}

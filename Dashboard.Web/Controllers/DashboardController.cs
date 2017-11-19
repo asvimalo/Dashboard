@@ -7,8 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Dashboard.Web.Controllers
 {
-    [Produces("application/json")]
-    [Route("api/dashboard")]
+    
     public class DashboardController : Controller
     {
         public IActionResult Index()

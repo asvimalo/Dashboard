@@ -1,0 +1,40 @@
+﻿(function () {
+    "use strict";
+    angular.module("app-dashboard2",
+        [
+            "ngRoute",             
+            //'ngFileUpload',
+            //'angularModalService',          
+            //"acquiredKnowledgeAdd",
+            //"acquiredKnowledgeDelete",
+            //"acquiredKnowledgeList",
+            //"assignmentList",
+            //"assignProjectToEmployee",
+            //"clientAdd",
+            //"clientList", 
+            //"commitmentAdd",
+            //"commitmentDelete",
+            //"commitmentList",
+            "dashboardView",
+            //"employeeAdd",
+            //"employeeDelete",
+            //"employeeDetails",           
+            //"employeeList",
+            //"employeeUpdate",           
+            //"knowledgeAdd",
+            //"knowledgeDelete",
+            //"knowledgeList",
+            //"locationList",
+            //"loaderCursor",
+            "navbar"
+            //"phaseAdd",
+            //"phaseDelete",
+            //"phaseList",   
+            //"projectDetails",
+            //"projectAdd",
+            //"projectList",
+            //"taskList"
+        
+            ]);
+})();
+//'daterangerpicker',
