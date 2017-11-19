@@ -52,8 +52,9 @@ var repoPhases = function ($http) {
                 console.log("didn't add assignment: " + error.message);
             })
             .finally(function () {
+                window.location.reload();
+                console.log("Success");
 
-                console.log("Finally...??");
             });
     };
     var updatePhase = function (phase) {
@@ -70,7 +71,7 @@ var repoPhases = function ($http) {
             });
     };
     var deletePhase = function (id) {
-        $http.delete('http://localhost:8890/api/dashboard/phases' + id)
+        $http.delete('http://localhost:8890/api/dashboard/phases/' + id)
             .then(function (response) {
                 return response.data;
             }, function (error) {
@@ -78,8 +79,8 @@ var repoPhases = function ($http) {
                 console.log("didn't delete employee: " + error.message);
             })
             .finally(function () {
-
-                console.log("Finally...??");
+                
+                console.log("Success delete");
             });
     };
     return {

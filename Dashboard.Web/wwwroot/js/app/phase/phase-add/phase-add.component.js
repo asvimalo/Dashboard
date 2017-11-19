@@ -9,21 +9,13 @@
                 self.phases = [];
 
                 $scope.addPhase = function () {
-                    var data = { "phaseName": self.phase.phaseName, "startDate": self.phase.startDate, "endDate": self.phase.endDate, "timeBudget": self.phase.timeBudget, "projectId": self.projectId };
+                    var data = {
+                        "phaseName": self.phase.phaseName, "startDate": self.phase.startDate, "endDate": self.phase.endDate, "timeBudget": self.phase.timeBudget, "projectId": $scope.$parent.$ctrl.projectId };
                     var dataTmp = JSON.stringify(data);
                     
 
                     // Http Post for Location 
-                    repoPhases.add(dataTmp).then(function (response) {
-                        console.log("Response from server api" + response);
-
-
-                    }, function (error) {
-                        //failure
-                        console.log("failure");
-                        self.errorMessage = "Failure to save new project";
-                        window.location.reload();
-                    });
+                    repoPhases.add(dataTmp);
                 }
             }
             

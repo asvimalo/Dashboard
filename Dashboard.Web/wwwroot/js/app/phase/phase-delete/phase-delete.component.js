@@ -34,9 +34,7 @@
                 }
 
                 $scope.deletePhase = function () {
-                    //repoPhases.delete(self.phaseId).then(function (response) {
-                    //    console.log("Deleted done ", response);
-                    //});
+                    repoPhases.delete(self.phaseId);
                     location.replace("#!/projects/project-details/" + self.phase.projectId);
                     location.reload();
 
