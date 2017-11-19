@@ -16,13 +16,13 @@
             "taskList",
             "locationList",
             "employeeAdd",
-            "assignProjectToEmployee",
             "projectAdd",
             "projectDetails",
             "clientAdd",
             "phaseAdd",
-            "phaseDelete"
-            
+            "phaseDelete",
+            "assignProjectToEmployee",
+            "allProjects"
             ]);
 })();
 

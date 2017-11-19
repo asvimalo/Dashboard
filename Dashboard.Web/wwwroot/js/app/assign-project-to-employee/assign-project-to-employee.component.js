@@ -25,14 +25,14 @@
                     .finally(function () {
                         holder.isBusy = false;
                     });
-                    
+
 
                 holder.commitments = [];
                 $scope.addCommitment = function () {
 
-                    holder.commitments.push($scope.commitment);                   
+                    holder.commitments.push($scope.commitment);
                     $scope.commitment = {};
-                    
+
                 };
 
                 $scope.remove = function (array, index) {
@@ -57,7 +57,7 @@
 
                     var data = { "ProjectId": $scope.formInfo.project.projectId, "EmployeeId": $scope.formInfo.employee.employeeId, "JobTitle": $scope.formInfo.jobtitle, "Location": $scope.formInfo.location, "Commitments": holder.commitments };
                     var dataTmp = JSON.stringify(data);
-                    repoAssignments.Add(dataTmp)  
+                    repoAssignments.Add(dataTmp)
                         .then(function (response) {
                             console.log("Response from server api" + response);
                             $scope.formInfo = {};
@@ -71,8 +71,8 @@
                         .finally(function () {
                             console.log("finally");
                             holder.isBusy = false;
-                        });  
-                        
+                        });
+                
                 };
             }
         });
