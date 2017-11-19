@@ -20,11 +20,11 @@
                     angular.copy(response, self.project);
                 }); 
 
-                //$scope.phaseId = {};
+                $scope.phaseId = {};
 
-                //$scope.Send = function (phaseId) {
-                //    location.replace("#!/phases/phase-delete/" + phaseId);
-                //};
+                $scope.Send = function (phaseId) {
+                    location.replace("#!/phases/phase-delete/" + phaseId);
+                };
                 
             }
         });

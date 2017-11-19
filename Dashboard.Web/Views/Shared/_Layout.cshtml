@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Dashboard.Web</title>
+    <title>SIGMA Dashboard</title>
 
     <environment names="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
@@ -29,7 +29,7 @@
     <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
-                <a asp-area="" asp-controller="Project" asp-action="Index" class="navbar-brand pull-left text-uppercase">Sigma</a>
+                <a asp-area="" asp-controller="Dashboard" asp-action="Index" class="navbar-brand pull-left text-uppercase">Sigma</a>
             </div>
             @if (User.Identity.IsAuthenticated)
             {

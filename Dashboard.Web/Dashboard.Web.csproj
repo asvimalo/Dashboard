@@ -7,9 +7,17 @@
 
   <ItemGroup>
     <Compile Remove="Views\Pictures\**" />
+    <Compile Remove="wwwroot\js\app\all-projects\**" />
+    <Compile Remove="wwwroot\js\app\one-project-details\**" />
     <Content Remove="Views\Pictures\**" />
+    <Content Remove="wwwroot\js\app\all-projects\**" />
+    <Content Remove="wwwroot\js\app\one-project-details\**" />
     <EmbeddedResource Remove="Views\Pictures\**" />
+    <EmbeddedResource Remove="wwwroot\js\app\all-projects\**" />
+    <EmbeddedResource Remove="wwwroot\js\app\one-project-details\**" />
     <None Remove="Views\Pictures\**" />
+    <None Remove="wwwroot\js\app\all-projects\**" />
+    <None Remove="wwwroot\js\app\one-project-details\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -32,8 +40,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\js\app\all-projects\" />
-    <Folder Include="wwwroot\js\app\one-project-details\" />
     <Folder Include="wwwroot\views\" />
   </ItemGroup>
 

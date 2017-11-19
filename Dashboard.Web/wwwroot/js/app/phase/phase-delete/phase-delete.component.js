@@ -7,42 +7,18 @@
                 $http,
                 $scope,
                 $routeParams,
-                repoPhases
-            ) {
+                repoPhases,
+                $window
+                ){
                 this.projectId = $routeParams.projectId;
                 var self = this; 
                 self.phase = {};
-                //$scope.$on('$locationChangeStart', function (e, next, previous) {
-                //    $scope.oldUrl = previous;
-                //    $scope.oldHash = $window.location.hash;
-                //}); 
-
-                //$scope.showAModal = function () {
-
-                //    // Just provide a template url, a controller and call 'showModal'.
-                //    ModalService.showModal({
-                //        templateUrl: "yesno/yesno.html",
-                //        controller: "YesNoController",
-                //        inputs: {
-                //            phaseId: self.phaseId,
-                //            phaseName: self.phaseName
-                //        }
-                //    }).then(function (modal) {
-                //        // The modal object has the element built, if this is a bootstrap modal
-                //        // you can call 'modal' to show it, if it's a custom modal just show or hide
-                //        // it as you need to.
-                //        modal.element.modal();
-                //        modal.close.then(function (result) {
-                //            $scope.message = result ? "You said Yes" : "You said No";
-                //        });
-                //    });
-                //};
-
-                $scope.dismissModal = function (result) {
-                    close(result, 200); // close, but give 200ms for bootstrap to animate
-                };
+                $scope.$on('$locationChangeStart', function (e, next, previous) {
+                    $scope.oldUrl = previous;
+                    $scope.oldHash = $window.location.hash;
+                });  
                  
-                if ($routeParams.phaseId === null) {
+                if ($routeParams.phaseId == null) {
                     this.projectId = $routeParams.projectId;
                     console.log("The phaseId is null");
                 } else {
@@ -58,10 +34,10 @@
                 }
 
                 $scope.deletePhase = function () {
-                    repoPhases.delete(self.phaseId).then(function (response) {
-                        console.log("Deleted done ", response);
+                    repoPhases.delete(self.phaseId);
+                    location.replace("#!/projects/project-details/" + self.phase.projectId);
+                    location.reload();
 
-                    });
                 };
                 
                 

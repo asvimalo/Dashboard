@@ -71,7 +71,8 @@
                         .finally(function () {
                             console.log("finally");
                             holder.isBusy = false;
-                        });
+                        });  
+                        
                 };
             }
         });
