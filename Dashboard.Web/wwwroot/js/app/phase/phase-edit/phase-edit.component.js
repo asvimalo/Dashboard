@@ -31,14 +31,13 @@
                     
                     repoPhases.update(self.phase.phaseId, dataTmp);
 
-                    location.replace("#!/projects/project-details/" + self.phase.projectId).reload();
-                    //location.reload();
+                    location.replace("#!/projects/project-details/" + self.phase.projectId);
+                    location.reload();
                 };
 
                 $scope.closeModal = function () {
-                    location.replace("#!/projects/project-details/" + self.phase.projectId).reload();
-                    //location.reload();
-
+                    location.replace("#!/projects/project-details/" + self.phase.projectId);
+                    location.reload();
                 };
             }
             

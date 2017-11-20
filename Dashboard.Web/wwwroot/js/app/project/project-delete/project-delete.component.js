@@ -17,6 +17,9 @@
 
                 $scope.deleteProject = function () {
                     repoProjects.delete(self.projectId);
+                    location.replace("#!/dashboard");
+                    location.reload();
+
                 };
                  
             }
