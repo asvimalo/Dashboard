@@ -1,6 +1,5 @@
 ﻿
 var repoAssignments = function ($http) {
-
     var getAssignments = function () {
         return $http.get('http://localhost:8890/api/dashboard/assignments')
             .then(function (response) {

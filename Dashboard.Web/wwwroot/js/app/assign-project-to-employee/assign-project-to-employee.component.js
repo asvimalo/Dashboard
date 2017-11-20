@@ -12,6 +12,7 @@
             ) {
                 //$routeProvider
                 var holder = this;
+                holder.isBusy = true;
 
                 holder.employeesAndProjects = [];
                 repoAssignments.lists().then(function (response) {
@@ -48,19 +49,6 @@
                     }
                 };
 
-                //$('input[name="daterange"]').daterangepicker(
-                //    {
-                //        locale: {
-                //            format: 'YYYY-MM-DD'
-                //        },
-                //        startDate: '2017-01-01',
-                //        endDate: '2017-12-31'
-                //    },
-                //    function (start, end, label) {
-                //        alert("A new date range was chosen: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
-                //    }
-                //);
-
                 $scope.assignProjectToEmployee = function () {
                     console.log("in the function");
                     holder.isBusy = true;
@@ -73,16 +61,18 @@
                     repoAssignments.add(dataTmp);
                     $scope.formInfo = {};
                     holder.commitments = [];
-                        //    $location.path("/dashboard");
+                    //$scope.message = "Project is assigned to emloyee.";
+                        
                         //.then(function (response) {
+                        //    holder.isBusy = true;
                         //    console.log("Response from server api" + response);
                         //    $scope.formInfo = {};
                         //    holder.commitments = [];
                         //    $location.path("/dashboard");
-                        //}, function () {
-                        //    console.log("failure");
-                        //    //failure
-                        //    holder.errorMessage = "Failure to save assign a project to an employee.";
+                        //}, function (error) {
+                        //     holder.errorMessage = "Failed to save data: " + error;
+                        //    
+                        //    
                         //})
                         //.finally(function () {
                         //    console.log("finally");

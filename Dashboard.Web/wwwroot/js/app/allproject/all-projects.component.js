@@ -3,7 +3,7 @@
     angular.module("allProjects", [])
         .component("allProjects", {
             templateUrl: "/js/app/allproject/all-projects.template.html",
-            controller: function allProjectController($http, $scope, $location, repoProjects, repoEmployees) { 
+            controller: function allProjectController($http, $scope, $location, repoProjects, repoAssignments) { 
                 var holder = this;
 
                 holder.allProjects = [];
@@ -11,6 +11,19 @@
                     //success
                     console.log("Check");
                     angular.copy(response, holder.allProjects);
+                }, function (error) {
+                    //failure
+                    holder.errorMessage = "Failed to load data: " + error;
+                })
+                    .finally(function () {
+                        holder.isBusy = false;
+                    });
+
+                holder.assignments = [];
+                repoAssignments.getAll().then(function (response) {
+                    //success
+                    console.log("Check");
+                    angular.copy(response, holder.assignments);
                 }, function (error) {
                     //failure
                     holder.errorMessage = "Failed to load data: " + error;
@@ -210,9 +223,6 @@
                 }).eq(0);
 
                 //**********   Helper functions   ***********
-
-
-
                 function createCell(baseclass, text = "", td = "") {
                     var cell = $("<td " + td + "></td>");
                     if (!isEmpty(baseclass))
@@ -265,8 +275,8 @@
 
                 function getInitDateToCalendar() {
                     var today = moment();
-                    var end = project[0].endDate;
-                    var start = project[0].startDate;
+                    var end = holder.allProjects[0].stopDate;
+                    var start = holder.allProjects[0].startDate;
                     for (var i = 1; i < nbrOfProjects; i++) {
                         if (project.endDate > end) {
                             end = project.endDate;
