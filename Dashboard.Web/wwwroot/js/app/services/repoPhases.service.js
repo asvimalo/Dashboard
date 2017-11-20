@@ -57,10 +57,10 @@ var repoPhases = function ($http) {
 
             });
     };
-    var updatePhase = function (phase) {
-        $http.put('http://localhost:8890/api/dashboard/phases', phase)
+    var updatePhase = function (id, phase) {
+        $http.put('http://localhost:8890/api/dashboard/phases/'+ id, phase )
             .then(function (response) {
-                return response.data;
+                return response;
             }, function (error) {
 
                 console.log("didn't update employee: " + error.message);

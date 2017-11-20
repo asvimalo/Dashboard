@@ -32,8 +32,8 @@
                 $scope.addEmployee = function () {
                     var newEmployee = {};
                     
-                    var employee = $scope.employee;
-                    
+                    var employee = $scope.employee; 
+
                     //var fi = this.fileInput.nativeElement;
                     //var file = $scope.file;
                     //var form = new FormData();
@@ -46,7 +46,8 @@
                     newEmployee.newKnowledges = holder.newKnowledges;
                     newEmployee.knowledges = employee.knowledges;
                     
-                    
+                    var file = new File([byteArrays], filename, { type: contentType, lastModified: Date.now() });
+
 
                     console.log("inside employees Controller ");
 
@@ -57,21 +58,20 @@
 
                     
                     var employeeJson = JSON.stringify(newEmployee);
-                    
-
-                    repoEmployees.addEmployee(employeeJson)
+                     
+                    repoEmployees.add(employeeJson)
                         .then(function (response) {
-                            //success
-                            console.log("Response from server api" + response);
-                            employee = {};
-                            
-                            //window.location.reload();
-                        }, function (err) {
-                            //failure
-                            // review Error response is coming back....
-                            holder.errorMessage = "Failure to save new employee";
-                            alert("Failure to save new employee" + err.stringify);
-                        })
+                        //success
+                        console.log("Response from server api" + response);
+                        employee = {};
+
+                        //window.location.reload();
+                    }, function (err) {
+                        //failure
+                        // review Error response is coming back....
+                        holder.errorMessage = "Failure to save new employee";
+                        alert("Failure to save new employee" + err.stringify);
+                    })
                         .finally(function () {
                             holder.isBusy = false;
                         });

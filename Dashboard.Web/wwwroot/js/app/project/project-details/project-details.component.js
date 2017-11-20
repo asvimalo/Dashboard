@@ -20,12 +20,19 @@
                     angular.copy(response, self.project);
                 }); 
 
+                $scope.deleteProject = function () {
+
+                };
+
                 $scope.phaseId = {};
 
-                $scope.Send = function (phaseId) {
+                $scope.Delete = function (phaseId) {
                     location.replace("#!/phases/phase-delete/" + phaseId);
                 };
-                
+
+                $scope.Edit = function (phaseId) {
+                    location.replace("#!/phases/phase-edit/" + phaseId);
+                };
             }
         });
       
