@@ -8,7 +8,7 @@
             //"acquiredKnowledgeAdd",
             //"acquiredKnowledgeDelete",
             //"acquiredKnowledgeList",
-            //"assignmentList",
+            "assignmentList",
             //"assignProjectToEmployee",
             //"clientAdd",
             //"clientList", 
@@ -19,20 +19,20 @@
             //"employeeAdd",
             //"employeeDelete",
             //"employeeDetails",           
-            //"employeeList",
+            "employeeList",
             //"employeeUpdate",           
             //"knowledgeAdd",
             //"knowledgeDelete",
             //"knowledgeList",
             //"locationList",
             //"loaderCursor",
-            "navbar"
+            "navbar",
             //"phaseAdd",
             //"phaseDelete",
             //"phaseList",   
             //"projectDetails",
             //"projectAdd",
-            //"projectList",
+            "projectList"
             //"taskList"
         
             ]);

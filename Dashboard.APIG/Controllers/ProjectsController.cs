@@ -48,13 +48,14 @@ namespace Dashboard.Data.Controllers
         {
             try
             {
-                var result =  _repoProject.Include(x => x.Assignments, y => y.Client, z => z.Phases);
+                //var result =  _repoProject.Include(x => x.Assignments, y => y.Client, z => z.Phases);
+                var result = _repoProject.GetAllForReal();
                 return Ok(result);
                 //return Ok(_mapper.Map<IEnumerable<ProjectViewModel>>(result));
             }
             catch (Exception ex)
             {
-                // LOGGING TODO
+                 
                 _logger.LogError($"Exception thrown white getting projects: {ex}");
                 return BadRequest($"Error ocurred");
             }

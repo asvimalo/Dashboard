@@ -1,31 +1,41 @@
-﻿<h2 class="text-center">Assignments</h2>
+﻿<h2 class="text-center">Assignments Now</h2>
 <table class="table table-responsive table-striped">
     <thead>
         <tr>
-            <td>assignmentId</td>
-            <td>employeeId</td>
-            <td>employee</td>
-            <td>projectId</td>
-            <td>project</td>
-            <td>jobTitle</td>
-            <td>startDate</td>
-            <td>stopDate</td>
-            <td>location</td>
-            <td>commitments</td>
+            <td>Assignment Id</td>            
+            <td>Employee Name</td>          
+            <td>Project</td>
+            <td>Job Title</td>
+            <td>Start Date</td>
+            <td>Stop Date</td>
+            <td>Location</td>
+            <td>Commitments</td>
         </tr>
     </thead>
-    <tr ng-repeat="assignment in $ctrl.assignments">
+    <!--<tr ng-repeat="assignment in $ctrl.assignments">
         <td>{{ assignment.assignmentId }}</td>
-        <td>{{ assignment.employeeId  }}</td>
-        <td>{{ assignment.employee  }}</td>
-        <td>{{ assignment.projectId  }}</td>
-        <td>{{ assignment.project  }}</td>
+        
+        <td>{{ assignment.employee.firstName  }}</td>
+       
+        <td>{{ assignment.project.projectName  }}</td>
         <td>{{ assignment.jobTitle  }}</td>
         <td>{{ assignment.startDate  }}</td>
         <td>{{ assignment.stopDate  }}</td>
-        <td>{{ assignment.location  }}</td>
-        <td>{{ assignment.commitments  }}</td>
-        <td><a ng-href="#/employees/{{ assignment.assignmentId }}" class="btn btn-sm btn-primary">Manage</a></td>
+        <td>{{ assignment.location  }}</td>-->
+        <!--<td>
+            <ul ng-repeat="commitment in assignment.commitments">
+                <li>{{ commitment.startDate  }}</li>
+                <li>{{ commitment.stopDate  }}</li>
+                <li>{{ commitment.hours  }}</li>
+            </ul>
+        </td>
+        <td>
+            <ul ng-repeat="jobTitleAssignment in assignment.jobTitleAssignments">
+                <li>{{ jobTitleAssignment.jobTitle  }}</li>
+                
+            </ul>
+        </td>
+        <td><a ng-href="#/assignment/:{{ assignment.assignmentId }}" class="btn btn-sm btn-primary">Edit</a></td>-->
 
-    </tr>
+    <!--</tr>-->
 </table>

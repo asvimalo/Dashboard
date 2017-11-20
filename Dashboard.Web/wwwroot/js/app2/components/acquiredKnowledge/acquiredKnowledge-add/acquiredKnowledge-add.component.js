@@ -12,6 +12,7 @@
                 ) {
 
                 var holder = this;
+                holder.isBusy = true;
 
                 holder.acquiredKnowledges = [];
                 //repoAcquiredKnowledges service:
@@ -42,7 +43,7 @@
 
                     console.log("inside acquired knowledges Controller ");
                     holder.errorMessage = "";
-                    holder.isBusy = true;
+                    
                     holder.progress = "";
 
                     var json = JSON.stringify(newAcquiredKnowledges);

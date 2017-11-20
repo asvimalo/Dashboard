@@ -42,7 +42,7 @@ namespace Dashboard.DataG.Controllers
         {
             try
             {
-                var result = _repo.Include(x=>x.Commitments,y=> y.Employee, z => z.Location, w => w.Project);
+                var result =  _repo.Include(x=>x.Commitments, y=> y.Employee, w => w.Project);
                 return Ok(result);
                 //return Ok(Mapper.Map<IEnumerable<CommitmentViewModel>>(result));
             }
@@ -101,7 +101,7 @@ namespace Dashboard.DataG.Controllers
                 {
                     var addedAssignment = _repo.Create(assignment);
 
-                    return Created($"api/dashboard/assignments/{addedAssignment.Id}", addedAssignment);
+                    return Ok(addedAssignment);
                 }
                 catch (Exception ex)
                 {
