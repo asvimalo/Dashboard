@@ -366,135 +366,111 @@
             var dates = [];
             var formatedDates = [];
             var startdate = moment();
-            startdate = startdate.add(-1, 'days');
             //var startdate = getInitDateToCalendar().start;
             var enddate = getInitDateToCalendar().end;
             for (i = 0; i < enddate; i++) {
-                startdate = startdate.add(1, 'days');
                 dates.push(startdate.format('YYYY-MM-DD'));
                 var plusOneDayStr = startdate.format('DD MMM'); //.format('DD MMM ddd');
                 formatedDates.push(plusOneDayStr);
+                startdate = startdate.add(1, 'days');
             }
 
             var tabledate = $("<table></table>").addClass("table borderless"); // table-bordered table-condensed");
             tabledate[0].border = "1";
             var rowdate = $(tabledate[0].insertRow(-1));
-            var columnCountDate = formatedDates.length;
-            //var str = "";
-            var celldate = $("<td colspan=\"2\"></td>");
-            celldate.html(formatedDates[i]);
-            rowdate.append(celldate);
-            for (var i = 1; i < columnCountDate; i++) {
-                addCellToHtml(rowdate, "cellDate", formatedDates[i].toString() + "  | ");
+
+            rowdate.append(createCell("", "", "colspan =\"2\""));
+            for (var i = 0; i < formatedDates.length; i++) {
+                rowdate.append(createCell("cellDate", formatedDates[i].toString() + "  | "));
             }
 
             //**********   PROJECT   ***********
             addEmptyRowToHtml();
 
             for (var i = 0; i < projects.length; i++) {
-                var data = [];
-                var phaseId = [];
+
+                var row = $(tabledate[0].insertRow(-1));
+                row.addClass("project");
+                row.attr('projectId', projects[i].name);
+
+                row.append(createCell("projectName", "  " + projects[i].name, "style=\"white-space:PRE\""));
+                row.append(createCell("insertButton"));
+
                 for (var j = 0; j < dates.length; j++) {                 //for calendar
                     var projectStart = moment(projects[i].startDate).format('YYYY-MM-DD');
                     var projectEnd = moment(projects[i].endDate).format('YYYY-MM-DD');
-                    data[j] = ' ';
-                    phaseId[j] = -1;
-                    if (projectStart == dates[j]) {
-                        data[j] = 'S';
-                    }
-                    else if (projectEnd == dates[j]) {
-                        data[j] = 'E';
-                    }
+                    var data = '';
+                    var phaseId = -1;
+                    if (projectStart == dates[j])
+                        data = 'S';
+                    else if (projectEnd == dates[j])
+                        data = 'E';
                     else {
+
                         for (var l = 0; l < projects[i].phases; l++) {      //for project's phases
                             var phaseStart = moment(projects[i].startPhase[l]).format('YYYY-MM-DD');
                             var phaseEnd = moment(projects[i].endPhase[l]).format('YYYY-MM-DD');
-                            if (phaseStart == dates[j]) {
-                                data[j] = 'PS';
-                                phaseId[j] = l;
-                            }
-                            else if (phaseEnd == dates[j]) {
-                                data[j] = 'PE';
-                                phaseId[j] = l;
-                            }
-                            else if ((phaseStart < dates[j]) && (phaseEnd > dates[j])) {
-                                data[j] = 'x';
-                                phaseId[j] = l;
+                            if ((phaseStart <= dates[j]) && (phaseEnd >= dates[j])) {
+                                phaseId = l;
+                                data = 'x';
+
+                                if (phaseStart == dates[j])
+                                    data = 'PS';
+                                else if (phaseEnd == dates[j])
+                                    data = 'PE';
                             }
                         }
                     }
-                }
-                // Write project row to html
-                {
-                    var row = $(tabledate[0].insertRow(-1));
-                    row.addClass("project");
-                    row.attr('projectId', projects[i].name);
 
-                    var cell = $("<td style=\"white-space:PRE\"></td>"); // TODO: Remove space hack
-                    cell.html("  " + projects[i].name); // TODO: Remove space hack
-                    cell.addClass("projectName");
-                    row.append(cell);
-
-                    var cell1 = $("<td></td>");
-                    cell1.addClass("insertButton");
-                    row.append(cell1);
-                    for (var j = 1; j < dates.length; j++) {
-                        var cell = $("<td></td>");
-                        cell.addClass("datacell");
-                        var celldiv = $("<div></div>");
-                        celldiv.html(data[j]);
-                        if (!isEmpty(data[j])) {
-                            addCssClass(data[j], celldiv);
-                            cell.attr("data-trigger", "hover");
-                            cell.attr("proj", i);
-                            cell.attr("phase", phaseId[j]);
-                        }
-                        row.append(cell.append(celldiv));
+                    // Write project cell to html
+                    var cell = createCell("datacell");
+                    var celldiv = $("<div></div>");
+                    celldiv.html(data);
+                    if (!isEmpty(data)) {
+                        addCssClass(data, celldiv);
+                        cell.attr("data-trigger", "hover");
+                        cell.attr("proj", i);
+                        cell.attr("phase", phaseId);
                     }
+                    row.append(cell.append(celldiv));
                 }
+
                 //Projects/Employee
                 if (typeof projects[i].employees !== 'undefined') {
                     for (var k = 0; k < projects[i].employees.length; k++) {
-                        data = [];
+
+                        var row = $(tabledate[0].insertRow(-1));
+                        row.addClass("employee");
+                        row.attr('projectId', projects[i].name);
+
+                        row.append(createCell("employeeName", projects[i].employees[k].name + "  ", "colspan=\"2\" style=\"white-space:PRE\"></td>"));
+
                         for (var j = 0; j < dates.length; j++) {                            //for calendar
-                            data[j] = ' ';
+                            data = '';
                             for (var l = 0; l < projects[i].employees[k].commit; l++) {     //for commitments
                                 var commitStart = moment(projects[i].employees[k].commitments.startDate[l]).format('YYYY-MM-DD');
                                 var commitEnd = moment(projects[i].employees[k].commitments.endDate[l]).format('YYYY-MM-DD');
-                                if (commitStart == dates[j]) {
-                                    data[j] = projects[i].employees[k].commitments.hours[l] + "h";
-                                }
-                                else if (commitEnd == dates[j]) {
-                                    data[j] = 'CE';
-                                }
-                                else if ((commitStart < dates[j]) && (commitEnd > dates[j])) {
-                                    data[j] = 'xC';
-                                }
-                            }
-                        }
-                        // Write employee row to html
-                        {
-                            var row = $(tabledate[0].insertRow(-1));
-                            row.addClass("employee");
-                            row.attr('projectId', projects[i].name);
 
-                            var cell = $("<td colspan=\"2\" style=\"white-space:PRE\"></td>"); // TODO: Remove space hack
-                            cell.addClass("employeeName");
-                            cell.html(projects[i].employees[k].name + "  "); // TODO: Remove space hack
-                            row.append(cell);
-                            for (var j = 1; j < dates.length; j++) {
-                                var cell = $("<td></td>");
-                                cell.addClass("datacell");
-                                var celldiv = $("<div></div>");
-                                if (!isEmpty(data[j])) {
-                                    addCssClass(data[j], celldiv);
-                                    celldiv.html(data[j]);
-                                }
-                                row.append(cell.append(celldiv));
+                                if (commitStart == dates[j])
+                                    data = projects[i].employees[k].commitments.hours[l] + "h";
+                                else if (commitEnd == dates[j])
+                                    data = 'CE';
+                                else if ((commitStart < dates[j]) && (commitEnd > dates[j]))
+                                    data = 'xC';
                             }
+
+                            // Write employee cell to html
+                            var cell = createCell("datacell");
+                            var celldiv = $("<div></div>");
+                            if (!isEmpty(data)) {
+                                addCssClass(data, celldiv);
+                                celldiv.html(data);
+                            }
+                            row.append(cell.append(celldiv));
                         }
                     }
                 }
+
                 addEmptyRowToHtml();
             }
 
@@ -550,21 +526,24 @@
             }).eq(0);
 
             //**********   Helper functions   ***********
-            function addCellToHtml(row, baseclass, text, )
+            function createCell(baseclass, text = "", td = "")
             {
-                var cell = $("<td></td>");
-                cell.addClass(baseclass);
-                cell.html(text);
-                row.append(cell);
+                var cell = $("<td " + td + "></td>");
+                if (!isEmpty(baseclass))
+                    cell.addClass(baseclass);
+                if (!isEmpty(text))
+                    cell.html(text);
+                return cell;
             }
 
             function addEmptyRowToHtml() {
                 var row1 = $(tabledate[0].insertRow(-1));
                 row1.addClass("emptyRow");
-                var cell2 = $("<td colspan=\"" + (dates.length + 1) + "\"></td>");
+                var cell2 = $("<td colspan=\"" + (dates.length + 2) + "\"></td>");
                 row1.append(cell2);
             }
 
+            // TODO: Convenient for debugging. Remove later
             function addCssClass(content, div) {
                 switch (content) {
                     case "S":

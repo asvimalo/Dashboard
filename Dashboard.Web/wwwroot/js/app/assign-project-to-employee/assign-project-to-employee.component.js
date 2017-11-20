@@ -70,21 +70,24 @@
 
                     var data = { "ProjectId": $scope.formInfo.project.projectId, "EmployeeId": $scope.formInfo.employee.employeeId, "JobTitle": $scope.formInfo.jobtitle, "Location": $scope.formInfo.location, "Commitments": holder.commitments };
                     var dataTmp = JSON.stringify(data);
-                    repoAssignments.add(dataTmp)
-                        .then(function (response) {
-                            console.log("Response from server api" + response);
-                            $scope.formInfo = {};
-                            holder.commitments = [];
-                            $location.path("/dashboard");
-                        }, function () {
-                            console.log("failure");
-                            //failure
-                            holder.errorMessage = "Failure to save assign a project to an employee.";
-                        })
-                        .finally(function () {
-                            console.log("finally");
-                            holder.isBusy = false;
-                        });
+                    repoAssignments.add(dataTmp);
+                    $scope.formInfo = {};
+                    holder.commitments = [];
+                        //    $location.path("/dashboard");
+                        //.then(function (response) {
+                        //    console.log("Response from server api" + response);
+                        //    $scope.formInfo = {};
+                        //    holder.commitments = [];
+                        //    $location.path("/dashboard");
+                        //}, function () {
+                        //    console.log("failure");
+                        //    //failure
+                        //    holder.errorMessage = "Failure to save assign a project to an employee.";
+                        //})
+                        //.finally(function () {
+                        //    console.log("finally");
+                        //    holder.isBusy = false;
+                        //});
                 
                 };
             }
