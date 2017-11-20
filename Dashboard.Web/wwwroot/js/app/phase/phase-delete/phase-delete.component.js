@@ -1,6 +1,6 @@
 ﻿(function () {
     "use strict";
-    angular.module("phaseDelete", [])
+    angular.module("phaseDelete")
         .component("phaseDelete", {
             templateUrl: "/js/app/phase/phase-delete/phase-delete.template.html",
             controller: function PhaseListController(

@@ -17,6 +17,7 @@
             "locationList",
             "employeeAdd",
             "projectAdd",
+            "projectDelete",
             "projectDetails",
             "clientAdd",
             "phaseAdd",

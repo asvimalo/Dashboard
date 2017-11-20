@@ -6,11 +6,11 @@
         </div>
         <div class="col-md-6">
             <div class="bs-selectbox btn-group pull-right">
-                <button class="btn dropdown-toggle" data-toggle="dropdown" type="button">
+                <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" type="button">
                     <span class="glyphicon glyphicon-cog"></span>
                 </button>
                 <ul class="dropdown-menu">
-                    <li>Delete</li>
+                    <li><a data-toggle="modal" data-target="#deleteProject" ng-click="deleteProject()">Delete</a></li>
                 </ul>
             </div>
         </div>
@@ -50,24 +50,16 @@
             <!--<p>Timebudget: {{phase.timeBudget}} Vacation Dependency </p>-->
             <p>Comments: {{phase.comments}}</p>
             <p>From: {{ phase.startDate | date:'dd, MMMM yyyy'}} To: {{ phase.endDate | date:'dd - MMMM - yyyy'}}</p>
-            <button class="btn btn-info" type="button" data-toggle="collapse" data-target="#{{phase.phaseId}}" aria-expanded="false" aria-controls="{{phase.phaseId}}">
-                Edit
-            </button>
-            <button class="btn btn-danger pull-right" type="button" data-toggle="modal" data-target="#deletePhase" ng-click="Send(phase.phaseId, phase.projectId)" > Delete </button>
+            <button class="btn btn-info" type="button" data-toggle="collapse" data-target="#editPhase" aria-expanded="false" ng-click="Edit(phase.phaseId, phase.projectId)"> Edit </button>
+            <button class="btn btn-danger pull-right" type="button" data-toggle="modal" data-target="#deletePhase" ng-click="Delete(phase.phaseId, phase.projectId)" > Delete </button>
         </div>
     </div>
     <phase-delete></phase-delete>
-
+    <phase-edit></phase-edit>
+    <project-delete></project-delete>
 </div>
  
-
-<!--<div ng-show="showDiv">
-    <div class="container">
-        .asdasd
-    </div>
-
-</div>-->
-
+ 
 
 
 
