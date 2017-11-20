@@ -3,29 +3,18 @@
     angular.module("app-dashboard",
         ["ngRoute",          
             'ngFileUpload',
-            'angularModalService',
-            "projectList",
-            "employeeList",
-            "assignmentList",
-            "dashboardView",
-            "clientList", 
-            "commitmentList",
-            "acquiredKnowledgeList",
-            "knowledgeList",
-            "phaseList",
-            "taskList",
-            "locationList",
-            "employeeAdd",
+            'angularModalService',   
             "assignProjectToEmployee",
-            "projectAdd",
-            "projectDelete",
-            "projectDetails",
             "clientAdd",
+            "employeeAdd",
+            "dashboardView",
             "phaseAdd",
             "phaseDelete",
             "phaseEdit",
-
-            
+            "projectAdd",
+            "projectDelete",
+            "projectDetails"
+      
             ]);
 })();
 

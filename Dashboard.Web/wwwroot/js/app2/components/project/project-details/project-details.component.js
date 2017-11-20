@@ -2,8 +2,9 @@
     "use strict";
     angular.module("projectDetails")
         .component("projectDetails", {
-            templateUrl: "/js/app2/components/project/project-details/project-details.template.html",
+            templateUrl: "/js/app/project/project-details/project-details.template.html",
             controller: function ProjectListController(
+                $http,
                 $scope,
                 $location,
                 $routeParams,
@@ -12,23 +13,26 @@
                 this.projectId = $routeParams.projectId;
 
                 var self = this;
-                self.isBusy = true;
+
                 self.project = {};
 
-                repoProjects.get(self.projectId).then(function (data) {
-                    self.project = data;
-                }, function () {
-                    console.log("failure");
-                    self.errorMessage = "Failure getting project";
+                repoProjects.get(self.projectId).then(function (response) {
+                    angular.copy(response, self.project);
+                }); 
 
-                }).finally(function () {
-                    console.log("finally");
-                    self.isBusy = false;
-                    window.location.reload();
-                });
+                $scope.deleteProject = function () {
 
-                
-                
+                };
+
+                $scope.phaseId = {};
+
+                $scope.Delete = function (phaseId) {
+                    location.replace("#!/phases/phase-delete/" + phaseId);
+                };
+
+                $scope.Edit = function (phaseId) {
+                    location.replace("#!/phases/phase-edit/" + phaseId);
+                };
             }
         });
       

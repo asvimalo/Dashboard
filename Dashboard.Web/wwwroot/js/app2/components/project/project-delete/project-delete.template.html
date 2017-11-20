@@ -1,0 +1,29 @@
+﻿
+
+<div class="modal fade" id="deleteProject" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-body">
+                <form name="DeletePhaseForm">
+                    <label>Are you sure you want to delete {{$ctrl.project.projectName}}?</label>
+                    <div class="form-group">
+                        <label>Phase Id</label>
+                        <input type="text" name="phasename" ng-readonly="$ctrl.project.projectId" value="{{ $ctrl.project.projectId }}" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Phase name</label>
+                        <input type="text" name="phasename" ng-readonly="$ctrl.project.projectName" value="{{ $ctrl.project.projectName }}" class="form-control">
+                    </div>
+
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-success" type="button" ng-click="deleteProject()"> Yes </button>
+                <button class="btn btn-danger pull-right" type="button" data-dismiss="modal"> No </button>
+            </div>
+
+        </div>
+    </div>
+</div>
