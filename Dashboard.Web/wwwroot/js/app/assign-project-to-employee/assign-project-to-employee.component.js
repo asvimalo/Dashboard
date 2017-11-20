@@ -7,7 +7,6 @@
                 $http,
                 $scope,
                 $location,
-                repoEmployees,
                 repoAssignments
             ) {
                 //$routeProvider
