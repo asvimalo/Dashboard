@@ -39,10 +39,7 @@ namespace Dashboard.DataG.Repository
 
         public /*async Task<*/IQueryable<TEntity>/*>*/ GetAll()
         {
-            //using (var context = new DashboardGenericContext())
-            //{
-            //    return await context.Set<TEntity>();
-            //}
+          
             return  _ctx.Set<TEntity>();
         }
 
@@ -69,10 +66,16 @@ namespace Dashboard.DataG.Repository
 
             //Apply eager loading
             foreach (Expression<Func<TEntity, object>> navigationProperty in includeExpressions)
+            {
+                
+                     
+                
                 dbQuery = dbQuery.Include<TEntity, object>(navigationProperty);
+            }
+                
 
-            return dbQuery
-                 .AsNoTracking();
+            return dbQuery;
+                 //.AsNoTracking();
                  
         }
 

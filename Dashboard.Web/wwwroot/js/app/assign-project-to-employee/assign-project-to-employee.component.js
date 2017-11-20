@@ -12,11 +12,13 @@
             ) {
                 //$routeProvider
                 var holder = this;
+                holder.isBusy = true;
 
                 holder.employeesAndProjects = [];
+
                 repoAssignments.lists().then(function (response) {
                     //success
-                    console.log("Check");
+                    console.log("Check lists recived");
                     angular.copy(response, holder.employeesAndProjects);
                 }, function (error) {
                     //failure
@@ -25,8 +27,8 @@
                     .finally(function () {
                         holder.isBusy = false;
                     });
-                    
 
+                
                 holder.commitments = [];
                 $scope.addCommitment = function () {
 
@@ -76,8 +78,8 @@
                         $scope.formInfo = {};
                         holder.commitments = [];
                         $location.path("/dashboard");
-                    }, function () {
-                        console.log("failure");
+                    }, function (error) {
+                        console.log("failure " + error);
                         //failure
                         holder.errorMessage = "Failure to save assign a project to an employee.";
                     })

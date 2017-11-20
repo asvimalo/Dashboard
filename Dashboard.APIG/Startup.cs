@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Serialization;
 using Microsoft.AspNetCore.Diagnostics;
+using Newtonsoft.Json;
 
 namespace Dashboard.APIG
 {
@@ -67,8 +68,10 @@ namespace Dashboard.APIG
             services.AddMvc()
                 .AddJsonOptions(config =>
                 {
-                config.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver(); // It was already camelcasing before this config
-                config.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+                    config.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver(); // It was already camelcasing before this config
+                    config.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+            
+                   
                 });
 
             services.AddLogging();

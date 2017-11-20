@@ -36,17 +36,14 @@ namespace Dashboard.DataG.Db
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             #region modelBuilder
-            ////modelBuilder.Entity<Picture>()
-            ////   .HasKey(p => p.PictureId);
 
-            ////modelBuilder.Entity<Picture>().ToTable("Picture");
 
-            ////modelBuilder.Entity<Project>()
-            ////    .HasKey(p => p.ProjectId);
-            ////modelBuilder.Entity<Project>()
-            ////    .HasMany(p => p.Commitments)
-            ////    .WithOne();
-            ////modelBuilder.Entity<Project>().ToTable("Project");
+            //modelBuilder.Entity<Project>()
+            //    .HasKey(p => p.ProjectId);
+            //modelBuilder.Entity<Project>()
+            //    .HasMany(a => a.Assignments).WithOne(c => c.Commitments)
+            //    .
+            //modelBuilder.Entity<Project>().ToTable("Project");
 
 
 
