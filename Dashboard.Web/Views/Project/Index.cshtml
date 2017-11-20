@@ -40,46 +40,9 @@
         </div>
     </div>
 
-    @* Modals start here *@
-    <!-- Panel1: Create Project -->
-    <div class="modal fade" id="projectAdd" role="dialog">
-        <div class="modal-dialog modal-lg">
-
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-                <div class="modal-body">
-                    <project-add></project-add>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-
-        </div>
-    </div>
-
-    <!-- Panel2: Add a new Employee -->
-    <div class="modal fade" id="employeeAdd" role="dialog">
-        <div class="modal-dialog modal-lg">
-
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-                <div class="modal-body">
-                    <employee-add></employee-add>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-
-        </div>
-    </div>
+ 
+<project-add></project-add>
+<employee-add></employee-add>
 
     <!-- Panel3: Assign an employee to a project -->
     <div class="modal fade" id="assignEmployeeToProject" role="dialog">
@@ -136,6 +99,10 @@
     <script src="~/js/app/project/project-details/project-details.module.js"></script>
     <script src="~/js/app/project/project-details/project-details.component.js"></script>
 
+    <script src="~/js/app/project/project-delete/project-delete.module.js"></script>
+    <script src="~/js/app/project/project-delete/project-delete.component.js"></script>
+
+
     @*/////////////            EMPLOYEE                  ///////////////////////*@
 
     <script src="~/js/app/employee/employee-list/employee-list.module.js"></script>
@@ -182,6 +149,9 @@
 
     <script src="~/js/app/phase/phase-delete/phase-delete.module.js"></script>
     <script src="~/js/app/phase/phase-delete/phase-delete.component.js"></script>
+
+    <script src="~/js/app/phase/phase-edit/phase-edit.module.js"></script>
+    <script src="~/js/app/phase/phase-edit/phase-edit.component.js"></script>
 
     @*/////////////            LOCATION                  ///////////////////////*@
 

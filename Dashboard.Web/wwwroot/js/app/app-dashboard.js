@@ -18,11 +18,14 @@
             "employeeAdd",
             "assignProjectToEmployee",
             "projectAdd",
+            "projectDelete",
             "projectDetails",
             "clientAdd",
             "phaseAdd",
-            "phaseDelete"
+            "phaseDelete",
+            "phaseEdit",
+
             
             ]);
 })();
-//'daterangerpicker',
+

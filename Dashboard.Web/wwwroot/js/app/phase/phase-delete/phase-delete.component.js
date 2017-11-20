@@ -1,6 +1,6 @@
 ﻿(function () {
     "use strict";
-    angular.module("phaseDelete", [])
+    angular.module("phaseDelete")
         .component("phaseDelete", {
             templateUrl: "/js/app/phase/phase-delete/phase-delete.template.html",
             controller: function PhaseListController(
@@ -35,6 +35,12 @@
 
                 $scope.deletePhase = function () {
                     repoPhases.delete(self.phaseId);
+                    location.replace("#!/projects/project-details/" + self.phase.projectId);
+                    location.reload();
+
+                };
+
+                $scope.closeModal = function () {
                     location.replace("#!/projects/project-details/" + self.phase.projectId);
                     location.reload();
 

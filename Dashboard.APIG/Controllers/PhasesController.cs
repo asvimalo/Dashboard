@@ -97,15 +97,18 @@ namespace Dashboard.API.Controllers
                     //Mapper.Map(commitmentVM, commiFromRepo);
 
                     phaseFromRepo.PhaseName = phase.PhaseName ?? phaseFromRepo.PhaseName;
-                    phaseFromRepo.Project = phase.Project ?? phaseFromRepo.Project;
+                    phaseFromRepo.TimeBudget = phase.TimeBudget;
+                    phaseFromRepo.Progress = phase.Progress;
+                    phaseFromRepo.StartDate = phase.StartDate;
+                    phaseFromRepo.EndDate = phase.EndDate;
                     phaseFromRepo.Comments = phase.Comments ?? phaseFromRepo.Comments;
-                    phaseFromRepo.Tasks = phase.Tasks ?? phaseFromRepo.Tasks;
                     phaseFromRepo.ProjectId = phase.ProjectId != 0 ? phase.ProjectId : phaseFromRepo.ProjectId;
 
 
 
                     var phaseUpdated = _repo.Update(phaseFromRepo.PhaseId, phaseFromRepo);
-                    return Ok(/*Mapper.Map<CommitmentViewModel>(*/phaseFromRepo/*)*/);
+                    return Ok();
+                    //return Ok(/*Mapper.Map<CommitmentViewModel>(*/phaseFromRepo/*)*/);
                 }
                 catch (Exception ex)
                 {

@@ -12,23 +12,21 @@
             ) {
                 //$routeProvider
                 var holder = this;
-                holder.isBusy = true;
 
                 holder.employeesAndProjects = [];
-
                 repoAssignments.lists().then(function (response) {
                     //success
-                    console.log("Check lists recived");
+                    console.log("Check");
                     angular.copy(response, holder.employeesAndProjects);
                 }, function (error) {
                     //failure
                     holder.errorMessage = "Failed to load data: " + error;
                 })
-                    .finally(function () {
-                        holder.isBusy = false;
-                    });
+                .finally(function () {
+                    holder.isBusy = false;
+                });
+                    
 
-                
                 holder.commitments = [];
                 $scope.addCommitment = function () {
 
@@ -72,21 +70,8 @@
 
                     var data = { "ProjectId": $scope.formInfo.project.projectId, "EmployeeId": $scope.formInfo.employee.employeeId, "JobTitle": $scope.formInfo.jobtitle, "Location": $scope.formInfo.location, "Commitments": holder.commitments };
                     var dataTmp = JSON.stringify(data);
-                    //var dataTmp = JSON.stringify(data);
-                    repoAssignments.add(dataTmp).then(function (response) {
-                        console.log("Response from server api" + response);
-                        $scope.formInfo = {};
-                        holder.commitments = [];
-                        $location.path("/dashboard");
-                    }, function (error) {
-                        console.log("failure " + error);
-                        //failure
-                        holder.errorMessage = "Failure to save assign a project to an employee.";
-                    })
-                        .finally(function () {
-                            console.log("finally");
-                            holder.isBusy = false;
-                        });  
+
+                    repoAssignments.add(dataTmp);
                         
                 };
             }

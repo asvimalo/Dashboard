@@ -1,0 +1,38 @@
+﻿<div class="modal fade" id="editPhase" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-body">
+                <form name="DeletePhaseForm">
+                    <label>Update {{ $ctrl.phase.phaseName }}</label>
+
+                    <div class="form-group">
+                        <label>Timebudget</label>
+                        <input type="text" ng-model="$ctrl.phase.timeBudget" ng-true-value="{{ $ctrl.phase.timeBudget }}" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Progress</label>
+                        <input type="text" ng-model="$ctrl.phase.progress" value="{{ $ctrl.phase.progress }}" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Comment</label>
+                        <input type="text" ng-model="$ctrl.phase.comment" value="{{ $ctrl.phase.comment }}" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Start</label>
+                        <input type="date" ng-model="$ctrl.phase.startDate" value="{{ $ctrl.phase.startDate | date:'yyyy-MM-dd' }}" min="2017-01-01" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>End</label>
+                        <input type="date" ng-model="$ctrl.phase.endDate" value="{{ $ctrl.phase.endDate | date:'yyyy-MM-dd' }}" min="2017-01-01" class="form-control" >
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-success" type="button" ng-click="editPhase()"> Save </button>
+                <button class="btn btn-danger pull-right" type="button" ng-click="closeModal()"> Go back </button>
+            </div>
+
+        </div>
+    </div>
+</div>
