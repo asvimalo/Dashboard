@@ -1,6 +1,7 @@
 ﻿body {
     color: grey;
     background-color: #eeeeee;
+    overflow-y: scroll;
 }
 
 /*.borderless td, .borderless th {

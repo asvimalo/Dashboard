@@ -11,7 +11,7 @@
             "phaseAdd",
             "phaseDelete",
             "phaseEdit",
-            "allProjects",
+            "allProjects"
             "allEmployees"
             ]);
 })();

@@ -1,27 +1,26 @@
 ﻿<link href="~/css/allProject.css" rel="stylesheet" type="text/css" />
 
 <div ng-app="app-dashboard">
-    @*<a ng-href="#!/projects/project-details/2">One Project Details</a>*@
-    <div ng-view></div>
+    <a ng-href="#!/projects/project-details/2">One Project Details</a>
 
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-9">
-                <div class="mainpanel">
-                    <div class="row">
-                        <div class="col-md-3">
-                            <button type="button" class="calendarbutton">Archive</button>
-                            <button type="button" class="activebutton">Active</button>
-                        </div>
-                        <div class="col-md-offset-6 col-md-3">
-                            <div class="row">
-                                <button type="button" class="activebutton">Days</button>
-                                <button type="button" class="calendarbutton">Weeks</button>
-                                <button type="button" class="calendarbutton">Months</button>
+                <div class="mainpanel"> 
+                    <div ng-view> 
+                        <div class="row">
+                            <div class="col-md-3">
+                                <button type="button" class="calendarbutton">Archive</button>
+                                <button type="button" class="activebutton">Active</button>
+                            </div>
+                            <div class="col-md-offset-6 col-md-3">
+                                <div class="row">
+                                    <button type="button" class="activebutton">Days</button>
+                                    <button type="button" class="calendarbutton">Weeks</button>
+                                    <button type="button" class="calendarbutton">Months</button>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div>
                         <br />
                         <div class="table-responsive" id="ganttchart"></div>
                     </div>
@@ -38,33 +37,16 @@
                 </div>
             </div>
         </div>
-        <all-projects></all-projects>
+        @*<all-projects></all-projects>*@
     </div>
+
+    <project-add></project-add>
+    <employee-add></employee-add>
+    <assign-project-to-employee></assign-project-to-employee>
 
     
-
-<project-add></project-add>
-<employee-add></employee-add>
-
-    <!-- Panel3: Assign an employee to a project -->
-    <div class="modal fade" id="assignEmployeeToProject" role="dialog">
-        <div class="modal-dialog modal-lg">
-
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-                <div class="modal-body">
-                    <assign-project-to-employee></assign-project-to-employee>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
+
 
 @section Scripts {
     <script src="~/lib/angular/angular.min.js"></script>

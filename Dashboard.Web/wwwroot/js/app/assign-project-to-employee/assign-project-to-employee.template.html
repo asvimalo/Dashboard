@@ -1,75 +1,79 @@
-﻿<form novalidate class="simple-form">
-    <div class="modal-body" id="modal-body">
-        <h3>Assign a project to an employee</h3>
-        <br/>
-        <div class="row">
-            <div class="form-group">
-                <div class="col-md-6">
-                    <div class="row">
-                        <label>Employee:</label>
-                        <select class="form-control" ng-options="item as item.firstName + ' ' + item.lastName for item in $ctrl.employeesAndProjects.employees" ng-model="formInfo.employee">
-                            <option value="" disabled selected></option>
-                        </select>
-                    </div>
-                    <div class="row">
-                        <label>Project:</label>
-                        <select class="form-control" ng-options="item.projectName for item in $ctrl.employeesAndProjects.projects" ng-model="formInfo.project">
-                            <!--$ctrl.projects.singleSelect-->
-                            <option value="" disabled selected></option>
-                        </select>
-                    </div>
-                    <div class="row">
-                        <label>Location:</label>
-                        <input type="text" ng-model="formInfo.location" class="form-control"> <!--$ctrl.assigment.location-->
-                    </div>
-                    <div class="row">
-                        <label>Job title:</label>
-                        <input type="text" ng-model="formInfo.jobtitle" class="form-control"> <!--$ctrl.assigment.jobTitle-->
-                        <!--<button class="btn btn-info" type="button" ng-click="addJobtitles()"> <span class="glyphicon glyphicon-plus"></span></button>-->
-                    </div>
-                    <br />
-                    <!--<label ng-hide="$ctrl.jobTitles.length == 0">Jobtitles:</label>
-                    <div ng-repeat="items in $ctrl.jobTitles">
-                        {{items}}
-                        <button class="glyphicon glyphicon-remove" type="button" ng-click="remove($ctrl.jobTitles, $index)"></button>
-                    </div>-->
+﻿<div class="modal fade" id="assignEmployeeToProject" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-body">
+                <p class="modalTitle">Assign a project to an employee</p>
+                  <form novalidate class="simple-form">
+                    <div class="modal-body" id="modal-body">
+                        <div class="row">
+                                <div class="col-md-5 modalDevider">
+                                    <div class="form-group">
+                                        <label>Employee:</label>
+                                        <select class="form-control" ng-options="item as item.firstName + ' ' + item.lastName for item in $ctrl.employeesAndProjects.employees" ng-model="formInfo.employee">
+                                            <option value="" disabled selected></option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Project:</label>
+                                        <select class="form-control" ng-options="item.projectName for item in $ctrl.employeesAndProjects.projects" ng-model="formInfo.project">
+                                            <!--$ctrl.projects.singleSelect-->
+                                            <option value="" disabled selected></option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Job title:</label>
+                                        <input type="text" ng-model="formInfo.jobtitle" class="form-control"> <!--$ctrl.assigment.jobTitle-->
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Location:</label>
+                                        <input type="text" ng-model="formInfo.location" class="form-control"> <!--$ctrl.assigment.location-->
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Commitment:</label>
+                                        <div ng-repeat="item in $ctrl.commitments">
+                                            {{item.hours}}h from {{item.startDate | date: 'dd-MM-yyyy'}} to {{item.stopDate | date: 'dd-MM-yyyy'}} <!-- Denna skriver ut ENDAST "h from to"-->
+                                            <button class="glyphicon glyphicon-remove" type="button" ng-click="remove($ctrl.commitments, $index)"></button>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <button class="btn btn-primary" type="submit" ng-click="assignProjectToEmployee()"> Save </button>
+                                </div>
+                            <!-- Add a new commitment -->
+                                <div class="col-md-6 modalDeviderMargin">
+                                    <h4>Add a new commitment</h4>
+                                    <!--<div class="form-group">
+                                        <label for="daterange1" class="control-label">Simple picker</label>
+                                        <input date-range-picker id="daterange1" name="daterange1" class="form-control date-picker" type="text"
+                                               ng-model="date" required ng-change="SimplePickerChange();" />
+                                    </div>-->
+                                    <!--<div class="row">
+                                        <label>From</label>
+                                        <input date-range-picker class="form-control date-picker" type="text" ng-model="commitment.date" required />
+                                    </div>-->
 
-                    <div class="row">
-                        <label>Commitment:</label>
-                        <div ng-repeat="item in $ctrl.commitments">
-                            {{item.hours}}h from {{item.startDate | date: 'dd-MM-yyyy'}} to {{item.stopDate | date: 'dd-MM-yyyy'}} <!-- Denna skriver ut ENDAST "h from to"-->
-                            <button class="glyphicon glyphicon-remove" type="button" ng-click="remove($ctrl.commitments, $index)"></button>
+                                    <div class="form-group">
+                                        <label>From</label>
+                                        <input type="date" ng-model="commitment.startDate" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>To</label>
+                                        <input type="date" ng-model="commitment.endDate" class="form-control" ng-change="validateEndDate(commitment.startDate, commitment.endDate)">
+                                    </div>
+                                    <span>{{errorMessage}}</span>
+                                    <div class="form-group">
+                                        <label>Commitment</label>
+                                        <input type="number" ng-model="commitment.hours" class="form-control">
+                                    </div>
+                                    <br />
+                                    <button class="btn btn-secondary" type="button" ng-click="addCommitment()"> Add </button>
+                                </div>
                         </div>
-                    </div>
-                </div>
+                    </div> 
+                </form>
             </div>
-            <!-- Add a new commitment -->
-            <div class="form-group">
-                <div class="col-md-6">
-                    <h4>Add a new commitment</h4>
-                    <div class="row">
-                        <label>From</label>
-                        <input type="date" ng-model="commitment.startDate" class="form-control">
-                    </div>
-                    <div class="row">
-                        <label>To</label>
-                        <input type="date" ng-model="commitment.stopDate" class="form-control" ng-change="validateStopDate(commitment.startDate, commitment.stopDate)">
-                    </div>
-                    <span>{{errorMessage}}</span>
-                    <div class="row">
-                        <label>Commitment</label>
-                        <input type="number" ng-model="commitment.hours" class="form-control">
-                    </div>
-                    <br />
-                    <button class="btn btn-secondary" type="button" ng-click="addCommitment()"> Add </button>
-                </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
-            <span>{{message}}</span>
         </div>
     </div>
-    <div class="form-group">
-        <div class="row">
-            <button class="btn btn-primary" type="submit" ng-click="assignProjectToEmployee()"> Save </button>
-        </div>
-    </div>
-</form>
+</div>

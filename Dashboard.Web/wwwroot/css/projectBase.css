@@ -36,12 +36,11 @@ a {
 .phase {
     background-color: #bedafd;
     padding-top: 2%;
-    padding-bottom: 1%;
-    padding-right: 2%;
-    padding-left: 2%;
+    padding-bottom: 1%; 
     margin-bottom: 0%;
     border-radius: 10px;
     box-shadow: 3px 3px 5px #a3a3a3;
+    width: 100%;
 }
 
 .oneProjectTop {
@@ -51,12 +50,12 @@ a {
     border-radius: 10px;
 }
 
-.projectAdd {
+.modalDevider {
     border-right: solid 1px #d7d7d7;
     margin-left: 2.5%;
 }
 
-.clientAdd {
+.modalDeviderMargin {
     margin-left: 2.5%;
 }
 
@@ -68,3 +67,15 @@ a {
     padding-top: 2%;
     padding-bottom: 2%;
 }
+
+.phaseInProject {
+    padding: 7px;
+}
+
+.phaseA {
+    background-color: #bedafd;
+    border-radius: 4px;
+    box-shadow: 1px 1px 5px #a3a3a3;
+    overflow-x: hidden;
+}
+ 
