@@ -19,13 +19,23 @@
                         </select>
                     </div>
                     <div class="row">
-                        <label>Job title:</label>
-                        <input type="text" ng-model="formInfo.jobtitle" class="form-control"> <!--$ctrl.assigment.jobTitle-->
-                    </div>
-                    <div class="row">
                         <label>Location:</label>
                         <input type="text" ng-model="formInfo.location" class="form-control"> <!--$ctrl.assigment.location-->
                     </div>
+                    <div class="row">
+                        <label>Job title:</label>
+                        <input type="text" ng-model="formInfo.jobtitle" class="form-control"> <!--$ctrl.assigment.jobTitle-->
+                        <!--<button class="btn btn-info" type="button" ng-click="addJobtitles()"> <span class="glyphicon glyphicon-plus"></span></button>-->
+                    </div>
+                    <br />
+                    <!--<label ng-hide="$ctrl.newKnowledges.length == 0">Added Knowledges:</label>
+                    <div ng-repeat="items in $ctrl.newKnowledges">
+                        {{items}}
+                        <button class="glyphicon glyphicon-remove" type="button" ng-click="remove($ctrl.newKnowledges, $index)"></button>
+                    </div>-->
+
+
+
                     <div class="row">
                         <label>Commitment:</label>
                         <div ng-repeat="item in $ctrl.commitments">
@@ -45,7 +55,7 @@
                     </div>
                     <div class="row">
                         <label>To</label>
-                        <input type="date" ng-model="commitment.endDate" class="form-control" ng-change="validateEndDate(commitment.startDate, commitment.endDate)">
+                        <input type="date" ng-model="commitment.stopDate" class="form-control" ng-change="validateStopDate(commitment.startDate, commitment.stopDate)">
                     </div>
                     <span>{{errorMessage}}</span>
                     <div class="row">
