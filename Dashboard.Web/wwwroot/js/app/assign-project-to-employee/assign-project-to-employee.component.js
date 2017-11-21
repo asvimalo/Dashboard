@@ -7,11 +7,11 @@
                 $http,
                 $scope,
                 $location,
-                repoEmployees,
                 repoAssignments
             ) {
                 //$routeProvider
                 var holder = this;
+                holder.isBusy = true;
 
                 holder.employeesAndProjects = [];
                 repoAssignments.lists().then(function (response) {
@@ -30,9 +30,9 @@
                 holder.commitments = [];
                 $scope.addCommitment = function () {
 
-                    holder.commitments.push($scope.commitment);                   
+                    holder.commitments.push($scope.commitment);
                     $scope.commitment = {};
-                    
+
                 };
 
                 $scope.remove = function (array, index) {
@@ -40,26 +40,13 @@
                     var y = holder.commitments;
                 };
 
-                $scope.validateEndDate = function (start, end) {
+                $scope.validateStopDate = function (start, end) {
                     $scope.errorMessage = "";
                     if (new Date(start) > new Date(end)) {
                         $scope.errorMessage = "To:date should be greater than start date.";
                         return false;
                     }
                 };
-
-                //$('input[name="daterange"]').daterangepicker(
-                //    {
-                //        locale: {
-                //            format: 'YYYY-MM-DD'
-                //        },
-                //        startDate: '2017-01-01',
-                //        endDate: '2017-12-31'
-                //    },
-                //    function (start, end, label) {
-                //        alert("A new date range was chosen: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
-                //    }
-                //);
 
                 $scope.assignProjectToEmployee = function () {
                     console.log("in the function");
@@ -71,8 +58,42 @@
                     var data = { "ProjectId": $scope.formInfo.project.projectId, "EmployeeId": $scope.formInfo.employee.employeeId, "JobTitle": $scope.formInfo.jobtitle, "Location": $scope.formInfo.location, "Commitments": holder.commitments };
                     var dataTmp = JSON.stringify(data);
 
-                    repoAssignments.add(dataTmp);
+                    $http.post('http://localhost:8890/api/dashboard/assignments', dataTmp)
+                        .then(function (response) {
+
+                            $scope.formInfo = {};
+                            holder.commitments = [];
+                            console.log("Response from server api" + response.data);
+
+                        }, function (error) {
+                            self.errorMessage = "Failure to save new project";
+                            console.log("didn't add assignment: " + error.message);
+                        })
+                        .finally(function () {
+                            self.isBusy = false;
+                            console.log("Finally...??");
+                        });
+
+
+
+
                         
+                    //repoAssignments.add(dataTmp).then(function(response) {
+                    //        holder.isBusy = true;
+                    //        console.log("Response from server api" + response);
+                    //        $scope.formInfo = {};
+                    //        holder.commitments = [];
+                    //        $location.path("/dashboard");
+                    //    }, function (error) {
+                    //         holder.errorMessage = "Failed to save data: " + error;
+                    //    })
+                    //    .finally(function () {
+                    //        console.log("finally");
+                    //        holder.isBusy = false;
+                    //    });
+
+                     //$scope.message = "Project is assigned to emloyee.";
+                
                 };
             }
         });
