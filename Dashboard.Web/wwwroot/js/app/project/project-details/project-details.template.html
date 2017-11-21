@@ -1,12 +1,10 @@
 ﻿<div class="container-fluid oneProjectTop">
-    <!-- Go back to all projects  -->
-
         <div class="row">
-            <div class="col-md-6">
-                <h2> {{$ctrl.project.projectName}} </h2>
+            <div class="col-md-11">
+                <h4> {{$ctrl.project.projectName}} </h4>
             </div>
-            <div class="col-md-6">
-                <div class="bs-selectbox btn-group pull-right">
+            <div class="col-md-1">
+                <div class="bs-selectbox">
                     <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" type="button">
                         <span class="glyphicon glyphicon-cog"></span>
                     </button>
@@ -47,7 +45,7 @@
             </div>
         <br />
         <div class="collapse" id="{{phase.phaseId}}">
-            <div class="well">
+            <div class="phaseDetailsCollapse">
                 <p>Timebudget: {{phase.timeBudget}}</p>
                 <p>Progress: {{phase.progress}}</p>
                 <!--<p>Timebudget: {{phase.timeBudget}} Vacation Dependency </p>-->

@@ -9,7 +9,7 @@
 
                 self.clients = [];
                 self.locations = [];
-
+                self.addedClient = {};
                 $scope.addClient = function () {
                     console.log("in the addProject function");
                     self.isBusy = true;
@@ -21,9 +21,9 @@
                     // Http Post for Location 
                     repoClients.add(dataTmp)
                         .then(function (response) {
-                            console.log("Response from server api" + response.data);
+                            console.log("Response from server api" + response);
                             // Sparar datan i $scope.locationObj för att få locationId
-                            angular.copy(response.data, $scope.locationObj);
+                            angular.copy(response, self.addedClient);
                             //window.location.reload();
 
                         }, function () {

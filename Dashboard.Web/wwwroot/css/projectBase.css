@@ -43,11 +43,15 @@ a {
     width: 100%;
 }
 
+.phaseDetailsCollapse {
+    background-color: white;
+    margin-bottom: 3%;
+    padding: 2%;
+}
+
 .oneProjectTop {
     background-color: #bedafd;
     padding: 2%;
-    box-shadow: 3px 3px 5px #a3a3a3;
-    border-radius: 10px;
 }
 
 .modalDevider {
