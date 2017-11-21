@@ -102,6 +102,9 @@
                     when('/allProjects', {
                         template: '<all-projects></all-projects>'
                     }).
+                    when('/allEmployees', {
+                        template: '<all-employees></all-employees>'
+                    }).
                     otherwise('/dashboard');
             }
         ]);

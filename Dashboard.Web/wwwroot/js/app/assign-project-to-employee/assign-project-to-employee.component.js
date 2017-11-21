@@ -24,7 +24,12 @@
                 })
                 .finally(function () {
                     holder.isBusy = false;
-                });
+                    });
+
+                //holder.jobTitles = [];
+                //$http.get('http://localhost:8890/api/dashboard/jobtitles').then(function (response) {
+                //    angular.copy(response.data, holder.jobTitles);
+                //});
                     
 
                 holder.commitments = [];
@@ -73,27 +78,6 @@
                             self.isBusy = false;
                             console.log("Finally...??");
                         });
-
-
-
-
-                        
-                    //repoAssignments.add(dataTmp).then(function(response) {
-                    //        holder.isBusy = true;
-                    //        console.log("Response from server api" + response);
-                    //        $scope.formInfo = {};
-                    //        holder.commitments = [];
-                    //        $location.path("/dashboard");
-                    //    }, function (error) {
-                    //         holder.errorMessage = "Failed to save data: " + error;
-                    //    })
-                    //    .finally(function () {
-                    //        console.log("finally");
-                    //        holder.isBusy = false;
-                    //    });
-
-                     //$scope.message = "Project is assigned to emloyee.";
-                
                 };
             }
         });
