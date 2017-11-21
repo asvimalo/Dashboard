@@ -57,26 +57,42 @@
 
                     var data = { "ProjectId": $scope.formInfo.project.projectId, "EmployeeId": $scope.formInfo.employee.employeeId, "JobTitle": $scope.formInfo.jobtitle, "Location": $scope.formInfo.location, "Commitments": holder.commitments };
                     var dataTmp = JSON.stringify(data);
-                    repoAssignments.add(dataTmp);
-                    $scope.formInfo = {};
-                    holder.commitments = [];
-                    //$scope.message = "Project is assigned to emloyee.";
+
+                    $http.post('http://localhost:8890/api/dashboard/assignments', dataTmp)
+                        .then(function (response) {
+
+                            $scope.formInfo = {};
+                            holder.commitments = [];
+                            console.log("Response from server api" + response.data);
+
+                        }, function (error) {
+                            self.errorMessage = "Failure to save new project";
+                            console.log("didn't add assignment: " + error.message);
+                        })
+                        .finally(function () {
+                            self.isBusy = false;
+                            console.log("Finally...??");
+                        });
+
+
+
+
                         
-                        //.then(function (response) {
-                        //    holder.isBusy = true;
-                        //    console.log("Response from server api" + response);
-                        //    $scope.formInfo = {};
-                        //    holder.commitments = [];
-                        //    $location.path("/dashboard");
-                        //}, function (error) {
-                        //     holder.errorMessage = "Failed to save data: " + error;
-                            
-                            
-                        //})
-                        //.finally(function () {
-                        //    console.log("finally");
-                        //    holder.isBusy = false;
-                        //});
+                    //repoAssignments.add(dataTmp).then(function(response) {
+                    //        holder.isBusy = true;
+                    //        console.log("Response from server api" + response);
+                    //        $scope.formInfo = {};
+                    //        holder.commitments = [];
+                    //        $location.path("/dashboard");
+                    //    }, function (error) {
+                    //         holder.errorMessage = "Failed to save data: " + error;
+                    //    })
+                    //    .finally(function () {
+                    //        console.log("finally");
+                    //        holder.isBusy = false;
+                    //    });
+
+                     //$scope.message = "Project is assigned to emloyee.";
                 
                 };
             }
