@@ -10,11 +10,9 @@
 
                 $scope.addPhase = function () {
                     var data = {
-                        "phaseName": self.phase.phaseName, "startDate": self.phase.startDate, "endDate": self.phase.endDate, "timeBudget": self.phase.timeBudget, "projectId": $scope.$parent.$ctrl.projectId };
+                        "phaseName": self.phase.phaseName, "startDate": new Date(self.phase.startDate).toLocaleDateString(), "endDate": new Date(self.phase.endDate).toLocaleDateString(), "timeBudget": self.phase.timeBudget, "projectId": $scope.$parent.$ctrl.projectId };
                     var dataTmp = JSON.stringify(data);
                     
-
-                    // Http Post for Location 
                     repoPhases.add(dataTmp);
                 }
             }

@@ -2,7 +2,7 @@
     "use strict";
     angular.module("projectDelete")
         .component("projectDelete", {
-            templateUrl: "/js/app/project/project-delete/project-delete.template.html",
+            templateUrl: "/js/app2/project/project-delete/project-delete.template.html",
             controller: function ProjectListController($http, $scope, $location, $routeParams, repoProjects)
             {
                 this.projectId = $routeParams.projectId;
@@ -17,9 +17,6 @@
 
                 $scope.deleteProject = function () {
                     repoProjects.delete(self.projectId);
-                    location.replace("#!/dashboard");
-                    location.reload();
-
                 };
                  
             }
