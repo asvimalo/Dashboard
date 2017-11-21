@@ -51,12 +51,12 @@ a {
     border-radius: 10px;
 }
 
-.projectAdd {
+.modalDevider {
     border-right: solid 1px #d7d7d7;
     margin-left: 2.5%;
 }
 
-.clientAdd {
+.modalDeviderMargin {
     margin-left: 2.5%;
 }
 
