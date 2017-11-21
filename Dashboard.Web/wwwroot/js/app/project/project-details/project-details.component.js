@@ -3,13 +3,8 @@
     angular.module("projectDetails")
         .component("projectDetails", {
             templateUrl: "/js/app/project/project-details/project-details.template.html",
-            controller: function ProjectListController(
-                $http,
-                $scope,
-                $location,
-                $routeParams,
-                repoProjects
-                ) {
+            controller: function ProjectListController( $http, $scope, $location, $routeParams, repoProjects ) 
+            {
                 this.projectId = $routeParams.projectId;
                  
                 var self = this;
@@ -18,11 +13,7 @@
 
                 repoProjects.get(self.projectId).then(function (response) {
                     angular.copy(response, self.project);
-                }); 
-
-                $scope.deleteProject = function () {
-
-                };
+                });  
 
                 $scope.phaseId = {};
 
