@@ -11,7 +11,7 @@
                 repoProjects
                 ) {
                 this.projectId = $routeParams.projectId;
-
+                 
                 var self = this;
 
                 self.project = {};

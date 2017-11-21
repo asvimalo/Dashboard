@@ -44,7 +44,7 @@ var repoClients = function ($http) {
             });
     };
     var addClient = function (client) {
-        $http.post('http://localhost:8890/api/dashboard/clients', client)
+        return $http.post('http://localhost:8890/api/dashboard/clients', client)
             .then(function (response) {
                 return response.data;
             }, function (error) {
