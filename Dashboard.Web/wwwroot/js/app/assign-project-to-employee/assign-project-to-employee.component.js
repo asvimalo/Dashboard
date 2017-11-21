@@ -58,25 +58,25 @@
                     var data = { "ProjectId": $scope.formInfo.project.projectId, "EmployeeId": $scope.formInfo.employee.employeeId, "JobTitle": $scope.formInfo.jobtitle, "Location": $scope.formInfo.location, "Commitments": holder.commitments };
                     var dataTmp = JSON.stringify(data);
                     repoAssignments.add(dataTmp);
-                    //$scope.formInfo = {};
-                    //holder.commitments = [];
+                    $scope.formInfo = {};
+                    holder.commitments = [];
                     //$scope.message = "Project is assigned to emloyee.";
                         
-                        .then(function (response) {
-                            holder.isBusy = true;
-                            console.log("Response from server api" + response);
-                            $scope.formInfo = {};
-                            holder.commitments = [];
-                            $location.path("/dashboard");
-                        }, function (error) {
-                             holder.errorMessage = "Failed to save data: " + error;
+                        //.then(function (response) {
+                        //    holder.isBusy = true;
+                        //    console.log("Response from server api" + response);
+                        //    $scope.formInfo = {};
+                        //    holder.commitments = [];
+                        //    $location.path("/dashboard");
+                        //}, function (error) {
+                        //     holder.errorMessage = "Failed to save data: " + error;
                             
                             
-                        })
-                        .finally(function () {
-                            console.log("finally");
-                            holder.isBusy = false;
-                        });
+                        //})
+                        //.finally(function () {
+                        //    console.log("finally");
+                        //    holder.isBusy = false;
+                        //});
                 
                 };
             }
