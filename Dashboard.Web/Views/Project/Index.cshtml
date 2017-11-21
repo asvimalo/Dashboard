@@ -1,27 +1,26 @@
 ﻿<link href="~/css/allProject.css" rel="stylesheet" type="text/css" />
 
 <div ng-app="app-dashboard">
-    @*<a ng-href="#!/projects/project-details/2">One Project Details</a>*@
-    <div ng-view></div>
+    <a ng-href="#!/projects/project-details/2">One Project Details</a>
 
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-9">
-                <div class="mainpanel">
-                    <div class="row">
-                        <div class="col-md-3">
-                            <button type="button" class="calendarbutton">Archive</button>
-                            <button type="button" class="activebutton">Active</button>
-                        </div>
-                        <div class="col-md-offset-6 col-md-3">
-                            <div class="row">
-                                <button type="button" class="activebutton">Days</button>
-                                <button type="button" class="calendarbutton">Weeks</button>
-                                <button type="button" class="calendarbutton">Months</button>
+                <div class="mainpanel"> 
+                    <div ng-view> 
+                        <div class="row">
+                            <div class="col-md-3">
+                                <button type="button" class="calendarbutton">Archive</button>
+                                <button type="button" class="activebutton">Active</button>
+                            </div>
+                            <div class="col-md-offset-6 col-md-3">
+                                <div class="row">
+                                    <button type="button" class="activebutton">Days</button>
+                                    <button type="button" class="calendarbutton">Weeks</button>
+                                    <button type="button" class="calendarbutton">Months</button>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div>
                         <br />
                         <div class="table-responsive" id="ganttchart"></div>
                     </div>
@@ -38,15 +37,16 @@
                 </div>
             </div>
         </div>
-        <all-projects></all-projects>
+        @*<all-projects></all-projects>*@
     </div>
 
-    
+    <project-add></project-add>
+    <employee-add></employee-add>
+    <assign-project-to-employee></assign-project-to-employee>
 
-<project-add></project-add>
-<employee-add></employee-add>
-<assign-project-to-employee></assign-project-to-employee>
-     
+    
+</div>
+
 
 @section Scripts {
     <script src="~/lib/angular/angular.min.js"></script>

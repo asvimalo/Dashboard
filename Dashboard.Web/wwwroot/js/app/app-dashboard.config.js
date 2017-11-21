@@ -33,15 +33,15 @@
                     when('/projects/project-delete/:projectId', {
                         template: '<project-delete></project-delete>'
                     }).
-                    when('/assignments', {
-                        template: '<assignment-list></assignment-list>'
-                    }).
+                    //when('/assignments', {
+                    //    template: '<assignment-list></assignment-list>'
+                    //}).
                     //when('/assignments/:employeeId', {
                     //    template: '<assignment-detail></assignment-detail>'
                     //}).
-                    when('/acquiredKnowledges', {
-                        template: '<acquired-knowledge-list></acquired-knowledge-list>'
-                    }).
+                    //when('/acquiredKnowledges', {
+                    //    template: '<acquired-knowledge-list></acquired-knowledge-list>'
+                    //}).
                     //when('/acquiredKnowledge/:acquiredKnowledge', {
                     //    template: '<acquiredKnowledge-detail></acquiredKnowledge-detail>'
                     //}).
@@ -54,21 +54,21 @@
                     when('/clients/client-add', {
                         template: '<client-add></client-add>'
                     }).
-                    when('/commitments', {
-                        template: '<commitment-list></commitment-list>'
-                    }).
+                    //when('/commitments', {
+                    //    template: '<commitment-list></commitment-list>'
+                    //}).
                     //when('/commitment/:commitmentId', {
                     //    template: '<commitment-detail></commitment-detail>'
                     //}).
-                    when('/knowledges', {
-                        template: '<knowledge-list></knowledge-list>'
-                    }).
+                    //when('/knowledges', {
+                    //    template: '<knowledge-list></knowledge-list>'
+                    //}).
                     //when('/knowledge/:knowledgeId', {
                     //    template: '<knowledge-detail></knowledge-detail>'
                     //}).
-                    when('/phases', {
-                        template: '<phase-list></phase-list>'
-                    }).
+                    //when('/phases', {
+                    //    template: '<phase-list></phase-list>'
+                    //}).
                     //when('/phases/:phaseId', {
                     //    template: '<phase-detail></phase-detail>'
                     //}).
@@ -81,15 +81,15 @@
                     when('/phases/phase-edit/:phaseId', {
                         template: '<phase-edit></phase-edit>'
                     }).
-                    when('/tasks', {
-                        template: '<task-list></task-list>'
-                    }).
+                    //when('/tasks', {
+                    //    template: '<task-list></task-list>'
+                    //}).
                     //when('/tasks/:taskId', {
                     //    template: '<task-detail></task-detail>'
                     //}).
-                    when('/locations', {
-                        template: '<location-list></location-list>'
-                    }).
+                    //when('/locations', {
+                    //    template: '<location-list></location-list>'
+                    //}).
                     //when('/locations/:locationId', {
                     //    template: '<location-detail></location-detail>'
                     //}).

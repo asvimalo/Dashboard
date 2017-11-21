@@ -11,6 +11,9 @@
             "phaseAdd",
             "phaseDelete",
             "phaseEdit",
+            "projectAdd",
+            "projectDelete",
+            "projectDetails",
             "allProjects"
             
             ]);

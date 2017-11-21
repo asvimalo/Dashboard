@@ -3,7 +3,7 @@
     angular.module("allProjects", [])
         .component("allProjects", {
             templateUrl: "/js/app/allproject/all-projects.template.html",
-            controller: function allProjectController($http, $scope, $location, $q, repoProjects, repoAssignments, repoEmployees) {
+            controller: function allProjectsController($http, $scope, $location, $q, repoProjects, repoAssignments, repoEmployees) {
                 var holder = this;
 
                 holder.allProjects = [];
