@@ -8,18 +8,18 @@
 
                 holder.allProjects = [];
                 holder.assignments = [];
-                holder.employees = [];
+                //holder.employees = [];
 
                 $q.all([
                     repoProjects.getAll(),
                     repoAssignments.getAll(),
-                    repoEmployees.getAll()
+                    //repoEmployees.getAll()
                 ]).then(function (response) {
                     //success
                     console.log("Check1");
                     angular.copy(response[0], holder.allProjects);
                     angular.copy(response[1], holder.assignments);
-                    angular.copy(response[2], holder.employees);
+                    //angular.copy(response[2], holder.employees);
 
                     init();
 
@@ -86,7 +86,7 @@
                                     var phaseStart = moment(phase.startDate).format('YYYY-MM-DD');
                                     var phaseEnd = moment(phase.endDate).format('YYYY-MM-DD');
                                     if ((phaseStart <= dates[j]) && (phaseEnd >= dates[j])) {
-                                        phaseId = l;
+                                        phaseId = k;
                                         data = 'x';
 
                                         if (phaseStart == dates[j]) {
@@ -113,43 +113,40 @@
                         }
 
                         //Projects/Employee
+                        //var employeesObj = [];  //contain all the employees belong to this project and its commitments
                         //if (project.assignments) {
-                        //
-                        //    var employees = [];
-                        //    for (var m = 0; m < project.assignments.length; m++) {
-                        //        //var employee = repoEmployees.get(project.assignments[m].employeeId);
-                        //        //if (employee) {
-                        //            //var doublet = employees.filter(function (item) {
-                        //            //    return item.id === employee.employeeId;
-                        //            //})[0];
-                        //            //if (doublet == null) {
-                        //                employees.push(employee);
-                        //            //}
-                        //        //}
-                        //        //TODO: loop 
-                        //        //var commitments = repoCommitments.get(project.assignments[m].assignmentsId);
+                        //    for (var m = 0; m < holder.assignments.length; m++) {
+                        //        var assignment = holder.assignments[m];
+                        //        if (project.projectId == assignment.projectId) {
+                        //            employeesObj.push({ "employee": assignment.employee, "commitments": assignment.commitments });
+                        //        } //OBS! condition: no doublets are allowed in injection table
                         //    }
-                        //
-                        //    //var employeeObj = [{"employees" : employees, "commitments" : project.assigments[m].commitments}];
                         //}
 
                         if (project.assignments) {
-                            for (var k = 0; k < project.assignments.length; k++) {
-                                var assignment = project.assignments[k];
-                                var employee = assignment.employees;
+                            for (var k = 0; k < holder.assignments.length; k++) {
+                                var assignment = holder.assignments[k];
+                                if (project.projectId != assignment.projectId)
+                                    continue;
+
+                                var employee = assignment.employee;
+                                var commitments = assignment.commitments;
                                 var row = $(tabledate[0].insertRow(-1));
                                 row.addClass("employee");
                                 row.attr('projectId', project.projectName);
 
-                                //TODO
                                 row.append(createCell("employeeName", employee.lastName + " " + employee.firstName + "  ", "colspan=\"2\" style=\"white-space:PRE\"></td>"));
 
                                 for (var j = 0; j < dates.length; j++) {                            //for calendar
                                     data = '';
-                                    for (var m = 0; m < assignment.commitments.length; m++) {     //for commitments
-                                        var commit = employee.commitments[m];
+                                    for (var m = 0; m < commitments.length; m++) {     //for commitments
+                                        var commit = commitments[m];
                                         var commitStart = moment(commit.startDate).format('YYYY-MM-DD');
-                                        var commitEnd = moment(commit.endDate[l]).format('YYYY-MM-DD');
+                                        var commitEnd = moment(commit.stopDate).format('YYYY-MM-DD');
+
+                                        // TODO
+                                        if (commitEnd == "0001-01-01")
+                                            commitEnd = commitStart;
 
                                         if (commitStart == dates[j])
                                             data = commit.hours + "h";

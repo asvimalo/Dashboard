@@ -3,7 +3,7 @@
     angular.module("app-dashboard",
         ["ngRoute",          
             'ngFileUpload',
-            'angularModalService',   
+            'angularModalService',
             "assignProjectToEmployee",
             "clientAdd",
             "employeeAdd",
@@ -11,8 +11,11 @@
             "phaseAdd",
             "phaseDelete",
             "phaseEdit",
+            "projectAdd",
+            "projectDelete",
+            "projectDetails",
             "allProjects"
-            "allEmployees"
+            //"allEmployees"
             ]);
 })();
 

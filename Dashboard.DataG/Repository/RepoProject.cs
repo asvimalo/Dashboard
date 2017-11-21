@@ -29,15 +29,24 @@ namespace Dashboard.DataG.Repository
             //             select  ).ToList();
             //return query;
 
-            string query = ($@"SELECT * FROM  Project as p
-                            left JOIN EmployeeProject as ep ON p.ProjectId = ep.ProjectId
-                            left JOIN Employee as e On ep.EmployeeId = e.EmployeeId
-                            left JOIN Commitment as c On ep.AssignmentId = c.AssigmentId");
-            var projects = _ctx.Projects
-                .FromSql(query).ToList();
+            //string query = ($@"SELECT * FROM  Project as p
+            //                left JOIN EmployeeProject as ep ON p.ProjectId = ep.ProjectId
+            //                left JOIN Employee as e On ep.EmployeeId = e.EmployeeId
+            //                left JOIN Commitment as c On ep.AssignmentId = c.AssigmentId");
+            //var projects = _ctx.Projects
+            //    .FromSql(query).ToList();
+
+            //var projects = new List<Project>();
+            //projects = _ctx.Projects.Where(x => _ctx.Employees.Any(y => y.EmployeeId == x.Employee)
+            
+            var projects = new List<Project>();
+            projects = _ctx.Projects
+                .Include(i => i.Phases)
+                .Include(i => i.Assignments)
+                .ToList();
+
             return projects;
 
         }
-
     }
 }
