@@ -35,11 +35,13 @@
 
                 $scope.deletePhase = function () {
                     repoPhases.delete(self.phaseId);
-                    location.replace("#!/projects/project-details/" + self.phase.projectId).reload();
+                    location.replace("#!/projects/project-details/" + self.phase.projectId);
+                    location.reload();
                 };
 
                 $scope.closeModal = function () {
                     location.replace("#!/projects/project-details/" + self.phase.projectId).reload();
+                    location.reload();
                 };
                 
                 
