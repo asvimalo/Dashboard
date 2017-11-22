@@ -31,7 +31,7 @@
 
     <div class="container-fluid" ng-repeat="phase in $ctrl.project.phases">
             <div class="row phaseA">
-                <div class="col-md-11 phaseInProject">
+                <div class="col-md-11 phaseInProject"> 
                     <div class="row">
                         <div class="col-md-4">{{ phase.phaseName }}</div>
                         <div class="col-md-4"><span class="glyphicon glyphicon-calendar"></span> {{ phase.startDate | date:'dd/MM-yyyy'}} - {{ phase.endDate | date:'dd/MM-yyyy'}}</div>
@@ -46,17 +46,20 @@
         <br />
         <div class="collapse" id="{{phase.phaseId}}">
             <div class="phaseDetailsCollapse">
-                <p>Timebudget: {{phase.timeBudget}}</p>
-                <p>Progress: {{phase.progress}}</p>
-                <!--<p>Timebudget: {{phase.timeBudget}} Vacation Dependency </p>-->
-                <p>Comments: {{phase.comments}}</p>
-                <p>From: {{ phase.startDate | date:'dd, MMMM yyyy'}} To: {{ phase.endDate | date:'dd - MMMM - yyyy'}}</p>
+                <table class="table table-striped">
+                    <tbody>
+                        <tr> <th>Timebudget: {{phase.timeBudget}}</th> </tr>
+                        <tr> <th>Progress: {{phase.progress}}</th> </tr>
+                        <tr> <th>Comments: {{phase.comments}}</th> </tr>
+                        <tr> <th><span class="glyphicon glyphicon-calendar"></span> From: {{ phase.startDate | date:'dd, MMMM yyyy'}} To: {{ phase.endDate | date:'dd - MMMM - yyyy'}}</th> </tr>
+                    </tbody>
+                </table> 
                 <button class="btn btn-info" type="button" data-toggle="collapse" data-target="#editPhase" aria-expanded="false" ng-click="Edit(phase.phaseId, phase.projectId)"> Edit </button>
                 <button class="btn btn-danger pull-right" type="button" data-toggle="modal" data-target="#deletePhase" ng-click="Delete(phase.phaseId, phase.projectId)"> Delete </button>
             </div>
         </div>
         <phase-delete></phase-delete>
-        <phase-edit></phase-edit>
+        <phase-edit field-value="$ctrl.hero.location" field-type="text" on-update="$ctrl.update('location', value)"></phase-edit>
         <project-delete></project-delete>
     </div>
  
