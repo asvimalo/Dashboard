@@ -33,6 +33,9 @@
                     when('/projects/project-delete/:projectId', {
                         template: '<project-delete></project-delete>'
                     }).
+                    when('/projects/project-edit/:projectId', {
+                        template: '<project-edit></project-edit>'
+                    }).
                     //when('/assignments', {
                     //    template: '<assignment-list></assignment-list>'
                     //}).

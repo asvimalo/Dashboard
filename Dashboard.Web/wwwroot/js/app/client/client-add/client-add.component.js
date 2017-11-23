@@ -15,7 +15,7 @@
                     self.isBusy = true;
                     self.errorMessage = "";
 
-                    var data = { "ClientName": self.client.clientName, "City": self.location.city, "Address": self.location.adress };
+                    var data = { "ClientName": $scope.addClientForm.clientName, "City": $scope.addClientForm.city, "Address": $scope.addClientForm.adress };
                     var dataTmp = JSON.stringify(data);
 
                     // Http Post for Location 
@@ -23,9 +23,8 @@
                         .then(function (response) {
                             console.log("Response from server api" + response);
                             // Sparar datan i $scope.locationObj för att få locationId
+                            $scope.addClientForm = {};
                             angular.copy(response, self.addedClient);
-                            //window.location.reload();
-
                         }, function () {
                             //failure
                             console.log("failure");
@@ -35,8 +34,7 @@
                         .finally(function () {
                             console.log("finally");
                             self.isBusy = false;
-                            window.location.reload();
-                            //console.log(locationdata)
+                             //console.log(locationdata)
 
                         });  
                 };

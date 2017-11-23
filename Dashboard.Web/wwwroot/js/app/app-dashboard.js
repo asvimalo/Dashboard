@@ -13,6 +13,7 @@
             "phaseEdit",
             "projectAdd",
             "projectDelete",
+            "projectEdit",
             "projectDetails",
             "allProjects"
             //"allEmployees"

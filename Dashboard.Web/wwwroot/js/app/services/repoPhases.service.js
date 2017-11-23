@@ -58,7 +58,7 @@ var repoPhases = function ($http) {
             });
     };
     var updatePhase = function (id, phase) {
-        $http.put('http://localhost:8890/api/dashboard/phases/'+ id, phase )
+        return $http.put('http://localhost:8890/api/dashboard/phases/'+ id, phase )
             .then(function (response) {
                 return response;
             }, function (error) {

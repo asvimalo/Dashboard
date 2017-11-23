@@ -135,8 +135,17 @@ namespace Dashboard.Data.Controllers
                 {
                     var projectFromRepo = await _repoProject.GetById(id);
                     //_mapper.Map(projectVM, projectFromRepo);
+
+                    projectFromRepo.ProjectName = project.ProjectName ?? projectFromRepo.ProjectName;
+                    projectFromRepo.StartDate = project.StartDate;
+                    projectFromRepo.StopDate = project.StopDate;
+                    projectFromRepo.TimeBudget = project.TimeBudget;
+                    projectFromRepo.ClientId = project.ClientId;
+                    projectFromRepo.Notes = project.Notes ?? projectFromRepo.Notes;
+
                     var projectUpdated = _repoProject.Update(projectFromRepo.ProjectId, projectFromRepo);
-                    return Ok(/*_mapper.Map<ProjectViewModel>(projectUpdated)*/projectUpdated);
+                    return Ok();
+                    //return Ok(/*_mapper.Map<ProjectViewModel>(projectUpdated)*/projectUpdated);
                 }
                 catch (Exception)
                 {
