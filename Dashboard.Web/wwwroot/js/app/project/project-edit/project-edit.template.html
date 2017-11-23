@@ -13,15 +13,12 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label>Start: {{$ctrl.project.startDate | date: 'longDate'}}</label>
-                        <input type="date" ng-model="$ctrl.project.startDate" class="form-control" name="startdate" value="{{$ctrl.project.startDate}}" required>
+                        <label>Start</label>
+                        <input type="text" ng-model="$ctrl.project.startDate" class="form-control" name="stopdate" value="{{ $ctrl.project.startDate }}">
                     </div>
                     <div class="form-group">
-                        <label>End: {{$ctrl.project.stopDate | date: 'longDate'}}</label>
-                        <input type="date" ng-model="$ctrl.project.stopDate" class="form-control" name="stopdate" value="{{$ctrl.project.stopDate}}" required>
-                        <div ng-show="addProjectForm.$submitted || addProjectForm.stopdate.$touched">
-                            <span ng-show="addProjectForm.stopdate.$error.required">Start date is required.</span>
-                        </div>
+                        <label>End</label>
+                        <input type="text" ng-model="$ctrl.project.stopDate" class="form-control" name="stopdate" value="{{ $ctrl.project.stopDate }}">
                     </div>
                     <div class="form-group">
                         <label>Timebudget</label>
@@ -30,15 +27,12 @@
                             <span ng-show="addProjectForm.timebudget.$error.required">Timebudget is required.</span>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <!--<div class="form-group">
                         <label>Client:</label>
-                        <select class="form-control" ng-options="item.clientName for item in $ctrl.employeesAndClients.clients" ng-model="addProjectForm.clients" name="client" required>
-                            <option value="" disabled selected >{{$ctrl.project.client.clientName}}</option>
-                        </select>
-                        <div ng-show="addProjectForm.$submitted || addProjectForm.client.$touched">
-                            <span ng-show="addProjectForm.client.$error.required">Client is required.</span>
-                        </div>
-                    </div>
+                        <select class="form-control" ng-options="item.clientName for item in $ctrl.employeesAndClients.clients" ng-model="addProjectForm.clients" name="client">
+                            <option value="" disabled selected >Choose Client</option>
+                        </select> 
+                    </div>-->
                     <!--<div class="form-group">
                         <label>Employee:</label>
                         <select class="form-control" multiple ng-options="item.employeeId as item.firstName + ' ' + item.lastName for item in $ctrl.employeesAndClients.employees" ng-model="addProjectForm.employees" name="employee" required></select>

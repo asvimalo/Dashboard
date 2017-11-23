@@ -15,6 +15,8 @@
 
                     repoPhases.get(self.phaseId).then(function (response) {
                         angular.copy(response, self.phase)
+                        self.phase.startDate = new Date(self.phase.startDate).toLocaleDateString();
+                        self.phase.endDate = new Date(self.phase.endDate).toLocaleDateString();
                     });
 
                 }
@@ -24,8 +26,8 @@
                         "timeBudget": self.phase.timeBudget,
                         "progress": self.phase.progress,
                         "comments": self.phase.comments,
-                        "startDate": self.phase.startDate,
-                        "endDate": self.phase.endDate
+                        "startDate": new Date(self.phase.startDate).toLocaleDateString(),
+                        "endDate": new Date(self.phase.endDate).toLocaleDateString()
                     };
                     var dataTmp = JSON.stringify(data);
                     

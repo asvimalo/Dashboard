@@ -11,8 +11,11 @@
 
                 self.project = {};
 
+
                 repoProjects.get(self.projectId).then(function (response) {
                     angular.copy(response, self.project);
+                    self.project.startDate = new Date(self.project.startDate).toLocaleDateString();
+                    self.project.stopDate = new Date(self.project.stopDate).toLocaleDateString();
                 });  
 
                 $scope.phaseId = {};

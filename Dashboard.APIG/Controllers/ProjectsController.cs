@@ -140,7 +140,6 @@ namespace Dashboard.Data.Controllers
                     projectFromRepo.StartDate = project.StartDate;
                     projectFromRepo.StopDate = project.StopDate;
                     projectFromRepo.TimeBudget = project.TimeBudget;
-                    projectFromRepo.ClientId = project.ClientId;
                     projectFromRepo.Notes = project.Notes ?? projectFromRepo.Notes;
 
                     var projectUpdated = _repoProject.Update(projectFromRepo.ProjectId, projectFromRepo);
