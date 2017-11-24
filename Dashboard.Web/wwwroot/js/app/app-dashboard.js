@@ -7,6 +7,7 @@
             "assignProjectToEmployee",
             "clientAdd",
             "employeeAdd",
+            "employeeDetails",
             "dashboardView",
             "phaseAdd",
             "phaseDelete",
