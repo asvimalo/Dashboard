@@ -3,10 +3,23 @@
     angular.module("employeeDetails")
         .component("employeeDetails", {
             templateUrl: "/js/app/employee/employee-details/employee-details.template.html",
-            controller: function EmployeeDetailsController($scope, $http, $location, repoEmployees, repoKnowledges)
+            controller: function EmployeeDetailsController($scope, $http, $location, $routeParams, repoAssignments, repoEmployees)
             {
-                 
-                  // Skapa som one project Details
+                this.employeeId = $routeParams.employeeId;
+
+                var holder = this;
+                holder.employee = {};
+
+                // Get Employee 
+                repoAssignments.get(holder.employeeId).then(function (response) {
+                    angular.copy(response, holder.employee);
+                    
+                });
+
+                $scope.assignments = {};
+
+                // Skapa som one project Details
+                // Data finns i Assignments 
             }
             
         });
