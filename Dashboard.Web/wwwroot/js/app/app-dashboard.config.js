@@ -15,7 +15,7 @@
                     when('/employees/employee-add', {
                         template: '<employee-add></employee-add>'
                     }).
-                    when('/employees/:employeeId', {
+                    when('/employees/employee-details/:employeeId', {
                         template: '<employee-details></employee-details>'
                     }).
                     when('/projects', {
