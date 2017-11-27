@@ -1,0 +1,31 @@
+﻿
+@{
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid" ng-app="app-dashboard">
+    <navbar></navbar>
+    <div class="container boby-content">
+        <loader-cursor></loader-cursor>
+        <div ng-view>
+        </div>
+    </div>
+    <footbar></footbar>
+</div>
+
+@section Scripts {
+    <script src="~/js/app/app-dashboard.js"></script>
+    <script src="~/js/app/app-dashboard.config.js"></script>
+    
+    <script src="~/js/app/directives/loader/loaderControl.js"></script>
+
+    <script src="~/js/app/components/dashboard-view/dashboard-view.module.js"></script>
+    <script src="~/js/app/components/dashboard-view/dashboard-view.component.js"></script>
+    <script src="~/js/app/components/footbar/footbar.module.js"></script>
+    <script src="~/js/app/components/footbar/footbar.component.js"></script>
+    <script src="~/js/app/components/navbar/navbar.module.js"></script>
+    <script src="~/js/app/components/navbar/navbar.component.js"></script>
+
+
+} 
