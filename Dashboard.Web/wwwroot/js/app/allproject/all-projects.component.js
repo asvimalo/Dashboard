@@ -3,23 +3,20 @@
     angular.module("allProjects", [])
         .component("allProjects", {
             templateUrl: "/js/app/allproject/all-projects.template.html",
-            controller: function allProjectsController($http, $scope, $location, $q, repoProjects, repoAssignments, repoEmployees) {
+            controller: function allProjectsController($http, $scope, $location, $q, repoProjects, repoAssignments) {
                 var holder = this;
 
                 holder.allProjects = [];
                 holder.assignments = [];
-                //holder.employees = [];
 
                 $q.all([
                     repoProjects.getAll(),
                     repoAssignments.getAll(),
-                    //repoEmployees.getAll()
                 ]).then(function (response) {
                     //success
                     console.log("Check1");
                     angular.copy(response[0], holder.allProjects);
                     angular.copy(response[1], holder.assignments);
-                    //angular.copy(response[2], holder.employees);
 
                     init();
 
@@ -30,30 +27,43 @@
                     .finally(function () {
                         holder.isBusy = false;
                     });
-                
 
+                var startdate = moment();
+                var employeeHidden = [];
+                
                 function init() {
                     //**********   CALENDAR   ***********
                     var dates = [];
                     var formatedDates = [];
-                    var startdate = moment();
-                    //var startdate = getInitDateToCalendar().start;
-                    var enddate = getInitDateToCalendar().end;
-                    for (i = 0; i < enddate; i++) {
-                        dates.push(startdate.format('YYYY-MM-DD'));
-                        var plusOneDayStr = startdate.format('DD MMM'); //.format('DD MMM ddd');
+                    //var startdate = moment();
+                    var currdate = startdate.clone();
+                    var enddate = 14;    //getInitDateToCalendar().end;
+                    for (var i = 0; i < enddate; i++) {
+                        dates.push(currdate.format('YYYY-MM-DD'));
+                        var plusOneDayStr = currdate.format('DD MMM'); //.format('DD MMM ddd');
                         formatedDates.push(plusOneDayStr);
-                        startdate = startdate.add(1, 'days');
+                        currdate = currdate.add(1, 'days');
                     }
-
-                    var tabledate = $("<table></table>").addClass("table borderless"); // table-bordered table-condensed");
-                    tabledate[0].border = "1";
+                    //var startDate = moment(); //new
+                    var tabledate = $("<table></table>").addClass("table borderless"); 
                     var rowdate = $(tabledate[0].insertRow(-1));
-
-                    rowdate.append(createCell("", "", "colspan =\"2\""));
+                    //createCalendar(startDate); //new
+                    rowdate.append(createCell("", "", "")); //colspan =\"2\"
+                    $('<button></button>').attr({ 'type': 'submit' }).addClass("glyphicon glyphicon-chevron-left").click(function () { //new
+                        dates = [];
+                        formatedDates = [];
+                        startdate = startdate.add(-1, 'days');
+                        init();
+                    }).appendTo(rowdate);
                     for (var i = 0; i < formatedDates.length; i++) {
                         rowdate.append(createCell("cellDate", formatedDates[i].toString() + "  | "));
                     }
+                    $('<button></button>').attr({ 'type': 'submit' }).addClass("glyphicon glyphicon-chevron-right").click(function () { //new
+                        dates = [];
+                        formatedDates = [];
+                        startdate = startdate.add( 1, 'days');
+                        init();
+                    }).appendTo(rowdate);
 
                     //**********   PROJECT   ***********
                     addEmptyRowToHtml(tabledate, dates);
@@ -64,7 +74,8 @@
                         var project = holder.allProjects[i];
                         var row = $(tabledate[0].insertRow(-1));
                         row.addClass("project");
-                        row.attr('projectId', project.projectName); //TODO change name from projectID
+                        row.attr('projectId', project.projectName); 
+                        row.attr('projectNbr', project.projectId);
 
                         row.append(createCell("projectName", "  " + project.projectName, "style=\"white-space:PRE\""));
                         row.append(createCell("insertButton"));
@@ -81,6 +92,9 @@
                                 data = 'E';
                             }
                             else {
+                                if (projectStart < dates[j] && projectEnd > dates[j]) {
+                                    data = 'x'
+                                }
                                 for (var k = 0; k < project.phases.length; k++) {      //for project's phases
                                     var phase = project.phases[k];
                                     var phaseStart = moment(phase.startDate).format('YYYY-MM-DD');
@@ -112,17 +126,6 @@
                             row.append(cell.append(celldiv));
                         }
 
-                        //Projects/Employee
-                        //var employeesObj = [];  //contain all the employees belong to this project and its commitments
-                        //if (project.assignments) {
-                        //    for (var m = 0; m < holder.assignments.length; m++) {
-                        //        var assignment = holder.assignments[m];
-                        //        if (project.projectId == assignment.projectId) {
-                        //            employeesObj.push({ "employee": assignment.employee, "commitments": assignment.commitments });
-                        //        } //OBS! condition: no doublets are allowed in injection table
-                        //    }
-                        //}
-
                         if (project.assignments) {
                             for (var k = 0; k < holder.assignments.length; k++) {
                                 var assignment = holder.assignments[k];
@@ -149,7 +152,7 @@
                                             commitEnd = commitStart;
 
                                         if (commitStart == dates[j])
-                                            data = commit.hours + "h";
+                                            data = commit.hours + "%";
                                         else if (commitEnd == dates[j])
                                             data = 'CE';
                                         else if ((commitStart < dates[j]) && (commitEnd > dates[j]))
@@ -192,14 +195,16 @@
                             if (phaseId == -1)
                                 return "";
                             var projectId = $(this).attr('proj');
-                            var projObj = projects[projectId];
+                            var projObj = holder.allProjects[projectId]; //projects[projectId];
+                            var startDate = moment(projObj.phases[phaseId].startDate);
+                            var endDate = moment(projObj.phases[phaseId].endDate);
                             var contentData =
-                                projObj.phaseName[phaseId] + "<br/><br/>" +
-                                "From: " + String(projObj.startPhase[phaseId].format('YYYY-MM-DD')) + " <br/>" +
-                                "To: " + String(projObj.endPhase[phaseId].format('YYYY-MM-DD')) + " <br/><br/>" +
-                                "Progress: " + projObj.phaseProgress[phaseId] + "%<br/>" +
-                                "Timebudget: " + projObj.phaseTimebudget[phaseId] + "h<br/>" +
-                                "Comment: " + projObj.phaseComments[phaseId] + "<br/>";
+                                projObj.phases[phaseId].phaseName + "<br/><br/>" +
+                                "From: " + startDate.format('YYYY-MM-DD') + " <br/>" +
+                                "To: " + endDate.format('YYYY-MM-DD') + " <br/><br/>" +
+                                "Progress: " + projObj.phases[phaseId].progress + "%<br/>" +
+                                "Timebudget: " + projObj.phases[phaseId].timeBudget + "h<br/>" +
+                                "Comment: " + projObj.phases[phaseId].comments + "<br/>";
                             return contentData;
                         }
                     });
@@ -218,12 +223,22 @@
 
                     //Go to OneProject
                     $(".projectName").click(function () {
-                        //var projectId = $(this).attr('projectId');
-                        window.location.assign("http://localhost:8899/#!/projects/project-details/2");
+                        var projectId = $(this).parent().attr('projectnbr');
+                        window.location.assign("http://localhost:8899/#!/projects/project-details/" + projectId);
                     }).eq(0);
                 }
 
                 //**********   Helper functions   ***********
+                function createCalendar(start) {
+                    var enddate = 7;
+                    for (var i = 0; i < enddate; i++) {
+                        dates.push(start.format('YYYY-MM-DD'));
+                        var plusOneDayStr = start.format('DD MMM'); //.format('DD MMM ddd');
+                        formatedDates.push(plusOneDayStr);
+                        start = start.add(1, 'days');
+                    }
+                }
+
                 function getEmployeeFromId(id)
                 {
                     for (var i = 0; i < holder.employees.length; i++) {
@@ -299,8 +314,9 @@
                         }
                     }
                     var tEnd = end.diff(today, 'days') + 10;
-                    tEnd = tEnd > 20 ? tEnd : 20;
+                    tEnd = tEnd > 7 ? tEnd : 7;
                     var tStart = today.diff(start, 'days') - 10;
+                    //tStart = tStart < 10 ? tStart : 
                     var result = { "start": start, "end": tEnd };
                     return result;
                 }

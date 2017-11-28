@@ -4,45 +4,48 @@
     overflow-y: scroll;
 }
 
-/*.borderless td, .borderless th {
-    border: none;
-}*/
 
-.borderless > tbody > tr > td {
+.borderless > tbody > tr > td, .borderless > tbody > tr {
     padding-left: 0%;
     padding-right: 0%;
     vertical-align: middle;
-    border-top: hidden;
-    border-left: hidden;
-    border-bottom: hidden;
+    border: hidden;
 }
 
-/*table > tbody > tr {
-    margin-bottom: 60%;
+
+/*div.container.body-content {
+    margin-left: 2%;
+    margin-right: 2%;
 }*/
+
 
 button:focus {
     outline: 0;
 }
 
-.table-borderless > tbody > tr > td,
+/*.table-borderless > tbody > tr,*/
+/*.table-borderless > tbody > tr > td,
 .table-borderless > tbody > tr > th,
 .table-borderless > tfoot > tr > td,
 .table-borderless > tfoot > tr > th,
 .table-borderless > thead > tr > td,
 .table-borderless > thead > tr > th {
     border: none;
-}
+}*/
 
 .mainpanel {
     background-color: whitesmoke;
     padding: 2%;
     min-height: 440px;
+    margin-left: -120px;
+    min-width: 1100px;
 }
 
 .sidepanel {
     background-color: whitesmoke;
     padding: 2%;
+    /*margin-right: -120px;*/
+    /*min-width: 15%;*/
 }
 /*#c2deee; #bedafd*/
 .panelButton {
@@ -77,12 +80,25 @@ button:focus {
     border: none;
 }
 
+
+/*calendar*/
 .cellDate {
     background-color: #eaeaea;
     min-width: 60px;
     text-align: center;
     border-left: 2px solid #f0f0f0;
+}
 
+tr > button.glyphicon.glyphicon-chevron-left, button.glyphicon.glyphicon-chevron-right {
+    padding-top: 8px;
+    padding-bottom: 8px;
+    color: #d0d0d0;
+    background-color: whitesmoke;
+    min-width: 40px;
+    padding-left: 8px;
+    padding-right: 0px;
+    vertical-align: middle;
+    border: none;
 }
 
 /* project */
@@ -195,3 +211,4 @@ button:focus {
 .clientAdd {
     margin-left: 2.5%;
 }
+
