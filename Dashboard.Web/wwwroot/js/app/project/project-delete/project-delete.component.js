@@ -9,10 +9,10 @@
 
                 var self = this;
 
-                self.project = {};
+                self.project = {}; 
 
                 repoProjects.get(self.projectId).then(function (response) {
-                    angular.copy(response, self.project);
+                    angular.copy(response, self.project); 
                 }); 
 
                 $scope.deleteProject = function () {

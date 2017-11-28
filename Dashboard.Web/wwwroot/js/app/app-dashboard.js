@@ -7,12 +7,14 @@
             "assignProjectToEmployee",
             "clientAdd",
             "employeeAdd",
+            "employeeDetails",
             "dashboardView",
             "phaseAdd",
             "phaseDelete",
             "phaseEdit",
             "projectAdd",
             "projectDelete",
+            "projectEdit",
             "projectDetails",
             "allProjects"
             //"allEmployees"

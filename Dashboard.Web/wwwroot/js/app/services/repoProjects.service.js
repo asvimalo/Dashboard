@@ -52,8 +52,8 @@ var repoProjects = function ($http) {
                 console.log("Finally...??");
             });
     };
-    var updateProject = function (project) {
-        $http.put('http://localhost:8890/api/dashboard/projects', project)
+    var updateProject = function (id, project) {
+        return $http.put('http://localhost:8890/api/dashboard/projects/'+ id, project)
             .then(function (response) {
                 return response.data;
             }, function (error) {

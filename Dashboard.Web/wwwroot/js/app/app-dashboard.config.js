@@ -15,9 +15,9 @@
                     when('/employees/employee-add', {
                         template: '<employee-add></employee-add>'
                     }).
-                    //when('/employees/:employeeId', {
-                    //    template: '<employee-detail></employee-detail>'
-                    //}).
+                    when('/employees/employee-details/:employeeId', {
+                        template: '<employee-details></employee-details>'
+                    }).
                     when('/projects', {
                         template: '<project-list></project-list>'
                     }).
@@ -32,6 +32,9 @@
                     }).
                     when('/projects/project-delete/:projectId', {
                         template: '<project-delete></project-delete>'
+                    }).
+                    when('/projects/project-edit/:projectId', {
+                        template: '<project-edit></project-edit>'
                     }).
                     //when('/assignments', {
                     //    template: '<assignment-list></assignment-list>'
