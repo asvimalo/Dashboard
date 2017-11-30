@@ -31,7 +31,7 @@
                                     <div class="form-group">
                                         <label>Commitment:</label>
                                         <div ng-repeat="item in $ctrl.commitments">
-                                            {{item.hours}}h from {{item.startDate | date: 'dd-MM-yyyy'}} to {{item.stopDate | date: 'dd-MM-yyyy'}} <!-- Denna skriver ut ENDAST "h from to"-->
+                                            {{item.hours}}% from {{item.startDate | date: 'dd-MM-yyyy'}} to {{item.stopDate | date: 'dd-MM-yyyy'}} 
                                             <button class="glyphicon glyphicon-remove" type="button" ng-click="remove($ctrl.commitments, $index)"></button>
                                         </div>
                                     </div>
@@ -41,6 +41,8 @@
                             <!-- Add a new commitment -->
                                 <div class="col-md-6 modalDeviderMargin">
                                     <h4>Add a new commitment</h4>
+                                    <p>If no explicit commitment is set, it defaults to 100% for the entire project duration.</p>
+                                    <hr/>
                                     <!--<div class="form-group">
                                         <label for="daterange1" class="control-label">Simple picker</label>
                                         <input date-range-picker id="daterange1" name="daterange1" class="form-control date-picker" type="text"
@@ -57,15 +59,19 @@
                                     </div>
                                     <div class="form-group">
                                         <label>To</label>
-                                        <input type="date" ng-model="commitment.endDate" class="form-control" ng-change="validateEndDate(commitment.startDate, commitment.endDate)">
+                                        <input type="date" ng-model="commitment.stopDate" class="form-control" ng-change="validateEndDate(commitment.startDate, commitment.stopDate)">
                                     </div>
                                     <span>{{errorMessage}}</span>
                                     <div class="form-group">
-                                        <label>Commitment</label>
-                                        <input type="number" ng-model="commitment.hours" class="form-control">
+                                        <label>Commitment (%)</label>
+                                        <!--<input type="number" ng-model="commitment.hours" class="form-control">-->
+                                        <select class="form-control" ng-options="item for item in $ctrl.commitmentHours" ng-model="commitment.hours">
+                                            <!--$ctrl.projects.singleSelect-->
+                                            <option value="" disabled selected></option>
+                                        </select>
                                     </div>
                                     <br />
-                                    <button class="btn btn-secondary" type="button" ng-click="addCommitment()"> Add </button>
+                                    <button id="addAssigmentsButton" class="btn btn-secondary" type="button" ng-click="addCommitment()"> Add </button>
                                 </div>
                         </div>
                     </div> 

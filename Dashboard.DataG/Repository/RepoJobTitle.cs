@@ -1,6 +1,8 @@
 ﻿using Dashboard.DataG.Contracts;
 using Dashboard.DataG.Db;
 using Dashboard.EntitiesG.EntitiesRev;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace Dashboard.DataG.Repository
 {
@@ -13,6 +15,10 @@ namespace Dashboard.DataG.Repository
         {
             _ctx = ctx;
         }
-    
+        public IQueryable<JobTitle> getAllOfThem()
+        {
+            return _ctx.JobTitles.Include(x => x.JobTitleAssignments);
+        }
+
     }
 }
