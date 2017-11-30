@@ -3,7 +3,7 @@
     angular.module("employeeDetails")
         .component("employeeDetails", {
             templateUrl: "/js/app/employee/employee-details/employee-details.template.html",
-            controller: function EmployeeDetailsController($scope, $http, $location, $routeParams, repoAssignments, repoEmployees)
+            controller: function EmployeeDetailsController($scope, $http, $location, $routeParams, repoAssignments, repoJobTitle)
             {
                 this.employeeId = $routeParams.employeeId;
 

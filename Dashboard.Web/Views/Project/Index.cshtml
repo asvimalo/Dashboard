@@ -2,19 +2,21 @@
 <br />
 <br />
 <br />
-<div ng-app="app-dashboard">
-    @*<a ng-href="#!/projects/project-details/2">One Project Details</a>*@
-    <a ng-href="#!/employees/employee-details/8">One Employee Details</a>
 
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-9">
-                <div class="mainpanel"> 
+<div class="container-fluid">
+    <div ng-app="app-dashboard" class="container">
+        
+        <div class="container-fluid">
+            @*<a ng-href="#!/projects/project-details/2">One Project Details</a>*@
+            <a ng-href="#!/employees/employee-details/8">One Employee Details</a>
+            <div class="container row">
+                <div class="col-md-9">
+                    <div class="mainpanel">
                         <div class="row">
                             <div class="col-md-3">
                                 <button type="button" class="calendarbutton">Archive</button>
                                 <button type="button" class="activebutton">Active</button>
-                          </div>
+                            </div>
                             <div class="col-md-offset-6 col-md-3">
                                 <div class="row">
                                     <button type="button" class="activebutton">Weeks</button>
@@ -25,28 +27,29 @@
                         </div>
                         <br />
                         <div class="table-responsive" id="ganttchart"></div>
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-3">
-                <div class="sidepanel" id="panels">
-                    @*<div >*@
+                <div class="col-md-3">
+                    <div class="sidepanel" id="panels">
+                        @*<div >*@
                         <br />
                         <button type="button" class="btn panelButton" data-toggle="modal" data-target="#projectAdd">Add a new project</button>
                         <button type="button" class="btn panelButton" data-toggle="modal" data-target="#employeeAdd">Add a new Employee</button>
                         <button type="button" class="btn panelButton" data-toggle="modal" data-target="#assignEmployeeToProject">Assign an employee to a project</button>
-                    @*</div>*@
+                        @*</div>*@
+                    </div>
                 </div>
             </div>
         </div>
+
+        <project-add></project-add>
+        <employee-add></employee-add>
+        <assign-project-to-employee></assign-project-to-employee>
+        @*<all-projects></all-projects>*@
+
     </div>
 
-    <project-add></project-add>
-    <employee-add></employee-add>
-    <assign-project-to-employee></assign-project-to-employee>
-    @*<all-projects></all-projects>*@
-    
 </div>
-
 
 @section Scripts {
     <script src="~/lib/angular/angular.min.js"></script>
