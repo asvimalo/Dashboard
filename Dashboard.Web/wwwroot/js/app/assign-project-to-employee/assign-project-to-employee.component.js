@@ -31,7 +31,7 @@
                 //    angular.copy(response.data, holder.jobTitles);
                 //});
                     
-
+                holder.commitmentHours = ["0", "25", "50", "75", "100"];
                 holder.commitments = [];
                 $scope.addCommitment = function () {
 
@@ -53,12 +53,22 @@
                     }
                 };
 
+                //if ($scope.formInfo.project && $scope.formInfo.employee) {
+                //    $('addAssigmentsButton').prop('disabled', false);
+                //} else {
+                //    $('addAssigmentsButton').prop('disabled', true);
+                //}
+
                 $scope.assignProjectToEmployee = function () {
                     console.log("in the function");
                     holder.isBusy = true;
                     holder.errorMessage = "";
 
                     var test = $scope.formInfo.employee;
+
+                    if (holder.commitments.length == 0) {
+                        holder.commitments = [{ "startDate": $scope.formInfo.project.startDate, "stopDate": $scope.formInfo.project.stopDate, "hours" : "100" }];
+                    }
 
                     var data = { "ProjectId": $scope.formInfo.project.projectId, "EmployeeId": $scope.formInfo.employee.employeeId, "JobTitle": $scope.formInfo.jobtitle, "Location": $scope.formInfo.location, "Commitments": holder.commitments };
                     var dataTmp = JSON.stringify(data);
