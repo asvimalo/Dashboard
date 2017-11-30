@@ -27,52 +27,53 @@
 </head>
 <body>
     <nav class="navbar navbar-default navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <a asp-area="" asp-controller="Dashboard" asp-action="Index" class="navbar-brand pull-left text-uppercase">Sigma</a>
+        <div class="container-fluid">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar2">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <div class="col-xs-4 col-sm-10 col-md-10">
+                <a asp-area="" asp-controller="Dashboard" asp-action="Index" class="navbar-brand navbar-left text-uppercase">Sigma</a>                
             </div>
-            @if (User.Identity.IsAuthenticated)
-            {
-                <div navbar-left>
-
-                    <a class="navbar-brand pull-right" asp-controller="Home" asp-action="Logout">Welcome @User.Claims.FirstOrDefault(x => x.Type == "given_name")?.Value  | <span class="btn btn-default">Logout</span></a>
-                </div>
-            }
-            else
-            {
-                <div navbar-left>
-                    <a class="navbar-brand pull-right" asp-controller="Home" asp-action="Login"><span class="btn btn-default">Login</span></a>
-                </div>
-
-            }
-        </div>
-    </nav>
-    <nav class="navbar navbar-default navbar-static-top navbar2">
-        <div class="container">
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Project" asp-action="Index">Dashboard</a></li>
-                    <li><a asp-area="" asp-controller="Employee" asp-action="Index">Employees</a></li>
-                    <li><a asp-area="" asp-controller="More" asp-action="Index">More</a></li>
-                    
-                    @*<li><a asp-area="" asp-controller="Project" asp-action="AngApp">Angular Dashboard</a></li>*@
-
+            <div class="col-xs-12 col-sm-2 col-md-2">
+                <ul class="nav navbar-nav navbar-right">
                     @if (User.Identity.IsAuthenticated)
                     {
-                        <li><a asp-area="" asp-controller="Employees" asp-action="GetUserInfo">User Info</a></li>
-                    }
+                        <li>
 
+                            <a class="navbar-brand " asp-controller="Home" asp-action="Logout">Welcome @User.Claims.FirstOrDefault(x => x.Type == "given_name")?.Value  | <span class="btn btn-default">Logout</span></a>
+                        </li>
+
+                    }
+                    else
+                    {
+                        <li>
+                            <a class="navbar-brand text-uppercase" asp-controller="Home" asp-action="Login">Login</a>
+                        </li>
+
+                    }
+                </ul>
+            </div> 
+        </div>
+        <div class="container-fluid navbar2">
+            <div class="collapse navbar-collapse" id="navbar2">
+                <ul class="nav navbar-nav ">
+                    <li><a asp-controller="Project" asp-action="Index">Dashboard</a></li>
+                    <li><a asp-controller="Employee" asp-action="Index">Employees</a></li>
+                    <li><a asp-controller="More" asp-action="Index">More</a></li>
                 </ul>
             </div>
         </div>
     </nav>
     <div class="container body-content">
+
             @RenderBody()
             @*<hr />*@
             @*<footer>
                 <p>&copy; 2017 - Dashboard.Web</p>
             </footer>*@
-        </div>
+    </div>
 
     <environment names="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>

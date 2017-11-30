@@ -8,18 +8,21 @@
                 this.employeeId = $routeParams.employeeId;
 
                 var holder = this;
-                holder.employee = {};
+                holder.assignments = [];
 
                 // Get Employee 
                 repoAssignments.get(holder.employeeId).then(function (response) {
-                    angular.copy(response, holder.employee);
+                    angular.copy(response, holder.assignments);
                     
                 });
 
-                $scope.assignments = {};
+                $scope.Delete = function (phaseId) {
+                    location.replace("#!/employees/employee-delete/" + phaseId);
+                };
 
-                // Skapa som one project Details
-                // Data finns i Assignments 
+                $scope.Edit = function (phaseId) {
+                    location.replace("#!/employees/employee-edit/" + phaseId);
+                };
             }
             
         });

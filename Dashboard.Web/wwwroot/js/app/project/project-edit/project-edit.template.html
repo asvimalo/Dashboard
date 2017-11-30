@@ -4,7 +4,7 @@
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
             <div class="modal-body">
-                <form name="DeletePhaseForm">
+                <form name="EditPhaseForm">
                     <div class="form-group">
                         <label>Name</label>
                         <input type="text" name="projectname" ng-model="$ctrl.project.projectName" value="{{$ctrl.project.projectName}}" class="form-control" required>
@@ -49,7 +49,7 @@
 
             <div class="modal-footer">
                 <button class="btn btn-success" type="button" ng-click="editProject()"> Save </button>
-                <button class="btn btn-danger pull-right" type="button" data-dismiss="modal"> Go back </button>
+                <button class="btn btn-danger pull-right" type="button" data-dismiss="modal"> Cancel </button>
             </div>
 
         </div>
