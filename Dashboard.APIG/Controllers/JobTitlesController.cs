@@ -9,13 +9,13 @@ namespace Dashboard.APIG.Controllers
 {
 
     [Route("api/dashboard/JobTitleAssignments")]
-    public class JobTitleAssignmentsController : Controller
+    public class JobTitlesController : Controller
     {
-        public IRepoJobTitleAssignment _repo;
-        private ILogger<JobTitleAssignmentsController> _logger;
+        public IRepoJobTitle _repo;
+        private ILogger<JobTitlesController> _logger;
 
-        public JobTitleAssignmentsController(IRepoJobTitleAssignment repo,
-            ILogger<JobTitleAssignmentsController> logger)
+        public JobTitlesController(IRepoJobTitle repo,
+            ILogger<JobTitlesController> logger)
         {
             _repo = repo;
             _logger = logger;
@@ -29,20 +29,20 @@ namespace Dashboard.APIG.Controllers
             {
                 var result = _repo.getAllOfThem();
 
-                    ;
+                ;
                 return Ok(result);
-               
+
             }
             catch (Exception ex)
             {
                 // LOGGING TODO
-                _logger.LogError($"Exception thrown white getting JobTitleAssignments: {ex}");
+                _logger.LogError($"Exception thrown white getting JobTitles: {ex}");
                 return BadRequest($"Error ocurred");
             }
         }
 
-        // GET api/dashboard/jobTitleAssignments/5
-        [HttpGet("{id}", Name = "GetJobTitleAssignment")]
+        // GET api/dashboard/jobTitles/5
+        [HttpGet("{id}", Name = "GetJobTitle")]
         public async Task<IActionResult> Get(int id)
         {
             try
@@ -54,7 +54,7 @@ namespace Dashboard.APIG.Controllers
             catch (Exception ex)
             {
 
-                _logger.LogError($"Exception thrown while getting commitment: {ex}");
+                _logger.LogError($"Exception thrown while getting JobTitle: {ex}");
                 return BadRequest($"Error ocurred");
             }
 
@@ -62,32 +62,32 @@ namespace Dashboard.APIG.Controllers
 
         // POST api/dashboard/jobTitleAssignments
         [HttpPost("")]
-        public async Task<IActionResult> Post([FromBody]JobTitleAssignment jobTitleAssignment)
+        public async Task<IActionResult> Post([FromBody]JobTitle jobTitle)
         {
             if (ModelState.IsValid)
             {
-                //var newCommitment = Mapper.Map<Commitment>(commitment);
+                
                 try
                 {
-                    var addedJobTitleAssignment = _repo.Create(jobTitleAssignment);
+                    var addedJobTitle = _repo.Create(jobTitle);
 
 
-                    return Ok(addedJobTitleAssignment);
+                    return Ok(addedJobTitle);
 
                 }
                 catch (Exception ex)
                 {
 
-                    _logger.LogError($"Exception thrown white getting clients: {ex}");
+                    _logger.LogError($"Exception thrown white getting JobTitles: {ex}");
 
                 }
             }
             return BadRequest("Failed to save changes to the database");
         }
 
-        // PUT api/dashboard/jobTitleAssignments/5
+        // PUT api/dashboard/jobTitles/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody]JobTitleAssignment jobTitleAssignment)
+        public async Task<IActionResult> Put(int id, [FromBody]JobTitle jobTitle)
         {
             if (ModelState.IsValid)
             {
@@ -95,20 +95,18 @@ namespace Dashboard.APIG.Controllers
                 //var userId = 0;
                 try
                 {
-                    var jobTitleAssignmentFromRepo = await _repo.GetById(id);
+                    var jobTitleFromRepo = await _repo.GetById(id);
                     //Mapper.Map(commitmentVM, commiFromRepo);
 
-                    jobTitleAssignmentFromRepo.Assignment = jobTitleAssignment.Assignment ?? jobTitleAssignmentFromRepo.Assignment;
-                    jobTitleAssignmentFromRepo.JobTitleId = jobTitleAssignment.JobTitleId != 0 ? jobTitleAssignment.JobTitleId : jobTitleAssignmentFromRepo.JobTitleId;
-                    jobTitleAssignmentFromRepo.AssignmentId = jobTitleAssignment.AssignmentId != 0 ? jobTitleAssignment.AssignmentId : jobTitleAssignmentFromRepo.AssignmentId;
-
-                    var jobTitleAssignmentUpdated = _repo.Update(jobTitleAssignmentFromRepo.JobTitleAssignmentId, jobTitleAssignmentFromRepo);
-                    return Ok(jobTitleAssignmentUpdated);
+                    jobTitleFromRepo.TitleName = jobTitle.TitleName ?? jobTitleFromRepo.TitleName;
+                                       
+                    var jobTitleUpdated = _repo.Update(jobTitleFromRepo.JobTitleId, jobTitleFromRepo);
+                    return Ok(jobTitleUpdated);
                 }
                 catch (Exception ex)
                 {
 
-                    _logger.LogError($"Exception thrown white updating jobTitleAssignment: {ex}");
+                    _logger.LogError($"Exception thrown white updating jobTitle: {ex}");
                     BadRequest("Something when wrong while updating");
                 }
 
@@ -122,15 +120,15 @@ namespace Dashboard.APIG.Controllers
         {
             try
             {
-                var JobTitleAssignmentToDel = _repo.GetById(id);
-                await _repo.Delete(JobTitleAssignmentToDel.Id);
+                var JobTitleToDel = _repo.GetById(id);
+                await _repo.Delete(JobTitleToDel.Id);
 
-                return Ok($"jobTitleAssignment deleted!");
+                return Ok($"jobTitle deleted!");
             }
             catch (Exception)
             {
 
-                return BadRequest($"jobTitleAssignment wasn't deleted!");
+                return BadRequest($"jobTitle wasn't deleted!");
             }
 
 
