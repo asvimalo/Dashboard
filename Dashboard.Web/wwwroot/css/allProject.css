@@ -35,8 +35,8 @@ button:focus {
 .mainpanel {
     background-color: whitesmoke;
     padding: 2%;
-    min-height: 453px;
-    max-height: 453px;
+    min-height: 442px;
+    max-height: 442px;
     /*margin-left: -120px;*/
     /*min-width: 1100px;*/
     overflow-y: scroll;

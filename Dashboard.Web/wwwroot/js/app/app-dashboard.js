@@ -8,6 +8,8 @@
             "clientAdd",
             "employeeAdd",
             "employeeDetails",
+            "employeeDelete",
+            "employeeEdit",
             "dashboardView",
             "phaseAdd",
             "phaseDelete",

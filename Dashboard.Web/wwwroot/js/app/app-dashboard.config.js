@@ -18,6 +18,12 @@
                     when('/employees/employee-details/:employeeId', {
                         template: '<employee-details></employee-details>'
                     }).
+                    when('/employees/employee-delete/:employeeId', {
+                        template: '<employee-delete></employee-delete>'
+                    }).
+                    when('/employees/employee-edit/:employeeId', {
+                        template: '<employee-edit></employee-edit>'
+                    }).
                     when('/projects', {
                         template: '<project-list></project-list>'
                     }).

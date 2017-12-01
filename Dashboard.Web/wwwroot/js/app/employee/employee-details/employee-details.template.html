@@ -1,6 +1,6 @@
 ﻿<div class="container-fluid oneProjectTop">
-    <div class="row">
-        <div class="col-md-11" ng-repeat="assignment in $ctrl.assignments" ng-if="$first">
+    <div class="row" ng-repeat="assignment in $ctrl.assignments" ng-if="$first">
+        <div class="col-md-11" >
             <h4> {{assignment.employee.firstName}} {{assignment.employee.lastName}} </h4>
         </div>
         <div class="col-md-1">
@@ -9,8 +9,8 @@
                     <span class="glyphicon glyphicon-cog"></span>
                 </button>
                 <ul class="dropdown-menu pull-right">
-                    <li><a data-toggle="modal" data-target="#projectEdit" ng-click="editProject()">Edit</a></li>
-                    <li><a data-toggle="modal" data-target="#deleteProject" ng-click="deleteProject()">Delete</a></li>
+                    <li><a data-toggle="modal" data-target="#editEmployee" ng-click="editEmployee(assignment.employee.employeeId)">Edit</a></li>
+                    <li><a data-toggle="modal" data-target="#deleteEmployee" ng-click="deleteEmployee(assignment.employee.employeeId)">Delete</a></li>
                 </ul>
             </div>
         </div>
@@ -24,9 +24,8 @@
         <div class="col-md-11 phaseInProject">
             <div class="row">
                 <div class="col-md-4">{{ assignment.project.projectName }}</div>
-                <!--<div class="col-md-4"><span class="glyphicon glyphicon-calendar"></span> {{ commitment.startDate | date:'dd/MM-yyyy'}} - {{ assignment.commitments.stopDate | date:'dd/MM-yyyy'}}</div>
-                <div class="col-md-2"><span class="glyphicon glyphicon-time"></span> {{ phase.timeBudget }}h</div>
-                <div class="col-md-2"><span class="glyphicon glyphicon-hourglass"></span> {{ phase.progress }}%</div>-->
+                <div class="col-md-4"><span class="glyphicon glyphicon-calendar"></span> {{ assignment.project.startDate | date:'dd/MM-yyyy'}} - {{ assignment.project.stopDate | date:'dd/MM-yyyy'}}</div>
+                <div class="col-md-4"><span class="glyphicon glyphicon-time"></span> {{ assignment.project.timeBudget }}h</div>
             </div>
         </div>
         <button class="btn btn-default col-md-1" type="button" data-toggle="collapse" data-target="#{{assignment.project.projectId}}" aria-expanded="false" aria-controls="{{assignment.project.projectId}}">
@@ -37,21 +36,23 @@
 
     <div class="collapse" id="{{assignment.project.projectId}}">
         <div class="phaseDetailsCollapse">
-            <table class="table table-striped" ng-repeat="com in assignment.commitments">
-                <tbody>
-                    <tr>
-                    <td>From: {{com.startDate | date:'dd, MMMM yyyy'}} - To: {{com.stopDate | date:'dd, MMMM yyyy'}}</td>
-                    <td>Commitment: {{com.hours}}h</td>
-                    <td ng-repeat="jobTitle in assignment.jobTitleAssignments.jobTitle">Jobtitle: {{jobTitle.jobTitle}}h</td>
-                    <td>Location: {{assignment.location}}</td>
-                    </tr>
-                </tbody>
+            <table class="table table-striped">                    
+                <tr ng-repeat="com in assignment.commitments">
+                    <td><span class="glyphicon glyphicon-calendar"></span> {{com.startDate | date:'dd/MM-yyyy'}} - {{com.stopDate | date:'dd/MM-yyyy'}}</td>
+                    <td><span class="glyphicon glyphicon-hourglass"></span> {{com.hours}}h</td>
+                    <td ng-repeat="job in assignment.jobTitleAssignments"><span class="glyphicon glyphicon-user"></span> {{job.jobTitle.titleName}}</td>
+                    <td><span class="glyphicon glyphicon-pushpin"></span> {{assignment.location}}</td>
+                </tr>  
             </table>
             <!--<a class="btn btn-info" ng-href="#!/phases/phase-edit/{{phase.phaseId}}"> Edit </a>-->
-            <button class="btn btn-info" type="button" data-toggle="collapse" data-target="#editPhase" aria-expanded="false" ng-click="Edit(phase.phaseId, phase.projectId)"> Edit </button>
-            <button class="btn btn-danger pull-right" type="button" data-toggle="modal" data-target="#deletePhase" ng-click="Delete(phase.phaseId, phase.projectId)"> Delete </button>
+            <button class="btn btn-info" type="button" data-toggle="collapse" data-target="#projectEdit" aria-expanded="false" ng-click="Edit(assignment.project.projectId)"> Edit </button>
+            <button class="btn btn-danger pull-right" type="button" data-toggle="modal" data-target="#deleteProject" ng-click="Delete(assignment.project.projectId)"> Delete </button>
         </div>
     </div>
 </div>
  
 
+<employee-delete></employee-delete>
+<employee-edit></employee-edit>
+<project-delete></project-delete>
+<project-edit></project-edit>

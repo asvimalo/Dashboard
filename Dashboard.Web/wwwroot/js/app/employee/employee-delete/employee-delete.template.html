@@ -1,21 +1,21 @@
 ﻿
-<div class="modal fade" id="employeeDelete" role="dialog">
+<div class="modal fade" id="deleteEmployee" role="dialog">
     <div class="modal-dialog modal-sm"> 
         <div class="modal-content">  
+
             <div class="modal-body">
-                <form name="DeletePhaseForm">
-                    <label>Are you sure you want to delete {{$ctrl.project.projectName}}?</label>
 
+                <form name="form" class="form-group" novalidate>
                     <div class="form-group">
-                        <label>Phase Id</label>
-                        <input type="text" name="phasename" ng-readonly="$ctrl.employee.employeeId" value="{{ $ctrl.employee.employeeId }}" class="form-control">
+                        <label>
+                            First Name:
+                            <input class="form-control" type="text" name="uFirstName" ng-readonly="$ctrl.employee.firstName" value="{{ $ctrl.employee.firtstName }}"/>
+                        </label> 
+                        <label>
+                            Last Name:
+                            <input class="form-control" type="text" name="uLastName" ng-readonly="$ctrl.employee.lastName" value="{{ $ctrl.employee.lastName }}" />
+                        </label>  
                     </div>
-
-                    <div class="form-group">
-                        <label>Phase name</label>
-                        <input type="text" name="phasename" ng-readonly="$ctrl.employee.firstName" value="{{ $ctrl.employee.firstName }} {{ $ctrl.employee.lastName }}" class="form-control">
-                    </div>
-
                 </form>
              </div>
 

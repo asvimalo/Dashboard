@@ -73,7 +73,7 @@
                     var data = { "ProjectId": $scope.formInfo.project.projectId, "EmployeeId": $scope.formInfo.employee.employeeId, "JobTitle": $scope.formInfo.jobtitle, "Location": $scope.formInfo.location, "Commitments": holder.commitments };
                     var dataTmp = JSON.stringify(data);
 
-                    $http.post('http://localhost:8890/api/dashboard/assignments', dataTmp)
+                    repoAssignments.add(dataTmp)
                         .then(function (response) {
 
                             $scope.formInfo = {};

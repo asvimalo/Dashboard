@@ -18,7 +18,7 @@ var repoEmployees = function ($http) {
     };
 
     var getEmployeeById = function (id) {
-        return $http.get("http://localhost:8890/api/dashboard/employees/", id)
+        return $http.get("http://localhost:8890/api/dashboard/employees/" + id)
             .then(function (response) {
                 return response.data;
             }, function (error) {
@@ -56,8 +56,8 @@ var repoEmployees = function ($http) {
                 console.log("Finally...??");
             });
     };
-    var updateEmployee = function (employee) {
-        $http.put('http://localhost:8890/api/dashboard/employees', employee)
+    var updateEmployee = function (id, employee) {
+        return $http.put('http://localhost:8890/api/dashboard/employees/' + id, employee)
             .then(function (response) {
                 return response.data;
             }, function (error) {

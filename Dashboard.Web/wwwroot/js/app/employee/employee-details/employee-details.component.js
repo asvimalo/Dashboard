@@ -16,13 +16,13 @@
                     
                 });
 
-                //$scope.Delete = function (phaseId) {
-                //    location.replace("#!/employees/employee-delete/" + phaseId);
-                //};
+                $scope.deleteEmployee = function (employeeId) {
+                    location.replace("#!/employees/employee-delete/" + employeeId);
+                };
 
-                //$scope.Edit = function (phaseId) {
-                //    location.replace("#!/employees/employee-edit/" + phaseId);
-                //};
+                $scope.editEmployee = function (employeeId) {
+                    location.replace("#!/employees/employee-edit/" + employeeId);
+                };
             }
             
         });
