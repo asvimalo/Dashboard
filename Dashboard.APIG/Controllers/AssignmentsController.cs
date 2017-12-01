@@ -78,7 +78,7 @@ namespace Dashboard.DataG.Controllers
             try
             {
                 var result =  _repo.GetProjectsByEmployeeId(id);
-                return Ok(result);
+                return Ok(result.Result);
                 //return Ok(Mapper.Map<CommitmentViewModel>(result));
             }
             catch (Exception ex)

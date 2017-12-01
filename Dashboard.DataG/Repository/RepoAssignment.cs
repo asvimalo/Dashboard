@@ -26,12 +26,10 @@ namespace Dashboard.DataG.Repository
         {
             return _ctx.Assignments
                 .Include(a => a.Commitments)
-                .Include(j => j.JobTitleAssignments)
-                    .ThenInclude(x => x.Select(y => y.JobTitle))
-                .Include(b => b.Location)
-                    .Include(x => x.Project)
-                    .ThenInclude(c => c.Phases)
-                .Where(p => p.EmployeeId == id).AsNoTracking();
+                .Include(j => j.JobTitleAssignments).ThenInclude(j => j.JobTitle)
+                .Include(p => p.Project)
+                .Include(x => x.Employee)
+                .Where(e => e.EmployeeId == id).AsNoTracking();
 
          }
     }

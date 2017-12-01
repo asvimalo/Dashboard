@@ -5,10 +5,10 @@
 
 <div class="container-fluid">
     <div ng-app="app-dashboard" class="container">
-        
+
         <div class="container-fluid">
-            @*<a ng-href="#!/projects/project-details/2">One Project Details</a>*@
-            <a ng-href="#!/employees/employee-details/8">One Employee Details</a>
+            <a ng-href="#!/projects/project-details/2">One Project Details</a>
+            <a ng-href="#!/employees/employee-details/1">One Employee Details</a>
             <div class="container row">
                 <div class="col-md-9">
                     <div class="mainpanel">
@@ -26,17 +26,15 @@
                             </div>
                         </div>
                         <br />
-                        <div class="table-responsive" id="ganttchart"></div>
+                        <div class="table-responsive" id="ganttchart" ng-view></div>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="sidepanel" id="panels">
-                        @*<div >*@
                         <br />
                         <button type="button" class="btn panelButton" data-toggle="modal" data-target="#projectAdd">Add a new project</button>
                         <button type="button" class="btn panelButton" data-toggle="modal" data-target="#employeeAdd">Add a new Employee</button>
                         <button type="button" class="btn panelButton" data-toggle="modal" data-target="#assignEmployeeToProject">Assign an employee to a project</button>
-                        @*</div>*@
                     </div>
                 </div>
             </div>
@@ -98,8 +96,8 @@
 
     @*/////////////            CLIENT                  ///////////////////////*@
 
-    <script src="~/js/app/client/client-add/client-add.module.js"></script> 
-    <script src="~/js/app/client/client-add/client-add.component.js"></script> 
+    <script src="~/js/app/client/client-add/client-add.module.js"></script>
+    <script src="~/js/app/client/client-add/client-add.component.js"></script>
 
     @*/////////////            PHASE                  ///////////////////////*@
 
@@ -128,8 +126,8 @@
 
     <script src="~/lib/moment/moment.js"></script>
 
-   
-   
+
+
 }
 
 

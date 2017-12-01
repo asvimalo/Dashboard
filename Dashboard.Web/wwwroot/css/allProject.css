@@ -1,7 +1,6 @@
 ﻿body {
     color: grey;
     background-color: #eeeeee;
-    overflow-y: scroll;
 }
 
 
@@ -36,9 +35,11 @@ button:focus {
 .mainpanel {
     background-color: whitesmoke;
     padding: 2%;
-    min-height: 440px;
-    margin-left: -120px;
-    min-width: 1100px;
+    min-height: 453px;
+    max-height: 453px;
+    /*margin-left: -120px;*/
+    /*min-width: 1100px;*/
+    overflow-y: scroll;
 }
 
 .sidepanel {
