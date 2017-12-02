@@ -13,7 +13,7 @@ var repoProjects = function ($http) {
             })
             .finally(function () {
 
-                console.log("Finally...??");
+                //console.log("Finally...??");
             });
     };
 
@@ -36,7 +36,7 @@ var repoProjects = function ($http) {
             })
             .finally(function () {
 
-                console.log("Finally...??");
+                //console.log("Finally...??");
             });
     };
     var addProject = function (project) {
@@ -49,7 +49,7 @@ var repoProjects = function ($http) {
             })
             .finally(function () {
 
-                console.log("Finally...??");
+                //console.log("Finally...??");
             });
     };
     var updateProject = function (id, project) {
@@ -62,7 +62,7 @@ var repoProjects = function ($http) {
             })
             .finally(function () {
 
-                console.log("Finally...??");
+                //console.log("Finally...??");
             });
     };
     var deleteProject = function (id) {
@@ -75,7 +75,7 @@ var repoProjects = function ($http) {
             })
             .finally(function () {
 
-                console.log("Finally...??");
+                //console.log("Finally...??");
             });
     };
     return {

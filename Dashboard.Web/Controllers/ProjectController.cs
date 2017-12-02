@@ -26,29 +26,36 @@ public class ProjectController : Controller
     {
         return View();
     }
-    public async Task<IActionResult> Index()
+
+    public IActionResult Index()
     {
-        //await WriteOutIdentityInformation();
-        var httpClient = await _httpClientDashboard.GetClient();
-        try
-        {
-            var responseEmployee = await httpClient.GetAsync("api/dashboard/employees").ConfigureAwait(false);
-            if (responseEmployee.IsSuccessStatusCode)
-            {
-                var employeesAsString = await responseEmployee.Content.ReadAsStringAsync().ConfigureAwait(false);
-                List<Project> employees = JsonConvert.DeserializeObject<IList<Project>>(employeesAsString).ToList();
-                return View(employees);
-            }
-            else
-                throw new Exception($"A problem happened while calling the API: {responseEmployee.ReasonPhrase}");
-        }
-        catch (Exception ex)
-        {
-
-            return Content($"Server down: {ex}");
-        }
-
+        return View();
     }
+
+    //public async Task<IActionResult> Index()
+    //{
+    //    //await WriteOutIdentityInformation();
+    //    var httpClient = await _httpClientDashboard.GetClient();
+    //    try
+    //    {
+    //        var responseEmployee = await httpClient.GetAsync("api/dashboard/employees").ConfigureAwait(false);
+    //        if (responseEmployee.IsSuccessStatusCode)
+    //        {
+    //            var employeesAsString = await responseEmployee.Content.ReadAsStringAsync().ConfigureAwait(false);
+    //            List<Project> employees = JsonConvert.DeserializeObject<IList<Project>>(employeesAsString).ToList();
+    //            return View(employees);
+    //        }
+    //        else
+    //            throw new Exception($"A problem happened while calling the API: {responseEmployee.ReasonPhrase}");
+    //    }
+    //    catch (Exception ex)
+    //    {
+
+    //        return Content($"Server down: {ex}");
+    //    }
+
+    //}
+
     [HttpGet]
     public IActionResult Add()
     {
