@@ -5,7 +5,7 @@ using Dashboard.DataG.Contracts;
 using Microsoft.Extensions.Logging;
 using Dashboard.EntitiesG.EntitiesRev;
 using Microsoft.AspNetCore.Hosting;
-
+using System.Linq;
 
 namespace Dashboard.APIG.Controllers
 {
@@ -74,7 +74,7 @@ namespace Dashboard.APIG.Controllers
         {
             try
             {
-                var result = _empRepo.GetById(id);
+                var result = _empRepo.Include(a => a.AcquiredKnowledges, x => x.Assignments).Where(x => x.EmployeeId == id).First();
                 return Ok(result);
                 //return Ok(Mapper.Map<CommitmentViewModel>(result));
             }

@@ -3,20 +3,12 @@
     angular.module("phaseDelete")
         .component("phaseDelete", {
             templateUrl: "/js/app/phase/phase-delete/phase-delete.template.html",
-            controller: function PhaseListController(
-                $http,
-                $scope,
-                $routeParams,
-                repoPhases,
-                $window
-                ){
+            controller: function PhaseListController($http, $scope, $routeParams, repoPhases)
+            {
                 this.projectId = $routeParams.projectId;
                 var self = this; 
                 self.phase = {};
-                $scope.$on('$locationChangeStart', function (e, next, previous) {
-                    $scope.oldUrl = previous;
-                    $scope.oldHash = $window.location.hash;
-                });  
+                  
                  
                 if ($routeParams.phaseId == null) {
                     this.projectId = $routeParams.projectId;
@@ -40,7 +32,7 @@
                 };
 
                 $scope.closeModal = function () {
-                    location.replace("#!/projects/project-details/" + self.phase.projectId).reload();
+                    location.replace("#!/projects/project-details/" + self.phase.projectId);
                     location.reload();
                 };
                 

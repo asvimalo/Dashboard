@@ -1,0 +1,28 @@
+﻿
+<div class="modal fade" id="deleteEmployee" role="dialog">
+    <div class="modal-dialog modal-sm"> 
+        <div class="modal-content">  
+
+            <div class="modal-body">
+
+                <form name="form" class="form-group" novalidate>
+                    <div class="form-group">
+                        <label>
+                            First Name:
+                            <input class="form-control" type="text" name="uFirstName" ng-readonly="$ctrl.employee.firstName" value="{{ $ctrl.employee.firtstName }}"/>
+                        </label> 
+                        <label>
+                            Last Name:
+                            <input class="form-control" type="text" name="uLastName" ng-readonly="$ctrl.employee.lastName" value="{{ $ctrl.employee.lastName }}" />
+                        </label>  
+                    </div>
+                </form>
+             </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>

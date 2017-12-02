@@ -31,7 +31,7 @@ var repoAssignments = function ($http) {
             });
     };
     var getAssignmentById = function (id) {
-        return $http.get("http://localhost:8890/api/dashboard/assignments/", id)
+        return $http.get("http://localhost:8890/api/dashboard/assignments/" + id)
             .then(function (response) {
                 return response.data;
             }, function (error) {
@@ -57,7 +57,7 @@ var repoAssignments = function ($http) {
             });
     };
     var addAssignment = function (assignment) {
-        $http.post('http://localhost:8890/api/dashboard/assignments', assignment)
+        return $http.post('http://localhost:8890/api/dashboard/assignments', assignment)
             .then(function (response) {
                 return response.data;
             }, function (error) {

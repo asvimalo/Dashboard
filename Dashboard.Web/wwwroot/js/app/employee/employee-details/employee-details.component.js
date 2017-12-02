@@ -3,23 +3,26 @@
     angular.module("employeeDetails")
         .component("employeeDetails", {
             templateUrl: "/js/app/employee/employee-details/employee-details.template.html",
-            controller: function EmployeeDetailsController($scope, $http, $location, $routeParams, repoAssignments, repoEmployees)
+            controller: function EmployeeDetailsController($scope, $http, $location, $routeParams, repoAssignments)
             {
                 this.employeeId = $routeParams.employeeId;
 
                 var holder = this;
-                holder.employee = {};
+                holder.assignments = [];
 
                 // Get Employee 
                 repoAssignments.get(holder.employeeId).then(function (response) {
-                    angular.copy(response, holder.employee);
+                    angular.copy(response, holder.assignments);
                     
                 });
 
-                $scope.assignments = {};
+                $scope.deleteEmployee = function (employeeId) {
+                    location.replace("#!/employees/employee-delete/" + employeeId);
+                };
 
-                // Skapa som one project Details
-                // Data finns i Assignments 
+                $scope.editEmployee = function (employeeId) {
+                    location.replace("#!/employees/employee-edit/" + employeeId);
+                };
             }
             
         });

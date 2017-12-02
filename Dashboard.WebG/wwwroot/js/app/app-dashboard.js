@@ -3,9 +3,10 @@
     angular.module("app-dashboard",
         [
             "footbar",
-            "loaderControl",
+            //"loaderControl",
             "navbar",
-            "ngRoute"           
+            "ngRoute",
+            "projectList"
             //'ngFileUpload',
             //'angularModalService',          
             //"assignProjectToEmployee",

@@ -8,6 +8,8 @@
          "clientAdd",
          "employeeAdd",
          "employeeDetails",
+         "employeeDelete",
+         "employeeEdit",
          "dashboardView",
          "phaseAdd",
          "phaseDelete",
@@ -17,7 +19,7 @@
          "projectEdit",
          "projectDetails",
          "allProjects",
-         "allEmployees",
+         "allEmployees"
         ]);
 })();
 
