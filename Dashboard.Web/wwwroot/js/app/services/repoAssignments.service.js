@@ -69,15 +69,13 @@ var repoAssignments = function ($http) {
                 console.log("Finally...??");
             });
     };
-    var updateAssignment = function (assignment) {
-        $http.put('http://localhost:8890/api/dashboard/assignments', assignment)
+    var updateAssignment = function (id, assignment) {
+        return $http.put('http://localhost:8890/api/dashboard/assignments/' + id, assignment)
             .then(function (response) {
-                console.log("Response from server api" + response);
-                $location.path("/dashboard")
                 return response.data;
             }, function (error) {
 
-                console.log("didn't update employee: " + error.message);
+                console.log("didn't update assignment: " + error.message);
             })
             .finally(function () {
 
@@ -87,7 +85,7 @@ var repoAssignments = function ($http) {
             });
     };
     var deleteAssignment = function (id) {
-        $http.delete('http://localhost:8890/api/dashboard/assignments', id)
+        return $http.delete('http://localhost:8890/api/dashboard/assignments/' + id)
             .then(function (response) {
                 return response.data;
             }, function (error) {

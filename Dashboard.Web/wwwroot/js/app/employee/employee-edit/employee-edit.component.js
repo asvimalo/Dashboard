@@ -9,18 +9,12 @@
                 var holder = this;
                 holder.employee = {};
 
-                if ($routeParams.employeeId == null) {
-                    console.log("The employeeId is NULL")
-                } else {
+                this.employeeId = $routeParams.employeeId;
 
-                    this.employeeId = $routeParams.employeeId;
+                repoEmployees.get(holder.employeeId).then(function (response) {
+                    angular.copy(response, holder.employee);
 
-                    repoEmployees.get(holder.employeeId).then(function (response) {
-                        angular.copy(response, holder.employee);
-
-                    });
-
-                }
+                });
 
                 $scope.editEmployee = function () {
                     var data = {
@@ -44,11 +38,7 @@
                         });
                     
                 };
-
-                $scope.closeModal = function () {
-                    location.replace("#!/employees/employee-details/" + holder.employeeId);
-                    location.reload();
-                };
+                 
                  
             }
             

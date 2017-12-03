@@ -46,7 +46,7 @@
                     newEmployee.newKnowledges = holder.newKnowledges;
                     newEmployee.knowledges = employee.knowledges;
                     
-                    var file = new File([byteArrays], filename, { type: contentType, lastModified: Date.now() });
+                    //var file = new File([byteArrays], filename, { type: contentType, lastModified: Date.now() });
 
 
                     console.log("inside employees Controller ");

@@ -1,0 +1,30 @@
+﻿
+
+<div class="modal fade" id="editAssignment" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-body" ng-repeat="assignment in $ctrl.assignment">
+                <form name="EditAssignmentForm"> 
+                    <div class="form-group">
+                        <label>Location</label>
+                        <input type="text" name="location" value="{{ assignment.location }}" class="form-control" required>
+                    </div> 
+                    <div class="form-group">
+                        <label>Start Date</label>
+                        <input type="text" value="{{ assignment.startDate }}" class="form-control" >
+                    </div> 
+                    <div class="form-group">
+                        <label>End Date</label>
+                        <input type="text" value="{{ assignment.stopDate }}" class="form-control" >
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-success" type="button" ng-click="editAssignment()"> Save </button>
+                <button class="btn btn-danger pull-right" type="button" data-dismiss="modal"> Cancel </button>
+            </div>
+
+        </div>
+    </div>
+</div>

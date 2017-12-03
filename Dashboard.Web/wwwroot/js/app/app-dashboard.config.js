@@ -42,12 +42,12 @@
                     when('/projects/project-edit/:projectId', {
                         template: '<project-edit></project-edit>'
                     }).
-                    //when('/assignments', {
-                    //    template: '<assignment-list></assignment-list>'
-                    //}).
-                    //when('/assignments/:employeeId', {
-                    //    template: '<assignment-detail></assignment-detail>'
-                    //}).
+                    when('/assignments/assignment-delete/:assignmentId', {
+                        template: '<assignment-delete></assignment-delete>'
+                    }).
+                    when('/assignments/assignment-edit/:assignmentId', {
+                        template: '<assignment-edit></assignment-edit>'
+                    }).
                     //when('/acquiredKnowledges', {
                     //    template: '<acquired-knowledge-list></acquired-knowledge-list>'
                     //}).

@@ -5,6 +5,8 @@
             'ngFileUpload',
             'angularModalService',
             "assignProjectToEmployee",
+            "assignmentDelete",
+            "assignmentEdit",
             "clientAdd",
             "employeeAdd",
             "employeeDetails",

@@ -72,7 +72,7 @@ namespace Dashboard.DataG.Controllers
         }
 
         // GET api/dashboard/Commitments/5
-        [HttpGet("{id}", Name = "GetAssigment")]
+        [HttpGet("{id}", Name = "GetEmployeeAssigment")]
         public async Task<IActionResult> Get(int id)
         {
             try
@@ -89,6 +89,7 @@ namespace Dashboard.DataG.Controllers
             }
 
         }
+         
 
         // POST api/dashboard/Commitments
         [HttpPost("")]
@@ -119,19 +120,28 @@ namespace Dashboard.DataG.Controllers
         {
             if (ModelState.IsValid)
             {
-                var projectId = 0;
-                var employeeId = 0;
-                var assignFromRepo = await _repo.GetById(id);
+                //var projectId = 0;
+                //var employeeId = 0;
+                var assignFromRepo = await _repo.GetAssignment(id);
 
                 try
                 {
-                    assignFromRepo.ProjectId = projectId;
-                    Int32.TryParse((assignment.ProjectId.ToString() ?? assignFromRepo.ProjectId.ToString()), out projectId);
-                    assignFromRepo.EmployeeId = employeeId;
-                    Int32.TryParse((assignment.EmployeeId.ToString() ?? assignFromRepo.EmployeeId.ToString()), out employeeId);
+                    var assignmentRepo = assignFromRepo.First();
+
+                    assignmentRepo.ProjectId = assignment.ProjectId;
+                    assignmentRepo.EmployeeId = assignment.EmployeeId;
+                    assignmentRepo.Location = assignment.Location;
+                    assignmentRepo.StartDate = assignment.StartDate;
+                    assignmentRepo.StopDate = assignment.StopDate;
 
 
-                    var AssignUpdated = _repo.Update(assignFromRepo.AssignmentId, assignFromRepo);
+                    //assignment.ProjectId = projectId;
+                    //Int32.TryParse((assignmentRepo.ProjectId.ToString() ?? assignment.ProjectId.ToString()), out projectId);
+                    //assignment.EmployeeId = employeeId;
+                    //Int32.TryParse((assignmentRepo.EmployeeId.ToString() ?? assignment.EmployeeId.ToString()), out employeeId);
+
+
+                    var AssignUpdated = _repo.Update(id, assignmentRepo); 
                     return Ok(/*Mapper.Map<CommitmentViewModel>(*/AssignUpdated/*)*/);
 
                 }

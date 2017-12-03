@@ -26,11 +26,7 @@
                         location.replace("#!/employees/employee-details/" + holder.employeeId);
                         location.reload();
                     };
-
-                    $scope.closeModal = function () {
-                        location.replace("#!/employees/employee-details/" + holder.employeeId);
-                        location.reload();
-                    };
+                     
 
                 }
                  

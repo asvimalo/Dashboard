@@ -44,7 +44,7 @@ var repoEmployees = function ($http) {
             });
     };
     var addEmployee = function (employee) {
-        $http.post('http://localhost:8890/api/dashboard/employees', employee)
+        return $http.post('http://localhost:8890/api/dashboard/employees', employee)
             .then(function (response) {
                 return response.data;
             }, function (error) {
