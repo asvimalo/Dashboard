@@ -7,7 +7,8 @@
                 $http,
                 $scope,
                 $location,
-                repoAssignments
+                repoAssignments,
+                repoJobTitles
             ) {
                 //$routeProvider
                 var holder = this;
@@ -26,10 +27,20 @@
                     holder.isBusy = false;
                     });
 
+                //http://localhost:8890/api/dashboard/jobTitleAssignments
+                holder.jobTitles = [];
+                repoJobTitles.getAll().then(function (response) {
+                    angular.copy(response.data, holder.jobTitles);
+                });
                 //holder.jobTitles = [];
-                //$http.get('http://localhost:8890/api/dashboard/jobtitles').then(function (response) {
+                //repoJobTitles.getAll().then(function (response) {
                 //    angular.copy(response.data, holder.jobTitles);
                 //});
+
+                holder.newJobTitles = [];
+                $scope.addJobTitle = function () {
+                    holder.newJobTitles.push($scope.forminfo.jobtitle);
+                }
                     
                 holder.commitmentHours = ["0", "25", "50", "75", "100"];
                 holder.commitments = [];
@@ -69,6 +80,8 @@
                     if (holder.commitments.length == 0) {
                         holder.commitments = [{ "startDate": $scope.formInfo.project.startDate, "stopDate": $scope.formInfo.project.stopDate, "hours" : "100" }];
                     }
+
+                    //TODO: fix jobtitles
 
                     var data = { "ProjectId": $scope.formInfo.project.projectId, "EmployeeId": $scope.formInfo.employee.employeeId, "JobTitle": $scope.formInfo.jobtitle, "Location": $scope.formInfo.location, "Commitments": holder.commitments };
                     var dataTmp = JSON.stringify(data);

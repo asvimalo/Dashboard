@@ -3,51 +3,32 @@
 <br />
 <br />
 
-<div class="container-fluid">
-    <div ng-app="app-dashboard" class="container">
-
-        <div class="container-fluid">
-            <a ng-href="#!/projects/project-details/2">One Project Details</a>
-            <a ng-href="#!/employees/employee-details/1">One Employee Details</a>
-            <div class="container row">
-                <div class="col-md-9">
-                    <div class="mainpanel">
-                        <div class="row">
-                            <div class="col-md-3">
-                                <button type="button" class="calendarbutton">Archive</button>
-                                <button type="button" class="activebutton">Active</button>
-                            </div>
-                            <div class="col-md-offset-6 col-md-3">
-                                <div class="row">
-                                    <button type="button" class="activebutton">Weeks</button>
-                                    <button type="button" class="calendarbutton">Months</button>
-                                    <button type="button" class="calendarbutton">Years</button>
-                                </div>
-                            </div>
-                        </div>
-                        <br />
-                        <div class="table-responsive" id="ganttchart" ng-view></div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="sidepanel" id="panels">
-                        <br />
-                        <button type="button" class="btn panelButton" data-toggle="modal" data-target="#projectAdd">Add a new project</button>
-                        <button type="button" class="btn panelButton" data-toggle="modal" data-target="#employeeAdd">Add a new Employee</button>
-                        <button type="button" class="btn panelButton" data-toggle="modal" data-target="#assignEmployeeToProject">Assign an employee to a project</button>
-                    </div>
+<div ng-app="app-dashboard">
+    <a ng-href="#!/projects/project-details/2">One Project Details</a>
+    <a ng-href="#!/employees/employee-details/2">One Employee Details</a>
+    @*<all-employees></all-employees>*@
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-10">
+                <all-projects></all-projects>
+            </div>
+            <div class="col-md-2">
+                <div class="sidepanel" id="panels">
+                    <br />
+                    <button type="button" class="btn panelButton" data-toggle="modal" data-target="#projectAdd">Add a new project</button>
+                    <button type="button" class="btn panelButton" data-toggle="modal" data-target="#employeeAdd">Add a new Employee</button>
+                    <button type="button" class="btn panelButton" data-toggle="modal" data-target="#assignEmployeeToProject">Assign an employee to a project</button>
                 </div>
             </div>
         </div>
-
-        <project-add></project-add>
-        <employee-add></employee-add>
-        <assign-project-to-employee></assign-project-to-employee>
-        @*<all-projects></all-projects>*@
-
     </div>
 
+    <project-add></project-add>
+    <employee-add></employee-add>
+    <assign-project-to-employee></assign-project-to-employee>  
 </div>
+
+
 
 @section Scripts {
     <script src="~/lib/angular/angular.min.js"></script>
@@ -68,6 +49,7 @@
     <script src="~/js/app/services/repoKnowledges.service.js"></script>
     <script src="~/js/app/services/repoAssignments.service.js"></script>
     <script src="~/js/app/services/repoPhases.service.js"></script>
+    <script src="~/js/app/services/repoJobTitles.service.js"></script>
 
     <script src="~/js/app/dashboard-view/dashboard-view.module.js"></script>
     <script src="~/js/app/dashboard-view/dashboard-view.component.js"></script>
@@ -133,6 +115,9 @@
     <script src="~/js/app/allproject/all-projects.module.js"></script>
     <script src="~/js/app/allproject/all-projects.component.js"></script>
 
+    @*/////////////            ALLEMPLOYEES                ///////////////////////*@
+    <script src="~/js/app/allemployee/all-employees.module.js"></script>
+    <script src="~/js/app/allemployee/all-employees.component.js"></script>
 
 
     @*********************************************@

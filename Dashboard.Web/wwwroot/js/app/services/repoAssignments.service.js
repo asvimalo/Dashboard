@@ -12,7 +12,7 @@ var repoAssignments = function ($http) {
             })
             .finally(function () {
 
-                console.log("Finally...??");
+                //console.log("Finally...??");
             });
     };
     var getLists = function () {
@@ -27,7 +27,7 @@ var repoAssignments = function ($http) {
             })
             .finally(function () {
 
-                console.log("Finally...??");
+                //console.log("Finally...??");
             });
     };
     var getAssignmentById = function (id) {
@@ -40,7 +40,7 @@ var repoAssignments = function ($http) {
             })
             .finally(function () {
 
-                console.log("Finally...??");
+               // console.log("Finally...??");
             });
     };
     var getAssignmentByName = function (name) {
@@ -53,7 +53,7 @@ var repoAssignments = function ($http) {
             })
             .finally(function () {
 
-                console.log("Finally...??");
+                //console.log("Finally...??");
             });
     };
     var addAssignment = function (assignment) {
@@ -66,7 +66,7 @@ var repoAssignments = function ($http) {
             })
             .finally(function () {
 
-                console.log("Finally...??");
+                //console.log("Finally...??");
             });
     };
     var updateAssignment = function (id, assignment) {
@@ -79,7 +79,7 @@ var repoAssignments = function ($http) {
             })
             .finally(function () {
 
-                console.log("Finally...??");
+                //console.log("Finally...??");
                 holder.isBusy = false;
 
             });
@@ -94,7 +94,7 @@ var repoAssignments = function ($http) {
             })
             .finally(function () {
 
-                console.log("Finally...??");
+                //console.log("Finally...??");
             });
     };
     return {
