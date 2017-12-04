@@ -1,4 +1,9 @@
-﻿<div class="container-fluid oneProjectTop">
+﻿<button class="btn btn-default" type="button" ng-click="showGantt()"> Go back </button>
+<br />
+<br />
+
+<div class="projectDetails">
+    <div class="container-fluid oneProjectTop">
         <div class="row">
             <div class="col-md-11">
                 <h4> {{$ctrl.project.projectName}} </h4>
@@ -11,7 +16,7 @@
                     <ul class="dropdown-menu pull-right">
                         <li><a data-toggle="modal" data-target="#projectEdit">Edit</a></li>
                         <li><a data-toggle="modal" data-target="#deleteProject">Delete</a></li>
-                  </ul>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -31,19 +36,19 @@
     <br /><br />
 
     <div class="container-fluid" ng-repeat="phase in $ctrl.project.phases">
-            <div class="row phaseA">
-                <div class="col-md-11 phaseInProject"> 
-                    <div class="row">
-                        <div class="col-md-4">{{ phase.phaseName }}</div>
-                        <div class="col-md-4"><span class="glyphicon glyphicon-calendar"></span> {{ phase.startDate | date:'dd/MM-yyyy'}} - {{ phase.endDate | date:'dd/MM-yyyy'}}</div>
-                        <div class="col-md-2"><span class="glyphicon glyphicon-time"></span> {{ phase.timeBudget }}h</div>
-                        <div class="col-md-2"><span class="glyphicon glyphicon-hourglass"></span> {{ phase.progress }}%</div>
-                    </div>
+        <div class="row phaseA">
+            <div class="col-md-11 phaseInProject">
+                <div class="row">
+                    <div class="col-md-4">{{ phase.phaseName }}</div>
+                    <div class="col-md-4"><span class="glyphicon glyphicon-calendar"></span> {{ phase.startDate | date:'dd/MM-yyyy'}} - {{ phase.endDate | date:'dd/MM-yyyy'}}</div>
+                    <div class="col-md-2"><span class="glyphicon glyphicon-time"></span> {{ phase.timeBudget }}h</div>
+                    <div class="col-md-2"><span class="glyphicon glyphicon-hourglass"></span> {{ phase.progress }}%</div>
                 </div>
-                    <button class="btn btn-default col-md-1" type="button" data-toggle="collapse" data-target="#{{phase.phaseId}}" aria-expanded="false" aria-controls="{{phase.phaseId}}">
-                        <span class="glyphicon glyphicon-triangle-bottom"></span>
-                    </button>
             </div>
+            <button class="btn btn-default col-md-1" type="button" data-toggle="collapse" data-target="#{{phase.phaseId}}" aria-expanded="false" aria-controls="{{phase.phaseId}}">
+                <span class="glyphicon glyphicon-triangle-bottom"></span>
+            </button>
+        </div>
         <br />
 
         <div class="collapse" id="{{phase.phaseId}}">
@@ -55,19 +60,20 @@
                         <tr> <th>Comments: {{phase.comments}}</th> </tr>
                         <tr> <th><span class="glyphicon glyphicon-calendar"></span> From: {{ phase.startDate | date:'dd, MMMM yyyy'}} To: {{ phase.endDate | date:'dd - MMMM - yyyy'}}</th> </tr>
                     </tbody>
-                </table>   
+                </table>
                 <!--<a class="btn btn-info" ng-href="#!/phases/phase-edit/{{phase.phaseId}}"> Edit </a>-->
                 <button class="btn btn-info" type="button" data-toggle="collapse" data-target="#editPhase" aria-expanded="false" ng-click="Edit(phase.phaseId, phase.projectId)" data-backdrop="static" data-keyboard="false"> Edit </button>
                 <button class="btn btn-danger pull-right" type="button" data-toggle="modal" data-target="#deletePhase" ng-click="Delete(phase.phaseId, phase.projectId)" data-backdrop="static" data-keyboard="false"> Delete </button>
             </div>
         </div>
-         
+
         <phase-delete></phase-delete>
         <phase-edit></phase-edit>
         <project-delete></project-delete>
         <project-edit></project-edit>
     </div>
 
+</div>
  
 
 

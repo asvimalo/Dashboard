@@ -18,6 +18,11 @@
                     self.project.stopDate = new Date(self.project.stopDate).toLocaleDateString();
                 });  
 
+                $scope.showGantt = function () {
+                    $(".ganttpanel").show();
+                    $(".projectDetails").hide();
+                };
+
                 $scope.phaseId = {};
 
                 $scope.Delete = function (phaseId) {
