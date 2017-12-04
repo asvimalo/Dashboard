@@ -52,6 +52,8 @@ namespace Dashboard.APIG
             services.AddScoped(typeof(IRepoClient), typeof(RepoClient));
             services.AddScoped(typeof(IRepoAcquiredKnowledge), typeof(RepoAcquiredKnowledge));
             services.AddScoped(typeof(IRepoProject), typeof(RepoProject));
+            services.AddScoped(typeof(IRepoJobTitle), typeof(RepoJobTitle));
+            services.AddScoped(typeof(IRepoJobTitleAssignment), typeof(RepoJobTitleAssignment));
 
             services.AddScoped(typeof(IDesignTimeDbContextFactory<DashboardGenericContext>), typeof(TempCtxDashboardGeneric));
 
