@@ -20,7 +20,8 @@
             "projectDelete",
             "projectEdit",
             "projectDetails",
-            "allProjects"
+            "allProjects",
+            "upload"
             //"allEmployees"
             ]);
 })();

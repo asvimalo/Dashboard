@@ -5,15 +5,13 @@ VisualStudioVersion = 15.0.26730.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dashboard.Web", "Dashboard.Web\Dashboard.Web.csproj", "{715C395E-43D5-4D7E-97D2-5D147AA31CB8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dashboard.IDP", "Dashboard.IDP\Dashboard.IDP.csproj", "{080B1A79-1FBA-480E-99AF-8447DF372681}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dashboard.APIG", "Dashboard.APIG\Dashboard.APIG.csproj", "{3C0E281B-A367-4E95-BF87-BA7371ADA27A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dashboard.DataG", "Dashboard.DataG\Dashboard.DataG.csproj", "{A2BBAEF3-871C-4250-AFA8-3B16E5D195BB}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dashboard.EntitiesG", "Dashboard.EntitiesG\Dashboard.EntitiesG.csproj", "{D84D6DCB-F57C-4FB0-862B-EAFC78731BEF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dashboard.WebG", "Dashboard.WebG\Dashboard.WebG.csproj", "{BBC8C193-CD7B-4410-914F-3D0FF133D256}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dashboard.WebG", "Dashboard.WebG\Dashboard.WebG.csproj", "{BBC8C193-CD7B-4410-914F-3D0FF133D256}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,10 +23,6 @@ Global
 		{715C395E-43D5-4D7E-97D2-5D147AA31CB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{715C395E-43D5-4D7E-97D2-5D147AA31CB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{715C395E-43D5-4D7E-97D2-5D147AA31CB8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{080B1A79-1FBA-480E-99AF-8447DF372681}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{080B1A79-1FBA-480E-99AF-8447DF372681}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{080B1A79-1FBA-480E-99AF-8447DF372681}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{080B1A79-1FBA-480E-99AF-8447DF372681}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3C0E281B-A367-4E95-BF87-BA7371ADA27A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3C0E281B-A367-4E95-BF87-BA7371ADA27A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3C0E281B-A367-4E95-BF87-BA7371ADA27A}.Release|Any CPU.ActiveCfg = Release|Any CPU

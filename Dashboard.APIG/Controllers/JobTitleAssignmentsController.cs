@@ -8,7 +8,7 @@ using Dashboard.EntitiesG.EntitiesRev;
 namespace Dashboard.APIG.Controllers
 {
 
-    [Route("api/dashboard/JobTitleAssignments")]
+    [Route("api/dashboard/[controller]")]
     public class JobTitleAssignmentsController : Controller
     {
         public IRepoJobTitleAssignment _repo;
@@ -29,7 +29,7 @@ namespace Dashboard.APIG.Controllers
             {
                 var result = _repo.getAllOfThem();
 
-                    ;
+                    
                 return Ok(result);
                
             }

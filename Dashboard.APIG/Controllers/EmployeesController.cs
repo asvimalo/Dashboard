@@ -6,6 +6,9 @@ using Microsoft.Extensions.Logging;
 using Dashboard.EntitiesG.EntitiesRev;
 using Microsoft.AspNetCore.Hosting;
 using System.Linq;
+using Microsoft.AspNetCore.Http;
+using System.IO;
+using Dashboard.APIG.Helpers;
 
 namespace Dashboard.APIG.Controllers
 {
@@ -263,6 +266,51 @@ namespace Dashboard.APIG.Controllers
            
                 
         }
+        [HttpPost("upload")]
+        public async Task<IActionResult> Upload([FromBody]ImageForCreation imageForCreation)
+        {
+            if (imageForCreation == null)
+            {
+                return BadRequest();
+            }
 
+            if (!ModelState.IsValid)
+            {
+                // return 422 - Unprocessable Entity when validation fails
+                return new UnprocessableEntityObjectResult(ModelState);
+            }
+
+            // Automapper maps only the Title in our configuration
+            var newEmployee = new Employee();
+
+            // Create an image from the passed-in bytes (Base64), and 
+            // set the filename on the image
+
+            // get this environment's web root path (the path
+            // from which static content, like an image, is served)
+            var webRootPath = _env.WebRootPath;
+
+            // create the filename
+            string fileName = Guid.NewGuid().ToString() + ".jpg";
+
+            // the full file path
+            var filePath = Path.Combine($"{webRootPath}/images/{fileName}");
+
+            // write bytes and auto-close stream
+            System.IO.File.WriteAllBytes(filePath, imageForCreation.Bytes);
+
+            // fill out the filename
+            newEmployee.ImageName = fileName;
+
+            // set the ownerId on the imageEntity
+            newEmployee.ImagePath = filePath;
+
+            // add and save.  
+            var addedEmp = await _empRepo.Create(newEmployee);
+
+            
+
+            return Ok (addedEmp);
+        }
     }
 }

@@ -11,8 +11,8 @@ using System;
 namespace Dashboard.DataG.Migrations
 {
     [DbContext(typeof(DashboardGenericContext))]
-    [Migration("20171115162502_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20171204064934_InitialDb")]
+    partial class InitialDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
