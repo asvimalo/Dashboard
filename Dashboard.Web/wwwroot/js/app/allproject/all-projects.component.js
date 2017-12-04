@@ -9,6 +9,8 @@
                 holder.allProjects = [];
                 holder.assignments = [];
 
+                var currentDate = moment();
+
                 $q.all([
                     repoProjects.getAll(),
                     repoAssignments.getAll()
@@ -17,7 +19,8 @@
                     angular.copy(response[0], holder.allProjects);
                     angular.copy(response[1], holder.assignments);
 
-                    initWeek();
+                    initProjectGantt('day', currentDate);
+                    $("#weekButton").addClass('active');
 
                 }, function (error) {
                     //failure
@@ -27,73 +30,57 @@
                         holder.isBusy = false;
                     });
 
+                var weekButton = $("#weekButton");
+                var monthButton = $("#monthButton");
+                var yearButton = $("#yearButton");
+
                 $scope.weekButtonClick = function () {
-                    //if ($(this).hasClass('active')) {
-                    //    $(this).removeClass('active')
-                    //} else {
-                    //    $(this).addClass('active')
-                    //}
-                    initWeek();
+                    if (!weekButton.hasClass('active')) weekButton.addClass('active');
+                    if (monthButton.hasClass('active')) monthButton.removeClass('active');
+                    if (yearButton.hasClass('active')) yearButton.removeClass('active');
+                    initProjectGantt('day', currentDate);
                 };
 
                 $scope.monthButtonClick = function () {
-                    //if ($(this).hasClass('active')) {
-                    //    $(this).removeClass('active')
-                    //} else {
-                    //    $(this).addClass('active')
-                    //}
-                    initMonth();
+                    if (weekButton.hasClass('active')) weekButton.removeClass('active');
+                    if (!monthButton.hasClass('active')) monthButton.addClass('active');
+                    if (yearButton.hasClass('active')) yearButton.removeClass('active');
+                    initProjectGantt('week', currentDate);
                 };
 
                 $scope.yearButtonClick = function () {
-                    initYear();
+                    if (monthButton.hasClass('active')) monthButton.removeClass('active');
+                    if (weekButton.hasClass('active')) weekButton.removeClass('active');
+                    if (!yearButton.hasClass('active')) yearButton.addClass('active');
+                    initProjectGantt('month', currentDate);
                 };
 
-                var startdate = moment();
                 var visibleEmployeeProjectNames = [];
                 $(".ganttpanel").show();
 
-                function initWeek() {
-                    resetGantt('day', 7, true);
-                }
-                function initMonth() {
-                    resetGantt('week', 5, true);
-                }
-                function initYear() {
-                    resetGantt('month', 3, false);
+                function initProjectGantt(timeUnit, startDate) {
+                    if (timeUnit === 'day')
+                        projectGantt('day', 7, true, startDate);
+                    else if (timeUnit === 'week')
+                        projectGantt('week', 5, true, startDate);
+                    else // month
+                        projectGantt('month', 3, false, startDate);
                 }
 
                 /*****************************************************************************************************************************************************************
                  * * * * * * * *     GANTT    * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
                  *****************************************************************************************************************************************************************/
-                function resetGantt(timeUnit, leap, checkAllEvents) {
+                function projectGantt(timeUnit, leap, checkAllEvents, startDate) {
                     //**********   CALENDAR   ***********
-                    var dates = [];
-                    var formatedDates = [];
-                    var currdate = startdate.clone().startOf(timeUnit);
-                    var dateCount = 10;
-                    var columnCount = dateCount + 2;
 
-                    for (var i = 0; i < dateCount; i++) {
-                        dates.push(currdate.clone());
-                        formatedDates.push(currdate.format('MM/DD ddd'));
-                        currdate = currdate.add(1, timeUnit);
-                    }
+                    var dates = createCalendarDates(timeUnit, startDate, 10);
+                    var columnCount = dates.length + 2;
+
                     var tabledate = $("<table></table>").addClass("table borderless");
-                    var rowdate = $(tabledate[0].insertRow(-1));
-
-                    createCalendarButton(rowdate, "glyphicon glyphicon-fast-backward", timeUnit, -leap, leap, checkAllEvents);
-                    createCalendarButton(rowdate, "glyphicon glyphicon-chevron-left", timeUnit, -1, leap, checkAllEvents);
-                    rowdate.append(createCell("", "", "")); //colspan =\"2\" 
-                    // Dates
-                    for (var i = 0; i < formatedDates.length; i++) {
-                        rowdate.append(createCell("cellDate", formatedDates[i].toString() + " |  "));
-                    }
-                    createCalendarButton(rowdate, "glyphicon glyphicon-chevron-right", timeUnit, 1, leap, checkAllEvents);
-                    createCalendarButton(rowdate, "glyphicon glyphicon-fast-forward", timeUnit, leap, leap, checkAllEvents);
+                    createCalendarHeader(tabledate, startDate, dates, leap, timeUnit, initProjectGantt);
 
                     //**********   PROJECT   ***********
-                    addEmptyRowToHtml(tabledate, dates.length);
+                    addEmptyRowToHtml(tabledate, columnCount);
 
                     var nbrOfProjects = holder.allProjects.length;
                     for (var i = 0; i < nbrOfProjects; i++) {
@@ -120,9 +107,8 @@
                             else if (projectEnd.isSame(dates[j], timeUnit)) {
                                 style = 'projectenddiv';
                             } else {
-                                if (projectStart.isBefore(dates[j], timeUnit) && projectEnd.isAfter(dates[j], timeUnit)) {
+                                if (projectStart.isBefore(dates[j], timeUnit) && projectEnd.isAfter(dates[j], timeUnit))
                                     style = 'celldiv'
-                                }
 
                                 if (checkAllEvents) {
                                     for (var k = 0; k < project.phases.length; k++) {      //for project's phases
@@ -192,7 +178,7 @@
                                         var commitStart = moment(commit.startDate);
                                         var commitEnd = moment(commit.stopDate);
 
-                                        if ((startdate.isSame(dates[j], timeUnit) && !startdate.isBefore(commitStart) && !startdate.isAfter(commitEnd)) || commitStart.isSame(dates[j], timeUnit))
+                                        if ((startDate.isSame(dates[j], timeUnit) && !startDate.isBefore(commitStart) && !startDate.isAfter(commitEnd)) || commitStart.isSame(dates[j], timeUnit))
                                             text = commit.hours + "%";
 
                                         if (commitStart.isSame(dates[j], timeUnit))
@@ -219,7 +205,7 @@
                             //$(".projectArrowButton").hide();
                         }
 
-                        addEmptyRowToHtml(tabledate, dates.length);
+                        addEmptyRowToHtml(tabledate, columnCount);
                     }
 
                     //**********   Data to HTML table   ***********
@@ -238,7 +224,6 @@
                     });
 
                     //Popover
-
                     $('[data-trigger="hover"]').popover({
                         'trigger': 'hover',
                         'placement': 'bottom',
@@ -255,12 +240,12 @@
                                 var projObj = holder.allProjects[projectId];
 
                                 if (phaseId.length == 1) {
-                                    var startDate = moment(projObj.phases[phaseId[0]].startDate);
-                                    var endDate = moment(projObj.phases[phaseId[0]].endDate);
+                                    var start = moment(projObj.phases[phaseId[0]].startDate);
+                                    var end = moment(projObj.phases[phaseId[0]].endDate);
                                     var contentData =
                                         projObj.phases[phaseId[0]].phaseName + "<br/><br/>" +
-                                        "From: " + startDate.format('YYYY-MM-DD') + " <br/>" +
-                                        "To: " + endDate.format('YYYY-MM-DD') + " <br/><br/>" +
+                                        "From: " + start.format('YYYY-MM-DD') + " <br/>" +
+                                        "To: " + end.format('YYYY-MM-DD') + " <br/><br/>" +
                                         "Progress: " + projObj.phases[phaseId[0]].progress + "%<br/>" +
                                         "Timebudget: " + projObj.phases[phaseId[0]].timeBudget + "h<br/>" +
                                         "Comment: " + projObj.phases[phaseId[0]].comments + "<br/>";
@@ -268,13 +253,12 @@
                                 } else {
                                     var contentData = "";
                                     for (var i = 0; i < phaseId.length; i += 2) { //phaseId is coming with comma
-                                        var tmp = phaseId[i];
-                                        var startDate = moment(projObj.phases[phaseId[i]].startDate);
-                                        var endDate = moment(projObj.phases[phaseId[i]].endDate);
+                                        var start = moment(projObj.phases[phaseId[i]].startDate);
+                                        var end = moment(projObj.phases[phaseId[i]].endDate);
                                         contentData +=
                                             projObj.phases[phaseId[i]].phaseName + "<br/>" +
-                                            "From: " + startDate.format('YYYY-MM-DD') + " <br/>" +
-                                            "To: " + endDate.format('YYYY-MM-DD') + " <br/>" +
+                                            "From: " + start.format('YYYY-MM-DD') + " <br/>" +
+                                            "To: " + end.format('YYYY-MM-DD') + " <br/>" +
                                             "Progress: " + projObj.phases[phaseId[0]].progress + "%<br/><br/>";
                                     }
                                 }
@@ -292,22 +276,22 @@
 
                     //Collapse
                     $('<button></button>').attr({ 'type': 'button' }).addClass("glyphicon glyphicon-triangle-bottom").click(function () {
-                            var projectRow = $(this).parent().parent();
-                            var projectId = projectRow.attr('projectId');
+                        var projectRow = $(this).parent().parent();
+                        var projectId = projectRow.attr('projectId');
 
-                            var index = visibleEmployeeProjectNames.indexOf(projectId);
-                            if (index > -1) {
-                                visibleEmployeeProjectNames.splice(index, 1);
-                            } else {
-                                visibleEmployeeProjectNames.push(projectId);
+                        var index = visibleEmployeeProjectNames.indexOf(projectId);
+                        if (index > -1) {
+                            visibleEmployeeProjectNames.splice(index, 1);
+                        } else {
+                            visibleEmployeeProjectNames.push(projectId);
+                        }
+                        projectRow.siblings(".employee").each(function () {
+                            var employeeProjectId = $(this).attr('projectId');
+                            if (employeeProjectId == projectId) {
+                                $(this).fadeToggle(300);
                             }
-                            projectRow.siblings(".employee").each(function () {
-                                var employeeProjectId = $(this).attr('projectId');
-                                if (employeeProjectId == projectId) {
-                                    $(this).fadeToggle(300);
-                                }
-                            });
-                        }).appendTo($('td.projectArrowButton'));
+                        });
+                    }).appendTo($('td.projectArrowButton'));
 
                     //Go to OneProject
                     $(".projectName").click(function () {
@@ -320,14 +304,6 @@
                 } //end of function resetGantt() **********************************************************************************************************************************
 
                 //**********   Helper functions   *********************************************************************************************************************************
-                function createCalendarButton(row, baseClass, timeUnit, delta, leap, checkAllEvents) {
-                    $('<button></button>').attr({ 'type': 'submit' }).addClass(baseClass).click(function () {
-                        startdate = startdate.add(delta, timeUnit);
-                        resetGantt(timeUnit, leap, checkAllEvents);
-                    }).appendTo(row);
-                }
-
-
                 function getEmployeeFromId(id) {
                     for (var i = 0; i < holder.employees.length; i++) {
                         if (holder.employees[i].employeeId == id)
@@ -336,25 +312,6 @@
                     return null;
                 }
 
-                function createCell(baseclass, text = "", td = "") {
-                    var cell = $("<td " + td + "></td>");
-                    if (!isEmpty(baseclass))
-                        cell.addClass(baseclass);
-                    if (!isEmpty(text))
-                        cell.html(text);
-                    return cell;
-                }
-
-                function addEmptyRowToHtml(table, columnCount) {
-                    var row1 = $(table[0].insertRow(-1));
-                    row1.addClass("emptyRow");
-                    var cell2 = $("<td colspan=\"" + columnCount + "\"></td>");
-                    row1.append(cell2);
-                }
-
-                function isEmpty(val) {
-                    return (val === undefined || val == null || val.length <= 0 || val === " ") ? true : false;
-                }
 
             } //Controller end
         });

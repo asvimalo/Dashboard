@@ -10,6 +10,8 @@
                 holder.allEmployees = [];
                 holder.assignments = [];
 
+                var currentDate = moment();
+
                 $q.all([
                     repoEmployees.getAll(),
                     repoAssignments.getAll()
@@ -18,7 +20,7 @@
                     angular.copy(response[0], holder.allEmployees);
                     angular.copy(response[1], holder.assignments);
 
-                    initWeekEmp();
+                    initEmployeeGantt('day', currentDate);
 
                 }, function (error) {
                     //failure
@@ -28,80 +30,47 @@
                         holder.isBusy = false;
                     });
 
-                $scope.emWeekButtonClick = function () {
-                    initWeekEmp();
+                $scope.weekButtonClick = function () {
+                    initEmployeeGantt('day', currentDate);
                 };
 
-                $scope.emMonthButtonClick = function () {
-                    initMonthEmp();
+                $scope.monthButtonClick = function () {
+                    initEmployeeGantt('week', currentDate);
                 };
 
-                function initMonthEmp() {
+                $scope.yearButtonClick = function () {
+                    initEmployeeGantt('month', currentDate);
+                };
 
+                function initEmployeeGantt(timeUnit, startDate) {
+                    if (timeUnit === 'day')
+                        employeeGantt('day', 7, true, startDate);
+                    else if (timeUnit === 'week')
+                        employeeGantt('week', 5, true, startDate);
+                    else // month
+                        employeeGantt('month', 3, false, startDate);
                 }
 
-                var startdate = moment();
-                //var visibleEmployeeProjectNames = [];
-
                 /*****************************************************************************************************************************************************************
-                * * * * * * * *     WEEK    * * * * * * * *   EMPLOYEEE   * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-                *****************************************************************************************************************************************************************/
-                function initWeekEmp() {
-                    var tmp = holder.allEmployees;
-                    var tmpp = holder.assignments;
-                    console.log("initWeekEmp");
-                    var dates = [];
-                    var formatedDates = [];
-                    var currdate = startdate.clone();
-                    var enddate = 10;
-                    for (var i = 0; i < enddate; i++) {
-                        dates.push(currdate.format('YYYY-MM-DD'));
-                        var plusOneDayStr = currdate.format('MM/DD ddd');
-                        formatedDates.push(plusOneDayStr);
-                        currdate = currdate.add(1, 'days');
-                    }
-                    var tabledate = $("<table></table>").addClass("table borderless");
-                    var rowdate = $(tabledate[0].insertRow(-1));
+                 * * * * * * * *     GANTT    * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                 *****************************************************************************************************************************************************************/
+                function employeeGantt(timeUnit, leap, checkAllEvents, startDate) {
+                    var dates = createCalendarDates(timeUnit, startDate, 10);
+                    var columnCount = dates.length + 2;
 
-                    $('<button></button>').attr({ 'type': 'submit' }).addClass("glyphicon glyphicon-fast-backward").click(function () {
-                        dates = [];
-                        formatedDates = [];
-                        startdate = startdate.add(-7, 'days');
-                        initWeek();
-                    }).appendTo(rowdate);
-                    $('<button></button>').attr({ 'type': 'submit' }).addClass("glyphicon glyphicon-chevron-left").click(function () {
-                        dates = [];
-                        formatedDates = [];
-                        startdate = startdate.add(-1, 'days');
-                        initWeek();
-                    }).appendTo(rowdate);
-                    rowdate.append(createCell("", "", ""));
-                    for (var i = 0; i < formatedDates.length; i++) {
-                        rowdate.append(createCell("cellDate", formatedDates[i].toString() + " |  "));
-                    }
-                    $('<button></button>').attr({ 'type': 'submit' }).addClass("glyphicon glyphicon-chevron-right").click(function () {
-                        dates = [];
-                        formatedDates = [];
-                        startdate = startdate.add(1, 'days');
-                        initWeek();
-                    }).appendTo(rowdate);
-                    $('<button></button>').attr({ 'type': 'submit' }).addClass("glyphicon glyphicon-fast-forward").click(function () {
-                        dates = [];
-                        formatedDates = [];
-                        startdate = startdate.add(7, 'days');
-                        initWeek();
-                    }).appendTo(rowdate);
+                    var tabledate = $("<table></table>").addClass("table borderless");
+                    createCalendarHeader(tabledate, startDate, dates, leap, timeUnit, initEmployeeGantt);
 
                     //**********   EMPLOYEE   ***********
-                    addEmptyRowToHtml(tabledate, dates);
+                    addEmptyRowToHtml(tabledate, columnCount);
 
                     var nbrOfEmployees = holder.allEmployees.length;
-                    var rowCount = 2;
+                    var rowCount = 2; // Header + empty
                     for (var i = 0; i < nbrOfEmployees; i++) {
                         var employee = holder.allEmployees[i];
                         var assignmentCount = 0;
 
-                        var sumCommit = Array.apply(null, Array(dates.length)).map(Number.prototype.valueOf, 0);
+                        var sumCommit = Array.apply(null, Array(dates.length)).map(Number.prototype.valueOf, 0); // Init to zero array
 
                         if (employee.assignments) {
 
@@ -119,42 +88,44 @@
                                 row.attr('projectId', project.projectName); //TODO: change, ProjectId is a very confusing name! 
                                 row.append(createCell("projectName", project.projectName + "  ", "colspan=\"2\" style=\"white-space:PRE\"></td>"));
 
-                                var projectStartString = moment(project.startDate).format('YYYY-MM-DD');
-                                var projectEndString = moment(project.stopDate).format('YYYY-MM-DD');
-                                var startDateString = moment(startdate).format('YYYY-MM-DD');
-
+                                var projectStart = moment(project.startDate);
+                                var projectEnd = moment(project.stopDate);
                                 for (var j = 0; j < dates.length; j++) {               //for calendar
-                                    var data = "";
+                                    var style = '';
+                                    var text = "";
+                                    var prevHours = -1;
+
                                     for (var m = 0; m < commitments.length; m++) {     //for commitments
                                         var commit = commitments[m];
-                                        var commitStart = moment(commit.startDate).format('YYYY-MM-DD');
-                                        var commitEnd = moment(commit.stopDate).format('YYYY-MM-DD');
+                                        var commitStart = moment(commit.startDate);
+                                        var commitEnd = moment(commit.stopDate);
 
-                                        if (dates[j] >= commitStart && dates[j] <= commitEnd) {  //TODO: Why not?
+                                        if (!dates[j].isBefore(commitStart, timeUnit) && !dates[j].isAfter(commitEnd, timeUnit))
                                             sumCommit[j] += commit.hours;
+                                        
+                                        if ((startDate.isSame(dates[j], timeUnit) && !startDate.isBefore(commitStart) && !startDate.isAfter(commitEnd)) || commitStart.isSame(dates[j], timeUnit)) {
+                                            text = "";
+                                            if (prevHours != commit.hours) {
+                                                text = "" + commit.hours;
+                                                prevHours = commit.hours;
+                                            }
+                                            text = commit.hours + "%";
                                         }
-
-                                        if (commitStart == dates[j]) {
-                                            data = commit.hours + "%";
-                                        }
-                                        else if (startDateString == dates[j] && commitStart < dates[j] && commitEnd > dates[j]) {  //TODO: Why not?
-                                            data = commit.hours + "%";
-                                        }
-                                        else if (commitEnd == dates[j]) {
-                                            data = 'CE';
-                                        }
-                                        else if ((commitStart < dates[j]) && (commitEnd > dates[j])) {
-                                            data = 'xC';
-                                        }
+                                        if (commitStart.isSame(dates[j], timeUnit))
+                                            style = 'comstartdiv';
+                                        else if (commitEnd.isSame(dates[j], timeUnit))
+                                            style = 'comenddiv';
+                                        else if (commitStart.isBefore(dates[j], timeUnit) && commitEnd.isAfter(dates[j], timeUnit))
+                                            style = 'comdiv';
                                     } //for-commitments
 
                                     //Write employee cell to html
                                     var cell = createCell("datacell");
                                     var celldiv = $("<div></div>");
-                                    if (!isEmpty(data)) {
-                                        addCssClass(data, celldiv);
-                                        celldiv.html(data);
-                                    }
+                                    if (!isEmpty(style))
+                                        celldiv.addClass(style);
+                                    if (!isEmpty(text))
+                                        celldiv.html(text);
                                     row.append(cell.append(celldiv));
                                 } //for-calendar
                             } //for- holder.empAssigments
@@ -166,8 +137,15 @@
                         row.attr("employeeId", employee.employeeId);
                         row.append(createCell("employeeCss", "  " + employee.firstName + " " + employee.lastName, "style=\"white-space:PRE\""));
                         row.append(createCell("projectArrowButton"));
+
+                        var prevSum = -1;
                         for (var j = 0; j < dates.length; j++) {
-                            row.append(createCell("", "" + sumCommit[j] ));
+                            var cellText = "";
+                            if (timeUnit === 'day' && prevSum != sumCommit[j]) {
+                                cellText = "" + sumCommit[j];
+                                prevSum = sumCommit[j];
+                            }
+                            row.append(createCell("", cellText));
                         }
 
                     } // for-loop for Employee
@@ -200,57 +178,6 @@
                     }).appendTo($('td.projectArrowButton'));
 
                 } //function initWeekEmp()
-
-                //*********  Helper class
-
-                function createCell(baseclass, text = "", td = "") {
-                    var cell = $("<td " + td + "></td>");
-                    if (!isEmpty(baseclass))
-                        cell.addClass(baseclass);
-                    if (!isEmpty(text))
-                        cell.html(text);
-                    return cell;
-                }
-
-                function addEmptyRowToHtml(table, dates) {
-                    var row1 = $(table[0].insertRow(-1));
-                    row1.addClass("emptyRow");
-                    var cell2 = $("<td colspan=\"" + (dates.length + 2) + "\"></td>");
-                    row1.append(cell2);
-                }
-
-                function isEmpty(val) {
-                    return (val === undefined || val == null || val.length <= 0 || val === " ") ? true : false;
-                }
-
-                function addCssClass(content, div) {
-                    switch (content) {
-                        case "S":
-                            div.addClass("projectstartdiv");
-                            break;
-                        case "E":
-                            div.addClass("projectenddiv");
-                            break;
-                        case "PS":
-                            div.addClass("phasestartdiv");
-                            break;
-                        case "PE":
-                            div.addClass("phaseenddiv");
-                            break;
-                        case "x":
-                            div.addClass("celldiv");
-                            break;
-                        case "CE":
-                            div.addClass("comenddiv");
-                            break;
-                        case "xC":
-                            div.addClass("comdiv");
-                            break;
-
-                        default:
-                            div.addClass("comstartdiv");
-                    }
-                }
 
             } //Controller end
         });

@@ -15,32 +15,16 @@
     border: hidden;
 }
 
-/*div.container.body-content {
-    margin-left: 2%;
-    margin-right: 2%;
-}*/
-
-
 button:focus {
     outline: 0;
 }
-
-/*.table-borderless > tbody > tr,*/
-/*.table-borderless > tbody > tr > td,
-.table-borderless > tbody > tr > th,
-.table-borderless > tfoot > tr > td,
-.table-borderless > tfoot > tr > th,
-.table-borderless > thead > tr > td,
-.table-borderless > thead > tr > th {
-    border: none;
-}*/
 
 .mainpanel {
     background-color: whitesmoke;
     padding: 2%;
     /*max-height: 600px;*/
     min-height: 440px;
-    min-width: 1050px;
+    min-width: 1100px;
     /*overflow-y: scroll;*/
 }
 
@@ -63,13 +47,13 @@ button:focus {
     margin-bottom: 7%;
 }
 
-/*.calendarbutton:active, .calendarbutton:focus {
-    background-color: #bedafd;
-}*/
-
-.calendarbutton.active {
+.calendarbutton:active, .calendarbutton:focus {
     background-color: #bedafd;
 }
+
+/*.active {
+    background-color: #bedafd;
+}*/
 
 .calendarbutton {
     background-color: #d0d0d0;

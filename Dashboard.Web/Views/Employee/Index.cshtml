@@ -1,56 +1,123 @@
-﻿@model IEnumerable<Dashboard.Entities.Employee>
+﻿<link href="~/css/allEmployee.css" rel="stylesheet" type="text/css" />
+<br />
+<br />
+<br />
 
-@{
-    ViewData["Title"] = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+<div ng-app="app-dashboard">
+    @*<a ng-href="#!/employees/employee-details/2">One Employee Details</a>*@
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-10">
+                <div class="mainpanel">
+                    <employee-details ng-view></employee-details>
+                    <all-employees></all-employees>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="sidepanel" id="panels">
+                    <br />
+                    <button type="button" class="btn panelButton" data-toggle="modal" data-target="#projectAdd">Add a new project</button>
+                    <button type="button" class="btn panelButton" data-toggle="modal" data-target="#employeeAdd">Add a new Employee</button>
+                    <button type="button" class="btn panelButton" data-toggle="modal" data-target="#assignEmployeeToProject">Assign an employee to a project</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <project-add></project-add>
+    <employee-add></employee-add>
+    <assign-project-to-employee></assign-project-to-employee>
+</div>
+
+@section Scripts {
+    <script src="~/lib/angular/angular.min.js"></script>
+<script src="~/lib/angular-route/angular-route.min.js"></script>
+<script src="~/lib/angular-resource/angular-resource.min.js"></script>
+<script src="~/lib/ng-file-upload-shim/ng-file-upload-shim.min.js"></script>
+<script src="~/lib/ng-file-upload-shim/ng-file-upload.min.js"></script>
+<script src="~/lib/angular-modal-service/dst/angular-modal-service.js"></script>
+
+@*////////*@
+<script src="~/js/app/app-dashboard.js"></script>
+<script src="~/js/app/app-dashboard.config.js"></script>
+
+
+<script src="~/js/app/services/repoEmployees.service.js"></script>
+<script src="~/js/app/services/repoProjects.service.js"></script>
+<script src="~/js/app/services/repoClients.service.js"></script>
+<script src="~/js/app/services/repoKnowledges.service.js"></script>
+<script src="~/js/app/services/repoAssignments.service.js"></script>
+<script src="~/js/app/services/repoPhases.service.js"></script>
+<script src="~/js/app/services/repoJobTitles.service.js"></script>
+
+<script src="~/js/app/dashboard-view/dashboard-view.module.js"></script>
+<script src="~/js/app/dashboard-view/dashboard-view.component.js"></script>
+
+@*/////////////            PROJECT                  ///////////////////////*@
+
+<script src="~/js/app/project/project-add/project-add.module.js"></script>
+<script src="~/js/app/project/project-add/project-add.component.js"></script>
+
+<script src="~/js/app/project/project-details/project-details.module.js"></script>
+<script src="~/js/app/project/project-details/project-details.component.js"></script>
+
+<script src="~/js/app/project/project-delete/project-delete.module.js"></script>
+<script src="~/js/app/project/project-delete/project-delete.component.js"></script>
+
+<script src="~/js/app/project/project-edit/project-edit.module.js"></script>
+<script src="~/js/app/project/project-edit/project-edit.component.js"></script>
+
+@*/////////////            EMPLOYEE                  ///////////////////////*@
+
+<script src="~/js/app/employee/employee-add/employee-add.module.js"></script>
+<script src="~/js/app/employee/employee-add/employee-add.component.js"></script>
+
+<script src="~/js/app/employee/employee-details/employee-details.module.js"></script>
+<script src="~/js/app/employee/employee-details/employee-details.component.js"></script>
+
+<script src="~/js/app/employee/employee-edit/employee-edit.module.js"></script>
+<script src="~/js/app/employee/employee-edit/employee-edit.component.js"></script>
+
+<script src="~/js/app/employee/employee-delete/employee-delete.module.js"></script>
+<script src="~/js/app/employee/employee-delete/employee-delete.component.js"></script>
+
+@*/////////////            CLIENT                  ///////////////////////*@
+
+<script src="~/js/app/client/client-add/client-add.module.js"></script>
+<script src="~/js/app/client/client-add/client-add.component.js"></script>
+
+@*/////////////            ASSIGNMENT                  ///////////////////////*@
+
+<script src="~/js/app/assignment/assignment-edit/assignment-edit.module.js"></script>
+<script src="~/js/app/assignment/assignment-edit/assignment-edit.component.js"></script>
+
+<script src="~/js/app/assignment/assignment-delete/assignment-delete.module.js"></script>
+<script src="~/js/app/assignment/assignment-delete/assignment-delete.component.js"></script>
+
+
+@*/////////////            PHASE                  ///////////////////////*@
+
+<script src="~/js/app/phase/phase-add/phase-add.module.js"></script>
+<script src="~/js/app/phase/phase-add/phase-add.component.js"></script>
+
+<script src="~/js/app/phase/phase-delete/phase-delete.module.js"></script>
+<script src="~/js/app/phase/phase-delete/phase-delete.component.js"></script>
+
+<script src="~/js/app/phase/phase-edit/phase-edit.module.js"></script>
+<script src="~/js/app/phase/phase-edit/phase-edit.component.js"></script>
+
+@*/////////////            PANEL3                  ///////////////////////*@
+<script src="~/js/app/assign-project-to-employee/assign-project-to-employee.module.js"></script>
+<script src="~/js/app/assign-project-to-employee/assign-project-to-employee.component.js"></script>
+
+@*/////////////            ALLPROJECTS                ///////////////////////*@
+<script src="~/js/app/allproject/all-projects.module.js"></script>
+<script src="~/js/app/allproject/all-projects.component.js"></script>
+
+@*/////////////            ALLEMPLOYEES                ///////////////////////*@
+<script src="~/js/app/allemployee/all-employees.module.js"></script>
+<script src="~/js/app/allemployee/all-employees.component.js"></script>
+
+<script src="~/js/app/allproject/gantt.js"></script>
+<script src="~/lib/moment/moment.js"></script>
 }
-
-<h2>Index</h2>
-
-<p>
-    <a class="btn btn-primary" asp-controller="Employee" asp-action="Add">Create Employee</a>
-
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.FirstName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LastName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PersonNr)
-            </th>
-            <th>
-                @*<img src="http://localhost:8890/@Html.DisplayNameFor(model => model.Picture.FileName)">*@
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FirstName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.LastName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PersonNr)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ImageName)
-                </td>
-                <td>
-                    <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.EmployeeId">Edit</a> |
-                    <a class="btn btn-success" asp-action="Details" asp-route-id="@item.EmployeeId">Details</a> |
-                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.EmployeeId">Delete</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
