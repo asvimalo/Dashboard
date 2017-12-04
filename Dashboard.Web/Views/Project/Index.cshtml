@@ -4,10 +4,10 @@
 <br />
 
 <div ng-app="app-dashboard">
-    @*<a ng-href="#!/projects/project-details/2">One Project Details</a>*@
-    @*<a ng-href="#!/employees/employee-details/2">One Employee Details</a>*@
-
-    <div class="container">
+    <a ng-href="#!/projects/project-details/2">One Project Details</a>
+    <a ng-href="#!/employees/employee-details/2">One Employee Details</a>
+    @*<all-employees></all-employees>*@
+    <div class="container-fluid">
         <div class="row">
             <div class="col-md-10">
                 <all-projects></all-projects>
@@ -23,14 +23,12 @@
         </div>
     </div>
 
-    <all-employees></all-employees>
-
     <project-add></project-add>
     <employee-add></employee-add>
     <assign-project-to-employee></assign-project-to-employee>  
 </div>
 
-</div>
+
 
 @section Scripts {
     <script src="~/lib/angular/angular.min.js"></script>
@@ -51,6 +49,7 @@
     <script src="~/js/app/services/repoKnowledges.service.js"></script>
     <script src="~/js/app/services/repoAssignments.service.js"></script>
     <script src="~/js/app/services/repoPhases.service.js"></script>
+    <script src="~/js/app/services/repoJobTitles.service.js"></script>
 
     <script src="~/js/app/dashboard-view/dashboard-view.module.js"></script>
     <script src="~/js/app/dashboard-view/dashboard-view.component.js"></script>

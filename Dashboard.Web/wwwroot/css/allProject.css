@@ -38,9 +38,10 @@ button:focus {
 .mainpanel {
     background-color: whitesmoke;
     padding: 2%;
+    /*max-height: 600px;*/
     min-height: 440px;
     min-width: 1100px;
-    overflow-y: scroll;
+    /*overflow-y: scroll;*/
 }
 
 .sidepanel {
@@ -164,6 +165,16 @@ tr > button.glyphicon.glyphicon-chevron-left, button.glyphicon.glyphicon-fast-ba
     }
 
 /* employee*/
+
+/*employeegantt*/
+.employeeCss {
+    background-color: #eaeaea;
+    margin-left: 10%;
+    border-bottom-left-radius: 4px;
+    border-top-left-radius: 4px;
+}
+
+/*projectgantt*/
 .employee {
     background-color: #b0c0d3;
     border-radius: 4px;
@@ -180,7 +191,6 @@ tr > button.glyphicon.glyphicon-chevron-left, button.glyphicon.glyphicon-fast-ba
     background-color: #bedafd;
     width: 100%;
     height: 20px;
-    font-size: 1%; /*1%;*/
 }
 
 .projectstartdiv {
@@ -190,7 +200,6 @@ tr > button.glyphicon.glyphicon-chevron-left, button.glyphicon.glyphicon-fast-ba
     margin-left: 10%;
     border-bottom-left-radius: 4px;
     border-top-left-radius: 4px;
-    font-size: 1%;
 }
 
 .projectenddiv {
@@ -199,14 +208,12 @@ tr > button.glyphicon.glyphicon-chevron-left, button.glyphicon.glyphicon-fast-ba
     height: 20px;
     border-bottom-right-radius: 4px;
     border-top-right-radius: 4px;
-    font-size: 1%;
 }
 
 .phasestartdiv {
     background-color: #bef5c1;
     width: 100%;
     height: 30px;
-    font-size: 1%;
 }
 
 .phaseenddiv {
@@ -239,14 +246,12 @@ tr > button.glyphicon.glyphicon-chevron-left, button.glyphicon.glyphicon-fast-ba
     height: 20px;
     border-bottom-right-radius: 4px;
     border-top-right-radius: 4px;
-    font-size: 1%;
 }
 
 .comdiv {
     background-color: #ddecff;
     width: 100%;
     height: 20px;
-    font-size: 1%;
 }
 
 
