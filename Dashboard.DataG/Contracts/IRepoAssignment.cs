@@ -10,5 +10,6 @@ namespace Dashboard.DataG.Contracts
     public interface IRepoAssignment : IGenericRepository<Assignment>
     {
         Task<IQueryable<Assignment>> GetProjectsByEmployeeId(int id);
+        Task<IQueryable<Assignment>> GetAssignment(int id);
     }
 }

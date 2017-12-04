@@ -29,8 +29,19 @@ namespace Dashboard.DataG.Repository
                 .Include(j => j.JobTitleAssignments).ThenInclude(j => j.JobTitle)
                 .Include(p => p.Project)
                 .Include(x => x.Employee)
-                .Where(e => e.EmployeeId == id).AsNoTracking();
+                .Where(e => e.EmployeeId == id || e.AssignmentId == id).AsNoTracking();
 
          }
+
+        public async Task<IQueryable<Assignment>> GetAssignment(int id)
+        {
+            return _ctx.Assignments
+                .Include(a => a.Commitments)
+                .Include(j => j.JobTitleAssignments).ThenInclude(j => j.JobTitle)
+                .Include(p => p.Project)
+                .Include(x => x.Employee)
+                .Where(e => e.AssignmentId == id).AsNoTracking();
+
+        }
     }
 }

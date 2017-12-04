@@ -9,8 +9,8 @@
                     <span class="glyphicon glyphicon-cog"></span>
                 </button>
                 <ul class="dropdown-menu pull-right">
-                    <li><a data-toggle="modal" data-target="#editEmployee" ng-click="editEmployee(assignment.employee.employeeId)">Edit</a></li>
-                    <li><a data-toggle="modal" data-target="#deleteEmployee" ng-click="deleteEmployee(assignment.employee.employeeId)">Delete</a></li>
+                    <li><a data-toggle="modal" data-target="#editEmployee"  >Edit</a></li>
+                    <li><a data-toggle="modal" data-target="#deleteEmployee"  >Delete</a></li>
                 </ul>
             </div>
         </div>
@@ -45,8 +45,8 @@
                 </tr>  
             </table>
             <!--<a class="btn btn-info" ng-href="#!/phases/phase-edit/{{phase.phaseId}}"> Edit </a>-->
-            <button class="btn btn-info" type="button" data-toggle="collapse" data-target="#projectEdit" aria-expanded="false" ng-click="Edit(assignment.project.projectId)"> Edit </button>
-            <button class="btn btn-danger pull-right" type="button" data-toggle="modal" data-target="#deleteProject" ng-click="Delete(assignment.project.projectId)"> Delete </button>
+            <button class="btn btn-info" type="button" data-toggle="modal" data-target="#editAssignment" ng-click="editAssignment(assignment.assignmentId)"> Edit </button>
+            <button class="btn btn-danger pull-right" type="button" data-toggle="modal" data-target="#deleteAssignment" ng-click="deleteAssignment(assignment.assignmentId)"> Delete </button>
         </div>
     </div>
 </div>
@@ -54,5 +54,5 @@
 
 <employee-delete></employee-delete>
 <employee-edit></employee-edit>
-<project-delete></project-delete>
-<project-edit></project-edit>
+<assignment-delete></assignment-delete>
+<assignment-edit></assignment-edit>

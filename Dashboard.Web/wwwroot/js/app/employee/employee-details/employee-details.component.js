@@ -3,7 +3,7 @@
     angular.module("employeeDetails")
         .component("employeeDetails", {
             templateUrl: "/js/app/employee/employee-details/employee-details.template.html",
-            controller: function EmployeeDetailsController($scope, $http, $location, $routeParams, repoAssignments)
+            controller: function EmployeeDetailsController($scope, $http, $location, $rootScope, $routeParams, repoAssignments)
             {
                 this.employeeId = $routeParams.employeeId;
 
@@ -16,13 +16,17 @@
                     
                 });
 
-                $scope.deleteEmployee = function (employeeId) {
-                    location.replace("#!/employees/employee-delete/" + employeeId);
+                $scope.deleteAssignment = function (assignmentId) {
+                    $location.path("assignments/assignment-delete/" + assignmentId);
+                    $location.replace();
                 };
 
-                $scope.editEmployee = function (employeeId) {
-                    location.replace("#!/employees/employee-edit/" + employeeId);
+                $scope.editAssignment = function (assignmentId) {
+                    $location.path("assignments/assignment-edit/" + assignmentId);
+                    $location.replace();
                 };
+
+                  
             }
             
         });
