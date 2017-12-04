@@ -28,78 +28,69 @@
                     });
 
                 $scope.weekButtonClick = function () {
-                    if ($(this).hasClass('active')) {
-                        $(this).removeClass('active')
-                    } else {
-                        $(this).addClass('active')
-                    }
+                    //if ($(this).hasClass('active')) {
+                    //    $(this).removeClass('active')
+                    //} else {
+                    //    $(this).addClass('active')
+                    //}
                     initWeek();
                 };
 
                 $scope.monthButtonClick = function () {
-                    if ($(this).hasClass('active')) {
-                        $(this).removeClass('active')
-                    } else {
-                        $(this).addClass('active')
-                    }
+                    //if ($(this).hasClass('active')) {
+                    //    $(this).removeClass('active')
+                    //} else {
+                    //    $(this).addClass('active')
+                    //}
                     initMonth();
                 };
 
+                $scope.yearButtonClick = function () {
+                    initYear();
+                };
 
                 var startdate = moment();
                 var visibleEmployeeProjectNames = [];
                 $(".ganttpanel").show();
 
                 function initWeek() {
-                    resetGantt('day', 1, 7);
+                    resetGantt('day', 7, true);
                 }
                 function initMonth() {
-                    resetGantt('week', 7, 35);
+                    resetGantt('week', 5, true);
+                }
+                function initYear() {
+                    resetGantt('month', 3, false);
                 }
 
                 /*****************************************************************************************************************************************************************
                  * * * * * * * *     GANTT    * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
                  *****************************************************************************************************************************************************************/
-                function resetGantt(timeUnit, shortLeap, longLeap) {
+                function resetGantt(timeUnit, leap, checkAllEvents) {
                     //**********   CALENDAR   ***********
                     var dates = [];
                     var formatedDates = [];
-                    var currdate = startdate.clone();
+                    var currdate = startdate.clone().startOf(timeUnit);
                     var dateCount = 10;
                     var columnCount = dateCount + 2;
 
                     for (var i = 0; i < dateCount; i++) {
                         dates.push(currdate.clone());
-                        formatedDates.push( currdate.format('MM/DD ddd') );
-                        currdate = currdate.add(shortLeap, 'days');
+                        formatedDates.push(currdate.format('MM/DD ddd'));
+                        currdate = currdate.add(1, timeUnit);
                     }
                     var tabledate = $("<table></table>").addClass("table borderless");
                     var rowdate = $(tabledate[0].insertRow(-1));
-                    // Back, long
-                    $('<button></button>').attr({ 'type': 'submit' }).addClass("glyphicon glyphicon-fast-backward").click(function () {
-                        startdate = startdate.add(-longLeap, 'days');
-                        resetGantt(timeUnit, shortLeap, longLeap);
-                    }).appendTo(rowdate);
-                    // Back, short
-                    $('<button></button>').attr({ 'type': 'submit' }).addClass("glyphicon glyphicon-chevron-left").click(function () {
-                        startdate = startdate.add(-shortLeap, 'days');
-                        resetGantt(timeUnit, shortLeap, longLeap);
-                    }).appendTo(rowdate);
+
+                    createCalendarButton(rowdate, "glyphicon glyphicon-fast-backward", timeUnit, -leap, leap, checkAllEvents);
+                    createCalendarButton(rowdate, "glyphicon glyphicon-chevron-left", timeUnit, -1, leap, checkAllEvents);
                     rowdate.append(createCell("", "", "")); //colspan =\"2\" 
                     // Dates
                     for (var i = 0; i < formatedDates.length; i++) {
                         rowdate.append(createCell("cellDate", formatedDates[i].toString() + " |  "));
                     }
-                    // Forward, short
-                    $('<button></button>').attr({ 'type': 'submit' }).addClass("glyphicon glyphicon-chevron-right").click(function () {
-                        startdate = startdate.add(shortLeap, 'days');
-                        resetGantt(timeUnit, shortLeap, longLeap);
-                    }).appendTo(rowdate);
-                    // Forward, long
-                    $('<button></button>').attr({ 'type': 'submit' }).addClass("glyphicon glyphicon-fast-forward").click(function () {
-                        startdate = startdate.add(longLeap, 'days');
-                        resetGantt(timeUnit, shortLeap, longLeap);
-                    }).appendTo(rowdate);
+                    createCalendarButton(rowdate, "glyphicon glyphicon-chevron-right", timeUnit, 1, leap, checkAllEvents);
+                    createCalendarButton(rowdate, "glyphicon glyphicon-fast-forward", timeUnit, leap, leap, checkAllEvents);
 
                     //**********   PROJECT   ***********
                     addEmptyRowToHtml(tabledate, dates.length);
@@ -129,32 +120,34 @@
                             else if (projectEnd.isSame(dates[j], timeUnit)) {
                                 style = 'projectenddiv';
                             } else {
-                                if (projectStart.isBefore(dates[j], timeUnit) && projectEnd.isAfter(dates[j], timeUnit) ) {
+                                if (projectStart.isBefore(dates[j], timeUnit) && projectEnd.isAfter(dates[j], timeUnit)) {
                                     style = 'celldiv'
                                 }
 
-                                for (var k = 0; k < project.phases.length; k++) {      //for project's phases
-                                    var phase = project.phases[k];
-                                    var phaseStart = moment(phase.startDate);
-                                    var phaseEnd = moment(phase.endDate);
-                                    if (dates[j].isAfter(phaseEnd, timeUnit) || dates[j].isBefore(phaseStart, timeUnit))
-                                        continue;
+                                if (checkAllEvents) {
+                                    for (var k = 0; k < project.phases.length; k++) {      //for project's phases
+                                        var phase = project.phases[k];
+                                        var phaseStart = moment(phase.startDate);
+                                        var phaseEnd = moment(phase.endDate);
+                                        if (dates[j].isAfter(phaseEnd, timeUnit) || dates[j].isBefore(phaseStart, timeUnit))
+                                            continue;
 
-                                    phaseIds.push(k);
+                                        phaseIds.push(k);
 
-                                    if (phaseStart.isSame(dates[j], timeUnit)) {
-                                        if (style == "phasestartdiv" || style == "phaseenddiv") {
-                                            var dataObj = { "id": k, "data": "phasestartdiv" };
-                                            phaseData.push(dataObj);
+                                        if (phaseStart.isSame(dates[j], timeUnit)) {
+                                            if (style == "phasestartdiv" || style == "phaseenddiv") {
+                                                var dataObj = { "id": k, "data": "phasestartdiv" };
+                                                phaseData.push(dataObj);
+                                            }
+                                            style = 'phasestartdiv';
                                         }
-                                        style = 'phasestartdiv';
-                                    }
-                                    else if (phaseEnd.isSame(dates[j], timeUnit)) {
-                                        if (style == "phasestartdiv" || style == "phaseenddiv") {
-                                            var dataObj = { "id": k, "data": "phaseenddiv" };
-                                            phaseData.push(dataObj);
+                                        else if (phaseEnd.isSame(dates[j], timeUnit)) {
+                                            if (style == "phasestartdiv" || style == "phaseenddiv") {
+                                                var dataObj = { "id": k, "data": "phaseenddiv" };
+                                                phaseData.push(dataObj);
+                                            }
+                                            style = 'phaseenddiv';
                                         }
-                                        style = 'phaseenddiv';
                                     }
                                 }
                             }
@@ -177,7 +170,7 @@
                             row.append(cell.append(celldiv));
                         }
 
-                        if (project.assignments) {
+                        if (project.assignments && checkAllEvents) {
                             for (var k = 0; k < holder.assignments.length; k++) {
                                 var assignment = holder.assignments[k];
                                 if (project.projectId != assignment.projectId)
@@ -245,6 +238,7 @@
                     });
 
                     //Popover
+
                     $('[data-trigger="hover"]').popover({
                         'trigger': 'hover',
                         'placement': 'bottom',
@@ -252,36 +246,45 @@
                         'data-html': 'true',
                         'html': 'true',
                         'content': function () {
-                            var phaseId = $(this).attr('phase');
-                            if (phaseId.length == 0)
-                                return "";
+                            if (checkAllEvents) {
+                                var phaseId = $(this).attr('phase');
+                                if (phaseId.length == 0)
+                                    return "";
 
-                            var projectId = $(this).attr('proj');
-                            var projObj = holder.allProjects[projectId];
+                                var projectId = $(this).attr('proj');
+                                var projObj = holder.allProjects[projectId];
 
-                            if (phaseId.length == 1) {
-                                var startDate = moment(projObj.phases[phaseId[0]].startDate);
-                                var endDate = moment(projObj.phases[phaseId[0]].endDate);
-                                var contentData =
-                                    projObj.phases[phaseId[0]].phaseName + "<br/><br/>" +
-                                    "From: " + startDate.format('YYYY-MM-DD') + " <br/>" +
-                                    "To: " + endDate.format('YYYY-MM-DD') + " <br/><br/>" +
-                                    "Progress: " + projObj.phases[phaseId[0]].progress + "%<br/>" +
-                                    "Timebudget: " + projObj.phases[phaseId[0]].timeBudget + "h<br/>" +
-                                    "Comment: " + projObj.phases[phaseId[0]].comments + "<br/>";
-
-                            } else {
-                                var contentData = "";
-                                for (var i = 0; i < phaseId.length; i += 2) { //phaseId is coming with comma
-                                    var tmp = phaseId[i];
-                                    var startDate = moment(projObj.phases[phaseId[i]].startDate);
-                                    var endDate = moment(projObj.phases[phaseId[i]].endDate);
-                                    contentData +=
-                                        projObj.phases[phaseId[i]].phaseName + "<br/>" +
+                                if (phaseId.length == 1) {
+                                    var startDate = moment(projObj.phases[phaseId[0]].startDate);
+                                    var endDate = moment(projObj.phases[phaseId[0]].endDate);
+                                    var contentData =
+                                        projObj.phases[phaseId[0]].phaseName + "<br/><br/>" +
                                         "From: " + startDate.format('YYYY-MM-DD') + " <br/>" +
-                                        "To: " + endDate.format('YYYY-MM-DD') + " <br/>" +
-                                        "Progress: " + projObj.phases[phaseId[0]].progress + "%<br/><br/>";
+                                        "To: " + endDate.format('YYYY-MM-DD') + " <br/><br/>" +
+                                        "Progress: " + projObj.phases[phaseId[0]].progress + "%<br/>" +
+                                        "Timebudget: " + projObj.phases[phaseId[0]].timeBudget + "h<br/>" +
+                                        "Comment: " + projObj.phases[phaseId[0]].comments + "<br/>";
+
+                                } else {
+                                    var contentData = "";
+                                    for (var i = 0; i < phaseId.length; i += 2) { //phaseId is coming with comma
+                                        var tmp = phaseId[i];
+                                        var startDate = moment(projObj.phases[phaseId[i]].startDate);
+                                        var endDate = moment(projObj.phases[phaseId[i]].endDate);
+                                        contentData +=
+                                            projObj.phases[phaseId[i]].phaseName + "<br/>" +
+                                            "From: " + startDate.format('YYYY-MM-DD') + " <br/>" +
+                                            "To: " + endDate.format('YYYY-MM-DD') + " <br/>" +
+                                            "Progress: " + projObj.phases[phaseId[0]].progress + "%<br/><br/>";
+                                    }
                                 }
+                            } else {
+                                var projectId = $(this).attr('proj');
+                                var projObj = holder.allProjects[projectId];
+                                var contentData =
+                                    "From: " + moment(projObj.startDate).format('YYYY-MM-DD') + " <br/>" +
+                                    "To: " + moment(projObj.stopDate).format('YYYY-MM-DD') + " <br/><br/>" +
+                                    "Timebudget: " + projObj.timeBudget + "h<br/>";
                             }
                             return contentData;
                         }
@@ -289,22 +292,22 @@
 
                     //Collapse
                     $('<button></button>').attr({ 'type': 'button' }).addClass("glyphicon glyphicon-triangle-bottom").click(function () {
-                        var projectRow = $(this).parent().parent();
-                        var projectId = projectRow.attr('projectId');
+                            var projectRow = $(this).parent().parent();
+                            var projectId = projectRow.attr('projectId');
 
-                        var index = visibleEmployeeProjectNames.indexOf(projectId);
-                        if (index > -1) {
-                            visibleEmployeeProjectNames.splice(index, 1);
-                        } else {
-                            visibleEmployeeProjectNames.push(projectId);
-                        }
-                        projectRow.siblings(".employee").each(function () {
-                            var employeeProjectId = $(this).attr('projectId');
-                            if (employeeProjectId == projectId) {
-                                $(this).fadeToggle(300);
+                            var index = visibleEmployeeProjectNames.indexOf(projectId);
+                            if (index > -1) {
+                                visibleEmployeeProjectNames.splice(index, 1);
+                            } else {
+                                visibleEmployeeProjectNames.push(projectId);
                             }
-                        });
-                    }).appendTo($('td.projectArrowButton'));
+                            projectRow.siblings(".employee").each(function () {
+                                var employeeProjectId = $(this).attr('projectId');
+                                if (employeeProjectId == projectId) {
+                                    $(this).fadeToggle(300);
+                                }
+                            });
+                        }).appendTo($('td.projectArrowButton'));
 
                     //Go to OneProject
                     $(".projectName").click(function () {
@@ -317,6 +320,14 @@
                 } //end of function resetGantt() **********************************************************************************************************************************
 
                 //**********   Helper functions   *********************************************************************************************************************************
+                function createCalendarButton(row, baseClass, timeUnit, delta, leap, checkAllEvents) {
+                    $('<button></button>').attr({ 'type': 'submit' }).addClass(baseClass).click(function () {
+                        startdate = startdate.add(delta, timeUnit);
+                        resetGantt(timeUnit, leap, checkAllEvents);
+                    }).appendTo(row);
+                }
+
+
                 function getEmployeeFromId(id) {
                     for (var i = 0; i < holder.employees.length; i++) {
                         if (holder.employees[i].employeeId == id)

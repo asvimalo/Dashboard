@@ -4,15 +4,15 @@
 <br />
 
 <div ng-app="app-dashboard">
-    <a ng-href="#!/projects/project-details/2">One Project Details</a>
-    <a ng-href="#!/employees/employee-details/2">One Employee Details</a>
-    @*<all-employees></all-employees>*@
+    @*<a ng-href="#!/projects/project-details/2">One Project Details</a>
+    <a ng-href="#!/employees/employee-details/2">One Employee Details</a>*@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-10">
                 <div class="mainpanel">
                     <project-details ng-view></project-details>
                     <all-projects></all-projects>
+                    @*<all-employees></all-employees>*@
                 </div>
             </div>
             <div class="col-md-2">
