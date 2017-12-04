@@ -48,6 +48,7 @@
 
                 var startdate = moment();
                 var visibleEmployeeProjectNames = [];
+                $(".ganttpanel").show();
 
                 function initWeek() {
                     resetGantt('day', 1, 7);
@@ -308,7 +309,9 @@
                     //Go to OneProject
                     $(".projectName").click(function () {
                         var projectId = $(this).parent().attr('projectnbr');
+                        $(".ganttpanel").hide();
                         window.location.assign("http://localhost:8899/#!/projects/project-details/" + projectId);
+
                     }).eq(0);
 
                 } //end of function resetGantt() **********************************************************************************************************************************
