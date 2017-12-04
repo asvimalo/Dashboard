@@ -1,1 +1,17 @@
-﻿
+﻿<div class="ganttpanel">
+    <div class="row">
+        <div class="col-md-3">
+                <p class="colorinfo" id="phasestart">Phase start</p>
+                <p class="colorinfo" id="phaseend">Phase end</p>
+                <p class="colorinfo" id="phasemulti">Multi events</p>
+        </div>
+        <div class="col-md-offset-6 col-md-3">
+            <div class="row">
+                <button type="button" class="calendarbutton" ng-click="weekButtonClick()">Weeks</button>
+                <button type="button" class="calendarbutton" ng-click="monthButtonClick()">Months</button>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="table-responsive" id="ganttchart"></div>
+</div>

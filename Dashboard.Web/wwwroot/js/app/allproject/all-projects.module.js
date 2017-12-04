@@ -1,4 +1,4 @@
 ﻿(function () {
     "use strict";
-    angular.module("allProject", []);
+    angular.module("allProjects", []);
 })();

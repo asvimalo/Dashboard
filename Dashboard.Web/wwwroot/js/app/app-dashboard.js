@@ -21,8 +21,7 @@
             "projectEdit",
             "projectDetails",
             "allProjects",
-            "upload"
-            //"allEmployees"
+            "allEmployees"
             ]);
 })();
 

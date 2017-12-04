@@ -1,9 +1,7 @@
-﻿var repoJobTitle = function ($http) {
+﻿var repoJobTitles = function ($http) {
 
-
-    //TODO: change url när det blir klart i backend
     var getJobTitles = function () {
-        return $http.get('http://localhost:8890/api/dashboard/knowledges')
+        return $http.get('http://localhost:8890/api/dashboard/JobTitleAssignments')
             .then(function (response) {
 
                 return response.data;
@@ -19,7 +17,7 @@
     };
 
     var getJobTitleById = function (id) {
-        return $http.get("http://localhost:8890/api/dashboard/knowledges/", id)
+        return $http.get("http://localhost:8890/api/dashboard/jobTitles", id)
             .then(function (response) {
                 return response.data;
             }, function (error) {
@@ -31,6 +29,7 @@
                 console.log("Finally...??");
             });
     };
+    //OBS!!! There's no things in backend - bugg
     var getJobTitleByName = function (name) {
         return $http.get("http://localhost:8890/api/dashboard/knowledges/", name)
             .then(function (response) {
@@ -45,7 +44,7 @@
             });
     };
     var addJobTitle = function (jobtitle) {
-        $http.post('http://localhost:8890/api/dashboard/knowledges', knowledge)
+        $http.post('http://localhost:8890/api/dashboard/JobTitleAssignments', jobtitle)
             .then(function (response) {
                 return response.data;
             }, function (error) {
@@ -58,7 +57,7 @@
             });
     };
     var updateJobTitle = function (jobtitle) {
-        $http.put('http://localhost:8890/api/dashboard/knowledges', jobtitle)
+        $http.put('http://localhost:8890/api/dashboard/jobTitles', jobtitle)
             .then(function (response) {
                 return response.data;
             }, function (error) {
@@ -71,7 +70,7 @@
             });
     };
     var deleteJobTitle = function (id) {
-        $http.delete('http://localhost:8890/api/dashboard/knowledges', id)
+        $http.delete('http://localhost:8890/api/dashboard/JobTitleAssignments', id)
             .then(function (response) {
                 return response.data;
             }, function (error) {
@@ -84,7 +83,7 @@
             });
     };
     return {
-        getAll: getJobTitle,
+        getAll: getJobTitles,
         get: getJobTitleById,
         getByName: getJobTitleByName,
         add: addJobTitle,
@@ -94,4 +93,4 @@
 };
 
 var module = angular.module('app-dashboard');
-module.factory('repoKnowledges', repoKnowledges);
+module.factory('repoJobTitles', repoJobTitles);

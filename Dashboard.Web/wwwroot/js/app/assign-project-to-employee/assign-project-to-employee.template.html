@@ -21,15 +21,33 @@
                                         </select>
                                     </div>
                                     <div class="form-group">
+                                        <label>Location:</label>
+                                        <input type="text" ng-model="formInfo.location" class="form-control"> 
+                                    </div>
+                                    <!--Jobtitle input text + button-->
+                                    <div class="form-group">
                                         <label>Job title:</label>
                                         <input type="text" ng-model="formInfo.jobtitle" class="form-control"> <!--$ctrl.assigment.jobTitle-->
+                                        <button class="btn btn-info" type="button" ng-click="addJobTitles()"> <span class="glyphicon glyphicon-plus"></span></button>
                                     </div>
                                     <div class="form-group">
-                                        <label>Location:</label>
-                                        <input type="text" ng-model="formInfo.location" class="form-control"> <!--$ctrl.assigment.location-->
+                                        <label ng-hide="$ctrl.newJobTitles.length == 0">Job titles:</label>
+                                        <div ng-repeat="item in $ctrl.newJobTitles">
+                                            {{item}}
+                                            <button class="glyphicon glyphicon-remove" type="button" ng-click="remove($ctrl.commitments, $index)"></button>
+                                        </div>
                                     </div>
+                                    <!--jobtitle dropdowmn-->
                                     <div class="form-group">
-                                        <label>Commitment:</label>
+                                        <label>Select a job title</label>
+                                        <select class="form-control" ng-options="item for item in $ctrl.jobTitles" ng-model="commitment.hours">
+                                            <option value="" disabled selected></option>
+                                        </select>
+                                    </div>
+                                    
+
+                                    <div class="form-group">
+                                        <label ng-hide="$ctrl.commitments.length == 0">Commitment:</label>
                                         <div ng-repeat="item in $ctrl.commitments">
                                             {{item.hours}}% from {{item.startDate | date: 'dd-MM-yyyy'}} to {{item.stopDate | date: 'dd-MM-yyyy'}} 
                                             <button class="glyphicon glyphicon-remove" type="button" ng-click="remove($ctrl.commitments, $index)"></button>
@@ -43,16 +61,6 @@
                                     <h4>Add a new commitment</h4>
                                     <p>If no explicit commitment is set, it defaults to 100% for the entire project duration.</p>
                                     <hr/>
-                                    <!--<div class="form-group">
-                                        <label for="daterange1" class="control-label">Simple picker</label>
-                                        <input date-range-picker id="daterange1" name="daterange1" class="form-control date-picker" type="text"
-                                               ng-model="date" required ng-change="SimplePickerChange();" />
-                                    </div>-->
-                                    <!--<div class="row">
-                                        <label>From</label>
-                                        <input date-range-picker class="form-control date-picker" type="text" ng-model="commitment.date" required />
-                                    </div>-->
-
                                     <div class="form-group">
                                         <label>From</label>
                                         <input type="date" ng-model="commitment.startDate" class="form-control">
