@@ -114,7 +114,7 @@
                     when('/allEmployees', {
                         template: '<all-employees></all-employees>'
                     }).
-                    otherwise('/dashboard');
+                    otherwise('/allprojects');
             }
         ]);
 })();
