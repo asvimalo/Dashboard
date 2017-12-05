@@ -1,7 +1,6 @@
 ﻿body {
     color: grey;
     background-color: #eeeeee;
-    overflow-y: scroll;
 }
 
 .container {
@@ -16,25 +15,9 @@
     border: hidden;
 }
 
-/*div.container.body-content {
-    margin-left: 2%;
-    margin-right: 2%;
-}*/
-
-
 button:focus {
     outline: 0;
 }
-
-/*.table-borderless > tbody > tr,*/
-/*.table-borderless > tbody > tr > td,
-.table-borderless > tbody > tr > th,
-.table-borderless > tfoot > tr > td,
-.table-borderless > tfoot > tr > th,
-.table-borderless > thead > tr > td,
-.table-borderless > thead > tr > th {
-    border: none;
-}*/
 
 .mainpanel {
     background-color: whitesmoke;
@@ -48,46 +31,29 @@ button:focus {
 .sidepanel {
     background-color: whitesmoke;
     padding: 2%;
-    min-width: 200px;
-    min-height: 440px;
-    max-height: 440px;
-    margin-left: -16%;
+    margin-right: -220px;
+    margin-left: 140px;
 }
 /*#c2deee; #bedafd*/
 .panelButton {
-    transition: 0.5s;
-    background-size: 200% auto;
-    background-image: linear-gradient(to right, #a1c4fd 0%, #c2e9fb 51%, #a1c4fd 100%);
-    border-radius: 5px;
+    background-color: #bedafd;
     min-width: 95%;
-    padding-left: 10%;
-    padding-right: 10%;
-    padding-top: 10%;
-    padding-bottom: 10%;
-    margin-left: 2%;
+    padding-top: 20%;
+    padding-bottom: 20%;
+    padding-right: 5%;
+    padding-left: 5%;
+    margin-left: 3%;
     margin-right: 2%;
-    margin-top: 10%;
-    text-transform: uppercase;
-    text-align: center;
+    margin-bottom: 7%;
 }
 
-.panelButton:hover {
-    background-position: right center; /* change the direction of the change here */
+.calendarbutton:active, .calendarbutton:focus {
+    background-color: #bedafd;
 }
 
-.panelIcons {
-    font-size: 30px; 
-    padding-bottom: 10%;
-    width: 100%;
-}
-
-/*.calendarbutton:active, .calendarbutton:focus {
+/*.active {
     background-color: #bedafd;
 }*/
-
-.calendarbutton.active {
-    background-color: #bedafd;
-}
 
 .calendarbutton {
     background-color: #d0d0d0;
@@ -282,4 +248,3 @@ tr > button.glyphicon.glyphicon-chevron-left, button.glyphicon.glyphicon-fast-ba
 .clientAdd {
     margin-left: 2.5%;
 }
- 

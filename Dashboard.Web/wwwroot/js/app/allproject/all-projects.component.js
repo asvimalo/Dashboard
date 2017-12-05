@@ -9,6 +9,8 @@
                 holder.allProjects = [];
                 holder.assignments = [];
 
+                var currentDate = moment();
+
                 $q.all([
                     repoProjects.getAll(),
                     repoAssignments.getAll()
@@ -17,7 +19,8 @@
                     angular.copy(response[0], holder.allProjects);
                     angular.copy(response[1], holder.assignments);
 
-                    initWeek();
+                    initProjectGantt('day', currentDate);
+                    $("#weekButton").addClass('active');
 
                 }, function (error) {
                     //failure
@@ -27,81 +30,56 @@
                         holder.isBusy = false;
                     });
 
+                var weekButton = $("#weekButton");
+                var monthButton = $("#monthButton");
+                var yearButton = $("#yearButton");
+
                 $scope.weekButtonClick = function () {
-                    if ($(this).hasClass('active')) {
-                        $(this).removeClass('active')
-                    } else {
-                        $(this).addClass('active')
-                    }
-                    initWeek();
+                    if (!weekButton.hasClass('active')) weekButton.addClass('active');
+                    if (monthButton.hasClass('active')) monthButton.removeClass('active');
+                    if (yearButton.hasClass('active')) yearButton.removeClass('active');
+                    initProjectGantt('day', currentDate);
                 };
 
                 $scope.monthButtonClick = function () {
-                    if ($(this).hasClass('active')) {
-                        $(this).removeClass('active')
-                    } else {
-                        $(this).addClass('active')
-                    }
-                    initMonth();
+                    if (weekButton.hasClass('active')) weekButton.removeClass('active');
+                    if (!monthButton.hasClass('active')) monthButton.addClass('active');
+                    if (yearButton.hasClass('active')) yearButton.removeClass('active');
+                    initProjectGantt('week', currentDate);
                 };
 
+                $scope.yearButtonClick = function () {
+                    if (monthButton.hasClass('active')) monthButton.removeClass('active');
+                    if (weekButton.hasClass('active')) weekButton.removeClass('active');
+                    if (!yearButton.hasClass('active')) yearButton.addClass('active');
+                    initProjectGantt('month', currentDate);
+                };
 
-                var startdate = moment();
                 var visibleEmployeeProjectNames = [];
 
-                function initWeek() {
-                    resetGantt('day', 1, 7);
-                }
-                function initMonth() {
-                    resetGantt('week', 7, 35);
+                function initProjectGantt(timeUnit, startDate) {
+                    if (timeUnit === 'day')
+                        projectGantt('day', 7, true, startDate);
+                    else if (timeUnit === 'week')
+                        projectGantt('week', 5, true, startDate);
+                    else // month
+                        projectGantt('month', 3, false, startDate);
                 }
 
                 /*****************************************************************************************************************************************************************
                  * * * * * * * *     GANTT    * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
                  *****************************************************************************************************************************************************************/
-                function resetGantt(timeUnit, shortLeap, longLeap) {
+                function projectGantt(timeUnit, leap, checkAllEvents, startDate) {
                     //**********   CALENDAR   ***********
-                    var dates = [];
-                    var formatedDates = [];
-                    var currdate = startdate.clone();
-                    var dateCount = 10;
-                    var columnCount = dateCount + 2;
 
-                    for (var i = 0; i < dateCount; i++) {
-                        dates.push(currdate.clone());
-                        formatedDates.push( currdate.format('MM/DD ddd') );
-                        currdate = currdate.add(shortLeap, 'days');
-                    }
+                    var dates = createCalendarDates(timeUnit, startDate, 10);
+                    var columnCount = dates.length + 2;
+
                     var tabledate = $("<table></table>").addClass("table borderless");
-                    var rowdate = $(tabledate[0].insertRow(-1));
-                    // Back, long
-                    $('<button></button>').attr({ 'type': 'submit' }).addClass("glyphicon glyphicon-fast-backward").click(function () {
-                        startdate = startdate.add(-longLeap, 'days');
-                        resetGantt(timeUnit, shortLeap, longLeap);
-                    }).appendTo(rowdate);
-                    // Back, short
-                    $('<button></button>').attr({ 'type': 'submit' }).addClass("glyphicon glyphicon-chevron-left").click(function () {
-                        startdate = startdate.add(-shortLeap, 'days');
-                        resetGantt(timeUnit, shortLeap, longLeap);
-                    }).appendTo(rowdate);
-                    rowdate.append(createCell("", "", "")); //colspan =\"2\" 
-                    // Dates
-                    for (var i = 0; i < formatedDates.length; i++) {
-                        rowdate.append(createCell("cellDate", formatedDates[i].toString() + " |  "));
-                    }
-                    // Forward, short
-                    $('<button></button>').attr({ 'type': 'submit' }).addClass("glyphicon glyphicon-chevron-right").click(function () {
-                        startdate = startdate.add(shortLeap, 'days');
-                        resetGantt(timeUnit, shortLeap, longLeap);
-                    }).appendTo(rowdate);
-                    // Forward, long
-                    $('<button></button>').attr({ 'type': 'submit' }).addClass("glyphicon glyphicon-fast-forward").click(function () {
-                        startdate = startdate.add(longLeap, 'days');
-                        resetGantt(timeUnit, shortLeap, longLeap);
-                    }).appendTo(rowdate);
+                    createCalendarHeader(tabledate, startDate, dates, leap, timeUnit, initProjectGantt);
 
                     //**********   PROJECT   ***********
-                    addEmptyRowToHtml(tabledate, dates.length);
+                    addEmptyRowToHtml(tabledate, columnCount);
 
                     var nbrOfProjects = holder.allProjects.length;
                     for (var i = 0; i < nbrOfProjects; i++) {
@@ -128,32 +106,33 @@
                             else if (projectEnd.isSame(dates[j], timeUnit)) {
                                 style = 'projectenddiv';
                             } else {
-                                if (projectStart.isBefore(dates[j], timeUnit) && projectEnd.isAfter(dates[j], timeUnit) ) {
+                                if (projectStart.isBefore(dates[j], timeUnit) && projectEnd.isAfter(dates[j], timeUnit))
                                     style = 'celldiv'
-                                }
 
-                                for (var k = 0; k < project.phases.length; k++) {      //for project's phases
-                                    var phase = project.phases[k];
-                                    var phaseStart = moment(phase.startDate);
-                                    var phaseEnd = moment(phase.endDate);
-                                    if (dates[j].isAfter(phaseEnd, timeUnit) || dates[j].isBefore(phaseStart, timeUnit))
-                                        continue;
+                                if (checkAllEvents) {
+                                    for (var k = 0; k < project.phases.length; k++) {      //for project's phases
+                                        var phase = project.phases[k];
+                                        var phaseStart = moment(phase.startDate);
+                                        var phaseEnd = moment(phase.endDate);
+                                        if (dates[j].isAfter(phaseEnd, timeUnit) || dates[j].isBefore(phaseStart, timeUnit))
+                                            continue;
 
-                                    phaseIds.push(k);
+                                        phaseIds.push(k);
 
-                                    if (phaseStart.isSame(dates[j], timeUnit)) {
-                                        if (style == "phasestartdiv" || style == "phaseenddiv") {
-                                            var dataObj = { "id": k, "data": "phasestartdiv" };
-                                            phaseData.push(dataObj);
+                                        if (phaseStart.isSame(dates[j], timeUnit)) {
+                                            if (style == "phasestartdiv" || style == "phaseenddiv") {
+                                                var dataObj = { "id": k, "data": "phasestartdiv" };
+                                                phaseData.push(dataObj);
+                                            }
+                                            style = 'phasestartdiv';
                                         }
-                                        style = 'phasestartdiv';
-                                    }
-                                    else if (phaseEnd.isSame(dates[j], timeUnit)) {
-                                        if (style == "phasestartdiv" || style == "phaseenddiv") {
-                                            var dataObj = { "id": k, "data": "phaseenddiv" };
-                                            phaseData.push(dataObj);
+                                        else if (phaseEnd.isSame(dates[j], timeUnit)) {
+                                            if (style == "phasestartdiv" || style == "phaseenddiv") {
+                                                var dataObj = { "id": k, "data": "phaseenddiv" };
+                                                phaseData.push(dataObj);
+                                            }
+                                            style = 'phaseenddiv';
                                         }
-                                        style = 'phaseenddiv';
                                     }
                                 }
                             }
@@ -176,7 +155,7 @@
                             row.append(cell.append(celldiv));
                         }
 
-                        if (project.assignments) {
+                        if (project.assignments && checkAllEvents) {
                             for (var k = 0; k < holder.assignments.length; k++) {
                                 var assignment = holder.assignments[k];
                                 if (project.projectId != assignment.projectId)
@@ -198,7 +177,7 @@
                                         var commitStart = moment(commit.startDate);
                                         var commitEnd = moment(commit.stopDate);
 
-                                        if ((startdate.isSame(dates[j], timeUnit) && !startdate.isBefore(commitStart) && !startdate.isAfter(commitEnd)) || commitStart.isSame(dates[j], timeUnit))
+                                        if ((startDate.isSame(dates[j], timeUnit) && !startDate.isBefore(commitStart) && !startDate.isAfter(commitEnd)) || commitStart.isSame(dates[j], timeUnit))
                                             text = commit.hours + "%";
 
                                         if (commitStart.isSame(dates[j], timeUnit))
@@ -225,7 +204,7 @@
                             //$(".projectArrowButton").hide();
                         }
 
-                        addEmptyRowToHtml(tabledate, dates.length);
+                        addEmptyRowToHtml(tabledate, columnCount);
                     }
 
                     //**********   Data to HTML table   ***********
@@ -251,36 +230,44 @@
                         'data-html': 'true',
                         'html': 'true',
                         'content': function () {
-                            var phaseId = $(this).attr('phase');
-                            if (phaseId.length == 0)
-                                return "";
+                            if (checkAllEvents) {
+                                var phaseId = $(this).attr('phase');
+                                if (phaseId.length == 0)
+                                    return "";
 
-                            var projectId = $(this).attr('proj');
-                            var projObj = holder.allProjects[projectId];
+                                var projectId = $(this).attr('proj');
+                                var projObj = holder.allProjects[projectId];
 
-                            if (phaseId.length == 1) {
-                                var startDate = moment(projObj.phases[phaseId[0]].startDate);
-                                var endDate = moment(projObj.phases[phaseId[0]].endDate);
-                                var contentData =
-                                    projObj.phases[phaseId[0]].phaseName + "<br/><br/>" +
-                                    "From: " + startDate.format('YYYY-MM-DD') + " <br/>" +
-                                    "To: " + endDate.format('YYYY-MM-DD') + " <br/><br/>" +
-                                    "Progress: " + projObj.phases[phaseId[0]].progress + "%<br/>" +
-                                    "Timebudget: " + projObj.phases[phaseId[0]].timeBudget + "h<br/>" +
-                                    "Comment: " + projObj.phases[phaseId[0]].comments + "<br/>";
+                                if (phaseId.length == 1) {
+                                    var start = moment(projObj.phases[phaseId[0]].startDate);
+                                    var end = moment(projObj.phases[phaseId[0]].endDate);
+                                    var contentData =
+                                        projObj.phases[phaseId[0]].phaseName + "<br/><br/>" +
+                                        "From: " + start.format('YYYY-MM-DD') + " <br/>" +
+                                        "To: " + end.format('YYYY-MM-DD') + " <br/><br/>" +
+                                        "Progress: " + projObj.phases[phaseId[0]].progress + "%<br/>" +
+                                        "Timebudget: " + projObj.phases[phaseId[0]].timeBudget + "h<br/>" +
+                                        "Comment: " + projObj.phases[phaseId[0]].comments + "<br/>";
 
-                            } else {
-                                var contentData = "";
-                                for (var i = 0; i < phaseId.length; i += 2) { //phaseId is coming with comma
-                                    var tmp = phaseId[i];
-                                    var startDate = moment(projObj.phases[phaseId[i]].startDate);
-                                    var endDate = moment(projObj.phases[phaseId[i]].endDate);
-                                    contentData +=
-                                        projObj.phases[phaseId[i]].phaseName + "<br/>" +
-                                        "From: " + startDate.format('YYYY-MM-DD') + " <br/>" +
-                                        "To: " + endDate.format('YYYY-MM-DD') + " <br/>" +
-                                        "Progress: " + projObj.phases[phaseId[0]].progress + "%<br/><br/>";
+                                } else {
+                                    var contentData = "";
+                                    for (var i = 0; i < phaseId.length; i += 2) { //phaseId is coming with comma
+                                        var start = moment(projObj.phases[phaseId[i]].startDate);
+                                        var end = moment(projObj.phases[phaseId[i]].endDate);
+                                        contentData +=
+                                            projObj.phases[phaseId[i]].phaseName + "<br/>" +
+                                            "From: " + start.format('YYYY-MM-DD') + " <br/>" +
+                                            "To: " + end.format('YYYY-MM-DD') + " <br/>" +
+                                            "Progress: " + projObj.phases[phaseId[0]].progress + "%<br/><br/>";
+                                    }
                                 }
+                            } else {
+                                var projectId = $(this).attr('proj');
+                                var projObj = holder.allProjects[projectId];
+                                var contentData =
+                                    "From: " + moment(projObj.startDate).format('YYYY-MM-DD') + " <br/>" +
+                                    "To: " + moment(projObj.stopDate).format('YYYY-MM-DD') + " <br/><br/>" +
+                                    "Timebudget: " + projObj.timeBudget + "h<br/>";
                             }
                             return contentData;
                         }
@@ -323,25 +310,6 @@
                     return null;
                 }
 
-                function createCell(baseclass, text = "", td = "") {
-                    var cell = $("<td " + td + "></td>");
-                    if (!isEmpty(baseclass))
-                        cell.addClass(baseclass);
-                    if (!isEmpty(text))
-                        cell.html(text);
-                    return cell;
-                }
-
-                function addEmptyRowToHtml(table, columnCount) {
-                    var row1 = $(table[0].insertRow(-1));
-                    row1.addClass("emptyRow");
-                    var cell2 = $("<td colspan=\"" + columnCount + "\"></td>");
-                    row1.append(cell2);
-                }
-
-                function isEmpty(val) {
-                    return (val === undefined || val == null || val.length <= 0 || val === " ") ? true : false;
-                }
 
             } //Controller end
         });

@@ -3,86 +3,88 @@
         <div class="modal-content">
             <div class="modal-body">
                 <p class="modalTitle">Assign a project to an employee</p>
-                  <form novalidate class="simple-form">
+                <form novalidate class="simple-form">
                     <div class="modal-body" id="modal-body">
                         <div class="row">
-                                <div class="col-md-5 modalDevider">
-                                    <div class="form-group">
-                                        <label>Employee:</label>
-                                        <select class="form-control" ng-options="item as item.firstName + ' ' + item.lastName for item in $ctrl.employeesAndProjects.employees" ng-model="formInfo.employee">
-                                            <option value="" disabled selected></option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Project:</label>
-                                        <select class="form-control" ng-options="item.projectName for item in $ctrl.employeesAndProjects.projects" ng-model="formInfo.project">
-                                            <!--$ctrl.projects.singleSelect-->
-                                            <option value="" disabled selected></option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Location:</label>
-                                        <input type="text" ng-model="formInfo.location" class="form-control"> 
-                                    </div>
+                            <div class="col-md-5 modalDevider">
+                                <div class="form-group">
+                                    <label>Employee:</label>
+                                    <select class="form-control" ng-options="item as item.firstName + ' ' + item.lastName for item in $ctrl.employeesAndProjects.employees" ng-model="formInfo.employee">
+                                        <option value="" disabled selected></option>
+                                    </select>
+                                    <!--</div>-->
+                                    <!--<div class="form-group">-->
+                                    <label>Project:</label>
+                                    <select class="form-control" ng-options="item.projectName for item in $ctrl.employeesAndProjects.projects" ng-model="formInfo.project">
+                                        <!--$ctrl.projects.singleSelect-->
+                                        <option value="" disabled selected></option>
+                                    </select>
+                                    <!--</div>-->
+                                    <!--<div class="form-group">-->
+                                    <label>Location:</label>
+                                    <input type="text" ng-model="formInfo.location" class="form-control">
+                                    <!--</div>-->
                                     <!--Jobtitle input text + button-->
-                                    <div class="form-group">
-                                        <label>Job title:</label>
+                                    <!--<div class="form-group">-->
+                                    <label>Select a job title</label>
+                                    <select class="form-control" ng-options="item for item in $ctrl.jobTitles" ng-model="commitment.hours">
+                                        <option value="" disabled selected></option>
+                                    </select>
+                                    <label>
+                                        Job title:
                                         <input type="text" ng-model="formInfo.jobtitle" class="form-control"> <!--$ctrl.assigment.jobTitle-->
-                                        <button class="btn btn-info" type="button" ng-click="addJobTitles()"> <span class="glyphicon glyphicon-plus"></span></button>
+                                    </label>
+                                    <button class="btn btn-info" type="button" ng-click="addJobTitles()"> <span class="glyphicon glyphicon-plus"></span></button>
+                                    <!--</div>-->
+                                    <!--<div class="form-group">-->
+                                    <label ng-hide="$ctrl.newJobTitles.length == 0">Job titles:</label>
+                                    <div ng-repeat="item in $ctrl.newJobTitles">
+                                        {{item}}
+                                        <button class="glyphicon glyphicon-remove" type="button" ng-click="remove($ctrl.commitments, $index)"></button>
                                     </div>
-                                    <div class="form-group">
-                                        <label ng-hide="$ctrl.newJobTitles.length == 0">Job titles:</label>
-                                        <div ng-repeat="item in $ctrl.newJobTitles">
-                                            {{item}}
-                                            <button class="glyphicon glyphicon-remove" type="button" ng-click="remove($ctrl.commitments, $index)"></button>
-                                        </div>
-                                    </div>
+                                    <!--</div>-->
                                     <!--jobtitle dropdowmn-->
-                                    <div class="form-group">
-                                        <label>Select a job title</label>
-                                        <select class="form-control" ng-options="item for item in $ctrl.jobTitles" ng-model="commitment.hours">
-                                            <option value="" disabled selected></option>
-                                        </select>
-                                    </div>
+                                    <!--<div class="form-group">-->
                                     
-
-                                    <div class="form-group">
-                                        <label ng-hide="$ctrl.commitments.length == 0">Commitment:</label>
-                                        <div ng-repeat="item in $ctrl.commitments">
-                                            {{item.hours}}% from {{item.startDate | date: 'dd-MM-yyyy'}} to {{item.stopDate | date: 'dd-MM-yyyy'}} 
-                                            <button class="glyphicon glyphicon-remove" type="button" ng-click="remove($ctrl.commitments, $index)"></button>
-                                        </div>
+                                    <!--</div>-->
+                                    <!--<div class="form-group">-->
+                                    <label ng-hide="$ctrl.commitments.length == 0">Commitment:</label>
+                                    <div ng-repeat="item in $ctrl.commitments">
+                                        {{item.hours}}% from {{item.startDate | date: 'dd-MM-yyyy'}} to {{item.stopDate | date: 'dd-MM-yyyy'}}
+                                        <button class="glyphicon glyphicon-remove" type="button" ng-click="remove($ctrl.commitments, $index)"></button>
                                     </div>
+                                    <!--</div>-->
                                     <br />
                                     <button class="btn btn-primary" type="submit" ng-click="assignProjectToEmployee()"> Save </button>
                                 </div>
+                            </div>
                             <!-- Add a new commitment -->
-                                <div class="col-md-6 modalDeviderMargin">
-                                    <h4>Add a new commitment</h4>
-                                    <p>If no explicit commitment is set, it defaults to 100% for the entire project duration.</p>
-                                    <hr/>
-                                    <div class="form-group">
-                                        <label>From</label>
-                                        <input type="date" ng-model="commitment.startDate" class="form-control">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>To</label>
-                                        <input type="date" ng-model="commitment.stopDate" class="form-control" ng-change="validateEndDate(commitment.startDate, commitment.stopDate)">
-                                    </div>
-                                    <span>{{errorMessage}}</span>
-                                    <div class="form-group">
-                                        <label>Commitment (%)</label>
-                                        <!--<input type="number" ng-model="commitment.hours" class="form-control">-->
-                                        <select class="form-control" ng-options="item for item in $ctrl.commitmentHours" ng-model="commitment.hours">
-                                            <!--$ctrl.projects.singleSelect-->
-                                            <option value="" disabled selected></option>
-                                        </select>
-                                    </div>
-                                    <br />
-                                    <button id="addAssigmentsButton" class="btn btn-secondary" type="button" ng-click="addCommitment()"> Add </button>
+                            <div class="col-md-6 modalDeviderMargin">
+                                <h4>Add a new commitment</h4>
+                                <p>If no explicit commitment is set, it defaults to 100% for the entire project duration.</p>
+                                <hr />
+                                <div class="form-group">
+                                    <label>From</label>
+                                    <input type="date" ng-model="commitment.startDate" class="form-control">
                                 </div>
+                                <div class="form-group">
+                                    <label>To</label>
+                                    <input type="date" ng-model="commitment.stopDate" class="form-control" ng-change="validateEndDate(commitment.startDate, commitment.stopDate)">
+                                </div>
+                                <span>{{errorMessage}}</span>
+                                <div class="form-group">
+                                    <label>Commitment (%)</label>
+                                    <!--<input type="number" ng-model="commitment.hours" class="form-control">-->
+                                    <select class="form-control" ng-options="item for item in $ctrl.commitmentHours" ng-model="commitment.hours">
+                                        <!--$ctrl.projects.singleSelect-->
+                                        <option value="" disabled selected></option>
+                                    </select>
+                                </div>
+                                <br />
+                                <button id="addAssigmentsButton" class="btn btn-secondary" type="button" ng-click="addCommitment()"> Add </button>
+                            </div>
                         </div>
-                    </div> 
+                    </div>
                 </form>
             </div>
             <div class="modal-footer">

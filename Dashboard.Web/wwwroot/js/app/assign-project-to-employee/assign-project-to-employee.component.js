@@ -7,6 +7,7 @@
                 $http,
                 $scope,
                 $location,
+                $q,
                 repoAssignments,
                 repoJobTitles
             ) {
@@ -15,23 +16,43 @@
                 holder.isBusy = true;
 
                 holder.employeesAndProjects = [];
-                repoAssignments.lists().then(function (response) {
-                    //success
-                    console.log("Check");
-                    angular.copy(response, holder.employeesAndProjects);
+                holder.jobTitles = [];
+
+                $q.all([
+                    repoAssignments.lists(),
+                    repoJobTitles.getAll()
+                ]).then(function (response){
+                    angular.copy(response[0], holder.employeesAndProjects);
+                    angular.copy(response[1], holder.jobTitles);
+
+                    //doWork();
                 }, function (error) {
                     //failure
                     holder.errorMessage = "Failed to load data: " + error;
                 })
-                .finally(function () {
-                    holder.isBusy = false;
-                    });
+        .finally(function () {
+            holder.isBusy = false;
+        });
 
-                //http://localhost:8890/api/dashboard/jobTitleAssignments
-                holder.jobTitles = [];
-                repoJobTitles.getAll().then(function (response) {
-                    angular.copy(response.data, holder.jobTitles);
-                });
+
+
+                //repoAssignments.lists().then(function (response) {
+                //    //success
+                //    console.log("Check");
+                //    angular.copy(response, holder.employeesAndProjects);
+                //}, function (error) {
+                //    //failure
+                //    holder.errorMessage = "Failed to load data: " + error;
+                //})
+                //.finally(function () {
+                //    holder.isBusy = false;
+                //    });
+
+                ////http://localhost:8890/api/dashboard/jobTitleAssignments
+               
+                //repoJobTitles.getAll().then(function (response) {
+                //    angular.copy(response.data, holder.jobTitles);
+                //});
                 //holder.jobTitles = [];
                 //repoJobTitles.getAll().then(function (response) {
                 //    angular.copy(response.data, holder.jobTitles);
