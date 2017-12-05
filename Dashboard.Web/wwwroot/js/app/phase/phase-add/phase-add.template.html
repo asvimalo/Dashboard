@@ -8,16 +8,23 @@
     </div>
     <div class="form-group">
         <label>From</label>
-        <input type="date" ng-model="$ctrl.phase.startDate" class="form-control" name="startdate" required>
+        <input type="date" ng-model="$ctrl.phase.startDate" class="form-control" name="startdate" ng-change="validateEndDate($ctrl.phase.startDate, $ctrl.phase.endDate)" required>
         <div ng-show="addPhaseForm.$submitted || addPhaseForm.startdate.$touched">
             <span ng-show="addPhaseForm.startdate.$error.required">Start date is required.</span>
+        </div>
+        <div class="alert alert-danger" ng-hide="alert">
+            <strong>Warning!</strong> <span>{{errorMessage}}</span>
         </div>
     </div>
     <div class="form-group">
         <label>To</label>
-        <input type="date" ng-model="$ctrl.phase.endDate" class="form-control" name="stopdate" required>
+        <input type="date" ng-model="$ctrl.phase.endDate" class="form-control" name="stopdate" ng-change="validateEndDate($ctrl.phase.startDate, $ctrl.phase.endDate)" required>
         <div ng-show="addPhaseForm.$submitted || addPhaseForm.endDate.$touched">
             <span ng-show="addPhaseForm.endDate.$error.required">Start date is required.</span>
+        </div>
+        <br />
+        <div class="alert alert-danger" ng-hide="alert">
+            <strong>Warning!</strong> <span>{{errorMessage}}</span>
         </div>
     </div>
     <div class="form-group">

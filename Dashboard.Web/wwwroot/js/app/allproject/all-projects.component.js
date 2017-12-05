@@ -56,7 +56,6 @@
                 };
 
                 var visibleEmployeeProjectNames = [];
-                $(".ganttpanel").show();
 
                 function initProjectGantt(timeUnit, startDate) {
                     if (timeUnit === 'day')
@@ -296,10 +295,9 @@
                     //Go to OneProject
                     $(".projectName").click(function () {
                         var projectId = $(this).parent().attr('projectnbr');
-                        $(".ganttpanel").hide();
                         window.location.assign("http://localhost:8899/#!/projects/project-details/" + projectId);
-
-                    }).eq(0);
+                        window.location.reload();
+                   }).eq(0);
 
                 } //end of function resetGantt() **********************************************************************************************************************************
 

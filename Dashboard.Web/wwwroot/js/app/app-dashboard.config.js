@@ -108,13 +108,13 @@
                     when('/assignProjectToEmployee', {
                         template: '<assign-project-to-employee></assign-project-to-employee>'
                     }).
-                    when('/allProjects', {
+                    when('/allprojects', {
                         template: '<all-projects></all-projects>'
                     }).
                     when('/allEmployees', {
                         template: '<all-employees></all-employees>'
                     }).
-                    otherwise('/dashboard');
+                    otherwise('/allprojects');
             }
         ]);
 })();

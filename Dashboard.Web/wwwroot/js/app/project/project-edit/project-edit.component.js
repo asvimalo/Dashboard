@@ -11,7 +11,7 @@
                 self.employeesAndClients = []; 
                 self.project = {};
 
-                $http.get('http://localhost:8890/api/dashboard/projects/employeesclientslist').then(function (response) {
+                repoProjects.getEmpClientList().then(function (response) {
                     angular.copy(response.data, self.employeesAndClients);
                 });
 

@@ -7,6 +7,7 @@
             {
                 var self = this;
                 self.phases = [];
+                $scope.alert = true;
 
                 $scope.addPhase = function () {
                     var data = {
@@ -15,6 +16,18 @@
                     
                     repoPhases.add(dataTmp);
                 }
+
+                $scope.validateEndDate = function (startDate, endDate) {
+                    if (new Date(endDate) < new Date(startDate)) {
+                        $scope.errorMessage = "To:date should be greater than start date.";
+                        $scope.alert = false;
+                        return false;
+                    }
+                    else {
+                        $scope.alert = true;
+                        return true;
+                    }
+                };
             }
             
         });

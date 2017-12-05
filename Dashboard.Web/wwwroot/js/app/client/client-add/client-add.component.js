@@ -3,7 +3,7 @@
     angular.module("clientAdd")
         .component("clientAdd", {
             templateUrl: "/js/app/client/client-add/client-add.template.html",
-            controller: function ClientAddController($http, $scope, $routeParams, $location, repoClients) {
+            controller: function ClientAddController($http, $scope, $routeParams, $location, $window, repoClients, repoProjects) {
 
                 var self = this;
 
@@ -17,14 +17,17 @@
 
                     var data = { "ClientName": $scope.addClientForm.clientName, "City": $scope.addClientForm.city, "Address": $scope.addClientForm.adress };
                     var dataTmp = JSON.stringify(data);
-
                     // Http Post for Location 
                     repoClients.add(dataTmp)
                         .then(function (response) {
                             console.log("Response from server api" + response);
                             // Sparar datan i $scope.locationObj för att få locationId
-                            $scope.addClientForm = {};
                             angular.copy(response, self.addedClient);
+
+                            // Update options
+                            $scope.addProjectForm.clients();
+
+                            $window.location.reload();
                         }, function () {
                             //failure
                             console.log("failure");
@@ -38,10 +41,7 @@
 
                         });  
                 };
-
-                $scope.updateClientList = function () {
-
-                };
+                 
 
              }
 

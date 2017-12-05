@@ -1,6 +1,7 @@
 ﻿body {
     color: grey;
     background-color: #eeeeee;
+    overflow-y: scroll;
 }
 
 .container {
@@ -24,27 +25,44 @@ button:focus {
     padding: 2%;
     /*max-height: 600px;*/
     min-height: 440px;
-    min-width: 1050px;
+    /*min-width: 1100px;*/
     /*overflow-y: scroll;*/
 }
 
 .sidepanel {
     background-color: whitesmoke;
     padding: 2%;
-    margin-right: -220px;
-    margin-left: 140px;
+    min-width: 200px;
+    min-height: 440px;
+    max-height: 440px;
+    margin-left: -16%;
 }
 /*#c2deee; #bedafd*/
 .panelButton {
-    background-color: #bedafd;
+    transition: 0.5s;
+    background-size: 200% auto;
+    background-image: linear-gradient(to right, #a1c4fd 0%, #c2e9fb 51%, #a1c4fd 100%);
+    border-radius: 5px;
     min-width: 95%;
-    padding-top: 20%;
-    padding-bottom: 20%;
-    padding-right: 5%;
-    padding-left: 5%;
-    margin-left: 3%;
+    padding-left: 10%;
+    padding-right: 10%;
+    padding-top: 10%;
+    padding-bottom: 10%;
+    margin-left: 2%;
     margin-right: 2%;
-    margin-bottom: 7%;
+    margin-top: 10%;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.panelButton:hover {
+    background-position: right center; /* change the direction of the change here */
+}
+
+.panelIcons {
+    font-size: 30px; 
+    padding-bottom: 10%;
+    width: 100%;
 }
 
 .calendarbutton.active {
@@ -232,3 +250,4 @@ tr > button.glyphicon.glyphicon-chevron-left, button.glyphicon.glyphicon-fast-ba
 .clientAdd {
     margin-left: 2.5%;
 }
+ 

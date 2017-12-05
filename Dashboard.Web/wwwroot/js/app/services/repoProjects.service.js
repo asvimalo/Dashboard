@@ -16,7 +16,21 @@ var repoProjects = function ($http) {
                 //console.log("Finally...??");
             });
     };
+    var getEmpClientList = function () {
+        return $http.get("http://localhost:8890/api/dashboard/projects/employeesclientslist")
+            .then(function (response) {
 
+                return response.data;
+
+            }, function (error) {
+
+                console.log("didn't get assignments: " + error.message);
+            })
+            .finally(function () {
+
+                //console.log("Finally...??");
+            });
+    };
     var getProjectById = function (id) {
         return $http.get("http://localhost:8890/api/dashboard/projects/" + id)
             .then(function (response) {
@@ -80,6 +94,7 @@ var repoProjects = function ($http) {
     };
     return {
         getAll: getProjects,
+        getEmpClientList: getEmpClientList,
         get: getProjectById,
         getByName: getProjectByName,
         add: addProject,
