@@ -153,13 +153,26 @@
                         for (var j = 0; j < dates.length; j++) {
                             var cellText = "";
                             if (timeUnit === 'day' && prevSum != sumCommit[j]) {
-                                cellText = "" + sumCommit[j];
+                                if (sumCommit[j] != 0)
+                                    cellText = "" + sumCommit[j] + "%";
                                 prevSum = sumCommit[j];
                             }
-                            row.append(createCell("", cellText));
+                            var style = '';
+                            if (timeUnit === 'day' && sumCommit[j] > 100)
+                                style = 'overtime';
+                            else if (sumCommit[j] != 0)
+                                style = 'celldiv';
+                            var cell = createCell("", "");
+                            var celldiv = $("<div></div>");
+                            if (!isEmpty(style))
+                                celldiv.addClass(style);
+                            if (!isEmpty(cellText))
+                                celldiv.html(cellText);
+                            row.append(cell.append(celldiv));
                         }
 
                         addEmptyRowToHtml(tabledate, columnCount);
+                        rowCount++;
                     } // for-loop for Employee
 
                     //**********   Data to HTML table   ***********
@@ -211,29 +224,28 @@
                             if (projectId.length == 0)
                                 return "";
 
-                            var tmp = holder.assignments;
-                            //TODO: check if it could be refactor!
                             for (var i = 0; i < holder.assignments.length; i++) {
-                                if (holder.assignments[i].projectId != projectId) { 
-                                    return "";
-                                } else {
-                                    var projObj = holder.assignments[i].project;
-                                    var contentData =
-                                        "From: " + moment(projObj.startDate).format('YYYY-MM-DD') + " <br/>" +
-                                        "To: " + moment(projObj.stopDate).format('YYYY-MM-DD') + " <br/><br/>" +
-                                        "Timebudget: " + projObj.timeBudget + "h<br/>";
-                                }
+                                if (holder.assignments[i].projectId != projectId)
+                                    continue;
+                                var projObj = holder.assignments[i].project;
+                                var contentData =
+                                    "" + projObj.projectName + " <br/>" +
+                                    "From: " + moment(projObj.startDate).format('YYYY-MM-DD') + " <br/>" +
+                                    "To: " + moment(projObj.stopDate).format('YYYY-MM-DD') + " <br/><br/>" +
+                                    "Timebudget: " + projObj.timeBudget + "h<br/>";
+                                return contentData;
                             } 
-                            return contentData;
+                            return "";
                         }
                     }); 
                 } //function initWeekEmp()
 
                 //Go to EmployeeDetails
-                $(".employeeCss").click(function () {
+                $("td.employeeCss").click(function () {
                     var employeeId = $(this).parent().attr('employeeId');
-                    $(".ganttpanel").hide();
+                    //$(".ganttpanel").hide();
                     window.location.assign("http://localhost:8899/#!/employees/employee-details/" + employeeId);
+                    //window.location.reload();
                 }).eq(0);
 
             } //Controller end

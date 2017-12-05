@@ -27,7 +27,7 @@
                                     <!--Jobtitle input text + button-->
                                     <!--<div class="form-group">-->
                                     <label>Select a job title</label>
-                                    <select class="form-control" ng-options="item for item in $ctrl.jobTitles" ng-model="commitment.hours">
+                                    <select class="form-control" ng-options="item.titleName for item in $ctrl.jobTitles" ng-model="commitment.hours">
                                         <option value="" disabled selected></option>
                                     </select>
                                     <label>
