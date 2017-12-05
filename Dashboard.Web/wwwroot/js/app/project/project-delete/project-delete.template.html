@@ -9,13 +9,18 @@
                         <strong>Alert!</strong> Are you sure you want to delete {{$ctrl.project.projectName}}?
                     </div>
                     <div class="form-group">
-                        <label>Project Id</label>
-                        <input type="text" name="phasename" ng-readonly="$ctrl.project.projectId" value="{{ $ctrl.project.projectId }}" class="form-control">
+                        <label>Start date</label>
+                        <input type="text" name="period" ng-readonly="$ctrl.project.startDate" value="{{ $ctrl.project.startDate | date: 'yyyy-MM-dd'}}" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label>End date</label>
+                        <input type="text" name="period" ng-readonly="$ctrl.project.startDate" value="{{ $ctrl.project.stopDate | date: 'yyyy-MM-dd'}}" class="form-control">
                     </div>
 
                     <div class="form-group">
                         <label>Project name</label>
-                        <input type="text" name="phasename" ng-readonly="$ctrl.project.projectName" value="{{ $ctrl.project.projectName }}" class="form-control">
+                        <input type="text" name="projectName" ng-readonly="$ctrl.project.projectName" value="{{ $ctrl.project.projectName }}" class="form-control">
                     </div>
 
                 </form>

@@ -1,9 +1,9 @@
 ﻿<div class="modal fade" id="projectAdd" role="dialog">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog">
         <div class="modal-content"> 
             <div class="modal-body">
                 <p class="modalTitle">Create a new Project</p>
-                 <form novalidate class="form-group " name="addProjectForm">
+                 <form novalidate name="addProjectForm">
                     <div class="row">
                         <div class="col-md-5 modalDevider">
                             <br />
@@ -16,16 +16,22 @@
                             </div>
                             <div class="form-group">
                                 <label>From</label>
-                                <input type="date" ng-model="$ctrl.project.startDate" class="form-control" name="startdate" required>
+                                <input type="date" ng-model="$ctrl.project.startDate" class="form-control" name="startdate" ng-change="validateEndDate($ctrl.project.startDate, $ctrl.project.stopDate)" min="2017-12-01" required>
                                 <div ng-show="addProjectForm.$submitted || addProjectForm.startdate.$touched">
                                     <span ng-show="addProjectForm.startdate.$error.required">Start date is required.</span>
+                                </div>
+                                <div class="alert alert-danger" ng-hide="alert">
+                                    <strong>Warning!</strong> <span>{{errorMessage}}</span>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label>To</label>
-                                <input type="date" ng-model="$ctrl.project.stopDate" class="form-control" name="stopdate" required>
+                                <input type="date" ng-model="$ctrl.project.stopDate" class="form-control" name="stopdate" ng-change="validateEndDate($ctrl.project.startDate, $ctrl.project.stopDate)" min="2017-12-01" required>
                                 <div ng-show="addProjectForm.$submitted || addProjectForm.stopdate.$touched">
                                     <span ng-show="addProjectForm.stopdate.$error.required">Start date is required.</span>
+                                </div> 
+                                <div class="alert alert-danger" ng-hide="alert">
+                                    <strong>Warning!</strong> <span>{{errorMessage}}</span>
                                 </div>
                             </div>
                             <div class="form-group">

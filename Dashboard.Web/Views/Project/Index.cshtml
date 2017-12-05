@@ -4,23 +4,21 @@
 <br />
 
 <div ng-app="app-dashboard">
-    <a ng-href="#!/projects/project-details/2">One Project Details</a>
-    <a ng-href="#!/employees/employee-details/2">One Employee Details</a>
+    @*<a ng-href="#!/employees/employee-details/2">One Employee Details</a>*@
     @*<all-employees></all-employees>*@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-10">
                 <div class="mainpanel">
-                    <project-details ng-view></project-details>
-                    <all-projects></all-projects>
+                    @*<project-details ng-view></project-details>*@
+                    <all-projects ng-view></all-projects>
                 </div>
             </div>
             <div class="col-md-2">
                 <div class="sidepanel" id="panels">
-                    <br />
-                    <button type="button" class="btn panelButton" data-toggle="modal" data-target="#projectAdd">Add a new project</button>
-                    <button type="button" class="btn panelButton" data-toggle="modal" data-target="#employeeAdd">Add a new Employee</button>
-                    <button type="button" class="btn panelButton" data-toggle="modal" data-target="#assignEmployeeToProject">Assign an employee to a project</button>
+                    <div class="panelButton" data-toggle="modal" data-target="#projectAdd"><span class="glyphicon glyphicon-edit panelIcons"></span>Add a new project</div>
+                    <div class="panelButton" data-toggle="modal" data-target="#employeeAdd"><span class="glyphicon glyphicon-user panelIcons"></span>Add a new Employee</div>
+                    <div class="panelButton" data-toggle="modal" data-target="#assignEmployeeToProject"><span class="glyphicon glyphicon-tasks panelIcons"></span>Assign an employee to a project</div>
                 </div>
             </div>
         </div>
