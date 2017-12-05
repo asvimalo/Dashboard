@@ -15,25 +15,9 @@
     border: hidden;
 }
 
-/*div.container.body-content {
-    margin-left: 2%;
-    margin-right: 2%;
-}*/
-
-
 button:focus {
     outline: 0;
 }
-
-/*.table-borderless > tbody > tr,*/
-/*.table-borderless > tbody > tr > td,
-.table-borderless > tbody > tr > th,
-.table-borderless > tfoot > tr > td,
-.table-borderless > tfoot > tr > th,
-.table-borderless > thead > tr > td,
-.table-borderless > thead > tr > th {
-    border: none;
-}*/
 
 .mainpanel {
     background-color: whitesmoke;
@@ -62,10 +46,6 @@ button:focus {
     margin-right: 2%;
     margin-bottom: 7%;
 }
-
-/*.calendarbutton:active, .calendarbutton:focus {
-    background-color: #bedafd;
-}*/
 
 .calendarbutton.active {
     background-color: #bedafd;
@@ -103,18 +83,6 @@ button:focus {
     text-align: center;
     padding: 3px;
 }
-
-/*.activebutton {
-    background-color: #bedafd;
-    color: whitesmoke;
-    border-radius: 4px;
-    padding: 2%;
-    padding-left: 3%;
-    padding-left: 3%;
-    border: none;
-    z-index: 3;
-}*/
-
 
 /*calendar*/
 .cellDate {

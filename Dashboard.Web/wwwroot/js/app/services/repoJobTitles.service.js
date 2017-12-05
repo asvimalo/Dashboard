@@ -1,7 +1,7 @@
 ﻿var repoJobTitles = function ($http) {
 
     var getJobTitles = function () {
-        return $http.get('http://localhost:8890/api/dashboard/JobTitleAssignments')
+        return $http.get('http://localhost:8890/api/dashboard/JobTitles')
             .then(function (response) {
 
                 return response.data;
@@ -17,7 +17,7 @@
     };
 
     var getJobTitleById = function (id) {
-        return $http.get("http://localhost:8890/api/dashboard/jobTitles", id)
+        return $http.get("http://localhost:8890/api/dashboard/JobTitles", id)
             .then(function (response) {
                 return response.data;
             }, function (error) {
@@ -57,7 +57,7 @@
             });
     };
     var updateJobTitle = function (jobtitle) {
-        $http.put('http://localhost:8890/api/dashboard/jobTitles', jobtitle)
+        $http.put('http://localhost:8890/api/dashboard/JobTitles', jobtitle)
             .then(function (response) {
                 return response.data;
             }, function (error) {
@@ -70,7 +70,7 @@
             });
     };
     var deleteJobTitle = function (id) {
-        $http.delete('http://localhost:8890/api/dashboard/JobTitleAssignments', id)
+        $http.delete('http://localhost:8890/api/dashboard/JobTitles', id)
             .then(function (response) {
                 return response.data;
             }, function (error) {
