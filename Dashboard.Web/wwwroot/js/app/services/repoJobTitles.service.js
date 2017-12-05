@@ -29,9 +29,9 @@
                 console.log("Finally...??");
             });
     };
-    //OBS!!! There's no things in backend - bugg
+    
     var getJobTitleByName = function (name) {
-        return $http.get("http://localhost:8890/api/dashboard/knowledges/", name)
+        return $http.get("http://localhost:8890/api/dashboard/JobTitles/", name)
             .then(function (response) {
                 return response.data;
             }, function (error) {
@@ -44,7 +44,7 @@
             });
     };
     var addJobTitle = function (jobtitle) {
-        $http.post('http://localhost:8890/api/dashboard/JobTitleAssignments', jobtitle)
+        $http.post('http://localhost:8890/api/dashboard/JobTitles', jobtitle)
             .then(function (response) {
                 return response.data;
             }, function (error) {
