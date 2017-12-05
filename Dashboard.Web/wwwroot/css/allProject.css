@@ -35,6 +35,9 @@ button:focus {
 .table-borderless > thead > tr > th {
     border: none;
 }*/
+.mainContainer {
+    background-color: whitesmoke;
+}
 
 .mainpanel {
     background-color: whitesmoke;
@@ -47,11 +50,8 @@ button:focus {
 
 .sidepanel {
     background-color: whitesmoke;
-    padding: 2%;
     min-width: 200px;
-    min-height: 440px;
-    max-height: 440px;
-    margin-left: -16%;
+    padding: 3%;
 }
 /*#c2deee; #bedafd*/
 .panelButton {
@@ -66,7 +66,8 @@ button:focus {
     padding-bottom: 10%;
     margin-left: 2%;
     margin-right: 2%;
-    margin-top: 10%;
+    margin-top: 6%;
+    margin-bottom: 6%;
     text-transform: uppercase;
     text-align: center;
 }

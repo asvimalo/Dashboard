@@ -111,7 +111,7 @@
                     when('/allprojects', {
                         template: '<all-projects></all-projects>'
                     }).
-                    when('/allEmployees', {
+                    when('/allemployees', {
                         template: '<all-employees></all-employees>'
                     }).
                     otherwise('/allprojects');

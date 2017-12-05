@@ -93,8 +93,6 @@
                         <tr ng-repeat="assignment in $ctrl.project.assignments ">
                             <th>
                                 {{ assignment.employee.firstName }} {{ assignment.employee.lastName }}
-                                <br />
-                                Start date: {{ assignment.startDate | date: 'yyyy-MM-dd'}} - End Date: {{ assignment.stopDate | date: 'yyyy-MM-dd' }}
                             </th>
                         </tr>
                     </tbody>
