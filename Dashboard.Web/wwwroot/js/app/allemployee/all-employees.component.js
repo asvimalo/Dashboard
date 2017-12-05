@@ -3,6 +3,7 @@
     angular.module("allEmployees", [])
         .component("allEmployees", {
             templateUrl: "/js/app/allemployee/all-employees.template.html",
+            styleUrls: ["/css/allEmployee.css"],
             controller: function allEmployeesController($http, $scope, $location, $q, repoEmployees, repoAssignments) {
                 var holder = this;
 
@@ -238,15 +239,14 @@
                             return "";
                         }
                     }); 
-                } //function initWeekEmp()
 
-                //Go to EmployeeDetails
-                $("td.employeeCss").click(function () {
-                    var employeeId = $(this).parent().attr('employeeId');
-                    //$(".ganttpanel").hide();
-                    window.location.assign("http://localhost:8899/#!/employees/employee-details/" + employeeId);
-                    //window.location.reload();
-                }).eq(0);
+                    //Go to EmployeeDetails
+                    $(".employeeCss").click(function () {
+                        var employeeId = $(this).parent().attr('employeeId');
+                        window.location.assign("http://localhost:8899/#!/employees/employee-details/" + employeeId);
+                    }).eq(0);
+
+                } //function initWeekEmp()
 
             } //Controller end
         });

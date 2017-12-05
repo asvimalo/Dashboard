@@ -29,6 +29,10 @@
                     var y = holder.knowledges;
                 };
 
+                $scope.reload = function () {
+                    window.location.reload();
+                }
+
                 $scope.addEmployee = function () {
                     var newEmployee = {};
                     

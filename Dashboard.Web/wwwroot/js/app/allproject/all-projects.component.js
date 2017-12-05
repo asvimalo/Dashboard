@@ -3,6 +3,7 @@
     angular.module("allProjects", [])
         .component("allProjects", {
             templateUrl: "/js/app/allproject/all-projects.template.html",
+            styleUrls: ["/css/allProject.css"],
             controller: function allProjectsController($http, $scope, $location, $q, repoProjects, repoAssignments) {
                 var holder = this;
 
@@ -91,7 +92,12 @@
                         row.attr('projectNbr', project.projectId);
 
                         row.append(createCell("projectName", "  " + project.projectName, "style=\"white-space:PRE\""));
-                        row.append(createCell("projectArrowButton"));
+                        if (checkAllEvents) {
+                            row.append(createCell("projectArrowButton"));
+                        } else {
+                            row.append(createCell(""));
+                        }
+                        
 
                         var projectStart = moment(project.startDate);
                         var projectEnd = moment(project.stopDate);

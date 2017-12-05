@@ -1,9 +1,9 @@
 ﻿<div class="modal fade" id="projectAdd" role="dialog">
     <div class="modal-dialog">
-        <div class="modal-content"> 
+        <div class="modal-content">
             <div class="modal-body">
                 <p class="modalTitle">Create a new Project</p>
-                 <form novalidate name="addProjectForm">
+                <form novalidate name="addProjectForm">
                     <div class="row">
                         <div class="col-md-5 modalDevider">
                             <br />
@@ -29,7 +29,7 @@
                                 <input type="date" ng-model="$ctrl.project.stopDate" class="form-control" name="stopdate" ng-change="validateEndDate($ctrl.project.startDate, $ctrl.project.stopDate)" min="2017-12-01" required>
                                 <div ng-show="addProjectForm.$submitted || addProjectForm.stopdate.$touched">
                                     <span ng-show="addProjectForm.stopdate.$error.required">Start date is required.</span>
-                                </div> 
+                                </div>
                                 <div class="alert alert-danger" ng-hide="alert">
                                     <strong>Warning!</strong> <span>{{errorMessage}}</span>
                                 </div>
@@ -68,13 +68,13 @@
                             <client-add></client-add>
                         </div>
                     </div>
+
+                    <div class="modal-footer">
+                        <button type="button" ng-click="reload()" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
                 </form>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
         </div>
-
     </div>
 </div>
 

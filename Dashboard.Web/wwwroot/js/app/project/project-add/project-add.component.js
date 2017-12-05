@@ -26,6 +26,10 @@
                     }
                 };
 
+                $scope.reload = function () {
+                    window.location.reload();
+                }
+
                 $scope.addProject = function (start, end) {
                     console.log("in the addProject function");
                     self.isBusy = true;
