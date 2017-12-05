@@ -27,42 +27,24 @@
                 });
 
                 function doWork() {
-
-                    //repoAssignments.lists().then(function (response) {
-                    //    //success
-                    //    console.log("Check");
-                    //    angular.copy(response, holder.employeesAndProjects);
-                    //}, function (error) {
-                    //    //failure
-                    //    holder.errorMessage = "Failed to load data: " + error;
-                    //})
-                    //.finally(function () {
-                    //    holder.isBusy = false;
-                    //    });
-
-                    ////http://localhost:8890/api/dashboard/jobTitleAssignments
-
-                    //repoJobTitles.getAll().then(function (response) {
-                    //    angular.copy(response.data, holder.jobTitles);
-                    //});
-                    //holder.jobTitles = [];
-                    //repoJobTitles.getAll().then(function (response) {
-                    //    angular.copy(response.data, holder.jobTitles);
-                    //});
-
                     holder.newJobTitles = [];
                     $scope.addJobTitle = function () {
-                        holder.newJobTitles.push($scope.forminfo.jobtitle);
+                        holder.newJobTitles.push($scope.formInfo.jobTitle);
                     }
 
                     holder.commitmentHours = ["0", "25", "50", "75", "100"];
                     holder.commitments = [];
+
                     $scope.addCommitment = function () {
 
                         holder.commitments.push($scope.commitment);
                         $scope.commitment = {};
 
                     };
+
+                    $scope.reload = function () {
+                        window.location.reload();
+                    }
 
                     $scope.remove = function (array, index) {
                         array.splice(index, 1);
@@ -77,26 +59,19 @@
                         }
                     };
 
-                    //if ($scope.formInfo.project && $scope.formInfo.employee) {
-                    //    $('addAssigmentsButton').prop('disabled', false);
-                    //} else {
-                    //    $('addAssigmentsButton').prop('disabled', true);
-                    //}
-
                     $scope.assignProjectToEmployee = function () {
                         console.log("in the function");
                         holder.isBusy = true;
                         holder.errorMessage = "";
 
-                        var test = $scope.formInfo.employee;
+                        var data = {};
 
                         if (holder.commitments.length == 0) {
                             holder.commitments = [{ "startDate": $scope.formInfo.project.startDate, "stopDate": $scope.formInfo.project.stopDate, "hours": "100" }];
                         }
-
-                        //TODO: fix jobtitles
-
-                        var data = { "ProjectId": $scope.formInfo.project.projectId, "EmployeeId": $scope.formInfo.employee.employeeId, "JobTitle": $scope.formInfo.jobtitle, "Location": $scope.formInfo.location, "Commitments": holder.commitments };
+                        data = { "ProjectId": $scope.formInfo.project.projectId, "EmployeeId": $scope.formInfo.employee.employeeId, "Location": $scope.formInfo.location, "Commitments": holder.commitments };
+                        data.newJobTitles = holder.newJobTitles;
+                        data.jobTitles = $scope.formInfo.jobTitles;
                         var dataTmp = JSON.stringify(data);
 
                         repoAssignments.add(dataTmp)
@@ -104,6 +79,7 @@
 
                                 $scope.formInfo = {};
                                 holder.commitments = [];
+                                holder.newJobTitles = [];
                                 console.log("Response from server api" + response.data);
 
                             }, function (error) {
