@@ -21,6 +21,7 @@
                     angular.copy(response[1], holder.assignments);
 
                     initEmployeeGantt('day', currentDate);
+                    $("#weekButton").addClass('active');
 
                 }, function (error) {
                     //failure
@@ -30,17 +31,22 @@
                         holder.isBusy = false;
                     });
 
+                var weekButton = $("#weekButton");
+                var monthButton = $("#monthButton");
+
                 $scope.weekButtonClick = function () {
+                    if (!weekButton.hasClass('active')) weekButton.addClass('active');
+                    if (monthButton.hasClass('active')) monthButton.removeClass('active');
                     initEmployeeGantt('day', currentDate);
                 };
 
                 $scope.monthButtonClick = function () {
+                    if (weekButton.hasClass('active')) weekButton.removeClass('active');
+                    if (!monthButton.hasClass('active')) monthButton.addClass('active');
                     initEmployeeGantt('week', currentDate);
                 };
 
-                $scope.yearButtonClick = function () {
-                    initEmployeeGantt('month', currentDate);
-                };
+                var visibleProjectNames = [];
 
                 function initEmployeeGantt(timeUnit, startDate) {
                     if (timeUnit === 'day')
@@ -85,8 +91,11 @@
                                 var row = $(tabledate[0].insertRow(-1));
                                 rowCount++;
                                 row.addClass("project");
-                                row.attr('projectId', project.projectName); //TODO: change, ProjectId is a very confusing name! 
-                                row.append(createCell("projectName", project.projectName + "  ", "colspan=\"2\" style=\"white-space:PRE\"></td>"));
+                                row.attr("employeeId", employee.employeeId);
+                                var projectCell = createCell("projectName", project.projectName + "  ", "colspan=\"2\" style=\"white-space:PRE\"></td>");
+                                projectCell.attr("projectId", project.projectId); //TODO: behövs eller omnämna till proj?
+                                row.append(projectCell);
+                                //row.append(createCell("projectName", project.projectName + "  ", "colspan=\"2\" style=\"white-space:PRE\"></td>"));
 
                                 var projectStart = moment(project.startDate);
                                 var projectEnd = moment(project.stopDate);
@@ -121,6 +130,8 @@
 
                                     //Write employee cell to html
                                     var cell = createCell("datacell");
+                                    cell.attr("data-trigger", "hover"); 
+                                    cell.attr("proj", project.projectId); 
                                     var celldiv = $("<div></div>");
                                     if (!isEmpty(style))
                                         celldiv.addClass(style);
@@ -136,48 +147,106 @@
                         row.addClass("employee");
                         row.attr("employeeId", employee.employeeId);
                         row.append(createCell("employeeCss", "  " + employee.firstName + " " + employee.lastName, "style=\"white-space:PRE\""));
-                        row.append(createCell("projectArrowButton"));
+                        row.append(createCell("employeeArrowButton"));
 
                         var prevSum = -1;
                         for (var j = 0; j < dates.length; j++) {
                             var cellText = "";
                             if (timeUnit === 'day' && prevSum != sumCommit[j]) {
-                                cellText = "" + sumCommit[j];
+                                if (sumCommit[j] != 0)
+                                    cellText = "" + sumCommit[j] + "%";
                                 prevSum = sumCommit[j];
                             }
-                            row.append(createCell("", cellText));
+                            var style = '';
+                            if (timeUnit === 'day' && sumCommit[j] > 100)
+                                style = 'overtime';
+                            else if (sumCommit[j] != 0)
+                                style = 'celldiv';
+                            var cell = createCell("", "");
+                            var celldiv = $("<div></div>");
+                            if (!isEmpty(style))
+                                celldiv.addClass(style);
+                            if (!isEmpty(cellText))
+                                celldiv.html(cellText);
+                            row.append(cell.append(celldiv));
                         }
 
+                        addEmptyRowToHtml(tabledate, columnCount);
+                        rowCount++;
                     } // for-loop for Employee
 
                     //**********   Data to HTML table   ***********
-                    var dateTable = $("#ganttchartEmp");
+                    var dateTable = $("#ganttchart");
                     dateTable.html("");
                     dateTable.append(tabledate);
 
-                    //dateTable.find(".project").hide();
+                    dateTable.find(".project").hide();
+                    dateTable.find(".project").each(function () {
+                        var employeeId = $(this).attr('employeeId');
+                        var tmp = visibleProjectNames;
+                        for (var i = 0; i < visibleProjectNames.length; i++) {
+                            if (employeeId == visibleProjectNames[i]) {
+                                $(this).show();
+                            }
+                        }
+                    });
 
                     //Collapse
                     $('<button></button>').attr({ 'type': 'button' }).addClass("glyphicon glyphicon-triangle-bottom").click(function () {
                         var employeeRow = $(this).parent().parent();
                         var employeeId = employeeRow.attr("employeeId");
 
-                        //var index = visibleEmployeeProjectNames.indexOf(projectId);
-                        //if (index > -1) {
-                        //    visibleEmployeeProjectNames.splice(index, 1);
-                        //} else {
-                        //    visibleEmployeeProjectNames.push(projectId);
-                        //}
+                        var index = visibleProjectNames.indexOf(employeeId);
+                        if (index > -1) {
+                            visibleProjectNames.splice(index, 1);
+                        } else {
+                            visibleProjectNames.push(employeeId);
+                        }
 
                         employeeRow.siblings(".project").each(function () {
-                            var employeeProjectId = $(this).attr('projectId');
+                            var employeeProjectId = $(this).attr('employeeId');
                             if (employeeProjectId == employeeId) {
                                 $(this).fadeToggle(300);
                             }
                         });
-                    }).appendTo($('td.projectArrowButton'));
+                    }).appendTo($('td.employeeArrowButton'));
 
+                    //popover
+                    $('[data-trigger="hover"]').popover({
+                        'trigger': 'hover',
+                        'placement': 'bottom',
+                        'container': 'body',
+                        'data-html': 'true',
+                        'html': 'true',
+                        'content': function () {
+
+                            var projectId = $(this).attr('proj');
+                            if (projectId.length == 0)
+                                return "";
+
+                            for (var i = 0; i < holder.assignments.length; i++) {
+                                if (holder.assignments[i].projectId != projectId)
+                                    continue;
+                                var projObj = holder.assignments[i].project;
+                                var contentData =
+                                    "" + projObj.projectName + " <br/>" +
+                                    "From: " + moment(projObj.startDate).format('YYYY-MM-DD') + " <br/>" +
+                                    "To: " + moment(projObj.stopDate).format('YYYY-MM-DD') + " <br/><br/>" +
+                                    "Timebudget: " + projObj.timeBudget + "h<br/>";
+                                return contentData;
+                            } 
+                            return "";
+                        }
+                    }); 
                 } //function initWeekEmp()
+
+                //Go to EmployeeDetails
+                $("td.employeeCss").click(function () {
+                    var employeeId = $(this).parent().attr('employeeId');
+                    //$(".ganttpanel").hide();
+                    window.location.assign("http://localhost:8899/#!/employees/employee-details/" + employeeId);
+                    //window.location.reload();
+                }).eq(0);
 
             } //Controller end
         });
