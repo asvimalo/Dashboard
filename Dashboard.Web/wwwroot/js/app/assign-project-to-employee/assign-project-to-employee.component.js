@@ -3,7 +3,7 @@
     angular.module("assignProjectToEmployee", [])
         .component("assignProjectToEmployee", {
             templateUrl: "/js/app/assign-project-to-employee/assign-project-to-employee.template.html",
-            controller: function assignProjectToEmployeeController($http, $scope, $location, $q, repoAssignments, repoJobTitles) {
+            controller: function assignProjectToEmployeeController($http, $scope, $location, $q, repoAssignments, repoJobTitles, repoJobTitles, repoJobTitlAssignments) {
                 //$routeProvider
                 var holder = this;
                 holder.isBusy = true;
@@ -70,13 +70,12 @@
                             holder.commitments = [{ "startDate": $scope.formInfo.project.startDate, "stopDate": $scope.formInfo.project.stopDate, "hours": "100" }];
                         }
                         data = { "ProjectId": $scope.formInfo.project.projectId, "EmployeeId": $scope.formInfo.employee.employeeId, "Location": $scope.formInfo.location, "Commitments": holder.commitments };
-                        data.newJobTitles = holder.newJobTitles;
-                        data.jobTitles = $scope.formInfo.jobTitles;
                         var dataTmp = JSON.stringify(data);
 
-                        repoAssignments.add(dataTmp)
-                            .then(function (response) {
+                        var serverResponse = {};
+                        repoAssignments.add(dataTmp).then(function (response) {
 
+                                serverResponse = response;
                                 $scope.formInfo = {};
                                 holder.commitments = [];
                                 holder.newJobTitles = [];
@@ -85,11 +84,23 @@
                             }, function (error) {
                                 self.errorMessage = "Failure to save new project";
                                 console.log("didn't add assignment: " + error.message);
-                            })
-                            .finally(function () {
+                            }).finally(function () {
                                 self.isBusy = false;
                                 console.log("Finally...??");
                             });
+
+                        data.newJobTitles = holder.newJobTitles;
+                        data.jobTitles = $scope.formInfo.jobTitles;
+                        var serverResponseJobTitle = {};
+                        repoJobTitles.add(dataTmp).then(function (response) {
+
+                        }, function (error) {
+                            self.errorMessage = "Failure to save new project";
+                            console.log("didn't add assignment: " + error.message);
+                        }).finally(function () {
+                            self.isBusy = false;
+                            console.log("Finally...??");
+                        });
                     }
                 };
             }
