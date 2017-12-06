@@ -12,7 +12,7 @@
                 self.project = {};
 
                 repoProjects.getEmpClientList().then(function (response) {
-                    angular.copy(response.data, self.employeesAndClients);
+                    angular.copy(response, self.employeesAndClients);
                 });
 
                 repoProjects.get(self.projectId).then(function (response) {
@@ -24,14 +24,14 @@
                   
                 $scope.editProject = function () {
 
-                    var data = {
+                    var projectData = {
                         "projectName": self.project.projectName,
                         "startDate": new Date(self.project.startDate).toLocaleDateString(),
                         "stopDate": new Date(self.project.stopDate).toLocaleDateString(),
                         "timeBudget": self.project.timeBudget,
                         "notes": self.project.notes
                     };
-                    var dataTmp = JSON.stringify(data);
+                    var dataTmp = JSON.stringify(projectData);
 
                     repoProjects.update(self.projectId, dataTmp).then(function (response) {
                         console.log("Response from server api" + response.data);
@@ -46,7 +46,9 @@
                     .finally(function () {
                         console.log("finally");
                         self.isBusy = false;
-                    });
+
+                     });
+                     
                 };
                  
             }

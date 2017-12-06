@@ -12,19 +12,22 @@
                 
                 repoAssignments.get(holder.assignmentId).then(function (response) {
                     angular.copy(response, holder.assignment);
+
+                    var oneAssignment = holder.assignment[0]; 
                        
                });
 
                 $scope.editAssignment = function () {
 
-                    var obj = holder.assignment[0];
+                    var obj = ctrl.holder.assignment[0];
 
                     var data = {
-                        "employeeId": obj.employeeId,
-                        "projectId": obj.projectId,
-                        "location": obj.location,
-                        "startDate": new Date(obj.startDate).toLocaleDateString(),
-                        "stopDate": new Date(obj.stopDate).toLocaleDateString()
+                        "employeeId": holder.employeeId,
+                        "firstName": holder.employee.firstName,
+                        "lastName": holder.employee.lastName,
+                        //"jobTitle": obj.jobTitleAssignments.jobTitle.titleName,
+                        "projectId": holder.projectId,
+                        "location": holder.location, 
                     };
                     var dataTmp = JSON.stringify(data);
 
@@ -42,6 +45,12 @@
                         console.log("finally");
                         holder.isBusy = false;
                     });
+                };
+
+                $scope.closeModal = function () {
+                    var oneAssignment = holder.assignment[0];
+
+                    location.replace("#!/projects/project-details/" + oneAssignment.projectId);
                 };
                  
             }

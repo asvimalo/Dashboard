@@ -54,7 +54,7 @@ var repoProjects = function ($http) {
             });
     };
     var addProject = function (project) {
-        $http.post('http://localhost:8890/api/dashboard/projects', project)
+        return $http.post('http://localhost:8890/api/dashboard/projects', project)
             .then(function (response) {
                 return response.data;
             }, function (error) {

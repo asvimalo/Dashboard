@@ -26,12 +26,12 @@
                     }
                 };
 
-                $scope.addProject = function (start, end) {
+                $scope.addProject = function ( ) {
                     console.log("in the addProject function");
                     self.isBusy = true;
                     self.errorMessage = "";
 
-                    var data = { "projectName": self.project.projectName, "startDate": new Date(self.project.startDate).toLocaleDateString(), "stopDate": new Date(self.project.stopDate).toLocaleDateString(), "timeBudget": self.project.timeBudget, "ClientId": $scope.formInfo.clients.clientId, "Employees": $scope.formInfo.employees, "notes": self.project.notes };
+                    var data = { "projectName": self.project.projectName, "startDate": new Date(self.project.startDate).toLocaleDateString(), "stopDate": new Date(self.project.stopDate).toLocaleDateString(), "timeBudget": self.project.timeBudget, "ClientId": $scope.addProjectForm.clients.clientId, "notes": self.project.notes };
                     var dataTmp = JSON.stringify(data);
 
                     repoProjects.add(dataTmp)

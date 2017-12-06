@@ -51,11 +51,18 @@ namespace Dashboard.DataG.Repository
 
         public async Task<IQueryable<Project>> GetProjectById (int id)
         {
-
-            return _ctx.Projects
+            var project = _ctx.Projects
+                .Include(c => c.Client)
                 .Include(i => i.Phases)
                 .Include(a => a.Assignments).ThenInclude(a => a.Employee)
+                .Include(a => a.Assignments)
+                .ThenInclude(a => a.JobTitleAssignments)
+                .ThenInclude(a => a.JobTitle)
+                .Include(a => a.Assignments)
+                .ThenInclude(a => a.Commitments)
                 .Where(p => p.ProjectId == id);
+
+            return project;
         }
     }
 }

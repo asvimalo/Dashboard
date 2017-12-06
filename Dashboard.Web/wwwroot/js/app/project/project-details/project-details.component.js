@@ -3,7 +3,7 @@
     angular.module("projectDetails")
         .component("projectDetails", {
             templateUrl: "/js/app/project/project-details/project-details.template.html",
-            controller: function ProjectListController( $http, $scope, $location, $routeParams, repoProjects ) 
+            controller: function ProjectListController( $http, $scope, $location, $routeParams, repoProjects, repoAssignments ) 
             {
                 this.projectId = $routeParams.projectId;
                  
@@ -26,6 +26,31 @@
                 $scope.Edit = function (phaseId) {
                     location.replace("#!/phases/phase-edit/" + phaseId);
                 };
+                 
+                $scope.deleteDeveloperFromProject = function (assignmentId) {
+
+                    repoAssignments.delete(assignmentId).then(function (response) {
+                        console.log("Response from server api" + response.data);
+
+                        location.reload();
+                    }, function () {
+                        console.log("failure");
+                        self.errorMessage = "Failure to save new project";
+                    })
+                    .finally(function () {
+                            console.log("finally");
+                            self.isBusy = false;
+
+                     });
+
+
+                }
+
+                $scope.editDeveloperAssignment = function (assignmentId) {
+
+                    location.replace("#!/assignments/assignment-edit/" + assignmentId);
+
+                }
             }
         });
       

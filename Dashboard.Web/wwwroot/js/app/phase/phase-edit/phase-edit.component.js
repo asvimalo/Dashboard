@@ -39,7 +39,6 @@
 
                 $scope.closeModal = function () {
                     location.replace("#!/projects/project-details/" + self.phase.projectId);
-                    location.reload();
                 };
             }
             

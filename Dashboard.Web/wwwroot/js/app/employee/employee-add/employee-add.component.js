@@ -65,7 +65,7 @@
                         console.log("Response from server api" + response);
                         employee = {};
 
-                        //window.location.reload();
+                        window.location.reload();
                     }, function (err) {
                         //failure
                         // review Error response is coming back....
