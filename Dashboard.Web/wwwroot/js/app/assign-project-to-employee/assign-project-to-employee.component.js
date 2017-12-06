@@ -65,7 +65,6 @@
                         holder.errorMessage = "";
 
                         var data = {};
-
                         if (holder.commitments.length == 0) {
                             holder.commitments = [{ "startDate": $scope.formInfo.project.startDate, "stopDate": $scope.formInfo.project.stopDate, "hours": "100" }];
                         }
@@ -74,9 +73,10 @@
                         data.jobTitles = $scope.formInfo.jobTitles;
                         var dataTmp = JSON.stringify(data);
 
-                        repoAssignments.add(dataTmp)
-                            .then(function (response) {
+                        var serverResponse = {};
+                        repoAssignments.add(dataTmp).then(function (response) {
 
+                                serverResponse = response;
                                 $scope.formInfo = {};
                                 holder.commitments = [];
                                 holder.newJobTitles = [];
@@ -85,8 +85,7 @@
                             }, function (error) {
                                 self.errorMessage = "Failure to save new project";
                                 console.log("didn't add assignment: " + error.message);
-                            })
-                            .finally(function () {
+                            }).finally(function () {
                                 self.isBusy = false;
                                 console.log("Finally...??");
                             });

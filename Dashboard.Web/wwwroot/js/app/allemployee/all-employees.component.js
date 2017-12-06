@@ -3,6 +3,7 @@
     angular.module("allEmployees", [])
         .component("allEmployees", {
             templateUrl: "/js/app/allemployee/all-employees.template.html",
+            styleUrls: ["/css/allEmployee.css"],
             controller: function allEmployeesController($http, $scope, $location, $q, repoEmployees, repoAssignments) {
                 var holder = this;
 
@@ -90,9 +91,9 @@
                                 var commitments = assignment.commitments;
                                 var row = $(tabledate[0].insertRow(-1));
                                 rowCount++;
-                                row.addClass("project");
+                                row.addClass("projectEmp");
                                 row.attr("employeeId", employee.employeeId);
-                                var projectCell = createCell("projectName", project.projectName + "  ", "colspan=\"2\" style=\"white-space:PRE\"></td>");
+                                var projectCell = createCell("projectNameEmp", project.projectName + "  ", "colspan=\"2\" style=\"white-space:PRE\"></td>");
                                 projectCell.attr("projectId", project.projectId); //TODO: behövs eller omnämna till proj?
                                 row.append(projectCell);
                                 //row.append(createCell("projectName", project.projectName + "  ", "colspan=\"2\" style=\"white-space:PRE\"></td>"));
@@ -144,7 +145,7 @@
 
                         var row = $(tabledate[0].insertRow(rowCount - assignmentCount));
                         rowCount++;
-                        row.addClass("employee");
+                        row.addClass("employeeHeader");
                         row.attr("employeeId", employee.employeeId);
                         row.append(createCell("employeeCss", "  " + employee.firstName + " " + employee.lastName, "style=\"white-space:PRE\""));
                         row.append(createCell("employeeArrowButton"));
@@ -180,8 +181,8 @@
                     dateTable.html("");
                     dateTable.append(tabledate);
 
-                    dateTable.find(".project").hide();
-                    dateTable.find(".project").each(function () {
+                    dateTable.find(".projectEmp").hide();
+                    dateTable.find(".projectEmp").each(function () {
                         var employeeId = $(this).attr('employeeId');
                         var tmp = visibleProjectNames;
                         for (var i = 0; i < visibleProjectNames.length; i++) {
@@ -203,7 +204,7 @@
                             visibleProjectNames.push(employeeId);
                         }
 
-                        employeeRow.siblings(".project").each(function () {
+                        employeeRow.siblings(".projectEmp").each(function () {
                             var employeeProjectId = $(this).attr('employeeId');
                             if (employeeProjectId == employeeId) {
                                 $(this).fadeToggle(300);
@@ -238,15 +239,14 @@
                             return "";
                         }
                     }); 
-                } //function initWeekEmp()
 
-                //Go to EmployeeDetails
-                $("td.employeeCss").click(function () {
-                    var employeeId = $(this).parent().attr('employeeId');
-                    //$(".ganttpanel").hide();
-                    window.location.assign("http://localhost:8899/#!/employees/employee-details/" + employeeId);
-                    //window.location.reload();
-                }).eq(0);
+                    //Go to EmployeeDetails
+                    $(".employeeCss").click(function () {
+                        var employeeId = $(this).parent().attr('employeeId');
+                        window.location.assign("http://localhost:8899/#!/employees/employee-details/" + employeeId);
+                    }).eq(0);
+
+                } //function initWeekEmp()
 
             } //Controller end
         });

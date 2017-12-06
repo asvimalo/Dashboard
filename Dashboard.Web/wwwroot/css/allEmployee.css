@@ -24,15 +24,15 @@ button:focus {
     padding: 2%;
     /*max-height: 600px;*/
     min-height: 440px;
-    min-width: 1050px;
+    min-width: 1000px;
     /*overflow-y: scroll;*/
 }
 
 .sidepanel {
     background-color: whitesmoke;
     padding: 2%;
-    margin-right: -180px;
-    margin-left: 140px;
+    /*margin-right: -180px;
+    margin-left: 140px;*/
 }
 /*#c2deee; #bedafd*/
 .panelButton {
@@ -146,12 +146,13 @@ tr > button.glyphicon.glyphicon-chevron-left, button.glyphicon.glyphicon-fast-ba
     }
 
 /*projectgantt*/
-.project {
+.projectEmp {
     background-color: #b0c0d3;
     border-radius: 4px;
 }
 
-.projectName {
+
+.projectNameEmp {
     background-color: whitesmoke;
     padding-left: 30%;
     text-align: right;
