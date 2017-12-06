@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 using Dashboard.DataG.Contracts;
 using Dashboard.EntitiesG.EntitiesRev;
 
-
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Authorization;
 using Dashboard.APIG.Models;
@@ -19,16 +18,22 @@ namespace Dashboard.DataG.Controllers
     {
         public IRepoProject _repoPro;
         public IRepoEmployee _repoEmp;
+        public IRepoJobTitle _repoJob;
+        public IRepoJobTitleAssignment _repoJobA;
         public IRepoAssignment _repo;
         private ILogger<AssignmentsController> _logger;
 
         public AssignmentsController(IRepoAssignment repo, 
             IRepoEmployee repoEmp,
             IRepoProject repoPro,
+            IRepoJobTitle repoJob,
+            IRepoJobTitleAssignment repoJobA,
             ILogger<AssignmentsController> logger)
         {
             _repoPro = repoPro;
             _repoEmp = repoEmp;
+            _repoJob = repoJob;
+            _repoJobA = repoJobA;
             _repo = repo;
             _logger = logger;
         }
@@ -93,25 +98,60 @@ namespace Dashboard.DataG.Controllers
 
         // POST api/dashboard/Commitments
         [HttpPost("")]
-        public async Task<IActionResult> Post([FromBody]Assignment assignment)
+        public async Task<IActionResult> Post([FromBody]AssignmentPost assignment)
         {
             if (ModelState.IsValid)
             {
-                //var newCommitment = Mapper.Map<Commitment>(commitment);
                 try
                 {
-                    var addedAssignment = _repo.Create(assignment);
+                    var newAssignment = new Assignment
+                    {
+                        EmployeeId = assignment.EmployeeId,
+                        ProjectId = assignment.ProjectId,
+                        Location = assignment.Location,
+                        Commitments = assignment.Commitments
+                    };
 
-                    return Ok(addedAssignment);
+                    var addedAssignment = await _repo.Create(newAssignment);
+
+                    if (assignment.newJobTitles != null) {
+                        foreach (var newJobTitle in assignment.newJobTitles)
+                        {
+                            var AddedJobTitle = await _repoJob.Create(new JobTitle
+                            {
+                                TitleName = newJobTitle
+                            });
+
+                            var addedJobTitleAssignment = await _repoJobA.Create(new JobTitleAssignment
+                            {
+                                AssignmentId = addedAssignment.AssignmentId,
+                                JobTitleId = AddedJobTitle.JobTitleId
+                            });
+                        }
+                    }
+
+                    if (assignment.jobTitles != null) {
+                        foreach (var jobTitle in assignment.jobTitles)
+                        {
+                            var addedJobTitleAssignment = await _repoJobA.Create(new JobTitleAssignment
+                            {
+                                AssignmentId = addedAssignment.AssignmentId,
+                                JobTitleId = jobTitle.JobTitleId
+                            });
+                        }
+                    }
+
+                    return Ok();
                 }
                 catch (Exception ex)
                 {
 
-                    _logger.LogError($"Thrown exception when updating: {ex}");
+                    _logger.LogError($"Exception thrown while posting assignment: {ex.Message}");
+                    return BadRequest($"Error ocurred");
                 }
-                
             }
             return BadRequest("Failed to save changes to the database");
+
         }
 
         // PUT api/dashboard/Commitments/5

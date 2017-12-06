@@ -3,7 +3,7 @@
     angular.module("assignProjectToEmployee", [])
         .component("assignProjectToEmployee", {
             templateUrl: "/js/app/assign-project-to-employee/assign-project-to-employee.template.html",
-            controller: function assignProjectToEmployeeController($http, $scope, $location, $q, repoAssignments, repoJobTitles, repoJobTitles, repoJobTitlAssignments) {
+            controller: function assignProjectToEmployeeController($http, $scope, $location, $q, repoAssignments, repoJobTitles) {
                 //$routeProvider
                 var holder = this;
                 holder.isBusy = true;
@@ -65,11 +65,12 @@
                         holder.errorMessage = "";
 
                         var data = {};
-
                         if (holder.commitments.length == 0) {
                             holder.commitments = [{ "startDate": $scope.formInfo.project.startDate, "stopDate": $scope.formInfo.project.stopDate, "hours": "100" }];
                         }
                         data = { "ProjectId": $scope.formInfo.project.projectId, "EmployeeId": $scope.formInfo.employee.employeeId, "Location": $scope.formInfo.location, "Commitments": holder.commitments };
+                        data.newJobTitles = holder.newJobTitles;
+                        data.jobTitles = $scope.formInfo.jobTitles;
                         var dataTmp = JSON.stringify(data);
 
                         var serverResponse = {};
@@ -88,19 +89,6 @@
                                 self.isBusy = false;
                                 console.log("Finally...??");
                             });
-
-                        data.newJobTitles = holder.newJobTitles;
-                        data.jobTitles = $scope.formInfo.jobTitles;
-                        var serverResponseJobTitle = {};
-                        repoJobTitles.add(dataTmp).then(function (response) {
-
-                        }, function (error) {
-                            self.errorMessage = "Failure to save new project";
-                            console.log("didn't add assignment: " + error.message);
-                        }).finally(function () {
-                            self.isBusy = false;
-                            console.log("Finally...??");
-                        });
                     }
                 };
             }
