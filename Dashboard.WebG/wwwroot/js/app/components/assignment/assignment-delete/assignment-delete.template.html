@@ -1,0 +1,41 @@
+﻿
+
+<div class="modal fade" id="deleteAssignment" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-body" ng-repeat="assignment in $ctrl.assignment">
+                <form name="DeleteAssignmentForm" >
+                    <div class="alert alert-danger">
+                        <strong>Alert!</strong> Are you sure you want to delete this assignment for this <strong>{{ assignment.employee.firstName }} {{ assignment.employee.lastName }}</strong> ?
+                    </div>  
+                    <div class="form-group">
+                        <label>Project</label>
+                        <input type="text" name="location" ng-readonly="assignment.project.projectName" value="{{ assignment.project.projectName }}" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Location</label>
+                        <input type="text" name="location" ng-readonly="assignment.location" value="{{ assignment.location }}" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Start Date</label>
+                        <input type="text" name="startDate" ng-readonly="assignment.startDate" value="{{ assignment.startDate | date:'yyyy-MM-dd' }}" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label>End Date</label>
+                        <input type="text" name="endDate" ng-readonly="assignment.stopDate" value="{{ assignment.stopDate | date:'yyyy-MM-dd' }}" class="form-control">
+                    </div>
+
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-success" type="button" ng-click="deleteProject()"> Delete </button>
+                <button class="btn btn-danger pull-right" type="button" data-dismiss="modal"> Cancel </button>
+            </div>
+
+        </div>
+    </div>
+</div>

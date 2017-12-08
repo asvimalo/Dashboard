@@ -2,7 +2,7 @@
     "use strict";
     angular.module("assignProjectToEmployee", [])
         .component("assignProjectToEmployee", {
-            templateUrl: "/js/app/components/assign-project-to-employee/assign-project-to-employee.template.html",
+            templateUrl: "/js/app/components/assignment/assign-project-to-employee/assign-project-to-employee.template.html",
             controller: function assignProjectToEmployeeController(
                 $scope,
                 $location,

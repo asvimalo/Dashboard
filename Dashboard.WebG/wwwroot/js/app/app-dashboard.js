@@ -1,24 +1,27 @@
 ﻿(function () {
     "use strict";
     angular.module("app-dashboard",
-        [
-            "footbar",
-            //"loaderControl",
-            "navbar",
-            "ngRoute",
-            "projectList"
-            //'ngFileUpload',
-            //'angularModalService',          
-            //"assignProjectToEmployee",
-            //"clientAdd",
-            //"employeeAdd",
-            //"dashboardView",
-            //"phaseAdd",
-            //"phaseDelete",
-            //"phaseEdit",
-            //"projectAdd",
-            //"projectDelete",
-            //"projectDetails",         
-            ]);
+        ["ngRoute",
+            'ngFileUpload',
+            'angularModalService',
+            "assignProjectToEmployee",
+            "assignmentDelete",
+            "assignmentEdit",
+            "clientAdd",
+            "employeeAdd",
+            "employeeDetails",
+            "employeeDelete",
+            "employeeEdit",
+            "dashboardView",
+            "phaseAdd",
+            "phaseDelete",
+            "phaseEdit",
+            "projectAdd",
+            "projectDelete",
+            "projectEdit",
+            "projectDetails",
+            "allProjects",
+            "allEmployees"
+        ]);
 })();
 

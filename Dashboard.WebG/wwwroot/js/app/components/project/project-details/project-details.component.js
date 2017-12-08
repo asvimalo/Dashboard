@@ -2,7 +2,7 @@
     "use strict";
     angular.module("projectDetails")
         .component("projectDetails", {
-            templateUrl: "/js/app/project/project-details/project-details.template.html",
+            templateUrl: "/js/app/components/project/project-details/project-details.template.html",
             controller: function ProjectListController(
                 $http,
                 $scope,

@@ -6,7 +6,7 @@
                 $locationProvider.hashPrefix('!');
 
                 $routeProvider.
-                    when('/', {
+                    when('/dashboard', {
                         template: '<dashboard-view></dashboard-view>'
                     }).
                     when('/employees', {
@@ -15,42 +15,54 @@
                     when('/employees/employee-add', {
                         template: '<employee-add></employee-add>'
                     }).
-                    when('/employees/:employeeId', {
-                        template: '<employee-detail></employee-detail>'
+                    when('/employees/employee-details/:employeeId', {
+                        template: '<employee-details></employee-details>'
+                    }).
+                    when('/employees/employee-delete/:employeeId', {
+                        template: '<employee-delete></employee-delete>'
+                    }).
+                    when('/employees/employee-edit/:employeeId', {
+                        template: '<employee-edit></employee-edit>'
                     }).
                     when('/projects', {
                         template: '<project-list></project-list>'
                     }).
+                    //when('/projects/:projectId', {
+                    //    template: '<project-detail></phone-detail>'
+                    //}).
                     when('/projects/project-add', {
                         template: '<project-add></project-add>'
                     }).
-                    when('/projects/:projectId', {
-                        template: '<project-detail></phone-detail>'
-                    }).                   
                     when('/projects/project-details/:projectId', {
                         template: '<project-details></project-details>'
                     }).
-                    when('/assignments', {
-                        template: '<assignment-list></assignment-list>'
+                    when('/projects/project-delete/:projectId', {
+                        template: '<project-delete></project-delete>'
                     }).
-                    //when('/assignments/:employeeId', {
-                    //    template: '<assignment-detail></assignment-detail>'
-                    //}).
+                    when('/projects/project-edit/:projectId', {
+                        template: '<project-edit></project-edit>'
+                    }).
+                    when('/assignments/assignment-delete/:assignmentId', {
+                        template: '<assignment-delete></assignment-delete>'
+                    }).
+                    when('/assignments/assignment-edit/:assignmentId', {
+                        template: '<assignment-edit></assignment-edit>'
+                    }).
                     //when('/acquiredKnowledges', {
                     //    template: '<acquired-knowledge-list></acquired-knowledge-list>'
                     //}).
                     //when('/acquiredKnowledge/:acquiredKnowledge', {
                     //    template: '<acquiredKnowledge-detail></acquiredKnowledge-detail>'
                     //}).
-                    //when('/clients', {
-                    //    template: '<client-list></client-list>'
-                    //}).
+                    when('/clients', {
+                        template: '<client-list></client-list>'
+                    }).
                     //when('/client/:client', {
                     //    template: '<acquiredKnowledge-detail></acquiredKnowledge-detail>'
                     //}).
-                    //when('/clients/client-add', {
-                    //    template: '<client-add></client-add>'
-                    //}).
+                    when('/clients/client-add', {
+                        template: '<client-add></client-add>'
+                    }).
                     //when('/commitments', {
                     //    template: '<commitment-list></commitment-list>'
                     //}).
@@ -69,12 +81,15 @@
                     //when('/phases/:phaseId', {
                     //    template: '<phase-detail></phase-detail>'
                     //}).
-                    //when('/phases/phase-add', {
-                    //    template: '<phase-add></phase-add>'
-                    //}).
-                    //when('/phases/phase-delete/:phaseId', {
-                    //    template: '<phase-delete></phase-delete>'
-                    //}).
+                    when('/phases/phase-add', {
+                        template: '<phase-add></phase-add>'
+                    }).
+                    when('/phases/phase-delete/:phaseId', {
+                        template: '<phase-delete></phase-delete>'
+                    }).
+                    when('/phases/phase-edit/:phaseId', {
+                        template: '<phase-edit></phase-edit>'
+                    }).
                     //when('/tasks', {
                     //    template: '<task-list></task-list>'
                     //}).
@@ -90,10 +105,16 @@
                     //when('/projectAdd', {
                     //    template: '<project-add></project-add>'
                     //}).
-                    //when('/assignProjectToEmployee', {
-                    //    template: '<assign-project-to-employee></assign-project-to-employee>'
-                    //}).
-                    otherwise('/');
+                    when('/assignProjectToEmployee', {
+                        template: '<assign-project-to-employee></assign-project-to-employee>'
+                    }).
+                    when('/allprojects', {
+                        template: '<all-projects></all-projects>'
+                    }).
+                    when('/allemployees', {
+                        template: '<all-employees></all-employees>'
+                    }).
+                    otherwise('/allprojects');
             }
         ]);
 })();
