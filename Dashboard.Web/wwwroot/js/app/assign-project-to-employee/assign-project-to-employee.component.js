@@ -123,7 +123,6 @@
                     };
 
                     $scope.assignProjectToEmployee = function () {
-                        console.log("in the function");
                         holder.isBusy = true;
                         holder.errorMessage = "";
 

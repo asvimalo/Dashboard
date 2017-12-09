@@ -10,6 +10,7 @@
                 self.clients = [];
                 self.locations = [];
                 self.addedClient = {};
+
                 $scope.addClient = function () {
                     console.log("in the addProject function");
                     self.isBusy = true;
@@ -38,10 +39,6 @@
 
                         });  
                 };
-                 
-
              }
-
         });
-
 })();
