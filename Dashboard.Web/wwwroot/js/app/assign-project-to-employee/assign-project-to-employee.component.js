@@ -13,19 +13,23 @@
                 holder.employeesAndProjects = [];
                 holder.jobTitles = [];
 
-                $q.all([
-                    repoAssignments.lists(),
-                    repoJobTitles.getAll()
-                ]).then(function (response) {
-                    angular.copy(response[0], holder.employeesAndProjects);
-                    angular.copy(response[1], holder.jobTitles);
+                fetchData(doWork);
 
-                    doWork();
-                }, function (error) {
-                    holder.errorMessage = "Failed to load data: " + error;
-                }).finally(function () {
-                    holder.isBusy = false;
-                });
+                function fetchData(completedCallback) {
+                    $q.all([
+                        repoAssignments.lists(),
+                        repoJobTitles.getAll()
+                    ]).then(function (response) {
+                        angular.copy(response[0], holder.employeesAndProjects);
+                        angular.copy(response[1], holder.jobTitles);
+                        if (completedCallback != null)
+                            completedCallback();
+                    }, function (error) {
+                        holder.errorMessage = "Failed to load data: " + error;
+                    }).finally(function () {
+                        holder.isBusy = false;
+                    });
+                };
 
                 function doWork() {
                     holder.newJobTitles = [];
@@ -145,6 +149,7 @@
                             $scope.formInfo = {};
                             holder.commitments = [];
                             holder.newJobTitles = [];
+                            fetchData(null); //Update jobtitles in select
                         }, function (error) {
                             self.errorMessage = "Failed to save new project";
                             console.log("didn't add assignment: " + error.message);
