@@ -25,10 +25,20 @@
                     
                 }
 
+                $scope.alert = true;
+                $scope.deleteShow = true;
+                $scope.deleteBtn = "Delete";
+                $scope.closeBtn = "Cancel";
+
                 $scope.deletePhase = function () {
-                    repoPhases.delete(self.phaseId);
-                    location.replace("#!/projects/project-details/" + self.phase.projectId);
-                    location.reload();
+                    repoPhases.delete(self.phaseId).then(function (response) {
+
+                        $scope.alert = false;
+                        $scope.successMessage = response;
+                        $scope.closeBtn = "Close";
+                        $scope.deleteShow = false; 
+
+                    });
                 };
 
                 $scope.closeModal = function () {

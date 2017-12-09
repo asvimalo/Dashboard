@@ -8,21 +8,28 @@
                 <form name="DeletePhaseForm"> 
 
                     <div class="form-group">
-                        <label>Phase Id</label>
-                        <input type="text" name="phaseId" ng-readonly="$ctrl.phase.phaseId" value="{{ $ctrl.phase.phaseId }}" class="form-control">
+                        <label>Start Date</label>
+                        <input type="text" name="phaseId" ng-readonly="$ctrl.phase.startDate" value="{{ $ctrl.phase.startDate | date: 'yyyy-MM-dd'}}" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label>End Date</label>
+                        <input type="text" name="phaseId" ng-readonly="$ctrl.phase.endDate" value="{{ $ctrl.phase.endDate | date: 'yyyy-MM-dd'}}" class="form-control">
                     </div>
 
                     <div class="form-group">
                         <label>Phase name</label>
                         <input type="text" name="phasename" ng-readonly="$ctrl.phase.phaseName" value="{{ $ctrl.phase.phaseName }}" class="form-control">
                     </div>
-
+                    <div class="alert alert-success" ng-hide="alert">
+                        <strong> {{successMessage}} </strong>
+                    </div>
                 </form>
             </div>
 
             <div class="modal-footer">
-                <button class="btn btn-success" type="button" ng-click="deletePhase()"> Delete </button>
-                <button class="btn btn-danger pull-right" type="button" ng-click="closeModal()"> Cancel </button>
+                <button class="btn btn-success" ng-show="deleteShow" type="button" ng-click="deletePhase()"> {{deleteBtn}} </button>
+                <button class="btn btn-danger pull-right" type="button" ng-click="closeModal()"> {{closeBtn}} </button>
             </div>
 
         </div>
