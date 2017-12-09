@@ -3,12 +3,7 @@
     angular.module("employeeAdd")
         .component("employeeAdd", {
             templateUrl: "/js/app/employee/employee-add/employee-add.template.html",
-            controller: function EmployeeListController($scope,
-                $http,
-                $location,
-                repoEmployees,
-                repoKnowledges
-            ) {
+            controller: function EmployeeListController($scope, $http, $location, repoEmployees, repoKnowledges) {
                 
                 var holder = this;
 
@@ -52,39 +47,25 @@
                     
                     //var file = new File([byteArrays], filename, { type: contentType, lastModified: Date.now() });
 
-
-                    console.log("inside employees Controller ");
-
                     holder.errorMessage = "";
                     holder.isBusy = true;
 
                     holder.progress = "";
-
                     
                     var employeeJson = JSON.stringify(newEmployee);
                      
-                    repoEmployees.add(employeeJson)
-                        .then(function (response) {
+                    repoEmployees.add(employeeJson).then(function (response) {
                         //success
-                        console.log("Response from server api" + response);
                         employee = {};
-
                         window.location.reload();
                     }, function (err) {
                         //failure
-                        // review Error response is coming back....
                         holder.errorMessage = "Failure to save new employee";
                         alert("Failure to save new employee" + err.stringify);
-                    })
-                        .finally(function () {
-                            holder.isBusy = false;
-                        });
-
+                    }).finally(function () {
+                        holder.isBusy = false;
+                    });
                 };
-
-                
             }
-            
         });
-      
 })();

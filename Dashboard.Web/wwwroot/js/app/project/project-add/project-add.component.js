@@ -20,10 +20,8 @@
                         $scope.alert = false;
                         return false;
                     }
-                    else {
-                        $scope.alert = true;
-                        return true;
-                    }
+                    $scope.alert = true;
+                    return true;
                 };
 
                 $scope.addProject = function ( ) {
