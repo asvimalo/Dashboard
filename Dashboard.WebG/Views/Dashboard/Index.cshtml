@@ -11,7 +11,7 @@
         <div ng-view>
         </div>
     </div>
-    <footbar></footbar>
+    <footbar></footbar>                                                 S
 </div>
 
 @section Scripts {
@@ -20,6 +20,15 @@
     
     <script src="~/js/app/directives/loader/loaderControl.js"></script>
 
+    <script src="~/js/app/services/repoEmployees.service.js"></script>
+    <script src="~/js/app/services/repoProjects.service.js"></script>
+    <script src="~/js/app/services/repoClients.service.js"></script>
+    <script src="~/js/app/services/repoKnowledges.service.js"></script>
+    <script src="~/js/app/services/repoAssignments.service.js"></script>
+    <script src="~/js/app/services/repoPhases.service.js"></script>
+    <script src="~/js/app/services/repoJobTitles.service.js"></script>
+    <script src="~/js/app/services/repoJobTitleAssignments.service.js"></script>
+
     <script src="~/js/app/components/dashboard-view/dashboard-view.module.js"></script>
     <script src="~/js/app/components/dashboard-view/dashboard-view.component.js"></script>
     <script src="~/js/app/components/footbar/footbar.module.js"></script>
@@ -27,5 +36,77 @@
     <script src="~/js/app/components/navbar/navbar.module.js"></script>
     <script src="~/js/app/components/navbar/navbar.component.js"></script>
 
+    @*/////////////            PROJECT                  ///////////////////////*@
+
+    <script src="~/js/app/project/project-add/project-add.module.js"></script>
+    <script src="~/js/app/project/project-add/project-add.component.js"></script>
+
+    <script src="~/js/app/project/project-details/project-details.module.js"></script>
+    <script src="~/js/app/project/project-details/project-details.component.js"></script>
+
+    <script src="~/js/app/project/project-delete/project-delete.module.js"></script>
+    <script src="~/js/app/project/project-delete/project-delete.component.js"></script>
+
+    <script src="~/js/app/project/project-edit/project-edit.module.js"></script>
+    <script src="~/js/app/project/project-edit/project-edit.component.js"></script>
+
+    @*/////////////            EMPLOYEE                  ///////////////////////*@
+
+    <script src="~/js/app/employee/employee-add/employee-add.module.js"></script>
+    <script src="~/js/app/employee/employee-add/employee-add.component.js"></script>
+
+    <script src="~/js/app/employee/employee-details/employee-details.module.js"></script>
+    <script src="~/js/app/employee/employee-details/employee-details.component.js"></script>
+
+    <script src="~/js/app/employee/employee-edit/employee-edit.module.js"></script>
+    <script src="~/js/app/employee/employee-edit/employee-edit.component.js"></script>
+
+    <script src="~/js/app/employee/employee-delete/employee-delete.module.js"></script>
+    <script src="~/js/app/employee/employee-delete/employee-delete.component.js"></script>
+
+    @*/////////////            CLIENT                  ///////////////////////*@
+
+    <script src="~/js/app/client/client-add/client-add.module.js"></script>
+    <script src="~/js/app/client/client-add/client-add.component.js"></script>
+
+    @*/////////////            ASSIGNMENT                  ///////////////////////*@
+
+    <script src="~/js/app/assignment/assignment-edit/assignment-edit.module.js"></script>
+    <script src="~/js/app/assignment/assignment-edit/assignment-edit.component.js"></script>
+
+    <script src="~/js/app/assignment/assignment-delete/assignment-delete.module.js"></script>
+    <script src="~/js/app/assignment/assignment-delete/assignment-delete.component.js"></script>
+
+
+    @*/////////////            PHASE                  ///////////////////////*@
+
+    <script src="~/js/app/phase/phase-add/phase-add.module.js"></script>
+    <script src="~/js/app/phase/phase-add/phase-add.component.js"></script>
+
+    <script src="~/js/app/phase/phase-delete/phase-delete.module.js"></script>
+    <script src="~/js/app/phase/phase-delete/phase-delete.component.js"></script>
+
+    <script src="~/js/app/phase/phase-edit/phase-edit.module.js"></script>
+    <script src="~/js/app/phase/phase-edit/phase-edit.component.js"></script>
+
+    @*/////////////            PANEL3                  ///////////////////////*@
+    <script src="~/js/app/assign-project-to-employee/assign-project-to-employee.module.js"></script>
+    <script src="~/js/app/assign-project-to-employee/assign-project-to-employee.component.js"></script>
+
+    @*/////////////            ALLPROJECTS                ///////////////////////*@
+    <script src="~/js/app/allproject/all-projects.module.js"></script>
+    <script src="~/js/app/allproject/all-projects.component.js"></script>
+
+    @*/////////////            ALLEMPLOYEES                ///////////////////////*@
+    <script src="~/js/app/allemployee/all-employees.module.js"></script>
+    <script src="~/js/app/allemployee/all-employees.component.js"></script>
+
+
+    @*********************************************@
+    @**************  GANTTCHART   ****************@
+    @*********************************************@
+
+    <script src="~/js/app/allproject/gantt.js"></script>
+    <script src="~/lib/moment/moment.js"></script>
 
 } 

@@ -3,13 +3,7 @@
     angular.module("employeeEdit")
         .component("employeeEdit", {
             templateUrl: "/js/app/components/employee/employee-edit/employee-edit.template.html",
-            controller: function EmployeeListController($scope,
-                $http,
-                $location,
-                $routeParams,
-                repoEmployees,
-                repoKnowledges
-            )
+            controller: function EmployeeListController($scope, $http, $location, $routeParams, repoEmployees, repoKnowledges)
             {
                 
                 var holder = this;

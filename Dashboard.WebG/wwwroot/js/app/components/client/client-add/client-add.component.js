@@ -3,48 +3,45 @@
     angular.module("clientAdd")
         .component("clientAdd", {
             templateUrl: "/js/app/components/client/client-add/client-add.template.html",
-            controller: function ClientAddController(
-                repoClients,
-                $scope,
-                $routeParams,
-                $location
-                ) {
+            controller: function ClientAddController($http, $scope, $routeParams, $location, $window, repoClients, repoProjects) {
 
                 var self = this;
-                // Putting all my Clients in this array.
+
                 self.clients = [];
-                // Putting all my Locations in this array.
                 self.locations = [];
-                // Add Project Function
+                self.addedClient = {};
                 $scope.addClient = function () {
                     console.log("in the addProject function");
                     self.isBusy = true;
                     self.errorMessage = "";
 
-                    var data = { "ClientName": self.client.clientName, "City": self.location.city, "Address": self.location.adress };
+                    var data = { "ClientName": $scope.addClientForm.clientName, "City": $scope.addClientForm.city, "Address": $scope.addClientForm.adress };
                     var dataTmp = JSON.stringify(data);
 
-                    // Http Post for Location 
-                    repoClients.add(dataTmp).then(function (response) {
-                        console.log("Response from server api" + response);
-                        // Sparar datan i $scope.locationObj för att få locationId
-                        angular.copy(response, $scope.locationObj);
-                        window.location.reload();
+                    repoClients.add(dataTmp)
+                        .then(function (response) {
 
-                    }, function () {
-                        //failure
-                        console.log("failure");
-                        self.errorMessage = "Failure to save new project";
-                        window.location.reload();
+                            console.log("Response from server api" + response);
+                            angular.copy(response, self.addedClient);
 
-                    }).finally(function () {
-                            console.log("finally");
-                            self.isBusy = false;
                             window.location.reload();
 
-                        });        
-                                                            
-                };              
-            }
+                        }, function (error) {
+                            //failure
+                            console.log("failure");
+                            self.errorMessage = "Failure to save new project";
+                            window.location.reload();
+                        })
+                        .finally(function () {
+                            console.log("finally");
+                            self.isBusy = false;
+
+                        });  
+                };
+                 
+
+             }
+
         });
+
 })();

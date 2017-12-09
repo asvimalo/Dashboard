@@ -9,7 +9,7 @@ var repoPhases = function ($http) {
 
             }, function (error) {
 
-                console.log("didn't get phases: " + error.message);
+                console.log("didn't get assignments: " + error.message);
             })
             .finally(function () {
 
@@ -18,12 +18,12 @@ var repoPhases = function ($http) {
     };
    
     var getPhaseById = function (id) {
-        return $http.get('http://localhost:8890/api/dashboard/phases/', id)
+        return $http.get('http://localhost:8890/api/dashboard/phases/' + id)
             .then(function (response) {
                 return response.data;
             }, function (error) {
 
-                console.log("didn't get phase: " + error.message);
+                console.log("didn't get assignment: " + error.message);
             })
             .finally(function () {
 
@@ -31,12 +31,12 @@ var repoPhases = function ($http) {
             });
     };
     var getPhaseByName = function (name) {
-        return $http.get("http://localhost:8890/api/dashboard/phases/", name)
+        return $http.get("http://localhost:8890/api/dashboard/phases/" + name)
             .then(function (response) {
                 return response.data;
             }, function (error) {
 
-                console.log("didn't get phase: " + error.message);
+                console.log("didn't get assignment: " + error.message);
             })
             .finally(function () {
 
@@ -49,20 +49,21 @@ var repoPhases = function ($http) {
                 return response.data;
             }, function (error) {
 
-                console.log("didn't add phase: " + error.message);
+                console.log("didn't add assignment: " + error.message);
             })
             .finally(function () {
+                window.location.reload();
+                console.log("Success");
 
-                console.log("Finally...??");
             });
     };
-    var updatePhase = function (phase) {
-        $http.put('http://localhost:8890/api/dashboard/phases', phase)
+    var updatePhase = function (id, phase) {
+        return $http.put('http://localhost:8890/api/dashboard/phases/'+ id, phase )
             .then(function (response) {
-                return response.data;
+                return response;
             }, function (error) {
 
-                console.log("didn't update phase: " + error.message);
+                console.log("didn't update employee: " + error.message);
             })
             .finally(function () {
 
@@ -70,16 +71,16 @@ var repoPhases = function ($http) {
             });
     };
     var deletePhase = function (id) {
-        $http.delete('http://localhost:8890/api/dashboard/phases', id)
+        $http.delete('http://localhost:8890/api/dashboard/phases/' + id)
             .then(function (response) {
                 return response.data;
             }, function (error) {
 
-                console.log("didn't delete phase: " + error.message);
+                console.log("didn't delete employee: " + error.message);
             })
             .finally(function () {
-
-                console.log("Finally...??");
+                
+                console.log("Success delete");
             });
     };
     return {

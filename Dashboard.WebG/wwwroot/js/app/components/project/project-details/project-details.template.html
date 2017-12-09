@@ -1,65 +1,110 @@
 ﻿
-<div class="container oneProjectTop">
-    <div class="row">
-        <div class="col-md-6">
-            <h2> {{$ctrl.project.projectName}} </h2> 
-        </div>
-        <div class="col-md-6">
-            <div class="bs-selectbox btn-group pull-right">
-                <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" type="button">
-                    <span class="glyphicon glyphicon-cog"></span>
-                </button>
-                <ul class="dropdown-menu">
-                    <li><a data-toggle="modal" data-target="#deleteProject" ng-click="deleteProject()">Delete</a></li>
-                </ul>
+<div class="projectDetails">
+
+    <div class="container-fluid oneProjectTop">
+        <div class="row">
+            <div class="col-md-11">
+                <h4> {{$ctrl.project.projectName}} </h4>
+            </div>
+            <div class="col-md-1">
+                <div class="bs-selectbox">
+                    <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" type="button">
+                        <span class="glyphicon glyphicon-cog"></span>
+                    </button>
+                    <ul class="dropdown-menu pull-right">
+                        <li><a data-toggle="modal" data-target="#projectEdit">Edit</a></li>
+                        <li><a data-toggle="modal" data-target="#deleteProject">Delete</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
 
 
-<br />
-<button class="btn btn-default" type="button" data-toggle="collapse" data-target="#phaseAdd" aria-expanded="false" aria-controls="phaseAdd">
-    <span class="glyphicon glyphicon-plus" ></span> Phases
-</button>
-<div class="collapse" id="phaseAdd">
     <br />
-    <phase-add></phase-add>
+    <button class="btn btn-default" type="button" data-toggle="collapse" data-target="#phaseAdd" aria-expanded="false" aria-controls="phaseAdd">
+        <span class="glyphicon glyphicon-plus"></span> Phases
+    </button>
+    <div class="collapse" id="phaseAdd">
+        <phase-add></phase-add>
+    </div>
+    <br /><br />
 
-</div>
-<br /><br />
-
-<div class="container" ng-repeat="phase in $ctrl.project.phases">
-    <div class="row phase" >
-        <div class="col-md-4">{{ phase.phaseName }}</div>
-        <div class="col-md-4"><span class="glyphicon glyphicon-calendar"></span> {{ phase.startDate | date:'dd MMMM yyyy'}} - {{ phase.endDate | date:'dd MMMM - yyyy'}}</div>
-        <div class="col-md-1"><span class="glyphicon glyphicon-time"></span> {{ phase.timeBudget }}h</div>
-        <div class="col-md-1"><span class="glyphicon glyphicon-hourglass"></span> {{ phase.progress }}%</div>
-        <div class="col-md-2">
-            <button class="btn btn-default" type="button" data-toggle="collapse" data-target="#{{phase.phaseId}}" aria-expanded="false" aria-controls="{{phase.phaseId}}">
+    <div class="container-fluid" ng-repeat="phase in $ctrl.project.phases">
+        <div class="row phaseA">
+            <div class="col-md-11 phaseInProject">
+                <div class="row">
+                    <div class="col-md-4">{{ phase.phaseName }}</div>
+                    <div class="col-md-4"><span class="glyphicon glyphicon-calendar"></span> {{ phase.startDate | date:'dd/MM-yyyy'}} - {{ phase.endDate | date:'dd/MM-yyyy'}}</div>
+                    <div class="col-md-2"><span class="glyphicon glyphicon-time"></span> {{ phase.timeBudget }}h</div>
+                    <div class="col-md-2"><span class="glyphicon glyphicon-hourglass"></span> {{ phase.progress }}%</div>
+                </div>
+            </div>
+            <button class="btn btn-default col-md-1" type="button" data-toggle="collapse" data-target="#{{phase.phaseId}}" aria-expanded="false" aria-controls="{{phase.phaseId}}">
                 <span class="glyphicon glyphicon-triangle-bottom"></span>
             </button>
         </div>
+        <br />
+
+        <div class="collapse" id="{{phase.phaseId}}">
+            <div class="phaseDetailsCollapse">
+                <table class="table table-striped">
+                    <tbody>
+                        <tr> <th>Timebudget: {{phase.timeBudget}} </th> </tr>
+                        <tr> <th>Progress: {{phase.progress}}</th> </tr>
+                        <tr> <th>Comments: {{phase.comments}}</th> </tr>
+                        <tr> <th><span class="glyphicon glyphicon-calendar"></span> From: {{ phase.startDate | date:'dd, MMMM yyyy'}} To: {{ phase.endDate | date:'dd - MMMM - yyyy'}}</th> </tr>
+                    </tbody>
+                </table> 
+                <button class="btn btn-info" type="button" data-toggle="collapse" data-target="#editPhase" aria-expanded="false" ng-click="Edit(phase.phaseId, phase.projectId)" data-backdrop="static" data-keyboard="false"> Edit </button>
+                <button class="btn btn-danger pull-right" type="button" data-toggle="modal" data-target="#deletePhase" ng-click="Delete(phase.phaseId, phase.projectId)" data-backdrop="static" data-keyboard="false"> Delete </button>
+            </div>
+        </div> 
     </div>
-    <br />
-    <div class="collapse" id="{{phase.phaseId}}">
-        <div class="well">
-            <p>Timebudget: {{phase.timeBudget}}</p>
-            <p>Progress: {{phase.progress}}</p>
-            <!--<p>Timebudget: {{phase.timeBudget}} Vacation Dependency </p>-->
-            <p>Comments: {{phase.comments}}</p>
-            <p>From: {{ phase.startDate | date:'dd, MMMM yyyy'}} To: {{ phase.endDate | date:'dd - MMMM - yyyy'}}</p>
-            <button class="btn btn-info" type="button" data-toggle="collapse" data-target="#editPhase" aria-expanded="false" ng-click="Edit(phase.phaseId, phase.projectId)"> Edit </button>
-            <button class="btn btn-danger pull-right" type="button" data-toggle="modal" data-target="#deletePhase" ng-click="Delete(phase.phaseId, phase.projectId)" > Delete </button>
+
+    <!-- Developer Assign To This Project -->
+    <div class="container-fluid">
+        <div class="row phaseA">
+            <div class="col-md-11 phaseInProject">
+                <div class="row">
+                    <div class="col-md-11">Developer assign to this project</div>
+                </div>
+            </div>
+            <button class="btn btn-default col-md-1" type="button" data-toggle="collapse" data-target="#developersAssignThisProject" aria-expanded="false">
+                <span class="glyphicon glyphicon-triangle-bottom"></span>
+            </button>
         </div>
+        <br />
+        <div class="collapse" id="developersAssignThisProject">
+            <div class="phaseDetailsCollapse" ng-repeat="assignment in $ctrl.project.assignments">
+                <table class="table table-striped">
+                    <tbody>
+                        <tr>
+                            <th>{{ assignment.employee.firstName }} {{ assignment.employee.lastName }}</th>
+                       </tr>
+                        <tr ng-repeat="jobAssignment in assignment.jobTitleAssignments">
+                            <th>Job Title: {{ jobAssignment.jobTitle.titleName }}</th>
+                        </tr>
+                        <tr>
+                            <th>Location: {{ assignment.location }}</th>
+                        </tr> 
+                    </tbody>
+                </table>
+                <!--<button class="btn btn-info" type="button" data-toggle="collapse" data-target="#editAssignment"  ng-click="editDeveloperAssignment(assignment.assignmentId)" data-backdrop="static" data-keyboard="false"> Edit </button>
+                <button class="btn btn-danger pull-right" type="button" ng-click="deleteDeveloperFromProject(assignment.assignmentId)" data-backdrop="static" data-keyboard="false"> Delete </button>-->
+
+            </div>
+        </div>
+
     </div>
-    <phase-delete></phase-delete>
-    <phase-edit></phase-edit>
-    <project-delete></project-delete>
 </div>
- 
- 
+
+<phase-delete></phase-delete>
+<phase-edit></phase-edit>
+<project-delete></project-delete>
+<project-edit></project-edit>
+<assignment-edit></assignment-edit>
 
 
 

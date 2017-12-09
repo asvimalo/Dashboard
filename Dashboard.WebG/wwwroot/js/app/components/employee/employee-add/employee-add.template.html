@@ -1,94 +1,66 @@
 ﻿
-<div class="row">
-    <h2 class="text-center">Add Employee</h2>
-    <div>
-        <div class="col-md-3">
-            <!--<img class="img-responsive thumbnail" ngf-thumbnail="file">-->
-        </div>
-        <div class="form-group col-md-5 ">
+<div class="modal fade" id="employeeAdd" role="dialog">
+    <div class="modal-dialog modal-sm"> 
+        <div class="modal-content">
+            <div class="modal-body">
+                <p class="modalTitle">Add a New Employee</p>
+                <form name="form" class="form-group" novalidate>
+                    <div class="form-group">
+                        <label>
+                            First Name:
+                            <input class="form-control" type="text" ng-model="employee.firstName" name="uFirstName" required="" />
+                        </label>
+                        <br />
+                        <div ng-show="form.$submitted || form.uFirstName.$touched">
+                            <div ng-show="form.uFirstName.$error.required">Tell us your First Name.</div>
+                        </div>
+                        <label>
+                            Last Name:
+                            <input class="form-control" type="text" ng-model="employee.lastName" name="uLastName" required="" />
+                        </label>
+                        <br />
+                        <div ng-show="form.$submitted || form.uLastName.$touched">
+                            <div ng-show="form.uLastName.$error.required">Tell us your Last Name.</div>
+                        </div>
 
-            <label class="form-control">
-                First Name: {{ employee.firstName }}
-            </label>
-            <label class="form-control">
-                Last Name: {{ employee.lastName }}
-            </label>
-            <label class="form-control">
-                Personal Number(ssn): {{ employee.personNr }}
-            </label>
-            <label class="form-control">
-                New Knowledge: {{ employee.newKnowledge }}
-            </label>
-            <label class="form-control">
-                Knowlege: {{ employee.knowledge }}
-            </label>
+                        <label>
+                            Personal Number(ssn):
+                            <input class="form-control" type="text" ng-model="employee.personNr" name="uPersonNr" required="" />
+                        </label>
+                        <br />
+                        <div ng-show="form.$submitted || form.uPersonNr.$touched">
+                            <div class="form-control" ng-show="form.uPersonNr.$error.required">Tell us your Personal Number.</div>
+                        </div>
+                        <label>
+                            Knowledge:
+                            <input class="form-control" type="text" ng-model="$ctrl.knowledges.knowledgeName" name="unewKnowledge" />
+                        </label>
+                        <button class="btn btn-info" type="button" ng-click="addKnowledges()"> <span class="glyphicon glyphicon-plus"></span></button>
+                        <br />
+                        <label ng-hide="$ctrl.newKnowledges.length == 0">Added Knowledges:</label>
+                        <div ng-repeat="items in $ctrl.newKnowledges">
+                            {{items}}
+                            <button class="glyphicon glyphicon-remove" type="button" ng-click="remove($ctrl.newKnowledges, $index)"></button>
+                        </div>
+                        <br /><br />
+                        <label>
+                            Choose knowledges
+                            <select class="form-control" multiple ng-options="item.knowledgeName for item in $ctrl.knowledges" ng-model="employee.knowledges" name="uKnowledge">
+                                <option value="" disabled selected></option>
+                            </select>
+                        </label>
+                        <div ng-show="form.$submitted || form.uKnowledge.$touched">
+                            <div class="form-control" ng-show="form.uKnowledge.$error.required">Tell us your knowledge.</div>
+                        </div>
+                        <div>
+                            <button class="btn btn-primary" ng-click="addEmployee()">Save Employee</button>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" ng-click="reload()" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
         </div>
-        <!--<div class="jumbotron" ngf-select ng-model="file" id="fileInput" name="file" ngf-pattern="'image/*'"
-             ngf-accept="'image/*'" ngf-max-size="20MB" ngf-min-height="100"
-             ngf-resize="{width: 100, height: 100}">Upload your picture</div>-->
     </div>
-
-    <form name="form" class="form-group col-md-6 col-md-offset-3" novalidate>
-
-        <h3>Add a New Employee</h3>
-        <div class="form-group">
-            <label>
-                First Name:
-                <input class="form-control" type="text" ng-model="employee.firstName" name="uFirstName" required="" />
-            </label>
-            <br />
-            <div ng-show="form.$submitted || form.uFirstName.$touched">
-                <div ng-show="form.uFirstName.$error.required">Tell us your First Name.</div>
-            </div>
-            <label>
-                Last Name:
-                <input class="form-control" type="text" ng-model="employee.lastName" name="uLastName" required="" />
-            </label>
-            <br />
-            <div ng-show="form.$submitted || form.uLastName.$touched">
-                <div ng-show="form.uLastName.$error.required">Tell us your Last Name.</div>
-            </div>
-
-            <label>
-                Personal Number(ssn):
-                <input class="form-control" type="text" ng-model="employee.personNr" name="uPersonNr" required="" />
-            </label>
-            <br />
-            <div ng-show="form.$submitted || form.uPersonNr.$touched">
-                <div class="form-control" ng-show="form.uPersonNr.$error.required">Tell us your Personal Number.</div>
-            </div>
-            <label>
-                Knowledge:
-                <input class="form-control" type="text" ng-model="$ctrl.knowledges.knowledgeName" name="unewKnowledge" />
-            </label>
-            <br />
-            <button class="btn btn-secondary" type="button" ng-click="addKnowledges()"> Add </button>
-            <br /> 
-            <label>Added Knowledges:</label>
-            <div ng-repeat="items in $ctrl.newKnowledges">
-                {{items}} 
-                <button class="glyphicon glyphicon-remove" type="button" ng-click="remove($ctrl.newKnowledges, $index)"></button>
-            </div>
-            <br />
-            <label>
-                Choices:
-                <select class="form-control" multiple ng-options="item.knowledgeName for item in $ctrl.knowledges" ng-model="employee.knowledges" name="uKnowledge">
-                    <option value="" disabled selected></option>
-                </select>
-            </label>
-            <div ng-show="form.$submitted || form.uKnowledge.$touched">
-                <div class="form-control" ng-show="form.uKnowledge.$error.required">Tell us your knowledge.</div>
-            </div>
-            <div>
-                <button class="btn btn-default" ng-click="addEmployee()">Add Employee</button>
-            </div>
-
-        </div>
-
-
-
-        <!--<input type="button" ng-click="reset(form)" value="Reset" />-->
-
-    </form>
-
 </div>
