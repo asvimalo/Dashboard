@@ -13,22 +13,22 @@ var repoProjects = function ($http) {
             })
             .finally(function () {
 
-                console.log("Finally...??");
+                //console.log("Finally...??");
             });
     };
-    var getLists = () => {
-        return $http.get('http://localhost:8890/api/dashboard/projects/employeesclientslist')
+    var getEmpClientList = function () {
+        return $http.get("http://localhost:8890/api/dashboard/projects/employeesclientslist")
             .then(function (response) {
 
                 return response.data;
 
             }, function (error) {
 
-                console.log("didn't getting the projects and client lists: " + error.message);
+                console.log("didn't get assignments: " + error.message);
             })
             .finally(function () {
 
-                console.log("Finally...??");
+                //console.log("Finally...??");
             });
     };
     var getProjectById = function (id) {
@@ -38,9 +38,6 @@ var repoProjects = function ($http) {
             }, function (error) {
 
                 console.log("didn't get employees: " + error.message);
-            }).finally(function () {
-
-                console.log("Finally...??");
             }); 
     };
     var getProjectByName = function (name) {
@@ -53,11 +50,11 @@ var repoProjects = function ($http) {
             })
             .finally(function () {
 
-                console.log("Finally...??");
+                //console.log("Finally...??");
             });
     };
     var addProject = function (project) {
-        $http.post('http://localhost:8890/api/dashboard/projects', project)
+        return $http.post('http://localhost:8890/api/dashboard/projects', project)
             .then(function (response) {
                 return response.data;
             }, function (error) {
@@ -66,11 +63,11 @@ var repoProjects = function ($http) {
             })
             .finally(function () {
 
-                console.log("Finally...??");
+                //console.log("Finally...??");
             });
     };
-    var updateProject = function (project) {
-        $http.put('http://localhost:8890/api/dashboard/projects', project)
+    var updateProject = function (id, project) {
+        return $http.put('http://localhost:8890/api/dashboard/projects/'+ id, project)
             .then(function (response) {
                 return response.data;
             }, function (error) {
@@ -79,7 +76,7 @@ var repoProjects = function ($http) {
             })
             .finally(function () {
 
-                console.log("Finally...??");
+                //console.log("Finally...??");
             });
     };
     var deleteProject = function (id) {
@@ -92,12 +89,12 @@ var repoProjects = function ($http) {
             })
             .finally(function () {
 
-                console.log("Finally...??");
+                //console.log("Finally...??");
             });
     };
     return {
         getAll: getProjects,
-        lists: getLists,
+        getEmpClientList: getEmpClientList,
         get: getProjectById,
         getByName: getProjectByName,
         add: addProject,

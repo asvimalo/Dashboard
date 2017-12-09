@@ -1,6 +1,5 @@
 ﻿
 var repoAssignments = function ($http) {
-
     var getAssignments = function () {
         return $http.get('http://localhost:8890/api/dashboard/assignments')
             .then(function (response) {
@@ -13,7 +12,7 @@ var repoAssignments = function ($http) {
             })
             .finally(function () {
 
-                console.log("Finally...??");
+                //console.log("Finally...??");
             });
     };
     var getLists = function () {
@@ -28,11 +27,11 @@ var repoAssignments = function ($http) {
             })
             .finally(function () {
 
-                console.log("Finally...??");
+                //console.log("Finally...??");
             });
     };
     var getAssignmentById = function (id) {
-        return $http.get("http://localhost:8890/api/dashboard/assignments/", id)
+        return $http.get("http://localhost:8890/api/dashboard/assignments/" + id)
             .then(function (response) {
                 return response.data;
             }, function (error) {
@@ -41,7 +40,7 @@ var repoAssignments = function ($http) {
             })
             .finally(function () {
 
-                console.log("Finally...??");
+               // console.log("Finally...??");
             });
     };
     var getAssignmentByName = function (name) {
@@ -54,11 +53,11 @@ var repoAssignments = function ($http) {
             })
             .finally(function () {
 
-                console.log("Finally...??");
+                //console.log("Finally...??");
             });
     };
     var addAssignment = function (assignment) {
-        $http.post('http://localhost:8890/api/dashboard/assignments', assignment)
+        return $http.post('http://localhost:8890/api/dashboard/assignments', assignment)
             .then(function (response) {
                 return response.data;
             }, function (error) {
@@ -67,24 +66,26 @@ var repoAssignments = function ($http) {
             })
             .finally(function () {
 
-                console.log("Finally...??");
+                //console.log("Finally...??");
             });
     };
-    var updateAssignment = function (assignment) {
-        $http.put('http://localhost:8890/api/dashboard/assignments', assignment)
+    var updateAssignment = function (id, assignment) {
+        return $http.put('http://localhost:8890/api/dashboard/assignments/' + id, assignment)
             .then(function (response) {
                 return response.data;
             }, function (error) {
 
-                console.log("didn't update employee: " + error.message);
+                console.log("didn't update assignment: " + error.message);
             })
             .finally(function () {
 
-                console.log("Finally...??");
+                //console.log("Finally...??");
+                holder.isBusy = false;
+
             });
     };
     var deleteAssignment = function (id) {
-        $http.delete('http://localhost:8890/api/dashboard/assignments', id)
+        return $http.delete('http://localhost:8890/api/dashboard/assignments/' + id)
             .then(function (response) {
                 return response.data;
             }, function (error) {
@@ -93,7 +94,7 @@ var repoAssignments = function ($http) {
             })
             .finally(function () {
 
-                console.log("Finally...??");
+                //console.log("Finally...??");
             });
     };
     return {

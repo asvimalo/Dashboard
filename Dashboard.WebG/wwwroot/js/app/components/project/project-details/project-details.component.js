@@ -8,22 +8,22 @@
                 $scope,
                 $location,
                 $routeParams,
-                repoProjects
-                ) {
+                repoProjects,
+                repoAssignments
+            ) 
+            {
                 this.projectId = $routeParams.projectId;
-
+                 
                 var self = this;
 
                 self.project = {};
-
+                 
                 repoProjects.get(self.projectId).then(function (response) {
                     angular.copy(response, self.project);
-                }); 
-
-                $scope.deleteProject = function () {
-
-                };
-
+                    self.project.startDate = new Date(self.project.startDate).toLocaleDateString();
+                    self.project.stopDate = new Date(self.project.stopDate).toLocaleDateString();
+                });  
+                  
                 $scope.phaseId = {};
 
                 $scope.Delete = function (phaseId) {
@@ -33,6 +33,31 @@
                 $scope.Edit = function (phaseId) {
                     location.replace("#!/phases/phase-edit/" + phaseId);
                 };
+                 
+                $scope.deleteDeveloperFromProject = function (assignmentId) {
+
+                    repoAssignments.delete(assignmentId).then(function (response) {
+                        console.log("Response from server api" + response.data);
+
+                        location.reload();
+                    }, function () {
+                        console.log("failure");
+                        self.errorMessage = "Failure to save new project";
+                    })
+                    .finally(function () {
+                            console.log("finally");
+                            self.isBusy = false;
+
+                     });
+
+
+                }
+
+                $scope.editDeveloperAssignment = function (assignmentId) {
+
+                    location.replace("#!/assignments/assignment-edit/" + assignmentId);
+
+                }
             }
         });
       
