@@ -59,12 +59,16 @@
                         repoClients.add(dataTmp).then(function (response) {
                             angular.copy(response, self.addedClient);
                             $scope.addClientForm = {};
-                            fetchData(null);
+                            fetchData(null); //Update Clients in select
                             }, function (error) {
                                 self.errorMessage = "Failure to save new project";
                             }).finally(function () {
                                 self.isBusy = false;
                             });  
+                    };
+
+                    $scope.reload = function () {
+                        window.location.reload();
                     };
 
                     $scope.addProject = function () {
@@ -102,10 +106,6 @@
                             self.isBusy = false;
                             $scope.addProjectForm = {};
                         });
-                    };
-
-                    $scope.reload = function () {
-                        window.location.reload();
                     };
                 }
             }
