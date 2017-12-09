@@ -113,6 +113,14 @@ button:focus {
     border-left: 2px solid #f0f0f0;
 }
 
+.todayCellDate {
+    background-color: #ffe6b3;
+    min-width: 60px;
+    text-align: center;
+    font: bold;
+    border-left: 2px solid #f0f0f0;
+}
+
 tr > button.glyphicon.glyphicon-fast-backward {
     padding-left: 50px;
 }
