@@ -12,7 +12,7 @@
         <div ng-show="addPhaseForm.$submitted || addPhaseForm.startdate.$touched">
             <span ng-show="addPhaseForm.startdate.$error.required">Start date is required.</span>
         </div>
-        <div class="alert alert-danger" ng-hide="alert">
+        <div class="alert alert-danger" ng-show="alert">
             <strong>Warning!</strong> <span>{{errorMessage}}</span>
         </div>
     </div>
@@ -23,16 +23,16 @@
             <span ng-show="addPhaseForm.endDate.$error.required">Start date is required.</span>
         </div>
         <br />
-        <div class="alert alert-danger" ng-hide="alert">
+        <div class="alert alert-danger" ng-show="alert">
             <strong>Warning!</strong> <span>{{errorMessage}}</span>
         </div>
     </div>
     <div class="form-group">
         <label>Timebudget</label>
-        <input type="number" ng-model="$ctrl.phase.timeBudget" class="form-control" name="timebudget" required>
+        <input type="number" ng-model="$ctrl.phase.timeBudget" class="form-control" name="timebudget" min="0" max="100" required>
         <div ng-show="addPhaseForm.$submitted || addPhaseForm.timebudget.$touched">
             <span ng-show="addPhaseForm.timebudget.$error.required">Timebudget is required.</span>
         </div>
     </div>
-    <button class="btn btn-success" type="button" ng-click="addPhase()"> Add </button>
+    <button class="btn btn-success" type="button" ng-disabled="alert == true" ng-click="addPhase()"> Add </button>
 </form>

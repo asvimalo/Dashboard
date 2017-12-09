@@ -1,6 +1,6 @@
 ﻿(function () {
     "use strict";
-    angular.module("projectList", []);
+    angular.module("clientList", []);
         
 
 })();

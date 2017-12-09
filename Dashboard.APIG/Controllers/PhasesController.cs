@@ -69,8 +69,19 @@ namespace Dashboard.API.Controllers
             {
                 try
                 {
-                    var addedPhase = _repo.Create(phase);
-                    return Created($"api/dashboard/commitments/{addedPhase.Id}", addedPhase);
+                    var newPhase = new Phase
+                    {
+                        PhaseName = phase.PhaseName,
+                        StartDate = phase.StartDate,
+                        EndDate = phase.EndDate,
+                        TimeBudget = phase.TimeBudget,
+                        ProjectId = phase.ProjectId,
+                        Comments = phase.Comments
+                    };
+
+                    var addedPhase = await _repo.Create(newPhase);
+                    //return Created($"api/dashboard/commitments/{addedPhase.Id}", addedPhase);
+                    return Ok();
                     //return Ok(Mapper.Map<CommitmentViewModel>(result));
                 }
                 catch (Exception ex)
@@ -107,7 +118,7 @@ namespace Dashboard.API.Controllers
 
 
                     var phaseUpdated = _repo.Update(phaseFromRepo.PhaseId, phaseFromRepo);
-                    return Ok();
+                    return Ok(phaseUpdated.Result);
                     //return Ok(/*Mapper.Map<CommitmentViewModel>(*/phaseFromRepo/*)*/);
                 }
                 catch (Exception ex)

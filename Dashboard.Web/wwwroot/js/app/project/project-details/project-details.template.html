@@ -57,8 +57,8 @@
                         <tr> <th><span class="glyphicon glyphicon-calendar"></span> From: {{ phase.startDate | date:'dd, MMMM yyyy'}} To: {{ phase.endDate | date:'dd - MMMM - yyyy'}}</th> </tr>
                     </tbody>
                 </table> 
-                <button class="btn btn-info" type="button" data-toggle="collapse" data-target="#editPhase" aria-expanded="false" ng-click="Edit(phase.phaseId, phase.projectId)" data-backdrop="static" data-keyboard="false"> Edit </button>
-                <button class="btn btn-danger pull-right" type="button" data-toggle="modal" data-target="#deletePhase" ng-click="Delete(phase.phaseId, phase.projectId)" data-backdrop="static" data-keyboard="false"> Delete </button>
+                <button class="btn btn-info" data-toggle="modal" data-target="#editPhase" aria-expanded="false" ng-click="Edit(phase.phaseId, phase.projectId)" data-backdrop="static" data-keyboard="false"> Edit </button>
+                <button class="btn btn-danger pull-right" data-toggle="modal" data-target="#deletePhase" ng-click="Delete(phase.phaseId, phase.projectId)" data-backdrop="static" data-keyboard="false"> Delete </button>
             </div>
         </div> 
     </div>

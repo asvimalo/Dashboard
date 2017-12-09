@@ -1,0 +1,256 @@
+﻿body {
+    color: grey;
+    background-color: #eeeeee;
+    overflow-y: scroll;
+}
+
+.container {
+    margin-left: 2%;
+    margin-right: 2%;
+}
+
+.borderless > tbody > tr > td, .borderless > tbody > tr {
+    padding-left: 0%;
+    padding-right: 0%;
+    vertical-align: middle;
+    border: hidden;
+}
+
+button:focus {
+    outline: 0;
+}
+
+
+.mainContainer {
+    background-color: whitesmoke;
+}
+
+.mainpanel {
+    background-color: whitesmoke;
+    padding: 2%;
+    /*max-height: 600px;*/
+    min-height: 440px;
+    min-width: 1000px;
+    /*overflow-y: scroll;*/
+}
+
+.sidepanel {
+    background-color: whitesmoke;
+    min-width: 200px;
+    padding: 3%;
+}
+/*#c2deee; #bedafd*/
+.panelButton {
+    transition: 0.5s;
+    background-size: 200% auto;
+    background-image: linear-gradient(to right, #a1c4fd 0%, #c2e9fb 51%, #a1c4fd 100%);
+    border-radius: 5px;
+    min-width: 95%;
+    padding-left: 10%;
+    padding-right: 10%;
+    padding-top: 10%;
+    padding-bottom: 10%;
+    margin-left: 2%;
+    margin-right: 2%;
+    margin-top: 6%;
+    margin-bottom: 6%;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.panelButton:hover {
+    background-position: right center; /* change the direction of the change here */
+}
+
+.panelIcons {
+    font-size: 30px; 
+    padding-bottom: 10%;
+    width: 100%;
+}
+
+.calendarbutton.active {
+    background-color: #bedafd;
+}
+
+.calendarbutton {
+    background-color: #d0d0d0;
+    color: whitesmoke;
+    border-radius: 4px;
+    padding: 2%;
+    padding-left: 3%;
+    padding-left: 3%;
+    border: none;
+    z-index: 3;
+}
+
+#phasestart {
+    background-color: #bef5c1;
+}
+
+#phaseend {
+    background-color: #94c296;
+}
+
+#phasemulti {
+    background-color: #ffff99;
+}
+
+.colorinfo {
+    display: inline;
+    width: 9%;
+    height: 30px;
+    border-radius: 4px;
+    color: grey;
+    text-align: center;
+    padding: 3px;
+}
+
+/*calendar*/
+.cellDate {
+    background-color: #eaeaea;
+    min-width: 60px;
+    text-align: center;
+    border-left: 2px solid #f0f0f0;
+}
+
+tr > button.glyphicon.glyphicon-fast-backward {
+    padding-left: 50px;
+}
+
+tr > button.glyphicon.glyphicon-chevron-right {
+    padding-left: 20px;
+}
+
+tr > button.glyphicon.glyphicon-chevron-left, button.glyphicon.glyphicon-fast-backward, button.glyphicon.glyphicon-chevron-right, button.glyphicon.glyphicon-fast-forward {
+    color: #d0d0d0;
+    background-color: whitesmoke;
+    min-width: 40px;
+    padding-right: 0px;
+    vertical-align: middle;
+    border: none;
+    z-index: 3;
+    vertical-align: middle;
+}
+
+/* project */
+.projectName {
+    background-color: #eaeaea;
+    margin-left: 10%;
+    border-bottom-left-radius: 4px;
+    border-top-left-radius: 4px;
+}
+
+.projectArrowButton {
+    background-color: #eaeaea;
+    border-bottom-right-radius: 4px;
+    border-top-right-radius: 4px;
+}
+
+    .projectArrowButton > button {
+        border: none;
+        background: none;
+        padding: 8px;
+        color: #d0d0d0
+    }
+
+/* employee*/
+
+/*employeegantt*/
+.employeeCss {
+    background-color: #eaeaea;
+    margin-left: 10%;
+    border-bottom-left-radius: 4px;
+    border-top-left-radius: 4px;
+}
+
+/*projectgantt*/
+.employee {
+    background-color: #b0c0d3;
+    border-radius: 4px;
+}
+
+.employeeName {
+    background-color: whitesmoke;
+    padding-left: 30%;
+    text-align: right;
+}
+
+/*gannt's cell deadlines*/
+.celldiv {
+    background-color: #bedafd;
+    width: 100%;
+    height: 20px;
+}
+
+.projectstartdiv {
+    background-color: #d04e4e;
+    width: 100%;
+    height: 20px;
+    margin-left: 10%;
+    border-bottom-left-radius: 4px;
+    border-top-left-radius: 4px;
+}
+
+.projectenddiv {
+    background-color: #d04e4e;
+    width: 100%;
+    height: 20px;
+    margin-right: 10%;
+    border-bottom-right-radius: 4px;
+    border-top-right-radius: 4px;
+}
+
+.phasestartdiv {
+    background-color: #bef5c1;
+    width: 100%;
+    height: 30px;
+}
+
+.phaseenddiv {
+    background-color: #94c296;
+    width: 100%;
+    height: 30px;
+    font-size: 10%;
+}
+
+.phasemultidiv {
+    background-color: #ffff99;
+    width: 100%;
+    height: 30px;
+    font-size: 10%;
+}
+
+.comstartdiv {
+    background-color: #ddecff;
+    width: 100%;
+    height: 20px;
+    padding-left: 10%;
+    margin-left: 10%;
+    border-bottom-left-radius: 4px;
+    border-top-left-radius: 4px;
+}
+
+.comenddiv {
+    background-color: #ddecff;
+    width: 100%;
+    height: 20px;
+    border-bottom-right-radius: 4px;
+    border-top-right-radius: 4px;
+}
+
+.comdiv {
+    background-color: #ddecff;
+    width: 100%;
+    height: 20px;
+}
+
+
+.projectAdd {
+    border-right: solid 1px #d7d7d7;
+    margin-left: 2.5%;
+}
+
+.clientAdd {
+    margin-left: 2.5%;
+}
+ 

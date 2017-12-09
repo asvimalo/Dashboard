@@ -1,0 +1,58 @@
+﻿<div class="container-fluid oneProjectTop">
+    <div class="row" ng-repeat="assignment in $ctrl.assignments" ng-if="$first">
+        <div class="col-md-11" >
+            <h4> {{assignment.employee.firstName}} {{assignment.employee.lastName}} </h4>
+        </div>
+        <div class="col-md-1">
+            <div class="bs-selectbox">
+                <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" type="button">
+                    <span class="glyphicon glyphicon-cog"></span>
+                </button>
+                <ul class="dropdown-menu pull-right">
+                    <li><a data-toggle="modal" data-target="#editEmployee"  >Edit</a></li>
+                    <li><a data-toggle="modal" data-target="#deleteEmployee"  >Delete</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+ 
+<br /><br />
+
+<div class="container-fluid" ng-repeat="assignment in $ctrl.assignments">
+    <div class="row phaseA">
+        <div class="col-md-11 phaseInProject">
+            <div class="row">
+                <div class="col-md-4">{{ assignment.project.projectName }}</div>
+                <div class="col-md-4"><span class="glyphicon glyphicon-calendar"></span> {{ assignment.project.startDate | date:'dd/MM-yyyy'}} - {{ assignment.project.stopDate | date:'dd/MM-yyyy'}}</div>
+                <div class="col-md-4"><span class="glyphicon glyphicon-time"></span> {{ assignment.project.timeBudget }}h</div>
+            </div>
+        </div>
+        <button class="btn btn-default col-md-1" type="button" data-toggle="collapse" data-target="#{{assignment.project.projectId}}" aria-expanded="false" aria-controls="{{assignment.project.projectId}}">
+            <span class="glyphicon glyphicon-triangle-bottom"></span>
+        </button>
+    </div>
+    <br />
+
+    <div class="collapse" id="{{assignment.project.projectId}}">
+        <div class="phaseDetailsCollapse">
+            <table class="table table-striped">                    
+                <tr ng-repeat="com in assignment.commitments">
+                    <td><span class="glyphicon glyphicon-calendar"></span> {{com.startDate | date:'dd/MM-yyyy'}} - {{com.stopDate | date:'dd/MM-yyyy'}}</td>
+                    <td><span class="glyphicon glyphicon-hourglass"></span> {{com.hours}}h</td>
+                    <td ng-repeat="job in assignment.jobTitleAssignments"><span class="glyphicon glyphicon-user"></span> {{job.jobTitle.titleName}}</td>
+                    <td><span class="glyphicon glyphicon-pushpin"></span> {{assignment.location}}</td>
+                </tr>  
+            </table>
+            <!--<a class="btn btn-info" ng-href="#!/phases/phase-edit/{{phase.phaseId}}"> Edit </a>-->
+            <button class="btn btn-info" type="button" data-toggle="modal" data-target="#editAssignment" ng-click="editAssignment(assignment.assignmentId)" data-backdrop="static" data-keyboard="false"> Edit </button>
+            <button class="btn btn-danger pull-right" type="button" data-toggle="modal" data-target="#deleteAssignment" ng-click="deleteAssignment(assignment.assignmentId)" data-backdrop="static" data-keyboard="false"> Delete </button>
+        </div>
+    </div>
+</div>
+ 
+
+<employee-delete></employee-delete>
+<employee-edit></employee-edit>
+<assignment-delete></assignment-delete>
+<assignment-edit></assignment-edit>
