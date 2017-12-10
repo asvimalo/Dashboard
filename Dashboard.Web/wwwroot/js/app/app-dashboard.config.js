@@ -116,10 +116,7 @@
                     }).
                     when('/allemployees', {
                         template: '<all-employees></all-employees>'
-                    }).
-                    when('/more', {
-                        template: '<client-edit></client-edit>'
-                    }).
+                    }).                  
                     otherwise('/allprojects');
             }
         ]);

@@ -27,10 +27,9 @@
                 }, function (error) {
                     //failure
                     holder.errorMessage = "Failed to load data: " + error;
-                })
-                    .finally(function () {
+                }).finally(function () {
                         holder.isBusy = false;
-                    });
+                });
 
                 var weekButton = $("#weekButton");
                 var monthButton = $("#monthButton");
@@ -239,11 +238,18 @@
                             return "";
                         }
                     }); 
+                    $('body').on('click', function (e) {
+                        $('[data-trigger="hover"]').each(function () {
+                            $(this).popover('hide');
+                        });
+                    });
 
                     //Go to EmployeeDetails
                     $(".employeeCss").click(function () {
                         var employeeId = $(this).parent().attr('employeeId');
-                        window.location.assign("http://localhost:8899/#!/employees/employee-details/" + employeeId);
+                        location.replace("#!/employees/employee-details/" + employeeId);
+                        location.reload();
+                        //window.location.assign("http://localhost:8899/#!/employees/employee-details/" + employeeId);
                     }).eq(0);
 
                 } //function initWeekEmp()

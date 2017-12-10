@@ -10,62 +10,82 @@
                             <div class="form-group">
                                 <label>Name</label>
                                 <input type="text" name="projectname" ng-model="$ctrl.project.projectName" class="form-control" required>
-                                <div ng-show="addProjectForm.$submitted || addProjectForm.projectname.$touched">
-                                    <span ng-show="addProjectForm.projectname.$error.required">Project name is required.</span>
-                                </div>
+                                <!--<div ng-show="addProjectForm.$submitted || addProjectForm.projectname.$touched">
+                                    <span ng-show="addProjectForm.projectname.$error.required">Please, enter the project name.</span>
+                                </div>-->
                             </div>
                             <div class="form-group">
                                 <label>From</label>
-                                <input type="date" ng-model="$ctrl.project.startDate" class="form-control" name="startdate" ng-change="validateEndDate($ctrl.project.startDate, $ctrl.project.stopDate)" min="2017-12-01" required>
-                                <div ng-show="addProjectForm.$submitted || addProjectForm.startdate.$touched">
+                                <input type="date" ng-model="$ctrl.project.startDate" class="form-control" name="startdate" ng-change="validateEndDate($ctrl.project.startDate, $ctrl.project.stopDate)" required>
+                                <!--<div ng-show="addProjectForm.$submitted || addProjectForm.startdate.$touched">
                                     <span ng-show="addProjectForm.startdate.$error.required">Start date is required.</span>
-                                </div>
-                                <div class="alert alert-danger" ng-hide="alert">
+                                </div>-->
+                                <!--<div class="alert alert-danger" ng-hide="alert">
                                     <strong>Warning!</strong> <span>{{errorMessage}}</span>
-                                </div>
+                                </div>-->
                             </div>
                             <div class="form-group">
                                 <label>To</label>
-                                <input type="date" ng-model="$ctrl.project.stopDate" class="form-control" name="stopdate" ng-change="validateEndDate($ctrl.project.startDate, $ctrl.project.stopDate)" min="2017-12-01" required>
-                                <div ng-show="addProjectForm.$submitted || addProjectForm.stopdate.$touched">
-                                    <span ng-show="addProjectForm.stopdate.$error.required">Start date is required.</span>
-                                </div>
-                                <div class="alert alert-danger" ng-hide="alert">
+                                <input type="date" ng-model="$ctrl.project.stopDate" class="form-control" name="stopdate" ng-change="validateEndDate($ctrl.project.startDate, $ctrl.project.stopDate)" required>
+                                <!--<div ng-show="addProjectForm.$submitted || addProjectForm.stopdate.$touched">
+                                    <span ng-show="addProjectForm.stopdate.$error.required">End date is required.</span>
+                                </div>-->
+                                <!--<div class="alert alert-danger" ng-hide="alert">
                                     <strong>Warning!</strong> <span>{{errorMessage}}</span>
-                                </div>
+                                </div>-->
                             </div>
                             <div class="form-group">
                                 <label>Timebudget</label>
                                 <input type="number" ng-model="$ctrl.project.timeBudget" class="form-control" name="timebudget" required>
-                                <div ng-show="addProjectForm.$submitted || addProjectForm.timebudget.$touched">
+                                <!--<div ng-show="addProjectForm.$submitted || addProjectForm.timebudget.$touched">
                                     <span ng-show="addProjectForm.timebudget.$error.required">Timebudget is required.</span>
-                                </div>
+                                </div>-->
                             </div>
                             <div class="form-group">
                                 <label>Client:</label>
                                 <select class="form-control" ng-options="item.clientName for item in $ctrl.employeesAndClients.clients" ng-model="addProjectForm.clients" name="client" required>
                                     <option value="" disabled selected></option>
                                 </select>
-                                <div ng-show="addProjectForm.$submitted || addProjectForm.client.$touched">
+                                <!--<div ng-show="addProjectForm.$submitted || addProjectForm.client.$touched">
                                     <span ng-show="addProjectForm.client.$error.required">Client is required.</span>
-                                </div>
+                                </div>-->
                             </div>
-                            <div class="form-group">
+                            <!--<div class="form-group">
                                 <label>Employee:</label>
                                 <select class="form-control" multiple ng-options="item.employeeId as item.firstName + ' ' + item.lastName for item in $ctrl.employeesAndClients.employees" ng-model="addProjectForm.employees" name="employee" required></select>
                                 <div ng-show="addProjectForm.$submitted || addProjectForm.employee.$touched">
                                     <span ng-show="addProjectForm.employee.$error.required">Employees is required.</span>
                                 </div>
-                            </div>
+                            </div>-->
                             <div class="form-group">
                                 <label>Comments</label>
                                 <input type="text" ng-model="$ctrl.project.notes" class="form-control">
                             </div>
                             <button class="btn btn-primary" type="button" ng-click="addProject()">Save</button>
-
+                            <div class="alert alert-danger" ng-hide="alertSave">
+                                <strong>Warning!</strong> <span>{{errorMessageSave}}</span>
+                            </div>
                         </div>
                         <div class="col-md-6 modalDeviderMargin">
-                            <client-add></client-add>
+                            <!--<client-add></client-add>-->
+                            <label>Create a new Client</label>
+                            <br />
+                            <div class="form-group">
+                                <label>Name</label>
+                                <input type="text" ng-model="addClientForm.clientName" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label>City</label>
+                                <input type="text" ng-model="addClientForm.city" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label>Address</label>
+                                <input type="text" ng-model="addClientForm.address" class="form-control">
+                            </div>
+                            <button class="btn btn-primary" type="button" ng-click="addClient()">Save</button>
+                            <div class="alert alert-danger" ng-hide="alertClient">
+                                <strong>Warning!</strong> <span>{{errorMessageClient}}</span>
+                            </div>
                         </div>
                     </div>
 

@@ -15,13 +15,22 @@
                     angular.copy(response, self.assignment); 
                 }); 
 
-                $scope.deleteProject = function () {
+                $scope.alert = false;
+                $scope.deleteBtn = "Delete";
+                $scope.cancelBtn = "Cancel";
+                $scope.deleteAssignment = function () {
                     repoAssignments.delete(self.assignmentId).then(function (response) {
-                        location.replace("#!/allemployees");
-                        location.reload();
+                        $scope.alert = true;
+                        $scope.successMessage = response;
+                        $scope.cancelBtn = true;
                     });
                     
 
+                };
+
+                $scope.closeModal = function () {
+                    location.replace("#!/allemployees");
+                    location.reload();
                 };
                  
             }

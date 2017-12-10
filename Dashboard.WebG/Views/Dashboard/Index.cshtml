@@ -6,15 +6,24 @@
 
 <div class="container-fluid" ng-app="app-dashboard">
     <navbar></navbar>
-    <div class="container boby-content">
-        <loader-cursor></loader-cursor>
-        <div ng-view>
-        </div>
+    <div class="body-content">
+        @*<loader-cursor></loader-cursor>*@
+        @*<div class="mainContainer row">
+            <div class="col-md-10">
+                <div class="mainpanel">*@
+                   <div ng-view></div>  
+                @*</div>            
+            </div>
+        
+        </div>*@
     </div>
-    <footbar></footbar>                                                 S
+
+    <footbar></footbar>
 </div>
 
 @section Scripts {
+    <script src="~/lib/angular/angular.min.js"></script>
+    <script src="~/lib/angular-route/angular-route.min.js"></script>
     <script src="~/js/app/app-dashboard.js"></script>
     <script src="~/js/app/app-dashboard.config.js"></script>
     
@@ -38,75 +47,75 @@
 
     @*/////////////            PROJECT                  ///////////////////////*@
 
-    <script src="~/js/app/project/project-add/project-add.module.js"></script>
-    <script src="~/js/app/project/project-add/project-add.component.js"></script>
+    <script src="~/js/app/components/project/project-add/project-add.module.js"></script>
+    <script src="~/js/app/components/project/project-add/project-add.component.js"></script>
 
-    <script src="~/js/app/project/project-details/project-details.module.js"></script>
-    <script src="~/js/app/project/project-details/project-details.component.js"></script>
+    <script src="~/js/app/components/project/project-details/project-details.module.js"></script>
+    <script src="~/js/app/components/project/project-details/project-details.component.js"></script>
 
-    <script src="~/js/app/project/project-delete/project-delete.module.js"></script>
-    <script src="~/js/app/project/project-delete/project-delete.component.js"></script>
+    <script src="~/js/app/components/project/project-delete/project-delete.module.js"></script>
+    <script src="~/js/app/components/project/project-delete/project-delete.component.js"></script>
 
-    <script src="~/js/app/project/project-edit/project-edit.module.js"></script>
-    <script src="~/js/app/project/project-edit/project-edit.component.js"></script>
+    <script src="~/js/app/components/project/project-edit/project-edit.module.js"></script>
+    <script src="~/js/app/components/project/project-edit/project-edit.component.js"></script>
 
     @*/////////////            EMPLOYEE                  ///////////////////////*@
 
-    <script src="~/js/app/employee/employee-add/employee-add.module.js"></script>
-    <script src="~/js/app/employee/employee-add/employee-add.component.js"></script>
+    <script src="~/js/app/components/employee/employee-add/employee-add.module.js"></script>
+    <script src="~/js/app/components/employee/employee-add/employee-add.component.js"></script>
 
-    <script src="~/js/app/employee/employee-details/employee-details.module.js"></script>
-    <script src="~/js/app/employee/employee-details/employee-details.component.js"></script>
+    <script src="~/js/app/components/employee/employee-details/employee-details.module.js"></script>
+    <script src="~/js/app/components/employee/employee-details/employee-details.component.js"></script>
 
-    <script src="~/js/app/employee/employee-edit/employee-edit.module.js"></script>
-    <script src="~/js/app/employee/employee-edit/employee-edit.component.js"></script>
+    <script src="~/js/app/components/employee/employee-edit/employee-edit.module.js"></script>
+    <script src="~/js/app/components/employee/employee-edit/employee-edit.component.js"></script>
 
-    <script src="~/js/app/employee/employee-delete/employee-delete.module.js"></script>
-    <script src="~/js/app/employee/employee-delete/employee-delete.component.js"></script>
+    <script src="~/js/app/components/employee/employee-delete/employee-delete.module.js"></script>
+    <script src="~/js/app/components/employee/employee-delete/employee-delete.component.js"></script>
 
     @*/////////////            CLIENT                  ///////////////////////*@
 
-    <script src="~/js/app/client/client-add/client-add.module.js"></script>
-    <script src="~/js/app/client/client-add/client-add.component.js"></script>
+    <script src="~/js/app/components/client/client-add/client-add.module.js"></script>
+    <script src="~/js/app/components/client/client-add/client-add.component.js"></script>
 
     @*/////////////            ASSIGNMENT                  ///////////////////////*@
 
-    <script src="~/js/app/assignment/assignment-edit/assignment-edit.module.js"></script>
-    <script src="~/js/app/assignment/assignment-edit/assignment-edit.component.js"></script>
+    <script src="~/js/app/components/assignment/assignment-edit/assignment-edit.module.js"></script>
+    <script src="~/js/app/components/assignment/assignment-edit/assignment-edit.component.js"></script>
 
-    <script src="~/js/app/assignment/assignment-delete/assignment-delete.module.js"></script>
-    <script src="~/js/app/assignment/assignment-delete/assignment-delete.component.js"></script>
+    <script src="~/js/app/components/assignment/assignment-delete/assignment-delete.module.js"></script>
+    <script src="~/js/app/components/assignment/assignment-delete/assignment-delete.component.js"></script>
 
 
     @*/////////////            PHASE                  ///////////////////////*@
 
-    <script src="~/js/app/phase/phase-add/phase-add.module.js"></script>
-    <script src="~/js/app/phase/phase-add/phase-add.component.js"></script>
+    <script src="~/js/app/components/phase/phase-add/phase-add.module.js"></script>
+    <script src="~/js/app/components/phase/phase-add/phase-add.component.js"></script>
 
-    <script src="~/js/app/phase/phase-delete/phase-delete.module.js"></script>
-    <script src="~/js/app/phase/phase-delete/phase-delete.component.js"></script>
+    <script src="~/js/app/components/phase/phase-delete/phase-delete.module.js"></script>
+    <script src="~/js/app/components/phase/phase-delete/phase-delete.component.js"></script>
 
-    <script src="~/js/app/phase/phase-edit/phase-edit.module.js"></script>
-    <script src="~/js/app/phase/phase-edit/phase-edit.component.js"></script>
+    <script src="~/js/app/components/phase/phase-edit/phase-edit.module.js"></script>
+    <script src="~/js/app/components/phase/phase-edit/phase-edit.component.js"></script>
 
     @*/////////////            PANEL3                  ///////////////////////*@
-    <script src="~/js/app/assign-project-to-employee/assign-project-to-employee.module.js"></script>
-    <script src="~/js/app/assign-project-to-employee/assign-project-to-employee.component.js"></script>
+    <script src="~/js/app/components/assignment/assign-project-to-employee/assign-project-to-employee.module.js"></script>
+    <script src="~/js/app/components/assignment/assign-project-to-employee/assign-project-to-employee.component.js"></script>
 
     @*/////////////            ALLPROJECTS                ///////////////////////*@
-    <script src="~/js/app/allproject/all-projects.module.js"></script>
-    <script src="~/js/app/allproject/all-projects.component.js"></script>
+    <script src="~/js/app/components/project/allproject/all-projects.module.js"></script>
+    <script src="~/js/app/components/project/allproject/all-projects.component.js"></script>
 
     @*/////////////            ALLEMPLOYEES                ///////////////////////*@
-    <script src="~/js/app/allemployee/all-employees.module.js"></script>
-    <script src="~/js/app/allemployee/all-employees.component.js"></script>
+    <script src="~/js/app/components/employee/allemployee/all-employees.module.js"></script>
+    <script src="~/js/app/components/employee/allemployee/all-employees.component.js"></script>
 
 
     @*********************************************@
     @**************  GANTTCHART   ****************@
     @*********************************************@
-
-    <script src="~/js/app/allproject/gantt.js"></script>
+    
+    <script src="~/js/app/components/project/allproject/gantt.js"></script>
     <script src="~/lib/moment/moment.js"></script>
-
+    <script src="~/lib/moment/locale/sv.js"></script>
 } 
