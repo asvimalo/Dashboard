@@ -79,6 +79,11 @@
                         $scope.alertSave = true;
                         self.errorMessageSave = "";
 
+                        //BUGG-fix
+                        if (!$scope.validateEndDate(self.project.startDate, self.project.stopDate)) {
+                            return false;
+                        }
+
                         if (self.project.projectName == null) {
                             $scope.errorMessageSave = "Please enter project name.";
                             $scope.alertSave = false;

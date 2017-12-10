@@ -64,14 +64,17 @@
                     var dates = createCalendarDates(timeUnit, startDate, 10);
                     var columnCount = dates.length + 2;
 
-                    var tabledate = $("<table></table>").addClass("table borderless");
+                    var tabledate = $("<table></table>").addClass("table borderless"); // borderless table-fixed");
+
                     createCalendarHeader(tabledate, startDate, dates, leap, timeUnit, initEmployeeGantt);
 
+                    var tablebody = $(tabledate[0].createTBody());
+
                     //**********   EMPLOYEE   ***********
-                    addEmptyRowToHtml(tabledate, columnCount);
+                    addEmptyRowToHtml(tablebody, columnCount);
 
                     var nbrOfEmployees = holder.allEmployees.length;
-                    var rowCount = 2; // Header + empty
+                    var rowCount = 1; // Header + empty
                     for (var i = 0; i < nbrOfEmployees; i++) {
                         var employee = holder.allEmployees[i];
                         var assignmentCount = 0;
@@ -82,20 +85,18 @@
 
                             for (var k = 0; k < holder.assignments.length; k++) {
                                 var assignment = holder.assignments[k];
-                                if (employee.employeeId != assignment.employeeId) {
+                                if (employee.employeeId != assignment.employeeId)
                                     continue;
-                                }
+                                
                                 assignmentCount++;
                                 var project = assignment.project;
                                 var commitments = assignment.commitments;
-                                var row = $(tabledate[0].insertRow(-1));
+                                var row = $(tablebody[0].insertRow(-1));
                                 rowCount++;
                                 row.addClass("projectEmp");
                                 row.attr("employeeId", employee.employeeId);
                                 var projectCell = createCell("projectNameEmp", project.projectName + "  ", "colspan=\"2\" style=\"white-space:PRE\"></td>");
-                                projectCell.attr("projectId", project.projectId); //TODO: behövs eller omnämna till proj?
                                 row.append(projectCell);
-                                //row.append(createCell("projectName", project.projectName + "  ", "colspan=\"2\" style=\"white-space:PRE\"></td>"));
 
                                 var projectStart = moment(project.startDate);
                                 var projectEnd = moment(project.stopDate);
@@ -142,13 +143,14 @@
                             } //for- holder.empAssigments
                         } //if- employee.assigments
 
-                        var row = $(tabledate[0].insertRow(rowCount - assignmentCount));
+                        var row = $(tablebody[0].insertRow(rowCount - assignmentCount));
                         rowCount++;
                         row.addClass("employeeHeader");
                         row.attr("employeeId", employee.employeeId);
                         row.append(createCell("employeeCss", "  " + employee.firstName + " " + employee.lastName, "style=\"white-space:PRE\""));
                         row.append(createCell("employeeArrowButton"));
-
+                        
+                        //Write commitment cells to html
                         var prevSum = -1;
                         for (var j = 0; j < dates.length; j++) {
                             var cellText = "";
@@ -171,7 +173,7 @@
                             row.append(cell.append(celldiv));
                         }
 
-                        addEmptyRowToHtml(tabledate, columnCount);
+                        addEmptyRowToHtml(tablebody, columnCount);
                         rowCount++;
                     } // for-loop for Employee
 
