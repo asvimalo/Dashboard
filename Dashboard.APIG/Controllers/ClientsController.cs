@@ -101,20 +101,17 @@ namespace Dashboard.APIG.Controllers
 
         // PUT api/dashboard/Commitments/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody]Client client)
+        public async Task<IActionResult> Put([FromBody]Client client)
         {
             if (ModelState.IsValid)
             {
-                //var projectId = 0;
-                //var userId = 0;
                 
-
 
                 try
                 {
-                    var clientFromRepo = await _repo.GetById(id);
+                    var clientFromRepo = await _repo.GetById(client.ClientId);
                     //Mapper.Map(commitmentVM, commiFromRepo);
-
+                    
                     clientFromRepo.ClientName = client.ClientName ?? clientFromRepo.ClientName;
                     clientFromRepo.Description = client.Description ?? clientFromRepo.Description;
                     clientFromRepo.Location = client.Location ?? clientFromRepo.Location;

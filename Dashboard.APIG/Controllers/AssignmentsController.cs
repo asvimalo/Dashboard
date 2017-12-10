@@ -166,23 +166,48 @@ namespace Dashboard.DataG.Controllers
 
                 try
                 {
-                    var assignmentRepo = assignFromRepo.First();
+                     
+                    if (assignment.JobTitleAssignments != null)
+                    {
+                        var assignmentRepo = assignFromRepo.First();
+                        var a = assignment.JobTitleAssignments.First().JobTitleId;
 
-                    assignmentRepo.ProjectId = assignment.ProjectId;
-                    assignmentRepo.EmployeeId = assignment.EmployeeId;
-                    assignmentRepo.Location = assignment.Location;
-                    assignmentRepo.StartDate = assignment.StartDate;
-                    assignmentRepo.StopDate = assignment.StopDate;
+                        var result = assignmentRepo.JobTitleAssignments.FirstOrDefault(x => x.JobTitleId == a);
 
+                        if (result == null)
+                        {
+                            assignmentRepo.JobTitleAssignments = assignment.JobTitleAssignments;
+                            await _repoJobA.Delete(assignFromRepo.First().JobTitleAssignments.First().JobTitleAssignmentId);
 
-                    //assignment.ProjectId = projectId;
-                    //Int32.TryParse((assignmentRepo.ProjectId.ToString() ?? assignment.ProjectId.ToString()), out projectId);
-                    //assignment.EmployeeId = employeeId;
-                    //Int32.TryParse((assignmentRepo.EmployeeId.ToString() ?? assignment.EmployeeId.ToString()), out employeeId);
+                            assignmentRepo.ProjectId = assignment.ProjectId;
+                            assignmentRepo.EmployeeId = assignment.EmployeeId;
+                            assignmentRepo.Location = assignment.Location;
+                            assignmentRepo.StartDate = assignment.StartDate;
+                            assignmentRepo.StopDate = assignment.StopDate;
 
+                            var AssignUpdated = _repo.Update(id, assignmentRepo);
+                            return Ok(AssignUpdated);
+                        }
+                        else
+                        {
+                            return BadRequest($"You've already chosen that job title.");
 
-                    var AssignUpdated = _repo.Update(id, assignmentRepo); 
-                    return Ok(/*Mapper.Map<CommitmentViewModel>(*/AssignUpdated/*)*/);
+                        }
+                    }
+                    else
+                    {
+                        var assignmentRepo = assignFromRepo.First();
+
+                        assignmentRepo.ProjectId = assignment.ProjectId;
+                        assignmentRepo.EmployeeId = assignment.EmployeeId;
+                        assignmentRepo.Location = assignment.Location;
+                        assignmentRepo.StartDate = assignment.StartDate;
+                        assignmentRepo.StopDate = assignment.StopDate;
+
+                        var AssignUpdated = _repo.Update(id, assignmentRepo);
+                        return Ok(AssignUpdated);
+                    }
+                     
 
                 }
                 catch (Exception ex)

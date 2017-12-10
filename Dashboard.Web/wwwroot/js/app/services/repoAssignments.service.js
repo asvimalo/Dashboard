@@ -70,17 +70,16 @@ var repoAssignments = function ($http) {
             });
     };
     var updateAssignment = function (id, assignment) {
-        return $http.put('http://localhost:8890/api/dashboard/assignments/' + id, assignment)
-            .then(function (response) {
+        return $http.put('http://localhost:8890/api/dashboard/assignments/' + id, assignment).then(function (response){
                 return response.data;
             }, function (error) {
-
-                console.log("didn't update assignment: " + error.message);
+                return error;
+                console.log("didn't update assignment: " + error.data);
             })
             .finally(function () {
 
-                //console.log("Finally...??");
-                holder.isBusy = false;
+                console.log("Finally...??");
+                //holder.isBusy = false;
 
             });
     };

@@ -63,6 +63,9 @@
                     when('/clients/client-add', {
                         template: '<client-add></client-add>'
                     }).
+                    when('/clients/client-edit', {
+                        template: '<client-edit></client-edit>'
+                    }).
                     //when('/commitments', {
                     //    template: '<commitment-list></commitment-list>'
                     //}).
@@ -113,6 +116,9 @@
                     }).
                     when('/allemployees', {
                         template: '<all-employees></all-employees>'
+                    }).
+                    when('/more', {
+                        template: '<client-edit></client-edit>'
                     }).
                     otherwise('/allprojects');
             }

@@ -10,7 +10,7 @@
                 self.phase = {};
                   
                  
-                if ($routeParams.phaseId == null) {
+                if ($routeParams.phaseId === null) {
                     this.projectId = $routeParams.projectId;
                     console.log("The phaseId is null");
                 } else {

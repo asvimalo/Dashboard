@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Dashboard.DataG.Contracts;
 using Microsoft.Extensions.Logging;
 using Dashboard.EntitiesG.EntitiesRev;
+using System.Linq;
 
 namespace Dashboard.APIG.Controllers
 {
@@ -69,11 +70,19 @@ namespace Dashboard.APIG.Controllers
                 
                 try
                 {
-                    var addedJobTitle = _repo.Create(jobTitle);
+                    var result = _repo.Include(x => x.JobTitleAssignments).FirstOrDefault(t => t.TitleName == jobTitle.TitleName);
 
+                    if (result != null)
+                    {
+                        return BadRequest("Failed to save changes to the database");
+                    }
+                    else
+                    {
+                        var addedJobTitle = _repo.Create(jobTitle);
 
-                    return Ok(addedJobTitle);
-
+                        return Ok(addedJobTitle);
+                    }
+                     
                 }
                 catch (Exception ex)
                 {
