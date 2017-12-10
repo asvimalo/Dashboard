@@ -253,12 +253,21 @@ namespace Dashboard.DataG.Controllers
         [HttpGet("projectsemployeeslist")]
         public async Task<IActionResult> GetProjectsEmployees()
         {
-            
                 try
                 {
                     var employees =  _repoEmp.GetAll();
-                    var projects = _repoPro.GetAll();
-                    var both = new ProjectsEmployeesListNames { Employees = employees, Projects = projects };
+                    var projectsTmp = _repoPro.GetAll();
+
+                    DateTime today = DateTime.Today;
+                    var projects = new List<Project>();
+                    foreach (Project p in projectsTmp) 
+                    {
+                        if(p.StopDate < today) 
+                            continue;
+                        projects.Add(p);
+                    }
+
+                    var both = new ProjectsEmployeesListNames { Employees = employees, Projects = projects.AsQueryable() };
                     return Ok(both);
                 }
                 catch (Exception ex)

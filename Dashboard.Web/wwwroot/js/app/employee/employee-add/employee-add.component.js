@@ -3,88 +3,108 @@
     angular.module("employeeAdd")
         .component("employeeAdd", {
             templateUrl: "/js/app/employee/employee-add/employee-add.template.html",
-            controller: function EmployeeListController($scope,
-                $http,
-                $location,
-                repoEmployees,
-                repoKnowledges
-            ) {
-                
+            controller: function EmployeeListController($scope, $http, $location, $q, repoEmployees, repoKnowledges) {
+
                 var holder = this;
+                $scope.alertSave = true;   
 
-                holder.employees = [];
                 holder.knowledges = [];
-                holder.newKnowledges = [];
 
-                repoKnowledges.get().then(function (response) {
-                    angular.copy(response, holder.knowledges);
-                });
+                fetchData(doWork);
 
-                $scope.addKnowledges = function () {
-                    holder.newKnowledges.push(holder.knowledges.knowledgeName);
+                function fetchData(completedCallback) {
+                    $q.all([
+                        repoKnowledges.get()
+                    ]).then(function (response) {
+                        angular.copy(response[0], holder.knowledges);
+                        if (completedCallback != null)
+                            completedCallback();
+                    }, function (error) {
+                        holder.errorMessage = "Failed to load data: " + error;
+                    }).finally(function () {
+                        holder.isBusy = false;
+                    });
                 };
 
-                $scope.remove = function (array, index) {
-                    array.splice(index, 1);
-                    var y = holder.knowledges;
-                };
+                function doWork() {
 
-                $scope.reload = function () {
-                    window.location.reload();
-                }
+                    holder.newKnowledges = [];
+                    $scope.addKnowledges = function () {
+                        holder.newKnowledges.push(holder.knowledges.knowledgeName);
+                    };
 
-                $scope.addEmployee = function () {
-                    var newEmployee = {};
-                    
-                    var employee = $scope.employee; 
+                    $scope.remove = function (array, index) {
+                        array.splice(index, 1);
+                        var y = holder.knowledges;
+                    };
 
-                    //var fi = this.fileInput.nativeElement;
-                    //var file = $scope.file;
-                    //var form = new FormData();
-                    //form.append("file", file);
-                    //newEmployee.file = form;
-
-                    newEmployee.firstName = employee.firstName;
-                    newEmployee.lastName = employee.lastName;
-                    newEmployee.personNr = employee.personNr;
-                    newEmployee.newKnowledges = holder.newKnowledges;
-                    newEmployee.knowledges = employee.knowledges;
-                    
-                    //var file = new File([byteArrays], filename, { type: contentType, lastModified: Date.now() });
-
-
-                    console.log("inside employees Controller ");
-
-                    holder.errorMessage = "";
-                    holder.isBusy = true;
-
-                    holder.progress = "";
-
-                    
-                    var employeeJson = JSON.stringify(newEmployee);
-                     
-                    repoEmployees.add(employeeJson)
-                        .then(function (response) {
-                        //success
-                        console.log("Response from server api" + response);
-                        employee = {};
-
+                    $scope.reload = function () {
                         window.location.reload();
-                    }, function (err) {
-                        //failure
-                        // review Error response is coming back....
-                        holder.errorMessage = "Failure to save new employee";
-                        alert("Failure to save new employee" + err.stringify);
-                    })
-                        .finally(function () {
+                    }
+
+                    function checkPersonNumber(pnbr) {
+                        var rx = /^\d{8}-\d{4}$/;
+                        if (!rx.test(pnbr))
+                            return false;
+                        var date = pnbr.slice(0, 8);
+                        if (!moment(date, 'YYYYMMDD').isValid())
+                            return false;
+                        return true;
+                    }
+
+                    $scope.addEmployee = function () {
+                        $scope.alertSave = true;
+                        holder.errorMessageSave = "";
+
+                        if ($scope.employee == null)
+                            return false;
+
+                        if ($scope.employee.firstName == null) {
+                            $scope.errorMessageSave = "Please enter the first name.";
+                            $scope.alertSave = false;
+                            return false;
+                        }
+
+                        if ($scope.employee.lastName == null) {
+                            $scope.errorMessageSave = "Please enter the last name.";
+                            $scope.alertSave = false;
+                            return false;
+                        }
+
+                        if ($scope.employee.personNr == null) {
+                            $scope.errorMessageSave = "Please enter personal number.";
+                            $scope.alertSave = false;
+                            return false;
+                        }
+                        if (!checkPersonNumber($scope.employee.personNr)) {
+                            $scope.errorMessageSave = "Please enter a valid personal number (YYYYMMDD-XXXX).";
+                            $scope.alertSave = false;
+                            return false;
+                        }
+
+                        var newEmployee = {};
+
+                        var employee = $scope.employee;
+                        newEmployee.firstName = employee.firstName;
+                        newEmployee.lastName = employee.lastName;
+                        newEmployee.personNr = employee.personNr;
+                        newEmployee.newKnowledges = holder.newKnowledges;
+                        newEmployee.knowledges = employee.knowledges;
+
+                        var employeeJson = JSON.stringify(newEmployee);
+
+                        repoEmployees.add(employeeJson).then(function (response) {
+                            $scope.employee = {};
+                            newEmployee = {};
+                            holder.newKnowledges = [];
+                            fetchData(null); //Update knowledges in select
+                        }, function (err) {
+                            holder.errorMessage = "Failure to save new employee";
+                        }).finally(function () {
                             holder.isBusy = false;
                         });
-
-                };
-
-                
+                    };
+                }
             }
-            
         });
-      
 })();

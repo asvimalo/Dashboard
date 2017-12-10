@@ -26,10 +26,9 @@
                 }, function (error) {
                     //failure
                     holder.errorMessage = "Failed to load data: " + error;
-                })
-                    .finally(function () {
+                }).finally(function () {
                         holder.isBusy = false;
-                    });
+                });
 
                 var weekButton = $("#weekButton");
                 var monthButton = $("#monthButton");

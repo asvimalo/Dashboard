@@ -38,21 +38,6 @@
             </div>
             <div class="col-xs-12 col-sm-4 col-md-2">
                 <ul class="nav navbar-nav navbar-right">
-                    @if (User.Identity.IsAuthenticated)
-                    {
-                        <li>
-
-                            <a class="navbar-brand " asp-controller="Home" asp-action="Logout">Welcome @User.Claims.FirstOrDefault(x => x.Type == "given_name")?.Value  | <span class="btn btn-default">Logout</span></a>
-                        </li>
-
-                    }
-                    else
-                    {
-                        <li>
-                            <a class="navbar-brand text-uppercase" asp-controller="Home" asp-action="Login">Login</a>
-                        </li>
-
-                    }
                 </ul>
             </div> 
         </div>
@@ -66,16 +51,9 @@
                 </ul>
             </div>
         </div>
-
     </nav>
-
     <div class="container-fluid">
-
-            @RenderBody()
-            @*<hr />*@
-            @*<footer>
-                <p>&copy; 2017 - Dashboard.Web</p>
-            </footer>*@
+    @RenderBody()
     </div>
 
     <environment names="Development">
