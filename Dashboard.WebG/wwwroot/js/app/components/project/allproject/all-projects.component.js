@@ -300,7 +300,9 @@
                     //Go to OneProject
                     $(".projectName").click(function () {
                         var projectId = $(this).parent().attr('projectnbr');
-                        window.location.assign("http://localhost:8899/#!/projects/project-details/" + projectId);
+                        location.replace("#!/projects/project-details/" + projectId);
+                        location.reload();
+                        //window.location.assign("http://localhost:8899/#!/projects/project-details/" + projectId);
                         //window.location.reload();
                    }).eq(0);
 
