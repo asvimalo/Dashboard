@@ -9,7 +9,7 @@ var repoProjects = function ($http) {
 
             }, function (error) {
 
-                console.log("didn't get employees: " + error.message);
+                console.log("didn't get projects: " + error.message);
             })
             .finally(function () {
 
@@ -24,7 +24,7 @@ var repoProjects = function ($http) {
 
             }, function (error) {
 
-                console.log("didn't get assignments: " + error.message);
+                console.log("didn't get Employee and Client list: " + error.message);
             })
             .finally(function () {
 
@@ -37,7 +37,7 @@ var repoProjects = function ($http) {
                 return response.data;
             }, function (error) {
 
-                console.log("didn't get employees: " + error.message);
+                console.log("didn't get project: " + error.message);
             }); 
     };
     var getProjectByName = function (name) {
@@ -46,7 +46,7 @@ var repoProjects = function ($http) {
                 return response.data;
             }, function (error) {
 
-                console.log("didn't get employee: " + error.message);
+                console.log("didn't get project: " + error.message);
             })
             .finally(function () {
 
@@ -54,12 +54,11 @@ var repoProjects = function ($http) {
             });
     };
     var addProject = function (project) {
-        return $http.post('http://localhost:8890/api/dashboard/projects', project)
-            .then(function (response) {
+        return $http.post('http://localhost:8890/api/dashboard/projects', project).then(function (response) {
                 return response.data;
             }, function (error) {
 
-                console.log("didn't add employee: " + error.message);
+                console.log("didn't add project: " + error.message);
             })
             .finally(function () {
 
@@ -69,10 +68,10 @@ var repoProjects = function ($http) {
     var updateProject = function (id, project) {
         return $http.put('http://localhost:8890/api/dashboard/projects/'+ id, project)
             .then(function (response) {
-                return response.data;
+                return response;
             }, function (error) {
 
-                console.log("didn't update employee: " + error.message);
+                console.log("didn't update project: " + error.message);
             })
             .finally(function () {
 
@@ -80,12 +79,12 @@ var repoProjects = function ($http) {
             });
     };
     var deleteProject = function (id) {
-        $http.delete('http://localhost:8890/api/dashboard/projects/' + id)
+        return $http.delete('http://localhost:8890/api/dashboard/projects/' + id)
             .then(function (response) {
                 return response.data;
             }, function (error) {
 
-                console.log("didn't delete employee: " + error.message);
+                console.log("didn't delete project: " + error.message);
             })
             .finally(function () {
 

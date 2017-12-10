@@ -6,7 +6,7 @@
                 $locationProvider.hashPrefix('!');
 
                 $routeProvider.
-                    when('/dashboard', {
+                    when('/', {
                         template: '<dashboard-view></dashboard-view>'
                     }).
                     when('/employees', {
@@ -114,7 +114,7 @@
                     when('/allemployees', {
                         template: '<all-employees></all-employees>'
                     }).
-                    otherwise('/allprojects');
+                    otherwise('/');
             }
         ]);
 })();

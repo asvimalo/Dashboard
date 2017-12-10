@@ -58,9 +58,8 @@ var repoPhases = function ($http) {
             });
     };
     var updatePhase = function (id, phase) {
-        return $http.put('http://localhost:8890/api/dashboard/phases/'+ id, phase )
-            .then(function (response) {
-                return response;
+        return $http.put('http://localhost:8890/api/dashboard/phases/' + id, phase).then(function (response) {
+            return response.data;
             }, function (error) {
 
                 console.log("didn't update employee: " + error.message);
@@ -71,7 +70,7 @@ var repoPhases = function ($http) {
             });
     };
     var deletePhase = function (id) {
-        $http.delete('http://localhost:8890/api/dashboard/phases/' + id)
+        return $http.delete('http://localhost:8890/api/dashboard/phases/' + id)
             .then(function (response) {
                 return response.data;
             }, function (error) {

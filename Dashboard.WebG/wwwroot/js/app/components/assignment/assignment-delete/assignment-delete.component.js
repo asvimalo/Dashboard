@@ -3,23 +3,40 @@
     angular.module("assignmentDelete")
         .component("assignmentDelete", {
             templateUrl: "/js/app/components/assignment/assignment-delete/assignment-delete.template.html",
-            controller: function AssignmentController($http, $scope, $location, $routeParams, repoAssignments)
+            controller: function AssignmentController(
+                $http,
+                $scope,
+                $location,
+                $routeParams,
+                repoAssignments
+            )
             {
                 this.assignmentId = $routeParams.assignmentId;
 
                 var self = this;
 
-                self.assignment = []; 
+                self.assignment = [];
 
                 repoAssignments.get(self.assignmentId).then(function (response) {
-                    angular.copy(response, self.assignment); 
-                }); 
+                    angular.copy(response, self.assignment);
+                });
 
-                $scope.deleteProject = function () {
-                    repoAssignments.delete(self.assignmentId);
-                    location.replace("#!/dashboard");
+                $scope.alert = false;
+                $scope.deleteBtn = "Delete";
+                $scope.cancelBtn = "Cancel";
+                $scope.deleteAssignment = function () {
+                    repoAssignments.delete(self.assignmentId).then(function (response) {
+                        $scope.alert = true;
+                        $scope.successMessage = response;
+                        $scope.cancelBtn = true;
+                    });
+
+
+                };
+
+                $scope.closeModal = function () {
+                    location.replace("#!/allemployees");
                     location.reload();
-
                 };
                  
             }

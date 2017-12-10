@@ -27,10 +27,9 @@
                 }, function (error) {
                     //failure
                     holder.errorMessage = "Failed to load data: " + error;
-                })
-                    .finally(function () {
+                }).finally(function () {
                         holder.isBusy = false;
-                    });
+                });
 
                 var weekButton = $("#weekButton");
                 var monthButton = $("#monthButton");
@@ -239,6 +238,11 @@
                             return "";
                         }
                     }); 
+                    $('body').on('click', function (e) {
+                        $('[data-trigger="hover"]').each(function () {
+                            $(this).popover('hide');
+                        });
+                    });
 
                     //Go to EmployeeDetails
                     $(".employeeCss").click(function () {

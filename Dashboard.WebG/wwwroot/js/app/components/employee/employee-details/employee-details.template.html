@@ -24,7 +24,7 @@
         <div class="col-md-11 phaseInProject">
             <div class="row">
                 <div class="col-md-4">{{ assignment.project.projectName }}</div>
-                <div class="col-md-4"><span class="glyphicon glyphicon-calendar"></span> {{ assignment.project.startDate | date:'dd/MM-yyyy'}} - {{ assignment.project.stopDate | date:'dd/MM-yyyy'}}</div>
+                <div class="col-md-4"><span class="glyphicon glyphicon-calendar"></span> {{ assignment.project.startDate | date:'dd/MM-yyyy'}} - {{ assignment.project.stopDate | date:'yyyy-MM-dd'}}</div>
                 <div class="col-md-4"><span class="glyphicon glyphicon-time"></span> {{ assignment.project.timeBudget }}h</div>
             </div>
         </div>
@@ -38,7 +38,7 @@
         <div class="phaseDetailsCollapse">
             <table class="table table-striped">                    
                 <tr ng-repeat="com in assignment.commitments">
-                    <td><span class="glyphicon glyphicon-calendar"></span> {{com.startDate | date:'dd/MM-yyyy'}} - {{com.stopDate | date:'dd/MM-yyyy'}}</td>
+                    <td><span class="glyphicon glyphicon-calendar"></span> {{com.startDate | date:'dd/MM-yyyy'}} - {{com.stopDate | date:'yyyy-MM-dd'}}</td>
                     <td><span class="glyphicon glyphicon-hourglass"></span> {{com.hours}}h</td>
                     <td ng-repeat="job in assignment.jobTitleAssignments"><span class="glyphicon glyphicon-user"></span> {{job.jobTitle.titleName}}</td>
                     <td><span class="glyphicon glyphicon-pushpin"></span> {{assignment.location}}</td>

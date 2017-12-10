@@ -3,14 +3,7 @@
     angular.module("projectDetails")
         .component("projectDetails", {
             templateUrl: "/js/app/components/project/project-details/project-details.template.html",
-            controller: function ProjectListController(
-                $http,
-                $scope,
-                $location,
-                $routeParams,
-                repoProjects,
-                repoAssignments
-            ) 
+            controller: function ProjectListController( $http, $scope, $location, $routeParams, repoProjects, repoAssignments ) 
             {
                 this.projectId = $routeParams.projectId;
                  

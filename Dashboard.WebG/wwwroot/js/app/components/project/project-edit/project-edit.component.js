@@ -4,12 +4,7 @@
     angular.module("projectEdit")
         .component("projectEdit", {
             templateUrl: "/js/app/components/project/project-edit/project-edit.template.html",
-            controller: function ProjectAddController(
-                $http,
-                $scope,
-                $routeParams,
-                repoProjects
-            ) {
+            controller: function ProjectAddController($http, $scope, $routeParams, repoProjects) {
 
                 this.projectId = $routeParams.projectId; 
                 var self = this; 
@@ -26,6 +21,31 @@
                     self.project.stopDate = new Date(self.project.stopDate).toLocaleDateString();
 
                 });
+
+                $scope.alert = false;
+                $scope.validateEndDate = function (startDate, endDate) {
+                    if (new Date(endDate) < new Date(startDate)) {
+                        $scope.errorMessage = "To:date should be greater than start date.";
+                        $scope.alert = true;
+                        return true;
+                    }
+                    else {
+                        $scope.alert = false;
+                        return false;
+                    }
+                };
+
+                $scope.validateTimebudget = function (timeBudget) {
+                    if (timeBudget < 0) {
+                        $scope.errorMessageAlertTimebudget = "Timebudget must be more than 0";
+                        $scope.alertTimebudget = true;
+                        return true;
+                    }
+                    else {
+                        $scope.alertTimebudget = false;
+                        return false;
+                    }
+                };
                   
                 $scope.editProject = function () {
 

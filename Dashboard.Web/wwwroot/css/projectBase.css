@@ -4,7 +4,7 @@
     color: #9a9a9a;
     letter-spacing: 5px;
 }
- 
+
 
 .menu {
     font-family: Arial;
@@ -32,7 +32,7 @@ a {
 .phase {
     background-color: #bedafd;
     padding-top: 2%;
-    padding-bottom: 1%; 
+    padding-bottom: 1%;
     margin-bottom: 0%;
     border-radius: 10px;
     box-shadow: 3px 3px 5px #a3a3a3;
@@ -50,7 +50,7 @@ a {
     padding: 2%;
     overflow: visible;
 }
-  
+
 .modalDevider {
     border-right: solid 1px #d7d7d7;
     margin-left: 2.5%;
@@ -80,7 +80,7 @@ a {
     overflow-x: hidden;
 }
 
-.navbar2{
+.navbar2 {
     background-color: white;
 }
 
@@ -89,6 +89,6 @@ a {
     max-width: 27%;
 }
 
-.alert{
+.alert {
     margin-top: 5%;
 }

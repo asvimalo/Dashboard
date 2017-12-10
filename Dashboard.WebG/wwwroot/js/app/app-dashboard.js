@@ -1,9 +1,10 @@
 ﻿(function () {
     "use strict";
     angular.module("app-dashboard",
-        ["ngRoute",
-            'ngFileUpload',
-            'angularModalService',
+        [
+            "ngRoute",
+        //    'ngFileUpload',
+        //    'angularModalService',
             "assignProjectToEmployee",
             "assignmentDelete",
             "assignmentEdit",
@@ -13,6 +14,7 @@
             "employeeDelete",
             "employeeEdit",
             "dashboardView",
+            "navbar",
             "phaseAdd",
             "phaseDelete",
             "phaseEdit",
