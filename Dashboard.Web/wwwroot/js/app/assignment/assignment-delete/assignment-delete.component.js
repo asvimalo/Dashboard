@@ -16,9 +16,11 @@
                 }); 
 
                 $scope.deleteProject = function () {
-                    repoAssignments.delete(self.assignmentId);
-                    location.replace("#!/dashboard");
-                    location.reload();
+                    repoAssignments.delete(self.assignmentId).then(function (response) {
+                        location.replace("#!/allemployees");
+                        location.reload();
+                    });
+                    
 
                 };
                  

@@ -70,7 +70,7 @@ var repoEmployees = function ($http) {
             });
     };
     var deleteEmployee = function (id) {
-        $http.delete('http://localhost:8890/api/dashboard/employees', employee)
+        $http.delete('http://localhost:8890/api/dashboard/employees/' + id)
             .then(function (response) {
                 return response.data;
             }, function (error) {

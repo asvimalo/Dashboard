@@ -65,7 +65,7 @@
                         holder.errorMessage = "";
 
                         var data = {};
-                        if (holder.commitments.length == 0) {
+                        if (holder.commitments.length === 0) {
                             holder.commitments = [{ "startDate": $scope.formInfo.project.startDate, "stopDate": $scope.formInfo.project.stopDate, "hours": "100" }];
                         }
                         data = { "ProjectId": $scope.formInfo.project.projectId, "EmployeeId": $scope.formInfo.employee.employeeId, "Location": $scope.formInfo.location, "Commitments": holder.commitments };
