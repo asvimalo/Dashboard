@@ -40,6 +40,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="wwwroot\js\app\phase\" />
     <Folder Include="wwwroot\views\" />
   </ItemGroup>
 

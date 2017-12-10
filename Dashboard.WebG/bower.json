@@ -9,6 +9,7 @@
     "font-awesome": "Font-Awesome#v4.7.0",
     "angular": "angularjs#v1.6.7",
     "angular-route": "v1.6.7",
-    "gantt": "v4.0.0"
+    "gantt": "v4.0.0",
+    "moment": "2.19.3"
   }
 }

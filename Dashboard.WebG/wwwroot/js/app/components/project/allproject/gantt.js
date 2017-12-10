@@ -44,8 +44,14 @@ function createCalendarHeader(table, startDate, dates, leap, timeUnit, initCallb
     // Printed dates
     rowdate.append(createCell("", "", "")); //colspan =\"2\" 
     for (var i = 0; i < dates.length; i++) {
-        formatedDate = dates[i].format('MM/DD ddd');
-        rowdate.append(createCell("cellDate", formatedDate.toString() + " |  "));
+        if (timeUnit == 'day')
+            formatedDate = dates[i].format('ddd DD/MM');
+        else if (timeUnit == 'week')
+            formatedDate = dates[i].format('DD/MM') + " - " + dates[i].add(6, 'days').format('DD/MM');
+        else // month
+            formatedDate = dates[i].format('MMM YYYY');
+        var style = dates[i].isSame(moment(), timeUnit) ? "todayCellDate" : "cellDate";
+        rowdate.append(createCell(style, formatedDate.toString() + " |  "));
     }
     // Forward buttons
     createCalendarButton(rowdate, "glyphicon glyphicon-chevron-right", startDate, 1   , timeUnit, initCallback);

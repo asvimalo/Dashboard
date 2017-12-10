@@ -13,20 +13,30 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label>Start</label>
-                        <input type="text" ng-model="$ctrl.project.startDate" class="form-control" name="stopdate" value="{{ $ctrl.project.startDate }}">
+                        <label>From</label>
+                        <input type="text" ng-model="$ctrl.project.startDate" class="form-control" name="stopdate" value="{{ $ctrl.project.startDate }}" ng-change="validateEndDate($ctrl.project.startDate, $ctrl.project.stopDate)">
+                    </div>
+                    <div class="alert alert-danger" ng-show="alert">
+                        <strong>Alert!</strong> <span>{{errorMessage}}</span>
                     </div>
                     <div class="form-group">
-                        <label>End</label>
-                        <input type="text" ng-model="$ctrl.project.stopDate" class="form-control" name="stopdate" value="{{ $ctrl.project.stopDate }}">
+                        <label>To</label>
+                        <input type="text" ng-model="$ctrl.project.stopDate" class="form-control" name="stopdate" value="{{ $ctrl.project.stopDate }}" ng-change="validateEndDate($ctrl.project.startDate, $ctrl.project.stopDate)">
+                    </div>
+                    <div class="alert alert-danger" ng-show="alert">
+                        <strong>Alert!</strong> <span>{{errorMessage}}</span>
                     </div>
                     <div class="form-group">
                         <label>Timebudget</label>
-                        <input type="number" ng-model="$ctrl.project.timeBudget" class="form-control" name="timebudget" required>
+                        <input type="text" ng-model="$ctrl.project.timeBudget" value="{{ $ctrl.project.timeBudget }}" class="form-control" name="timebudget" ng-change="validateTimebudget($ctrl.project.timeBudget)" required>
                         <div ng-show="addProjectForm.$submitted || addProjectForm.timebudget.$touched">
                             <span ng-show="addProjectForm.timebudget.$error.required">Timebudget is required.</span>
                         </div>
                     </div> 
+                    <div class="alert alert-danger" ng-show="alertTimebudget">
+                        <strong>Alert!</strong>
+                        <span>{{errorMessageAlertTimebudget}}</span>
+                    </div>
                     <div class="form-group">
                         <label>Comments</label>
                         <input type="text" ng-model="$ctrl.project.notes" class="form-control">
@@ -35,7 +45,7 @@
             </div>
 
             <div class="modal-footer">
-                <button class="btn btn-success" type="button" ng-click="editProject()"> Save </button>
+                <button class="btn btn-success" type="button" ng-disabled="alert === true || alertTimebudget === true" ng-click="editProject()"> Save </button>
                 <button class="btn btn-danger pull-right" type="button" data-dismiss="modal"> Cancel </button>
             </div>
 

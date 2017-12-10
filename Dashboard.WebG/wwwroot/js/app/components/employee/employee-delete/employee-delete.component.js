@@ -22,9 +22,11 @@
                     });
 
                     $scope.deleteEmployee = function () {
-                        repoEmployees.delete(self.employeeId);
-                        location.replace("#!/employees/employee-details/" + holder.employeeId);
-                        location.reload();
+                        repoEmployees.delete(holder.employeeId).then(function (response) {
+                            location.replace("#!/allemployees");
+                            location.reload();
+                        });
+                        
                     };
                      
 

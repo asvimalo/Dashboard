@@ -1,6 +1,5 @@
 ﻿
 <div class="projectDetails">
-
     <div class="container-fluid oneProjectTop">
         <div class="row">
             <div class="col-md-11">
@@ -19,9 +18,6 @@
             </div>
         </div>
     </div>
-
-
-
     <br />
     <button class="btn btn-default" type="button" data-toggle="collapse" data-target="#phaseAdd" aria-expanded="false" aria-controls="phaseAdd">
         <span class="glyphicon glyphicon-plus"></span> Phases
@@ -36,7 +32,7 @@
             <div class="col-md-11 phaseInProject">
                 <div class="row">
                     <div class="col-md-4">{{ phase.phaseName }}</div>
-                    <div class="col-md-4"><span class="glyphicon glyphicon-calendar"></span> {{ phase.startDate | date:'dd/MM-yyyy'}} - {{ phase.endDate | date:'dd/MM-yyyy'}}</div>
+                    <div class="col-md-4"><span class="glyphicon glyphicon-calendar"></span> {{ phase.startDate | date:'yyyy-MM-dd'}} - {{ phase.endDate | date:'yyyy-MM-dd'}}</div>
                     <div class="col-md-2"><span class="glyphicon glyphicon-time"></span> {{ phase.timeBudget }}h</div>
                     <div class="col-md-2"><span class="glyphicon glyphicon-hourglass"></span> {{ phase.progress }}%</div>
                 </div>
@@ -57,8 +53,8 @@
                         <tr> <th><span class="glyphicon glyphicon-calendar"></span> From: {{ phase.startDate | date:'dd, MMMM yyyy'}} To: {{ phase.endDate | date:'dd - MMMM - yyyy'}}</th> </tr>
                     </tbody>
                 </table> 
-                <button class="btn btn-info" type="button" data-toggle="collapse" data-target="#editPhase" aria-expanded="false" ng-click="Edit(phase.phaseId, phase.projectId)" data-backdrop="static" data-keyboard="false"> Edit </button>
-                <button class="btn btn-danger pull-right" type="button" data-toggle="modal" data-target="#deletePhase" ng-click="Delete(phase.phaseId, phase.projectId)" data-backdrop="static" data-keyboard="false"> Delete </button>
+                <button class="btn btn-info" data-toggle="modal" data-target="#editPhase" aria-expanded="false" ng-click="Edit(phase.phaseId, phase.projectId)" data-backdrop="static" data-keyboard="false"> Edit </button>
+                <button class="btn btn-danger pull-right" data-toggle="modal" data-target="#deletePhase" ng-click="Delete(phase.phaseId, phase.projectId)" data-backdrop="static" data-keyboard="false"> Delete </button>
             </div>
         </div> 
     </div>
@@ -68,7 +64,7 @@
         <div class="row phaseA">
             <div class="col-md-11 phaseInProject">
                 <div class="row">
-                    <div class="col-md-11">Developer assign to this project</div>
+                    <div class="col-md-11">Employees assigned to this project</div>
                 </div>
             </div>
             <button class="btn btn-default col-md-1" type="button" data-toggle="collapse" data-target="#developersAssignThisProject" aria-expanded="false">

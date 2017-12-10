@@ -22,13 +22,16 @@
                         <label>Project name</label>
                         <input type="text" name="projectName" ng-readonly="$ctrl.project.projectName" value="{{ $ctrl.project.projectName }}" class="form-control">
                     </div>
-
+                    <div class="alert alert-success" ng-show="alert">
+                        <strong> {{successMessage}} </strong>
+                    </div>
                 </form>
             </div>
 
             <div class="modal-footer">
-                <button class="btn btn-success" type="button" ng-click="deleteProject()"> Delete </button>
-                <button class="btn btn-danger pull-right" type="button" data-dismiss="modal"> Cancel </button>
+                <button class="btn btn-success" type="button" ng-disabled="alert === true" ng-click="deleteProject()"> {{deleteBtn}} </button>
+                <button class="btn btn-danger pull-right" type="button" data-dismiss="modal" ng-hide="alert === true"> {{cancelBtn}} </button>
+                <button class="btn btn-danger pull-right" type="button" data-dismiss="modal" ng-hide="alert === false" ng-click="closeModal()"> Close </button>
             </div>
 
         </div>

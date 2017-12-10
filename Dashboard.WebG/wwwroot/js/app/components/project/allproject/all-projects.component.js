@@ -4,14 +4,7 @@
         .component("allProjects", {
             templateUrl: "/js/app/components/project/allproject/all-projects.template.html",
             styleUrls: ["/css/allProject.css"],
-            controller: function allProjectsController(
-                $http,
-                $scope,
-                $location,
-                $q,
-                repoProjects,
-                repoAssignments
-            ) {
+            controller: function allProjectsController($http, $scope, $location, $q, repoProjects, repoAssignments) {
                 var holder = this;
 
                 holder.allProjects = [];
@@ -33,10 +26,9 @@
                 }, function (error) {
                     //failure
                     holder.errorMessage = "Failed to load data: " + error;
-                })
-                    .finally(function () {
+                }).finally(function () {
                         holder.isBusy = false;
-                    });
+                });
 
                 var weekButton = $("#weekButton");
                 var monthButton = $("#monthButton");
@@ -104,7 +96,7 @@
                         } else {
                             row.append(createCell(""));
                         }
-                        
+
 
                         var projectStart = moment(project.startDate);
                         var projectEnd = moment(project.stopDate);
@@ -251,29 +243,24 @@
                                 var projectId = $(this).attr('proj');
                                 var projObj = holder.allProjects[projectId];
 
-                                if (phaseId.length == 1) {
-                                    var start = moment(projObj.phases[phaseId[0]].startDate);
-                                    var end = moment(projObj.phases[phaseId[0]].endDate);
-                                    var contentData =
-                                        projObj.phases[phaseId[0]].phaseName + "<br/><br/>" +
+                                var contentData = "";
+                                for (var i = 0; i < phaseId.length; i += 2) { //phaseId is coming with comma
+                                    var start = moment(projObj.phases[phaseId[i]].startDate);
+                                    var end = moment(projObj.phases[phaseId[i]].endDate);
+                                    contentData +=
+                                        (i > 0 ? "<br/>" : "") +
+                                        projObj.phases[phaseId[i]].phaseName + "<br/>" +
                                         "From: " + start.format('YYYY-MM-DD') + " <br/>" +
-                                        "To: " + end.format('YYYY-MM-DD') + " <br/><br/>" +
-                                        "Progress: " + projObj.phases[phaseId[0]].progress + "%<br/>" +
-                                        "Timebudget: " + projObj.phases[phaseId[0]].timeBudget + "h<br/>" +
-                                        "Comment: " + projObj.phases[phaseId[0]].comments + "<br/>";
-
-                                } else {
-                                    var contentData = "";
-                                    for (var i = 0; i < phaseId.length; i += 2) { //phaseId is coming with comma
-                                        var start = moment(projObj.phases[phaseId[i]].startDate);
-                                        var end = moment(projObj.phases[phaseId[i]].endDate);
-                                        contentData +=
-                                            projObj.phases[phaseId[i]].phaseName + "<br/>" +
-                                            "From: " + start.format('YYYY-MM-DD') + " <br/>" +
-                                            "To: " + end.format('YYYY-MM-DD') + " <br/>" +
-                                            "Progress: " + projObj.phases[phaseId[0]].progress + "%<br/><br/>";
-                                    }
+                                        "To: " + end.format('YYYY-MM-DD') + " <br/>" +
+                                        "Progress: " + projObj.phases[phaseId[i]].progress + "%<br/>";
                                 }
+                                if (phaseId.length == 1) {
+                                    contentData += "Timebudget: " + projObj.phases[phaseId[0]].timeBudget + "h<br/>";
+                                    var comments = projObj.phases[phaseId[0]].comments;
+                                    if (comments != null)
+                                        contentData += "Comment: " + comments + "<br/>";
+                                }
+                                
                             } else {
                                 var projectId = $(this).attr('proj');
                                 var projObj = holder.allProjects[projectId];
@@ -284,6 +271,11 @@
                             }
                             return contentData;
                         }
+                    });
+                    $('body').on('click', function (e) {
+                        $('[data-trigger="hover"]').each(function () {
+                            $(this).popover('hide');
+                        });
                     });
 
                     //Collapse
