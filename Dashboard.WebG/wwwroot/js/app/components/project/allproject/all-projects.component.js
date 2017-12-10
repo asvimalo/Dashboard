@@ -120,9 +120,7 @@
                                         var phase = project.phases[k];
                                         var phaseStart = moment(phase.startDate);
                                         var phaseEnd = moment(phase.endDate);
-                                        if (dates[j].isAfter(phaseEnd, timeUnit))
-                                            break;
-                                        if (dates[j].isBefore(phaseStart, timeUnit))
+                                        if (dates[j].isAfter(phaseEnd, timeUnit) || dates[j].isBefore(phaseStart, timeUnit))
                                             continue;
 
                                         phaseIds.push(k);
