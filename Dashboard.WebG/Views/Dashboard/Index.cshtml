@@ -7,7 +7,27 @@
 <div class="container-fluid" ng-app="app-dashboard">
     <navbar></navbar>
     <div class="body-content">
-        <div ng-view></div>
+        <br />
+
+        <div class="container-fluid">
+            <div class="mainContainer row">
+                <div class="col-md-10">
+                    <div ng-view></div>
+                </div>
+                <div class="col-md-2">
+                    <div class="sidepanel" id="panels">
+                        <div class="panelButton" data-toggle="modal" data-target="#projectAdd"><span class="glyphicon glyphicon-edit panelIcons"></span>Add a new project</div>
+                        <div class="panelButton" data-toggle="modal" data-target="#employeeAdd"><span class="glyphicon glyphicon-user panelIcons"></span>Add a new Employee</div>
+                        <div class="panelButton" data-toggle="modal" data-target="#assignEmployeeToProject"><span class="glyphicon glyphicon-tasks panelIcons"></span>Assign an employee to a project</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <project-add></project-add>
+        <employee-add></employee-add>
+        <assign-project-to-employee></assign-project-to-employee>  
+
     </div>
     <footbar></footbar>
 </div>

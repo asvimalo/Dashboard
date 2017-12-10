@@ -8,6 +8,11 @@
     margin-right: 2%;
 }
 
+th {
+    font-weight: normal;
+    font-size: 12px;
+}
+
 .borderless > tbody > tr > td, .borderless > tbody > tr, .borderless > thead > tr > th, .borderless > thead > tr {
     padding-left: 0%;
     padding-right: 0%;

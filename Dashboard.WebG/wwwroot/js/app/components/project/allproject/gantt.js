@@ -58,7 +58,7 @@ function createCalendarHeader(table, startDate, dates, leap, timeUnit, initCallb
         var style = dates[i].isSame(moment(), timeUnit) ? "todayCellDate" : "cellDate";
         var datecell = $("<th></th>");
         datecell.addClass(style);
-        datecell.html(formatedDate.toString() + " |  ");
+        datecell.html(formatedDate.toString() + " |");
         rowdate.append(datecell);
     }
     // Forward buttons
