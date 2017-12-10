@@ -31,9 +31,10 @@
                 </form>
             </div>
 
-            <div class="modal-footer">
-                <button class="btn btn-success" type="button" ng-click="deleteProject()"> Delete </button>
-                <button class="btn btn-danger pull-right" type="button" data-dismiss="modal"> Cancel </button>
+            <div class="modal-footer">  
+                <button class="btn btn-success" type="button" ng-disabled="alert === true" ng-click="deleteAssignment()"> {{deleteBtn}} </button>
+                <button class="btn btn-danger pull-right" type="button" data-dismiss="modal" ng-hide="alert === true"> {{cancelBtn}} </button>
+                <button class="btn btn-danger pull-right" type="button" data-dismiss="modal" ng-hide="alert === false" ng-click="closeModal()"> Close </button>
             </div>
 
         </div>
