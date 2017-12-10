@@ -30,6 +30,11 @@
 
                     holder.newKnowledges = [];
                     $scope.addKnowledges = function () {
+                        if (holder.knowledges.knowledgeName == null) {
+                            $scope.errorMessageSave = "The input field is empty.";
+                            $scope.alertSave = false;
+                            return false;
+                        }
                         holder.newKnowledges.push(holder.knowledges.knowledgeName);
                     };
 

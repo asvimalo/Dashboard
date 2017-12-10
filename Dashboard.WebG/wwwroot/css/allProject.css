@@ -1,7 +1,6 @@
 ﻿body {
     color: grey;
     background-color: #eeeeee;
-    overflow-y: scroll;
 }
 
 .container {
@@ -9,7 +8,7 @@
     margin-right: 2%;
 }
 
-.borderless > tbody > tr > td, .borderless > tbody > tr {
+.borderless > tbody > tr > td, .borderless > tbody > tr, .borderless > thead > tr > th, .borderless > thead > tr {
     padding-left: 0%;
     padding-right: 0%;
     vertical-align: middle;
@@ -28,11 +27,27 @@ button:focus {
 .mainpanel {
     background-color: whitesmoke;
     padding: 2%;
-    /*max-height: 600px;*/
     min-height: 440px;
     min-width: 1000px;
-    /*overflow-y: scroll;*/
+    max-height: 500px;
+    overflow: auto;
 }
+
+/*#ganttwrapper {
+    position: relative;
+}
+    */
+/*#ganttchart {
+    height: 500px;
+    overflow: auto;
+}*/
+
+/*#ganttwrapper table thead th {
+  position:absolute; 
+  top:-40px;
+  z-index:2;
+  height:40px;
+}*/
 
 .sidepanel {
     background-color: whitesmoke;
@@ -113,15 +128,23 @@ button:focus {
     border-left: 2px solid #f0f0f0;
 }
 
-tr > button.glyphicon.glyphicon-fast-backward {
+.todayCellDate {
+    background-color: #ffe6b3;
+    min-width: 60px;
+    text-align: center;
+    font: bold;
+    border-left: 2px solid #f0f0f0;
+}
+
+button.glyphicon.glyphicon-fast-backward {
     padding-left: 50px;
 }
 
-tr > button.glyphicon.glyphicon-chevron-right {
+button.glyphicon.glyphicon-chevron-right {
     padding-left: 20px;
 }
 
-tr > button.glyphicon.glyphicon-chevron-left, button.glyphicon.glyphicon-fast-backward, button.glyphicon.glyphicon-chevron-right, button.glyphicon.glyphicon-fast-forward {
+button.glyphicon.glyphicon-chevron-left, button.glyphicon.glyphicon-fast-backward, button.glyphicon.glyphicon-chevron-right, button.glyphicon.glyphicon-fast-forward {
     color: #d0d0d0;
     background-color: whitesmoke;
     min-width: 40px;
@@ -163,11 +186,36 @@ tr > button.glyphicon.glyphicon-chevron-left, button.glyphicon.glyphicon-fast-ba
     border-top-left-radius: 4px;
 }
 
+.employeeArrowButton {
+    background-color: #eaeaea;
+    border-bottom-right-radius: 4px;
+    border-top-right-radius: 4px;
+}
+
+    .employeeArrowButton > button {
+        border: none;
+        background: none;
+        padding: 8px;
+        color: #d0d0d0
+    }
+
+.projectEmp {
+    background-color: #b0c0d3;
+    border-radius: 4px;
+}
+
+.projectNameEmp {
+    background-color: whitesmoke;
+    padding-left: 30%;
+    text-align: right;
+}
+
 /*projectgantt*/
 .employee {
     background-color: #b0c0d3;
     border-radius: 4px;
 }
+
 
 .employeeName {
     background-color: whitesmoke;
@@ -180,8 +228,7 @@ tr > button.glyphicon.glyphicon-chevron-left, button.glyphicon.glyphicon-fast-ba
     background-color: #bedafd;
     width: 100%;
     height: 20px;
-}
-
+    text-align: center;}
 .projectstartdiv {
     background-color: #d04e4e;
     width: 100%;
@@ -213,7 +260,14 @@ tr > button.glyphicon.glyphicon-chevron-left, button.glyphicon.glyphicon-fast-ba
     font-size: 10%;
 }
 
-.phasemultidiv {
+.overtime {
+    background-color: #f5bec1;
+    width: 100%;
+    height: 20px;
+    vertical-align: middle;
+    text-align: center;
+
+}.phasemultidiv {
     background-color: #ffff99;
     width: 100%;
     height: 30px;

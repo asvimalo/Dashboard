@@ -7,17 +7,8 @@
 <div class="container-fluid" ng-app="app-dashboard">
     <navbar></navbar>
     <div class="body-content">
-        @*<loader-cursor></loader-cursor>*@
-        @*<div class="mainContainer row">
-            <div class="col-md-10">
-                <div class="mainpanel">*@
-                   <div ng-view></div>  
-                @*</div>            
-            </div>
-        
-        </div>*@
+        <div ng-view></div>
     </div>
-
     <footbar></footbar>
 </div>
 
@@ -26,7 +17,7 @@
     <script src="~/lib/angular-route/angular-route.min.js"></script>
     <script src="~/js/app/app-dashboard.js"></script>
     <script src="~/js/app/app-dashboard.config.js"></script>
-    
+
     <script src="~/js/app/directives/loader/loaderControl.js"></script>
 
     <script src="~/js/app/services/repoEmployees.service.js"></script>
@@ -114,8 +105,8 @@
     @*********************************************@
     @**************  GANTTCHART   ****************@
     @*********************************************@
-    
+
     <script src="~/js/app/components/project/allproject/gantt.js"></script>
     <script src="~/lib/moment/moment.js"></script>
     <script src="~/lib/moment/locale/sv.js"></script>
-} 
+}

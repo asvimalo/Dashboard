@@ -73,22 +73,25 @@
                     //**********   CALENDAR   ***********
 
                     var dates = createCalendarDates(timeUnit, startDate, 10);
+                    var stopDate = dates[dates.length - 1];
                     var columnCount = dates.length + 2;
 
-                    var tabledate = $("<table></table>").addClass("table borderless");
-                    createCalendarHeader(tabledate, startDate, dates, leap, timeUnit, initProjectGantt);
+                    var tabledate = $("<table></table>").addClass("table borderless"); // borderless table-fixed");
+
+                   createCalendarHeader(tabledate, startDate, dates, leap, timeUnit, initProjectGantt);
+
+                    var tablebody = $(tabledate[0].createTBody());
 
                     //**********   PROJECT   ***********
-                    addEmptyRowToHtml(tabledate, columnCount);
+                    addEmptyRowToHtml(tablebody, columnCount);
 
                     var nbrOfProjects = holder.allProjects.length;
                     for (var i = 0; i < nbrOfProjects; i++) {
 
                         var project = holder.allProjects[i];
-                        var row = $(tabledate[0].insertRow(-1));
+                        var row = $(tablebody[0].insertRow(-1));
                         row.addClass("project");
-                        row.attr('projectId', project.projectName);
-                        row.attr('projectNbr', project.projectId);
+                        row.attr('projectId', project.projectId);
 
                         row.append(createCell("projectName", "  " + project.projectName, "style=\"white-space:PRE\""));
                         if (checkAllEvents) {
@@ -103,12 +106,10 @@
                         for (var j = 0; j < dates.length; j++) {                 //for calendar
                             var style = '';
                             var phaseIds = [];
-                            var phaseData = [];
 
                             if (projectStart.isSame(dates[j], timeUnit)) {
                                 style = 'projectstartdiv';
-                            }
-                            else if (projectEnd.isSame(dates[j], timeUnit)) {
+                            } else if (projectEnd.isSame(dates[j], timeUnit)) {
                                 style = 'projectenddiv';
                             } else {
                                 if (projectStart.isBefore(dates[j], timeUnit) && projectEnd.isAfter(dates[j], timeUnit))
@@ -119,25 +120,19 @@
                                         var phase = project.phases[k];
                                         var phaseStart = moment(phase.startDate);
                                         var phaseEnd = moment(phase.endDate);
-                                        if (dates[j].isAfter(phaseEnd, timeUnit) || dates[j].isBefore(phaseStart, timeUnit))
+                                        if (dates[j].isAfter(phaseEnd, timeUnit))
+                                            break;
+                                        if (dates[j].isBefore(phaseStart, timeUnit))
                                             continue;
 
                                         phaseIds.push(k);
 
-                                        if (phaseStart.isSame(dates[j], timeUnit)) {
-                                            if (style == "phasestartdiv" || style == "phaseenddiv") {
-                                                var dataObj = { "id": k, "data": "phasestartdiv" };
-                                                phaseData.push(dataObj);
-                                            }
+                                        if (phaseIds.length > 1)
+                                            style = 'phasemultidiv';
+                                        else if (phaseStart.isSame(dates[j], timeUnit))
                                             style = 'phasestartdiv';
-                                        }
-                                        else if (phaseEnd.isSame(dates[j], timeUnit)) {
-                                            if (style == "phasestartdiv" || style == "phaseenddiv") {
-                                                var dataObj = { "id": k, "data": "phaseenddiv" };
-                                                phaseData.push(dataObj);
-                                            }
+                                        else if (phaseEnd.isSame(dates[j], timeUnit))
                                             style = 'phaseenddiv';
-                                        }
                                     }
                                 }
                             }
@@ -146,13 +141,7 @@
                             var cell = createCell("datacell");
                             var celldiv = $("<div></div>");
                             if (!isEmpty(style)) {
-                                if (phaseData.length >= 1) {
-                                    celldiv.addClass("phasemultidiv");
-                                    phaseData = [];
-                                } else {
-                                    //addCssClass(style, celldiv);
-                                    celldiv.addClass(style);
-                                }
+                                celldiv.addClass(style);
                                 cell.attr("data-trigger", "hover");
                                 cell.attr("proj", i);
                                 cell.attr("phase", phaseIds);
@@ -168,9 +157,9 @@
 
                                 var employee = assignment.employee;
                                 var commitments = assignment.commitments;
-                                var row = $(tabledate[0].insertRow(-1));
+                                var row = $(tablebody[0].insertRow(-1));
                                 row.addClass("employee");
-                                row.attr('projectId', project.projectName);
+                                row.attr('projectId', project.projectId);
 
                                 row.append(createCell("employeeName", employee.lastName + " " + employee.firstName + "  ", "colspan=\"2\" style=\"white-space:PRE\"></td>"));
 
@@ -209,7 +198,7 @@
                             //$(".projectArrowButton").hide();
                         }
 
-                        addEmptyRowToHtml(tabledate, columnCount);
+                        addEmptyRowToHtml(tablebody, columnCount);
                     }
 
                     //**********   Data to HTML table   ***********
@@ -299,11 +288,9 @@
 
                     //Go to OneProject
                     $(".projectName").click(function () {
-                        var projectId = $(this).parent().attr('projectnbr');
+                        var projectId = $(this).parent().attr('projectId');
                         location.replace("#!/projects/project-details/" + projectId);
                         location.reload();
-                        //window.location.assign("http://localhost:8899/#!/projects/project-details/" + projectId);
-                        //window.location.reload();
                    }).eq(0);
 
                 } //end of function resetGantt() **********************************************************************************************************************************
