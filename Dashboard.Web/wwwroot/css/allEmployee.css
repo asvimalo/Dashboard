@@ -1,4 +1,4 @@
-﻿body {
+﻿/*body {
     color: grey;
     background-color: #eeeeee;
 }
@@ -23,19 +23,19 @@ button:focus {
     background-color: whitesmoke;
     padding: 2%;
     /*max-height: 600px;*/
-    min-height: 440px;
-    min-width: 1000px;
+    /*min-height: 440px;
+    min-width: 1000px;*/
     /*overflow-y: scroll;*/
-}
+/*}*/
 
-.sidepanel {
+/*.sidepanel {
     background-color: whitesmoke;
-    padding: 2%;
+    padding: 2%;*/
     /*margin-right: -180px;
     margin-left: 140px;*/
-}
+/*}*/
 /*#c2deee; #bedafd*/
-.panelButton {
+/*.panelButton {
     background-color: #bedafd;
     min-width: 95%;
     padding-top: 20%;
@@ -98,7 +98,7 @@ button:focus {
 
 
 /*calendar*/
-.cellDate {
+/*.cellDate {
     background-color: #eaeaea;
     min-width: 60px;
     text-align: center;
@@ -122,10 +122,10 @@ tr > button.glyphicon.glyphicon-chevron-left, button.glyphicon.glyphicon-fast-ba
     border: none;
     z-index: 3;
     vertical-align: middle;
-}
+}*/
 
 /* employee */
-.employeeCss {
+/*.employeeCss {
     background-color: #eaeaea;
     margin-left: 10%;
     border-bottom-left-radius: 4px;
@@ -143,10 +143,10 @@ tr > button.glyphicon.glyphicon-chevron-left, button.glyphicon.glyphicon-fast-ba
         background: none;
         padding: 8px;
         color: #d0d0d0
-    }
+    }*/
 
 /*projectgantt*/
-.projectEmp {
+/*.projectEmp {
     background-color: #b0c0d3;
     border-radius: 4px;
 }
@@ -156,10 +156,10 @@ tr > button.glyphicon.glyphicon-chevron-left, button.glyphicon.glyphicon-fast-ba
     background-color: whitesmoke;
     padding-left: 30%;
     text-align: right;
-}
+}*/
 
 /*gannt's cell deadlines*/
-.celldiv {
+/*.celldiv {
     background-color: #bedafd;
     width: 100%;
     height: 20px;
@@ -173,9 +173,9 @@ tr > button.glyphicon.glyphicon-chevron-left, button.glyphicon.glyphicon-fast-ba
     margin-left: 10%;
     border-bottom-left-radius: 4px;
     border-top-left-radius: 4px;
-}
+}*/
 
-.projectenddiv {
+/*.projectenddiv {
     background-color: #d04e4e;
     width: 100%;
     height: 20px;
@@ -243,5 +243,5 @@ tr > button.glyphicon.glyphicon-chevron-left, button.glyphicon.glyphicon-fast-ba
 }
 
 .clientAdd {
-    margin-left: 2.5%;
-}
+    margin-left: 2.5%;*/
+/*}*/
