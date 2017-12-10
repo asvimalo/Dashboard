@@ -28,21 +28,26 @@ function addEmptyRowToHtml(table, columnCount) {
     row1.append(cell2);
 }
 
-function createCalendarButton(row, baseClass, startDate, delta, timeUnit, initCallback) {
+function createCalendarButton(buttoncell, baseClass, startDate, delta, timeUnit, initCallback) {
     $('<button></button>').attr({ 'type': 'submit' }).addClass(baseClass).click(function () {
         newStartdate = startDate.add(delta, timeUnit);
         initCallback(timeUnit, newStartdate);
-    }).appendTo(row);
+    }).appendTo(buttoncell);
 }
 
 function createCalendarHeader(table, startDate, dates, leap, timeUnit, initCallback) {
-    var rowdate = $(table[0].insertRow(-1));
-
+    var header = $(table[0].createTHead());
+    var rowdate = $(header[0].insertRow(-1));
+    
     // Back buttons
-    createCalendarButton(rowdate, "glyphicon glyphicon-fast-backward", startDate, -leap, timeUnit, initCallback);
-    createCalendarButton(rowdate, "glyphicon glyphicon-chevron-left" , startDate, -1   , timeUnit, initCallback);
+    var buttoncellBack = $("<th></th>");
+    createCalendarButton(buttoncellBack, "glyphicon glyphicon-fast-backward", startDate, -leap, timeUnit, initCallback);
+    createCalendarButton(buttoncellBack, "glyphicon glyphicon-chevron-left" , startDate, -1, timeUnit, initCallback);
+    rowdate.append(buttoncellBack);
+
     // Printed dates
-    rowdate.append(createCell("", "", "")); //colspan =\"2\" 
+    var cell = $("<th></th>");  
+    rowdate.append(cell); //colspan =\"2\" 
     for (var i = 0; i < dates.length; i++) {
         if (timeUnit == 'day')
             formatedDate = dates[i].format('ddd DD/MM');
@@ -51,21 +56,14 @@ function createCalendarHeader(table, startDate, dates, leap, timeUnit, initCallb
         else // month
             formatedDate = dates[i].format('MMM YYYY');
         var style = dates[i].isSame(moment(), timeUnit) ? "todayCellDate" : "cellDate";
-        rowdate.append(createCell(style, formatedDate.toString() + " |  "));
+        var datecell = $("<th></th>");
+        datecell.addClass(style);
+        datecell.html(formatedDate.toString() + " |  ");
+        rowdate.append(datecell);
     }
     // Forward buttons
-    createCalendarButton(rowdate, "glyphicon glyphicon-chevron-right", startDate, 1   , timeUnit, initCallback);
-    createCalendarButton(rowdate, "glyphicon glyphicon-fast-forward" , startDate, leap, timeUnit, initCallback);
-    
+    var buttoncellFwd = $("<th></th>");
+    createCalendarButton(buttoncellFwd, "glyphicon glyphicon-chevron-right", startDate, 1   , timeUnit, initCallback);
+    createCalendarButton(buttoncellFwd, "glyphicon glyphicon-fast-forward" , startDate, leap, timeUnit, initCallback);
+    rowdate.append(buttoncellFwd);
 }
-
-
-//function createRowPrimary(table, primName, primId) {
-//    var row = $(table[0].insertRow(-1));
-//    row.addClass("project");
-//    row.attr('primName', primName);
-//    row.attr('primId', primId);
-//    row.append(createCell("primName", "  " + primName, "style=\"white-space:PRE\""));
-//    row.append(createCell("projectArrowButton"));
-//    return row;
-//}

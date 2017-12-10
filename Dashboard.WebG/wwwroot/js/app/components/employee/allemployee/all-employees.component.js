@@ -247,7 +247,9 @@
                     //Go to EmployeeDetails
                     $(".employeeCss").click(function () {
                         var employeeId = $(this).parent().attr('employeeId');
-                        window.location.assign("http://localhost:8899/#!/employees/employee-details/" + employeeId);
+                        location.replace("#!/employees/employee-details/" + employeeId);
+                        location.reload();
+                        //window.location.assign("http://localhost:8899/#!/employees/employee-details/" + employeeId);
                     }).eq(0);
 
                 } //function initWeekEmp()

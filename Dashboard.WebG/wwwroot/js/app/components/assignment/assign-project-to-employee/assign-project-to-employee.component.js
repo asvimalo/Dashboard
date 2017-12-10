@@ -3,7 +3,13 @@
     angular.module("assignProjectToEmployee", [])
         .component("assignProjectToEmployee", {
             templateUrl: "/js/app/components/assignment/assign-project-to-employee/assign-project-to-employee.template.html",
-            controller: function assignProjectToEmployeeController($http, $scope, $location, $q, repoAssignments, repoJobTitles) {
+            controller: function assignProjectToEmployeeController($http,
+                $scope,
+                $location,
+                $q,
+                repoAssignments,
+                repoJobTitles
+            ) {
 
                 var holder = this;
                 holder.isBusy = true;
