@@ -125,12 +125,18 @@
 
                                         phaseIds.push(k);
 
-                                        if (phaseIds.length > 1)
-                                            style = 'phasemultidiv';
-                                        else if (phaseStart.isSame(dates[j], timeUnit))
-                                            style = 'phasestartdiv';
-                                        else if (phaseEnd.isSame(dates[j], timeUnit))
-                                            style = 'phaseenddiv';
+                                        if (phaseStart.isSame(dates[j], timeUnit)) {
+                                            if (style == "phasestartdiv" || style == "phaseenddiv" || style == 'phasemultidiv')
+                                                style = 'phasemultidiv';
+                                            else
+                                                style = 'phasestartdiv';
+                                        }
+                                        else if (phaseEnd.isSame(dates[j], timeUnit)) {
+                                            if (style == "phasestartdiv" || style == "phaseenddiv" || style == 'phasemultidiv')
+                                                style = 'phasemultidiv';
+                                            else
+                                                style = 'phaseenddiv';
+                                        }
                                     }
                                 }
                             }
