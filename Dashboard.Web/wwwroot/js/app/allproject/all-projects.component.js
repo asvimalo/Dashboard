@@ -291,8 +291,8 @@
                     //Go to OneProject
                     $(".projectName").click(function () {
                         var projectId = $(this).parent().attr('projectId');
-                        window.location.assign("http://localhost:8899/#!/projects/project-details/" + projectId);
-                        //window.location.reload();
+                        location.replace("#!/projects/project-details/" + projectId);
+                        location.reload();
                    }).eq(0);
 
                 } //end of function resetGantt() **********************************************************************************************************************************
