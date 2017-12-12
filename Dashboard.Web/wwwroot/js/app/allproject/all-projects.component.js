@@ -2,7 +2,7 @@
     "use strict";
     angular.module("allProjects", [])
         .component("allProjects", {
-            templateUrl: "/js/app/components/project/allproject/all-projects.template.html",
+            templateUrl: "/js/app/allproject/all-projects.template.html",
             styleUrls: ["/css/allProject.css"],
             controller: function allProjectsController($http, $scope, $location, $q, repoProjects, repoAssignments) {
                 var holder = this;
@@ -103,6 +103,7 @@
 
                         var projectStart = moment(project.startDate);
                         var projectEnd = moment(project.stopDate);
+
                         for (var j = 0; j < dates.length; j++) {                 //for calendar
                             var style = '';
                             var phaseIds = [];
@@ -116,27 +117,24 @@
                                     style = 'celldiv'
 
                                 if (checkAllEvents) {
+
                                     for (var k = 0; k < project.phases.length; k++) {      //for project's phases
                                         var phase = project.phases[k];
                                         var phaseStart = moment(phase.startDate);
                                         var phaseEnd = moment(phase.endDate);
-                                        if (dates[j].isAfter(phaseEnd, timeUnit) || dates[j].isBefore(phaseStart, timeUnit))
+                                        if (dates[j].isAfter(phaseEnd, timeUnit))
+                                            break;
+                                        if (dates[j].isBefore(phaseStart, timeUnit))
                                             continue;
 
                                         phaseIds.push(k);
 
-                                        if (phaseStart.isSame(dates[j], timeUnit)) {
-                                            if (style == "phasestartdiv" || style == "phaseenddiv" || style == 'phasemultidiv')
-                                                style = 'phasemultidiv';
-                                            else
-                                                style = 'phasestartdiv';
-                                        }
-                                        else if (phaseEnd.isSame(dates[j], timeUnit)) {
-                                            if (style == "phasestartdiv" || style == "phaseenddiv" || style == 'phasemultidiv')
-                                                style = 'phasemultidiv';
-                                            else
-                                                style = 'phaseenddiv';
-                                        }
+                                        if (phaseIds.length > 1)
+                                            style = 'phasemultidiv';
+                                        else if (phaseStart.isSame(dates[j], timeUnit))
+                                            style = 'phasestartdiv';
+                                        else if (phaseEnd.isSame(dates[j], timeUnit))
+                                            style = 'phaseenddiv';
                                     }
                                 }
                             }

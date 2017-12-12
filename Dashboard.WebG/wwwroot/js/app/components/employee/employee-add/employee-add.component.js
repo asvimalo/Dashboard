@@ -102,6 +102,7 @@
                             $scope.employee = {};
                             newEmployee = {};
                             holder.newKnowledges = [];
+                            holder.knowledges = [];
                             fetchData(null); //Update knowledges in select
                         }, function (err) {
                             holder.errorMessage = "Failure to save new employee";
