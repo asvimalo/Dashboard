@@ -9,6 +9,9 @@ using System.Linq;
 using Microsoft.AspNetCore.Http;
 using System.IO;
 using Dashboard.APIG.Helpers;
+using Dashboard.APIG.Infrastructure;
+using System.Collections.Generic;
+using Dashboard.APIG.Models;
 
 namespace Dashboard.APIG.Controllers
 {
@@ -38,6 +41,9 @@ namespace Dashboard.APIG.Controllers
         
         // GET api/dashboard/employees
         [HttpGet("")]
+        [NoCache]
+        [ProducesResponseType(typeof(List<Employee>), 200)]
+        [ProducesResponseType(typeof(ApiResponse<Employee>), 400)]
         public async Task<IActionResult> Get()
         {
             try
@@ -45,7 +51,7 @@ namespace Dashboard.APIG.Controllers
                 var result = _empRepo.Include(x => x.AcquiredKnowledges, y => y.Assignments);
 
                 return Ok(result);
-                //return Ok(Mapper.Map<IEnumerable<CommitmentViewModel>>(result));
+                
             }
             catch (Exception ex)
             {
@@ -55,6 +61,9 @@ namespace Dashboard.APIG.Controllers
             }
         }
         [HttpGet("load")]
+        [NoCache]
+        [ProducesResponseType(typeof(List<Employee>), 200)]
+        [ProducesResponseType(typeof(ApiResponse<Employee>), 400)]
         public async Task<IActionResult> Load()
         {
             try
@@ -73,13 +82,16 @@ namespace Dashboard.APIG.Controllers
         }
         // GET api/dashboard/Commitments/5
         [HttpGet("{id}", Name = "GetEmployee")]
+        [NoCache]
+        [ProducesResponseType(typeof(Employee), 200)]
+        [ProducesResponseType(typeof(ApiResponse<Employee>), 400)]
         public async Task<IActionResult> Get(int id)
         {
             try
             {
                 var result = _empRepo.Include(a => a.AcquiredKnowledges, x => x.Assignments).Where(x => x.EmployeeId == id).First();
                 return Ok(result);
-                //return Ok(Mapper.Map<CommitmentViewModel>(result));
+                
             }
             catch (Exception ex)
             {
@@ -92,6 +104,8 @@ namespace Dashboard.APIG.Controllers
 
         // POST api/dashboard/employees
         [HttpPost("")]
+        [ProducesResponseType(typeof(ApiResponse<Employee>), 201)]
+        [ProducesResponseType(typeof(ApiResponse<Employee>), 400)]
         public async Task<IActionResult> Post([FromBody]EmployeePost employee)
         {
             if (ModelState.IsValid)
@@ -159,83 +173,45 @@ namespace Dashboard.APIG.Controllers
                         }
                     }
 
-                    return Ok();
-                    //#region Write picture to Image folder
-                    //var webRootPath = _env.WebRootPath;
-                    //var fileName = newEmployee.FirstName + ".jpg";
-                    //var filePath = Path.Combine($"{webRootPath}/Images/{fileName}");
-                    //await System.IO.File.WriteAllBytesAsync(filePath, employee.Bytes);
-
-
-                    //var newCommitment = Mapper.Map<Commitment>(commitment);
-                    //newEmployee.ImageName = fileName;
-                    //newEmployee.ImagePath = filePath; 
-                    //#endregion
-                    //return Ok(Mapper.Map<CommitmentViewModel>(result));
+                    return Ok(addedEmployee);
+                    
                 }
                 catch (Exception ex)
                 {
 
-                    _logger.LogError($"Exception thrown while getting employee: {ex.Message}");
+                    _logger.LogError($"Exception thrown while adding employee: {ex.Message}");
                     return BadRequest($"Error ocurred");
                 }
             }
             return BadRequest("Failed to save changes to the database");
         }
 
-        // PUT api/dashboard/Commitments/5
+        // PUT api/dashboard/employees/5
         [HttpPut("{id}")]
+        [ProducesResponseType(typeof(ApiResponse<Employee>), 200)]
+        [ProducesResponseType(typeof(ApiResponse<Employee>), 400)]
         public async Task<IActionResult> Put(int id, [FromBody]EmployeePost employee)
         {
             if (ModelState.IsValid)
-            {               
-                //var projectId = 0;
-                //var userId = 0;
+            {   
                 var employeeFromRepo = await _empRepo.GetById(id);
-                //Mapper.Map(commitmentVM, commiFromRepo);
+                
                 if (employeeFromRepo == null)
                 {
                     return NotFound();
                 }
                 
-                //var webRootPath = _env.WebRootPath;               
-                //var newCommitment = Mapper.Map<Commitment>(commitment);
+                
                 
                 employeeFromRepo.FirstName = employee.FirstName ?? employeeFromRepo.FirstName;
                 employeeFromRepo.LastName = employee.LastName ?? employeeFromRepo.LastName;
                 employeeFromRepo.PersonNr = employee.PersonNr ?? employeeFromRepo.PersonNr;
 
-                #region file handling
-                //if(employee.File != null)
-                //{
-                //    System.IO.File.Delete(Path.Combine($"{webRootPath}/Images/{employeeFromRepo.FirstName}" + "jpg"));
-                //    var newEmployee = new Employee
-                //    {
-                //        FirstName = employee.FirstName,
-                //        LastName = employee.LastName,
-                //        PersonNr = employee.PersonNr
-
-                //    };
-                //    var fileName = newEmployee.FirstName + ".jpg";
-                //    var filePath = Path.Combine($"{webRootPath}/Images/{fileName}");
-
-                //    //await System.IO.File.WriteAllBytesAsync(filePath, employee.Bytes);
-
-                //    newEmployee.ImageName = fileName;
-                //    newEmployee.ImagePath = filePath;
-                //} 
-                #endregion
-
-               
-
-                //employeeFromRepo.ImageName = employee.ImageName ?? employeeFromRepo.ImageName;
-                //employeeFromRepo.ImagePath = employee.ImagePath ?? employeeFromRepo.ImagePath;
-                //employeeFromRepo.Assignments = employee.Assignments ?? employeeFromRepo.Assignments;
-                //employeeFromRepo.AcquiredKnowledges = employee.AcquiredKnowledge ?? employeeFromRepo.AcquiredKnowledges;
+              
                 try
                 {
                     var employeeUpdated = _empRepo.Update(employeeFromRepo.EmployeeId, employeeFromRepo);
-                    return Ok(/*Mapper.Map<CommitmentViewModel>(*/employeeUpdated/*)*/);
+                    return Ok(employeeUpdated);
                 }
                 catch (Exception ex)
                 {
@@ -249,6 +225,8 @@ namespace Dashboard.APIG.Controllers
 
         // DELETE api/dashboard/Commitments/5
         [HttpDelete("{id}")]
+        [ProducesResponseType(typeof(ApiResponse<Assignment>), 200)]
+        [ProducesResponseType(typeof(ApiResponse<Assignment>), 400)]
         public async Task<IActionResult> Delete(int id)
         {
             try
@@ -266,51 +244,6 @@ namespace Dashboard.APIG.Controllers
            
                 
         }
-        [HttpPost("upload")]
-        public async Task<IActionResult> Upload([FromBody]ImageForCreation imageForCreation)
-        {
-            if (imageForCreation == null)
-            {
-                return BadRequest();
-            }
-
-            if (!ModelState.IsValid)
-            {
-                // return 422 - Unprocessable Entity when validation fails
-                return new UnprocessableEntityObjectResult(ModelState);
-            }
-
-            // Automapper maps only the Title in our configuration
-            var newEmployee = new Employee();
-
-            // Create an image from the passed-in bytes (Base64), and 
-            // set the filename on the image
-
-            // get this environment's web root path (the path
-            // from which static content, like an image, is served)
-            var webRootPath = _env.WebRootPath;
-
-            // create the filename
-            string fileName = Guid.NewGuid().ToString() + ".jpg";
-
-            // the full file path
-            var filePath = Path.Combine($"{webRootPath}/images/{fileName}");
-
-            // write bytes and auto-close stream
-            System.IO.File.WriteAllBytes(filePath, imageForCreation.Bytes);
-
-            // fill out the filename
-            newEmployee.ImageName = fileName;
-
-            // set the ownerId on the imageEntity
-            newEmployee.ImagePath = filePath;
-
-            // add and save.  
-            var addedEmp = await _empRepo.Create(newEmployee);
-
-            
-
-            return Ok (addedEmp);
-        }
+       
     }
 }

@@ -4,6 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 using Dashboard.DataG.Contracts;
 using Microsoft.Extensions.Logging;
 using Dashboard.EntitiesG.EntitiesRev;
+using Dashboard.APIG.Infrastructure;
+using System.Collections.Generic;
+using Dashboard.APIG.Models;
 
 namespace Dashboard.API.Controllers
 {
@@ -23,17 +26,20 @@ namespace Dashboard.API.Controllers
 
         // GET api/dashboard/locations
         [HttpGet("")]
+        [NoCache]
+        [ProducesResponseType(typeof(List<Location>), 200)]
+        [ProducesResponseType(typeof(ApiResponse<Location>), 400)]
         public async Task<IActionResult> Get()
         {
             try
             {
                 var result =  _repo.GetAll();
                 return Ok(result);
-                //return Ok(Mapper.Map<IEnumerable<CommitmentViewModel>>(result));
+                
             }
             catch (Exception ex)
             {
-                // LOGGING TODO
+                
                 _logger.LogError($"Exception thrown white getting locations: {ex}");
                 return BadRequest($"Error ocurred");
             }
@@ -41,13 +47,16 @@ namespace Dashboard.API.Controllers
 
         // GET api/dashboard/locations/5
         [HttpGet("{id}", Name = "GetLocation")]
+        [NoCache]
+        [ProducesResponseType(typeof(Location), 200)]
+        [ProducesResponseType(typeof(ApiResponse<Location>), 400)]
         public async Task<IActionResult> Get(int id)
         {
             try
             {
                 var result = await _repo.GetById(id);
                 return Ok(result);
-                //return Ok(Mapper.Map<CommitmentViewModel>(result));
+               
             }
             catch (Exception ex)
             {
@@ -60,6 +69,8 @@ namespace Dashboard.API.Controllers
 
         // POST api/dashboard/locations
         [HttpPost("")]
+        [ProducesResponseType(typeof(ApiResponse<Location>), 201)]
+        [ProducesResponseType(typeof(ApiResponse<Location>), 400)]
         public async Task<IActionResult> Post([FromBody]Location location)
         {
             if (ModelState.IsValid)
@@ -67,38 +78,39 @@ namespace Dashboard.API.Controllers
                 try
                 {
                     var addedLocation =  _repo.Create(location);
-                    return Created($"api/dashboard/commitments/{addedLocation.Id}", addedLocation);
-                    //return Ok(Mapper.Map<CommitmentViewModel>(result));
+                    return Ok(addedLocation);
+                    
                 }
                 catch (Exception ex)
                 {
                     _logger.LogError($"Exception thrown while getting location: {ex}");
                     return BadRequest($"Error ocurred");
                 }
-                //var newCommitment = Mapper.Map<Commitment>(commitment);                             
+                                         
             }
             return BadRequest("Failed to save changes to the database");
         }
 
         // PUT api/dashboard/Commitments/5
         [HttpPut("{id}")]
+        [ProducesResponseType(typeof(ApiResponse<Location>), 200)]
+        [ProducesResponseType(typeof(ApiResponse<Location>), 400)]
         public async Task<IActionResult> Put(int id, [FromBody]Location location)
         {
             if (ModelState.IsValid)
             {
-                //var projectId = 0;
-                //var userId = 0;
+               
                 try
                 {
                     var locationFromRepo = await _repo.GetById(id);
-                    //Mapper.Map(commitmentVM, commiFromRepo);
+                    
 
                     locationFromRepo.City = location.City ?? locationFromRepo.City;
                     locationFromRepo.Address = location.Address ?? locationFromRepo.Address;
                     locationFromRepo.Clients = location.Clients ?? locationFromRepo.Clients;
                     var locationUpdated = _repo.Update(locationFromRepo.LocationId, locationFromRepo);
 
-                    return Ok(/*Mapper.Map<CommitmentViewModel>(*/locationUpdated/*)*/);
+                    return Ok(locationUpdated);
                 }
                 catch (Exception ex)
                 {
@@ -112,6 +124,8 @@ namespace Dashboard.API.Controllers
 
         // DELETE api/dashboard/Commitments/5
         [HttpDelete("{id}")]
+        [ProducesResponseType(typeof(ApiResponse<Location>), 200)]
+        [ProducesResponseType(typeof(ApiResponse<Location>), 400)]
         public async Task<IActionResult> Delete(int id)
         {
             try
@@ -119,7 +133,7 @@ namespace Dashboard.API.Controllers
                 var locationToDel = await _repo.GetById(id);
                 await _repo.Delete(locationToDel.LocationId);
 
-                return Ok($"Commitment deleted!");
+                return Ok(locationToDel);
             }
             catch (Exception ex)
             {

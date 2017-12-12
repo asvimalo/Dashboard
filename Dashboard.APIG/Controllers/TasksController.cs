@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Dashboard.DataG.Contracts;
 using Microsoft.Extensions.Logging;
+using Dashboard.APIG.Infrastructure;
+using Dashboard.APIG.Models;
 
 namespace Dashboard.APIG.Controllers
 {
@@ -25,17 +27,20 @@ namespace Dashboard.APIG.Controllers
 
         // GET api/dashboard/tasks
         [HttpGet("")]
+        [NoCache]
+        [ProducesResponseType(typeof(List<EntitiesG.EntitiesRev.Task>), 200)]
+        [ProducesResponseType(typeof(ApiResponse<EntitiesG.EntitiesRev.Task>), 400)]
         public async Task<IActionResult> Get()
         {
             try
             {
                 var result =  _repo.Include(x => x.Phase).ToList();
                 return Ok(result);
-                //return Ok(Mapper.Map<IEnumerable<CommitmentViewModel>>(result));
+                
             }
             catch (Exception ex)
             {
-                // LOGGING TODO
+               
                 _logger.LogError($"Exception thrown white getting tasks: {ex}");
                 return BadRequest($"Error ocurred");
             }
@@ -43,13 +48,16 @@ namespace Dashboard.APIG.Controllers
 
         // GET api/dashboard/tasks/5
         [HttpGet("{id}", Name = "GetTask")]
+        [NoCache]
+        [ProducesResponseType(typeof(EntitiesG.EntitiesRev.Task), 200)]
+        [ProducesResponseType(typeof(ApiResponse<EntitiesG.EntitiesRev.Task>), 400)]
         public async Task<IActionResult> Get(int id)
         {
             try
             {
                 var result = await _repo.GetById(id);
                 return Ok(result);
-                //return Ok(Mapper.Map<CommitmentViewModel>(result));
+                
             }
             catch (Exception ex)
             {
@@ -62,16 +70,18 @@ namespace Dashboard.APIG.Controllers
 
         // POST api/dashboard/tasks
         [HttpPost("")]
+        [ProducesResponseType(typeof(ApiResponse<EntitiesG.EntitiesRev.Task>), 201)]
+        [ProducesResponseType(typeof(ApiResponse<EntitiesG.EntitiesRev.Task>), 400)]
         public async Task<IActionResult> Post([FromBody]EntitiesG.EntitiesRev.Task task)
         {
             if (ModelState.IsValid)
             {
-                //var newCommitment = Mapper.Map<Commitment>(commitment);
+                
                 try
                 {
                     var addedTask = _repo.Create(task);
 
-                    return Created($"api/dashboard/tasks/{addedTask.Id}", addedTask);
+                    return Ok(addedTask);
                 }
                 catch (Exception)
                 {
@@ -85,6 +95,8 @@ namespace Dashboard.APIG.Controllers
 
         // PUT api/dashboard/Commitments/5
         [HttpPut("{id}")]
+        [ProducesResponseType(typeof(ApiResponse<EntitiesG.EntitiesRev.Task>), 200)]
+        [ProducesResponseType(typeof(ApiResponse<EntitiesG.EntitiesRev.Task>), 400)]
         public async Task<IActionResult> Put(int id, [FromBody]EntitiesG.EntitiesRev.Task task)
         {
             if (ModelState.IsValid)
@@ -93,13 +105,13 @@ namespace Dashboard.APIG.Controllers
                 try
                 {
                     var taskFromRepo = await _repo.GetById(id);
-                    //Mapper.Map(commitmentVM, commiFromRepo);
+                    
 
                     taskFromRepo.TaskName = task.TaskName ?? taskFromRepo.TaskName;
                     taskFromRepo.Phase = task.Phase ?? taskFromRepo.Phase;
                     taskFromRepo.PhaseId = task.PhaseId != 0 ? task.PhaseId : taskFromRepo.PhaseId;
                     var taskUpdated = _repo.Update(taskFromRepo.TaskId, taskFromRepo);
-                    return Ok(/*Mapper.Map<CommitmentViewModel>(*/taskUpdated/*)*/);
+                    return Ok(taskUpdated);
                 }
                 catch (Exception)
                 {
@@ -114,6 +126,8 @@ namespace Dashboard.APIG.Controllers
 
         // DELETE api/dashboard/Commitments/5
         [HttpDelete("{id}")]
+        [ProducesResponseType(typeof(ApiResponse<EntitiesG.EntitiesRev.Task>), 200)]
+        [ProducesResponseType(typeof(ApiResponse<EntitiesG.EntitiesRev.Task>), 400)]
         public async Task<IActionResult> Delete(int id)
         {
             try
@@ -121,7 +135,7 @@ namespace Dashboard.APIG.Controllers
                 var taskToDel = await _repo.GetById(id);
                 await _repo.Delete(taskToDel.TaskId);
 
-                return Ok($"Commitment deleted!");
+                return Ok(taskToDel);
             }
             catch (Exception)
             {

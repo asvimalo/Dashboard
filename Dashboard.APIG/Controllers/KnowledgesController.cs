@@ -4,6 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 using Dashboard.DataG.Contracts;
 using Microsoft.Extensions.Logging;
 using Dashboard.EntitiesG.EntitiesRev;
+using System.Collections.Generic;
+using Dashboard.APIG.Models;
+using Dashboard.APIG.Infrastructure;
 
 namespace Dashboard.API.Controllers
 {
@@ -23,13 +26,16 @@ namespace Dashboard.API.Controllers
 
         // GET api/dashboard/knowledges
         [HttpGet("")]
+        [NoCache]
+        [ProducesResponseType(typeof(List<Knowledge>), 200)]
+        [ProducesResponseType(typeof(ApiResponse<Knowledge>), 400)]
         public async Task<IActionResult> Get()
         {
             try
             {
                 var result = _repo.Include(x => x.AcquiredKnowledges);
                 return Ok(result);
-                //return Ok(Mapper.Map<IEnumerable<CommitmentViewModel>>(result));
+                
             }
             catch (Exception ex)
             {
@@ -39,15 +45,18 @@ namespace Dashboard.API.Controllers
             }
         }
 
-        // GET api/dashboard/Commitments/5
+        // GET api/dashboard/knowledges/5
         [HttpGet("{id}", Name = "GetKnowledge")]
+        [NoCache]
+        [ProducesResponseType(typeof(Knowledge), 200)]
+        [ProducesResponseType(typeof(ApiResponse<Knowledge>), 400)]
         public async Task<IActionResult> Get(int id)
         {
             try
             {
                 var result = _repo.GetById(id);
                 return Ok(result);
-                //return Ok(Mapper.Map<CommitmentViewModel>(result));
+               
             }
             catch (Exception ex)
             {
@@ -60,6 +69,8 @@ namespace Dashboard.API.Controllers
 
         // POST api/dashboard/knowledges
         [HttpPost("")]
+        [ProducesResponseType(typeof(ApiResponse<Knowledge>), 201)]
+        [ProducesResponseType(typeof(ApiResponse<Knowledge>), 400)]
         public async Task<IActionResult> Post([FromBody]Knowledge knowledge)
         {
             if (ModelState.IsValid)
@@ -75,27 +86,24 @@ namespace Dashboard.API.Controllers
                     _logger.LogError($"Exception thrown while getting knowledge: {ex}");
                     return BadRequest($"Error ocurred");
                 }
-                //var newCommitment = Mapper.Map<Commitment>(commitment);
                 
-               
-                    
-              
             }
             return BadRequest("Failed to save changes to the database");
         }
 
         // PUT api/dashboard/knowledges/5
         [HttpPut("{id}")]
+        [ProducesResponseType(typeof(ApiResponse<Knowledge>), 200)]
+        [ProducesResponseType(typeof(ApiResponse<Knowledge>), 400)]
         public async Task<IActionResult> Put(int id, [FromBody]Knowledge knowledge)
         {
             if (ModelState.IsValid)
             {
-                //var projectId = 0;
-                //var userId = 0;
+              
                 try
                 {
                     var knowledgeFromRepo = await _repo.GetById(id);
-                    //Mapper.Map(commitmentVM, commiFromRepo);
+                   
 
                     knowledgeFromRepo.KnowledgeName = knowledge.KnowledgeName ?? knowledgeFromRepo.KnowledgeName;
                     knowledgeFromRepo.Description = knowledge.Description ?? knowledgeFromRepo.Description;
@@ -103,11 +111,8 @@ namespace Dashboard.API.Controllers
 
 
                     var knowledgeUpdated = _repo.Create(knowledgeFromRepo);
-
-
-                    
-
-                    return Ok(/*Mapper.Map<CommitmentViewModel>(*/knowledgeUpdated/*)*/);
+      
+                    return Ok(knowledgeUpdated);
                 }
                 catch (Exception ex)
                 {
@@ -122,6 +127,8 @@ namespace Dashboard.API.Controllers
 
         // DELETE api/dashboard/Commitments/5
         [HttpDelete("{id}")]
+        [ProducesResponseType(typeof(ApiResponse<Knowledge>), 200)]
+        [ProducesResponseType(typeof(ApiResponse<Knowledge>), 400)]
         public async Task<IActionResult> Delete(int id)
         {
             try

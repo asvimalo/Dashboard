@@ -1,11 +1,11 @@
-﻿<!DOCTYPE html>
+﻿ <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SIGMA Dashboard</title>
 
-    <environment include="Development">
+    <environment names="Development">
 
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link href="~/lib/font-awesome/css/font-awesome.css" rel="stylesheet" />
@@ -13,10 +13,13 @@
         <link href="~/css/allProject.css" rel="stylesheet" />
         <link rel="stylesheet" href="~/css/site.css" />
     </environment>
-    <environment exclude="Development">
+    <environment names="Production">
         <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
               asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
-              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />        
+        <link href="~/lib/font-awesome/css/font-awesome.css" rel="stylesheet" asp-append-version="true"/>
+        <link rel="stylesheet" href="~/css/projectBase.css"/>
+        <link href="~/css/allProject.css" rel="stylesheet"/>
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     </environment>
 </head>
@@ -25,12 +28,17 @@
         @RenderBody()
     </div>
 
-    <environment include="Development">
-        <script src="~/lib/jquery/dist/jquery.js"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+    <environment names="Development">
+       
+        <script src="~/lib/jquery/dist/jquery.js" asp-append-version="true"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.js" asp-append-version="true"></script>
+        <script src="~/lib/angular/angular.min.js" asp-append-version="true"></script>
+        <script src="~/js/app/components/project/allproject/gantt.js"></script>
+        <script src="~/lib/moment/moment.js"></script>
+        <script src="~/lib/moment/locale/sv.js"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
     </environment>
-    <environment exclude="Development">
+    <environment names="Production">
         <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
                 asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
                 asp-fallback-test="window.jQuery"
@@ -47,7 +55,9 @@
                 asp-fallback-src="~/lib/angular/angular.min.js"
                 asp-fallback-test="window.angular">
         </script>
-
+        <script src="~/js/app/components/project/allproject/gantt.js"></script>
+        <script src="~/lib/moment/moment.js"></script>
+        <script src="~/lib/moment/locale/sv.js"></script>
         <script src="~/js/site.min.js" asp-append-version="true"></script>
     </environment>
 

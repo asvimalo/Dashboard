@@ -1,4 +1,5 @@
 ﻿
+using Dashboard.APIG.Infrastructure;
 using Dashboard.APIG.Models;
 using Dashboard.DataG.Contracts;
 
@@ -28,30 +29,30 @@ namespace Dashboard.Data.Controllers
             IRepoClient repoClient,
             IRepoAssignment repoAssignment,
             IRepoEmployee repoEmp,
-        ILogger<ProjectsController> logger/*,
-            IMapper mapper*/)
+        ILogger<ProjectsController> logger
+            )
         {
             _repoEmp = repoEmp;
             _repoProject = repoProject;
             _repoClient = repoClient;
             _repoAssignment = repoAssignment;
             _logger = logger;
-            //_mapper = mapper;
+           
         }
-        public IActionResult Index()
-        {
-            return View();
-        }
-        // GET api/values
+        
+      
         [HttpGet("")]
+        [NoCache]
+        [ProducesResponseType(typeof(List<Project>), 200)]
+        [ProducesResponseType(typeof(ApiResponse<Project>), 400)]
         public async Task<IActionResult> Get()
         {
             try
             {
-                //var result =  _repoProject.Include(x => x.Assignments, y => y.Client, z => z.Phases);
+                
                 var result = _repoProject.GetAllForReal();
                 return Ok(result);
-                //return Ok(_mapper.Map<IEnumerable<ProjectViewModel>>(result));
+               
             }
             catch (Exception ex)
             {
@@ -61,15 +62,18 @@ namespace Dashboard.Data.Controllers
             }
         }
 
-        // GET api/values/5
+       
         [HttpGet("{id}", Name = "GetProject")]
+        [NoCache]
+        [ProducesResponseType(typeof(Project), 200)]
+        [ProducesResponseType(typeof(ApiResponse<Project>), 400)]
         public async Task<IActionResult> Get(int id)
         {
             try
             {
-                var result = _repoProject.GetProjectById(id);
-                return Ok(result.Result.First());
-                //return Ok(_mapper.Map<ProjectViewModel>(result));
+                var result = await _repoProject.GetProjectById(id);
+                return Ok(result.First());
+                
             }
             catch (Exception ex)
             {
@@ -82,6 +86,8 @@ namespace Dashboard.Data.Controllers
 
         // POST api/values
         [HttpPost("")]
+        [ProducesResponseType(typeof(ApiResponse<Project>), 201)]
+        [ProducesResponseType(typeof(ApiResponse<Project>), 400)]
         public async Task<IActionResult> Post([FromBody]ProjectForm project)
         {
             if (ModelState.IsValid)
@@ -100,18 +106,10 @@ namespace Dashboard.Data.Controllers
                     
                     var addedProject = await _repoProject.Create(newProject);
 
-                    //foreach (var employeeId in project.Employees)
-                    //{ 
-                    //    var addedAssignment = await _repoAssignment.Create(new Assignment
-                    //    {
-                    //        ProjectId = addedProject.ProjectId, // products table
-                    //        Project = addedProject,
-                    //        EmployeeId = employeeId
-                    //    });
-                    //}
-                    return Ok();
+                   
+                    return Ok(addedProject);
                         
-                    //return Ok(_mapper.Map<ProjectViewModel>(result));
+                   
                 }
                 catch (Exception ex)
                 {
@@ -124,8 +122,10 @@ namespace Dashboard.Data.Controllers
             return BadRequest("Failed to save changes to the database");
         }
 
-        // PUT api/values/5
+        
         [HttpPut("{id}")]
+        [ProducesResponseType(typeof(ApiResponse<Project>), 200)]
+        [ProducesResponseType(typeof(ApiResponse<Project>), 400)]
         public async Task<IActionResult> Put(int id, [FromBody]Project project)
         {
             if (ModelState.IsValid)
@@ -133,7 +133,7 @@ namespace Dashboard.Data.Controllers
                 try
                 {
                     var projectFromRepo = await _repoProject.GetById(id);
-                    //_mapper.Map(projectVM, projectFromRepo);
+   
 
                     projectFromRepo.ProjectName = project.ProjectName ?? projectFromRepo.ProjectName;
                     projectFromRepo.StartDate = project.StartDate;
@@ -142,8 +142,8 @@ namespace Dashboard.Data.Controllers
                     projectFromRepo.Notes = project.Notes ?? projectFromRepo.Notes;
 
                     var projectUpdated = _repoProject.Update(projectFromRepo.ProjectId, projectFromRepo);
-                    return Ok();
-                    //return Ok(/*_mapper.Map<ProjectViewModel>(projectUpdated)*/projectUpdated);
+                    return Ok(projectUpdated);
+                    
                 }
                 catch (Exception)
                 {
@@ -156,8 +156,10 @@ namespace Dashboard.Data.Controllers
 
         }
 
-        // DELETE api/values/5
+ 
         [HttpDelete("{id}")]
+        [ProducesResponseType(typeof(ApiResponse<Project>), 200)]
+        [ProducesResponseType(typeof(ApiResponse<Project>), 400)]
         public async Task<IActionResult> Delete(int id)
         {
             try
@@ -165,7 +167,7 @@ namespace Dashboard.Data.Controllers
                 var projectToDel = await _repoProject.GetById(id);
                 await _repoProject.Delete(projectToDel.ProjectId);
 
-                return Ok($"Project deleted!");
+                return Ok(projectToDel);
 
             }
             catch (Exception)
@@ -177,6 +179,9 @@ namespace Dashboard.Data.Controllers
                 
         }
         [HttpGet("employeesclientslist")]
+        [NoCache]
+        [ProducesResponseType(typeof(ClientsEmployeesListNames), 200)]
+        [ProducesResponseType(typeof(ApiResponse<ClientsEmployeesListNames>), 400)]
         public async Task<IActionResult> GetList(int id)
         {
             try

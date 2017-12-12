@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Dashboard.DataG.Contracts;
 using Microsoft.Extensions.Logging;
 using Dashboard.EntitiesG.EntitiesRev;
+using Dashboard.APIG.Models;
+using Dashboard.APIG.Infrastructure;
 
 namespace Dashboard.API.Controllers
 {
@@ -26,13 +28,16 @@ namespace Dashboard.API.Controllers
 
         // GET api/dashboard/phases
         [HttpGet("")]
+        [NoCache]
+        [ProducesResponseType(typeof(List<Phase>), 200)]
+        [ProducesResponseType(typeof(ApiResponse<Phase>), 400)]
         public async Task<IActionResult> Get()
         {
             try
             {
                 var result =  _repo.Include(x => x.Project, y => y.Tasks);
                 return Ok(result);
-                //return Ok(Mapper.Map<IEnumerable<CommitmentViewModel>>(result));
+                
             }
             catch (Exception ex)
             {
@@ -44,13 +49,16 @@ namespace Dashboard.API.Controllers
 
         // GET api/dashboard/phases/5
         [HttpGet("{id}")]
+        [NoCache]
+        [ProducesResponseType(typeof(Phase), 200)]
+        [ProducesResponseType(typeof(ApiResponse<Phase>), 400)]
         public async Task<IActionResult> Get(int id)
         {
             try
             {
                 var result = _repo.Include(x => x.Project, y => y.Tasks).First(x=>x.PhaseId == id);
                 return Ok(result);
-                //return Ok(Mapper.Map<CommitmentViewModel>(result));
+                
             }
             catch (Exception ex)
             {
@@ -63,6 +71,8 @@ namespace Dashboard.API.Controllers
 
         // POST api/dashboard/phases
         [HttpPost("")]
+        [ProducesResponseType(typeof(ApiResponse<Phase>), 201)]
+        [ProducesResponseType(typeof(ApiResponse<Phase>), 400)]
         public async Task<IActionResult> Post([FromBody]Phase phase)
         {
             if (ModelState.IsValid)
@@ -80,9 +90,9 @@ namespace Dashboard.API.Controllers
                     };
 
                     var addedPhase = await _repo.Create(newPhase);
-                    //return Created($"api/dashboard/commitments/{addedPhase.Id}", addedPhase);
-                    return Ok();
-                    //return Ok(Mapper.Map<CommitmentViewModel>(result));
+                    
+                    return Ok(addedPhase);
+                    
                 }
                 catch (Exception ex)
                 {
@@ -90,7 +100,7 @@ namespace Dashboard.API.Controllers
                     _logger.LogError($"Exception thrown while getting commitment: {ex}");
                     return BadRequest($"Error ocurred");
                 }
-                //var newCommitment = Mapper.Map<Commitment>(commitment);
+                
                 
             }
             return BadRequest("Failed to save changes to the database");
@@ -98,6 +108,8 @@ namespace Dashboard.API.Controllers
 
         // PUT api/dashboard/phases/5
         [HttpPut("{id}")]
+        [ProducesResponseType(typeof(ApiResponse<Phase>), 200)]
+        [ProducesResponseType(typeof(ApiResponse<Phase>), 400)]
         public async Task<IActionResult> Put(int id, [FromBody]Phase phase)
         {
             if (ModelState.IsValid)
@@ -105,7 +117,7 @@ namespace Dashboard.API.Controllers
                 try
                 {
                     var phaseFromRepo = await _repo.GetById(id);
-                    //Mapper.Map(commitmentVM, commiFromRepo);
+                    
 
                     phaseFromRepo.PhaseName = phase.PhaseName ?? phaseFromRepo.PhaseName;
                     phaseFromRepo.TimeBudget = phase.TimeBudget;
@@ -115,11 +127,9 @@ namespace Dashboard.API.Controllers
                     phaseFromRepo.Comments = phase.Comments ?? phaseFromRepo.Comments;
                     phaseFromRepo.ProjectId = phase.ProjectId != 0 ? phase.ProjectId : phaseFromRepo.ProjectId;
 
-
-
-                    var phaseUpdated = _repo.Update(phaseFromRepo.PhaseId, phaseFromRepo);
-                    return Ok(phaseUpdated.Result);
-                    //return Ok(/*Mapper.Map<CommitmentViewModel>(*/phaseFromRepo/*)*/);
+                    var phaseUpdated = await _repo.Update(phaseFromRepo.PhaseId, phaseFromRepo);
+                    return Ok(phaseUpdated);
+                    
                 }
                 catch (Exception ex)
                 {
@@ -127,12 +137,6 @@ namespace Dashboard.API.Controllers
                     _logger.LogError($"Exception thrown while getting commitment: {ex}");
                     return BadRequest($"Error ocurred");
                 }
-                //var projectId = 0;
-                //var userId = 0;
-               
-
-               
-               
                
             }
             return BadRequest("Error occured");
@@ -141,6 +145,8 @@ namespace Dashboard.API.Controllers
 
         // DELETE api/dashboard/Commitments/5
         [HttpDelete("{id}")]
+        [ProducesResponseType(typeof(ApiResponse<Phase>), 200)]
+        [ProducesResponseType(typeof(ApiResponse<Phase>), 400)]
         public async Task<IActionResult> Delete(int id)
         {
             try
@@ -148,7 +154,7 @@ namespace Dashboard.API.Controllers
                 var phaseToDel = await _repo.GetById(id);
                await _repo.Delete(phaseToDel.PhaseId);
 
-                return Ok($"Commitment deleted!");
+                return Ok(phaseToDel);
             }
             catch (Exception)
             {

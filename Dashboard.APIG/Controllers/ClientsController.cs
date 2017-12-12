@@ -1,4 +1,5 @@
-﻿using Dashboard.APIG.Models;
+﻿using Dashboard.APIG.Infrastructure;
+using Dashboard.APIG.Models;
 using Dashboard.DataG.Contracts;
 using Dashboard.EntitiesG.EntitiesRev;
 using Microsoft.AspNetCore.Mvc;
@@ -29,6 +30,9 @@ namespace Dashboard.APIG.Controllers
 
         // GET api/dashboard/clients
         [HttpGet("")]
+        [NoCache]
+        [ProducesResponseType(typeof(List<Client>), 200)]
+        [ProducesResponseType(typeof(ApiResponse<Client>), 400)]
         public async Task<IActionResult> Get()
         {
             try
@@ -47,13 +51,16 @@ namespace Dashboard.APIG.Controllers
 
         // GET api/dashboard/clients/5
         [HttpGet("{id}", Name = "GetClient")]
+        [NoCache]
+        [ProducesResponseType(typeof(Client), 200)]
+        [ProducesResponseType(typeof(ApiResponse<Client>), 400)]
         public async Task<IActionResult> Get(int id)
         {
             try
             {   
                 var result = _repo.GetById(id);
                 return Ok(result);
-                //return Ok(Mapper.Map<CommitmentViewModel>(result));
+               
             }
             catch (Exception ex)
             {
@@ -66,6 +73,8 @@ namespace Dashboard.APIG.Controllers
 
         // POST api/dashboard/clients
         [HttpPost("")]
+        [ProducesResponseType(typeof(ApiResponse<Client>), 201)]
+        [ProducesResponseType(typeof(ApiResponse<Client>), 400)]
         public async Task<IActionResult> Post([FromBody] ClientLocation client)
         {
             if (ModelState.IsValid)
@@ -75,11 +84,11 @@ namespace Dashboard.APIG.Controllers
                     Address = client.Address,
                     City = client.City
                 };
-                //var newCommitment = Mapper.Map<Commitment>(commitment);
+               
                 var newClient = new Client{ ClientName = client.ClientName};
                 try
                 {
-                    //a
+                   
                     var locationAdded = await _repoLoc.Create(location);
                     newClient.LocationId = locationAdded.LocationId;
                     var addedClient = await _repo.Create(newClient);
@@ -99,8 +108,10 @@ namespace Dashboard.APIG.Controllers
 
         }
 
-        // PUT api/dashboard/Commitments/5
+        // PUT api/dashboard/clients/5
         [HttpPut("{id}")]
+        [ProducesResponseType(typeof(ApiResponse<Client>), 200)]
+        [ProducesResponseType(typeof(ApiResponse<Client>), 400)]
         public async Task<IActionResult> Put([FromBody]Client client)
         {
             if (ModelState.IsValid)
@@ -110,7 +121,7 @@ namespace Dashboard.APIG.Controllers
                 try
                 {
                     var clientFromRepo = await _repo.GetById(client.ClientId);
-                    //Mapper.Map(commitmentVM, commiFromRepo);
+              
                     
                     clientFromRepo.ClientName = client.ClientName ?? clientFromRepo.ClientName;
                     clientFromRepo.Description = client.Description ?? clientFromRepo.Description;
@@ -118,7 +129,7 @@ namespace Dashboard.APIG.Controllers
                     clientFromRepo.Projects = client.Projects ?? clientFromRepo.Projects;
                     clientFromRepo.LocationId = client.LocationId != 0 ? client.LocationId : clientFromRepo.LocationId;
                     var clientUpdated = await _repo.Update(clientFromRepo.ClientId, clientFromRepo);
-                    return Ok(/*Mapper.Map<CommitmentViewModel>(*/clientUpdated/*)*/);
+                    return Ok(clientUpdated);
                 }
                 catch (Exception ex)
                 {
@@ -133,6 +144,8 @@ namespace Dashboard.APIG.Controllers
 
         // DELETE api/dashboard/Commitments/5
         [HttpDelete("{id}")]
+        [ProducesResponseType(typeof(ApiResponse<Client>), 200)]
+        [ProducesResponseType(typeof(ApiResponse<Client>), 400)]
         public async Task<IActionResult> Delete(int id)
         {
             var clientToDel = await _repo.GetById(id);
@@ -141,7 +154,7 @@ namespace Dashboard.APIG.Controllers
                 try
                 {
                     await _repo.Delete(clientToDel.ClientId);
-                    return Ok($"Commitment deleted!");
+                    return Ok(clientToDel);
                 }
                 catch (Exception ex)
                 {

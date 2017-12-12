@@ -19,7 +19,8 @@ namespace Dashboard.DataG.Db
 
                 builder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=DashboardGenericDb;Trusted_Connection=True;MultipleActiveResultSets=true",
                     optionsBuilder => optionsBuilder.MigrationsAssembly(typeof(DashboardGenericContext).GetTypeInfo().Assembly.GetName().Name));
-                
+                // localdb connection: "Server=(localdb)\\mssqllocaldb;Database=DashboardGenericDb;Trusted_Connection=True;MultipleActiveResultSets=true"
+                // SQL connection: "Server=(localdb)\\mssqllocaldb;Database=DashboardGenericDb;Trusted_Connection=True;MultipleActiveResultSets=true"
                 return new DashboardGenericContext(builder.Options);
             }
         }

@@ -32,26 +32,18 @@ namespace Dashboard.APIG
             host.Run();
         }
 
-        public static IWebHost BuildWebHost(string[] args)
-        {
-            return WebHost.CreateDefaultBuilder()
-                                .UseKestrel()
-                                .ConfigureAppConfiguration((ctx, cfg) =>
-                                {
+        public static IWebHost BuildWebHost(string[] args) =>
 
-
-                                })
-                                .ConfigureLogging((ctx, logging) => {
-                                    logging.AddConsole();
-                                })
-                                .UseIISIntegration()
-                                .UseStartup<Startup>()
-                                .UseSetting("DesignTime", "true")
-                                .UseDefaultServiceProvider((context, options) =>
-                                {
-                                    options.ValidateScopes = context.HostingEnvironment.IsDevelopment();
-                                })
-                                .Build();
-        }
+             WebHost.CreateDefaultBuilder(args)
+                .UseStartup<Startup>()
+                .UseSetting("DesignTime", "true")
+                .UseDefaultServiceProvider((context, options) =>
+                {
+                     options.ValidateScopes = context.HostingEnvironment.IsDevelopment();
+                })
+                .Build();
+                                
+                                
+       
     }
 }

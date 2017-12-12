@@ -4,6 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 using Dashboard.DataG.Contracts;
 using Microsoft.Extensions.Logging;
 using Dashboard.EntitiesG.EntitiesRev;
+using Dashboard.APIG.Infrastructure;
+using System.Collections.Generic;
+using Dashboard.APIG.Models;
 
 namespace Dashboard.APIG.Controllers
 {
@@ -23,6 +26,9 @@ namespace Dashboard.APIG.Controllers
 
         // GET api/dashboard/commitments
         [HttpGet("")]
+        [NoCache]
+        [ProducesResponseType(typeof(List<Commitment>), 200)]
+        [ProducesResponseType(typeof(ApiResponse<Commitment>), 400)]
         public async Task<IActionResult> Get()
         {
             try
@@ -41,6 +47,9 @@ namespace Dashboard.APIG.Controllers
 
         // GET api/dashboard/Commitments/5
         [HttpGet("{id}", Name = "GetCommitment")]
+        [NoCache]
+        [ProducesResponseType(typeof(Commitment), 200)]
+        [ProducesResponseType(typeof(ApiResponse<Commitment>), 400)]
         public async Task<IActionResult> Get(int id)
         {
             try
@@ -60,11 +69,13 @@ namespace Dashboard.APIG.Controllers
 
         // POST api/dashboard/Commitments
         [HttpPost("")]
+        [ProducesResponseType(typeof(ApiResponse<Commitment>), 201)]
+        [ProducesResponseType(typeof(ApiResponse<Commitment>), 400)]
         public async Task<IActionResult> Post([FromBody]Commitment commitment)
         {
             if (ModelState.IsValid)
             {
-                //var newCommitment = Mapper.Map<Commitment>(commitment);
+                
                 try
                 {
                     var addedCommitment = _repo.Create(commitment);
@@ -85,6 +96,8 @@ namespace Dashboard.APIG.Controllers
 
         // PUT api/dashboard/Commitments/5
         [HttpPut("{id}")]
+        [ProducesResponseType(typeof(ApiResponse<Commitment>), 200)]
+        [ProducesResponseType(typeof(ApiResponse<Commitment>), 400)]
         public async Task<IActionResult> Put(int id, [FromBody]Commitment commitment)
         {
             if (ModelState.IsValid)
@@ -116,6 +129,8 @@ namespace Dashboard.APIG.Controllers
 
         // DELETE api/dashboard/Commitments/5
         [HttpDelete("{id}")]
+        [ProducesResponseType(typeof(ApiResponse<Assignment>), 200)]
+        [ProducesResponseType(typeof(ApiResponse<Assignment>), 400)]
         public async Task<IActionResult> Delete(int id)
         {
             try

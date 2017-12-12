@@ -4,6 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 using Dashboard.DataG.Contracts;
 using Microsoft.Extensions.Logging;
 using Dashboard.EntitiesG.EntitiesRev;
+using Dashboard.APIG.Infrastructure;
+using System.Collections.Generic;
+using Dashboard.APIG.Models;
 
 namespace Dashboard.APIG.Controllers
 {
@@ -23,6 +26,9 @@ namespace Dashboard.APIG.Controllers
 
         // GET api/dashboard/jobTitleAssignments
         [HttpGet("")]
+        [NoCache]
+        [ProducesResponseType(typeof(List<JobTitleAssignment>), 200)]
+        [ProducesResponseType(typeof(ApiResponse<JobTitleAssignment>), 400)]
         public async Task<IActionResult> Get()
         {
             try
@@ -43,6 +49,9 @@ namespace Dashboard.APIG.Controllers
 
         // GET api/dashboard/jobTitleAssignments/5
         [HttpGet("{id}", Name = "GetJobTitleAssignment")]
+        [NoCache]
+        [ProducesResponseType(typeof(JobTitleAssignment), 200)]
+        [ProducesResponseType(typeof(ApiResponse<JobTitleAssignment>), 400)]
         public async Task<IActionResult> Get(int id)
         {
             try
@@ -62,6 +71,8 @@ namespace Dashboard.APIG.Controllers
 
         // POST api/dashboard/jobTitleAssignments
         [HttpPost("")]
+        [ProducesResponseType(typeof(ApiResponse<JobTitleAssignment>), 201)]
+        [ProducesResponseType(typeof(ApiResponse<JobTitleAssignment>), 400)]
         public async Task<IActionResult> Post([FromBody]JobTitleAssignment jobTitleAssignment)
         {
             if (ModelState.IsValid)
@@ -87,6 +98,8 @@ namespace Dashboard.APIG.Controllers
 
         // PUT api/dashboard/jobTitleAssignments/5
         [HttpPut("{id}")]
+        [ProducesResponseType(typeof(ApiResponse<JobTitleAssignment>), 200)]
+        [ProducesResponseType(typeof(ApiResponse<JobTitleAssignment>), 400)]
         public async Task<IActionResult> Put(int id, [FromBody]JobTitleAssignment jobTitleAssignment)
         {
             if (ModelState.IsValid)
@@ -118,6 +131,8 @@ namespace Dashboard.APIG.Controllers
 
         // DELETE api/dashboard/jobTitleAssignments/5
         [HttpDelete("{id}")]
+        [ProducesResponseType(typeof(ApiResponse<JobTitleAssignment>), 200)]
+        [ProducesResponseType(typeof(ApiResponse<JobTitleAssignment>), 400)]
         public async Task<IActionResult> Delete(int id)
         {
             try

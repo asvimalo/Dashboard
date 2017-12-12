@@ -9,6 +9,7 @@ using Dashboard.EntitiesG.EntitiesRev;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Authorization;
 using Dashboard.APIG.Models;
+using Dashboard.APIG.Infrastructure;
 
 namespace Dashboard.DataG.Controllers
 {
@@ -43,22 +44,28 @@ namespace Dashboard.DataG.Controllers
         }
         // GET api/dashboard/Assignments
         [HttpGet("")]
+        [NoCache]
+        [ProducesResponseType(typeof(List<Assignment>), 200)]
+        [ProducesResponseType(typeof(ApiResponse<Assignment>), 400)]
         public async Task<IActionResult> Get()
         {
             try
             {
                 var result =  _repo.Include(x=>x.Commitments, y=> y.Employee, w => w.Project);
                 return Ok(result);
-                //return Ok(Mapper.Map<IEnumerable<CommitmentViewModel>>(result));
+                
             }
             catch (Exception ex)
             {
-                // LOGGING TODO
+             
                 _logger.LogError($"Exception thrown white getting commitments: {ex}");
                 return BadRequest($"Error ocurred");
             }
         }
         [HttpGet("load")]
+        [NoCache]
+        [ProducesResponseType(typeof(List<Assignment>), 200)]
+        [ProducesResponseType(typeof(ApiResponse<Assignment>), 400)]
         public async Task<IActionResult> Load()
         {
             try
@@ -66,38 +73,43 @@ namespace Dashboard.DataG.Controllers
                 var result = _repo.GetAll();
 
                 return Ok(result);
-                //return Ok(Mapper.Map<IEnumerable<CommitmentViewModel>>(result));
+               
             }
             catch (Exception ex)
             {
-                // LOGGING TODO
+                
                 _logger.LogError($"Exception thrown white getting commitments: {ex}");
                 return BadRequest($"Error ocurred");
             }
         }
 
-        // GET api/dashboard/Commitments/5
+
         [HttpGet("{id}", Name = "GetEmployeeAssigment")]
+        [NoCache]
+        [ProducesResponseType(typeof(List<Project>), 200)]
+        [ProducesResponseType(typeof(ApiResponse<Project>), 400)]
         public async Task<IActionResult> Get(int id)
         {
             try
             {
-                var result =  _repo.GetProjectsByEmployeeId(id);
-                return Ok(result.Result);
-                //return Ok(Mapper.Map<CommitmentViewModel>(result));
+                var result =  await _repo.GetProjectsByEmployeeId(id);
+                return Ok(result);
+                
             }
             catch (Exception ex)
             {
 
-                _logger.LogError($"Exception thrown while getting commitment: {ex}");
+                _logger.LogError($"Exception thrown while getting projects: {ex}");
                 return BadRequest($"Error ocurred");
             }
 
         }
          
 
-        // POST api/dashboard/Commitments
+        // POST api/dashboard/assigments
         [HttpPost("")]
+        [ProducesResponseType(typeof(ApiResponse<Assignment>), 201)]
+        [ProducesResponseType(typeof(ApiResponse<Assignment>), 400)]
         public async Task<IActionResult> Post([FromBody]AssignmentPost assignment)
         {
             if (ModelState.IsValid)
@@ -141,7 +153,7 @@ namespace Dashboard.DataG.Controllers
                         }
                     }
 
-                    return Ok();
+                    return Ok(addedAssignment);
                 }
                 catch (Exception ex)
                 {
@@ -156,6 +168,8 @@ namespace Dashboard.DataG.Controllers
 
         // PUT api/dashboard/Commitments/5
         [HttpPut("{id}")]
+        [ProducesResponseType(typeof(ApiResponse<Assignment>), 200)]
+        [ProducesResponseType(typeof(ApiResponse<Assignment>), 400)]
         public async Task<IActionResult> Put(int id, [FromBody]Assignment assignment)
         {
             if (ModelState.IsValid)
@@ -232,6 +246,8 @@ namespace Dashboard.DataG.Controllers
 
         // DELETE api/dashboard/Assignments/5
         [HttpDelete("{id}")]
+        [ProducesResponseType(typeof(ApiResponse<Assignment>), 200)]
+        [ProducesResponseType(typeof(ApiResponse<Assignment>), 400)]
         public async Task<IActionResult> Delete(int id)
         {
             var assingmentToDel = await _repo.GetById(id);
@@ -251,6 +267,9 @@ namespace Dashboard.DataG.Controllers
         }
 
         [HttpGet("projectsemployeeslist")]
+        [NoCache]
+        [ProducesResponseType(typeof(ProjectsEmployeesListNames), 200)]
+        [ProducesResponseType(typeof(ApiResponse<ProjectsEmployeesListNames>), 400)]
         public async Task<IActionResult> GetProjectsEmployees()
         {
                 try

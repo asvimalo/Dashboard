@@ -5,6 +5,9 @@ using Dashboard.DataG.Contracts;
 using Microsoft.Extensions.Logging;
 using Dashboard.EntitiesG.EntitiesRev;
 using System.Linq;
+using Dashboard.APIG.Infrastructure;
+using System.Collections.Generic;
+using Dashboard.APIG.Models;
 
 namespace Dashboard.APIG.Controllers
 {
@@ -24,6 +27,9 @@ namespace Dashboard.APIG.Controllers
 
         // GET api/dashboard/jobTitleAssignments
         [HttpGet("")]
+        [NoCache]
+        [ProducesResponseType(typeof(List<JobTitle>), 200)]
+        [ProducesResponseType(typeof(ApiResponse<JobTitle>), 400)]
         public async Task<IActionResult> Get()
         {
             try
@@ -44,13 +50,16 @@ namespace Dashboard.APIG.Controllers
 
         // GET api/dashboard/jobTitles/5
         [HttpGet("{id}", Name = "GetJobTitle")]
+        [NoCache]
+        [ProducesResponseType(typeof(JobTitle), 200)]
+        [ProducesResponseType(typeof(ApiResponse<JobTitle>), 400)]
         public async Task<IActionResult> Get(int id)
         {
             try
             {
                 var result = await _repo.GetById(id);
                 return Ok(result);
-                //return Ok(Mapper.Map<CommitmentViewModel>(result));
+               
             }
             catch (Exception ex)
             {
@@ -61,8 +70,10 @@ namespace Dashboard.APIG.Controllers
 
         }
 
-        // POST api/dashboard/jobTitleAssignments
+        // POST api/dashboard/jobTitles
         [HttpPost("")]
+        [ProducesResponseType(typeof(ApiResponse<JobTitle>), 201)]
+        [ProducesResponseType(typeof(ApiResponse<JobTitle>), 400)]
         public async Task<IActionResult> Post([FromBody]JobTitle jobTitle)
         {
             if (ModelState.IsValid)
@@ -96,6 +107,8 @@ namespace Dashboard.APIG.Controllers
 
         // PUT api/dashboard/jobTitles/5
         [HttpPut("{id}")]
+        [ProducesResponseType(typeof(ApiResponse<JobTitle>), 200)]
+        [ProducesResponseType(typeof(ApiResponse<JobTitle>), 400)]
         public async Task<IActionResult> Put(int id, [FromBody]JobTitle jobTitle)
         {
             if (ModelState.IsValid)
@@ -125,6 +138,8 @@ namespace Dashboard.APIG.Controllers
 
         // DELETE api/dashboard/jobTitleAssignments/5
         [HttpDelete("{id}")]
+        [ProducesResponseType(typeof(ApiResponse<JobTitle>), 200)]
+        [ProducesResponseType(typeof(ApiResponse<JobTitle>), 400)]
         public async Task<IActionResult> Delete(int id)
         {
             try

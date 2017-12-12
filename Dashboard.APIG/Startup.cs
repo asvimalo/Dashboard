@@ -14,6 +14,8 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Serialization;
 using Microsoft.AspNetCore.Diagnostics;
 using Newtonsoft.Json;
+using Swashbuckle.AspNetCore.Swagger;
+using Swashbuckle.AspNetCore.SwaggerUI;
 
 namespace Dashboard.APIG
 {
@@ -35,7 +37,7 @@ namespace Dashboard.APIG
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<DashboardGenericContext>(option => {
-                option.UseSqlServer(Configuration["ConnectionStrings:DashboardGenericContextConnection"]);
+                option.UseSqlServer(Configuration["ConnectionStrings:DashboardlocalDbContextConnection"]);
                 option.ConfigureWarnings(warnings => warnings.Throw(CoreEventId.IncludeIgnoredWarning));
 
             });
@@ -77,6 +79,37 @@ namespace Dashboard.APIG
                 });
 
             services.AddLogging();
+            services.AddSwaggerGen(c =>
+            {
+                c.DocInclusionPredicate((docName, apiDesc) =>
+                {
+                    if (apiDesc.HttpMethod == null) return false;
+                    return true;
+                });
+            });
+            services.AddSwaggerGen(options =>
+            {
+                options.DocInclusionPredicate((docName, apiDesc) =>
+                {
+                    if (apiDesc.HttpMethod == null) return false;
+                    return true;
+                });
+                options.SwaggerDoc("v1", new Info
+                {
+                    Version = "v1",
+                    Title = "SIGMA DASHBOARD API",
+                    Description = "SIGMA DASHBOARD API Swagger Documentation",
+                    TermsOfService = "None",
+                    Contact = new Contact { Name = "SIGMAITC", Url = "http://www.sigmaitc.se/sv/" },
+                    License = new License { Name = "MIT", Url = "https://en.wikipedia.org/wiki/MIT_License" }
+                });
+               
+
+                //Add XML comment document by uncommenting the following
+                // var filePath = Path.Combine(PlatformServices.Default.Application.ApplicationBasePath, "MyApi.xml");
+                // options.IncludeXmlComments(filePath);
+
+            });
         }
 
         private Action<MvcOptions> AddJsonOptions(Func<object, object> p)
@@ -108,18 +141,27 @@ namespace Dashboard.APIG
             {
                 using (var scope = app.ApplicationServices.CreateScope())
                 {
-                    //DashboardContextSeedData.SeedData();
-                    //var initializer = scope.ServiceProvider.GetRequiredService<DashboardContextSeedData>();
-                    //initializer.SeedData().Wait();
+                    
                 }
             }
-
-            app.UseMvc(routes =>
+            app.UseSwagger();
+            
+            // Visit http://localhost:8890/swagger
+            app.UseSwaggerUI(c =>
             {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Dashboard}/{action=Index}/{id?}");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "DASHBOARD API V1");
             });
+            app.UseMvc(
+                routes =>
+                {
+                    routes.MapRoute(
+                        name: "default",
+                        template: "{controller=Home}/{action=Index}/{id?}");
+
+                    
+                }
+
+                );
 
         }
     }
